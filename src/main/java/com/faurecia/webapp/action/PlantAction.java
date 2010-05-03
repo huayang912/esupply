@@ -1,78 +1,82 @@
 package com.faurecia.webapp.action;
 
+import java.net.MalformedURLException;
 import java.util.List;
+
+import javax.xml.bind.JAXBException;
 
 import com.faurecia.model.Plant;
 import com.faurecia.service.GenericManager;
 
 public class PlantAction extends BaseAction {
 	private GenericManager<Plant, String> plantManager;
-    private List plants;
-    private Plant plant;
-    private String code;
+	private List plants;
+	private Plant plant;
+	private String code;
 
-    public void setPlantManager(GenericManager<Plant, String> plantManager) {
-        this.plantManager = plantManager;
-    }
+	public void setPlantManager(GenericManager<Plant, String> plantManager) {
+		this.plantManager = plantManager;
+	}
 
-    public List getPlants() {
-        return plants;
-    }
+	public List getPlants() {
+		return plants;
+	}
 
-    public String list() {
-    	plants = plantManager.getAll();
-        return SUCCESS;
-    }
-    
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public String list() {
+		plants = plantManager.getAll();
+		return SUCCESS;
+	}
 
-    public Plant getPlant() {
-        return plant;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setPlant(Plant plant) {
-        this.plant = plant;
-    }
-    
-    public String delete() {
-        this.plantManager.remove(plant.getCode());
-        saveMessage(getText("plant.deleted"));
+	public Plant getPlant() {
+		return plant;
+	}
 
-        return SUCCESS;
-    }
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
 
-    public String edit() {
-        if (this.code != null) {
-            plant = this.plantManager.get(code);
-        } else {
-        	plant = new Plant();
-        }
+	public String delete() {
+		this.plantManager.remove(plant.getCode());
+		saveMessage(getText("plant.deleted"));
 
-        return SUCCESS;
-    }
+		return SUCCESS;
+	}
 
-    public String save() throws Exception {
-        if (cancel != null) {
-            return CANCEL;
-        }
+	public String edit() throws JAXBException, MalformedURLException {
 
-        if (delete != null) {
-            return delete();
-        }
+		if (this.code != null) {
+			plant = this.plantManager.get(code);
+		} else {
+			plant = new Plant();
+		}
 
-        boolean isNew = (plant.getCode() == null);
+		return SUCCESS;
+	}
 
-        plant = this.plantManager.save(plant);
+	public String save() throws Exception {
+		if (cancel != null) {
+			return CANCEL;
+		}
 
-        String key = (isNew) ? "plant.added" : "plant.updated";
-        saveMessage(getText(key));
+		if (delete != null) {
+			return delete();
+		}
 
-        if (!isNew) {
-            return INPUT;
-        } else {
-            return SUCCESS;
-        }
-    }
+		boolean isNew = (plant.getCode() == null);
+
+		plant = this.plantManager.save(plant);
+
+		String key = (isNew) ? "plant.added" : "plant.updated";
+		saveMessage(getText(key));
+
+		if (!isNew) {
+			return INPUT;
+		} else {
+			return SUCCESS;
+		}
+	}
 }
