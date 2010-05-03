@@ -147,4 +147,6 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="orderManager" class="com.faurecia.service.impl.OrderServiceImpl"/>
 </beans>
