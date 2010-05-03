@@ -7,7 +7,7 @@
 
 <c:set var="buttons">
     <input type="button" style="margin-right: 5px"
-        onclick="location.href='<c:url value="/editPlant.html"/>'"
+        onclick="location.href='<c:url value="/plant/editPlant.html"/>'"
         value="<fmt:message key="button.add"/>"/>
     
     <input type="button" onclick="location.href='<c:url value="/mainMenu.html"/>'"
@@ -21,6 +21,13 @@
     <display:column property="code" sortable="true" href="editPlant.html" 
         paramId="code" paramProperty="code" titleKey="plant.code"/>
     <display:column property="name" sortable="true" titleKey="plant.name"/>
+    
+    <display:setProperty name="paging.banner.item_name" value="plant"/>
+    <display:setProperty name="paging.banner.items_name" value="plants"/>
+    
+    <display:setProperty name="export.excel.filename" value="Plant List.xls"/>
+    <display:setProperty name="export.csv.filename" value="Plant List.csv"/>
+    <display:setProperty name="export.pdf.filename" value="Plant List.pdf"/>
 </display:table>
 
 <c:out value="${buttons}" escapeXml="false" />

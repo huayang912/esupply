@@ -254,25 +254,9 @@
                         <configuration>
                             <encoding>UTF8</encoding>
                             <includes>
-                                ApplicationResources_ko.properties,
-                                ApplicationResources_no.properties,
-                                ApplicationResources_tr.properties,
-                                ApplicationResources_zh*.properties
-                            </includes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>native2ascii-8859_1</id>
-                        <goals>
-                            <goal>native2ascii</goal>
-                        </goals>
-                        <configuration>
-                            <encoding>8859_1</encoding>
-                            <includes>
-                                ApplicationResources_de.properties,
-                                ApplicationResources_fr.properties,
-                                ApplicationResources_nl.properties,
-                                ApplicationResources_pt*.properties
+                                ApplicationResources_zh*.properties,
+                                displaytag_zh*.properties,
+                                errors_zh*.properties
                             </includes>
                         </configuration>
                     </execution>
@@ -283,14 +267,9 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
-                    <exclude>ApplicationResources_de.properties</exclude>
-                    <exclude>ApplicationResources_fr.properties</exclude>
-                    <exclude>ApplicationResources_ko.properties</exclude>
-                    <exclude>ApplicationResources_nl.properties</exclude>
-                    <exclude>ApplicationResources_no.properties</exclude>
-                    <exclude>ApplicationResources_pt*.properties</exclude>
-                    <exclude>ApplicationResources_tr.properties</exclude>
                     <exclude>ApplicationResources_zh*.properties</exclude>
+                    <exclude>displaytag_zh*.properties</exclude>
+                    <exclude>errors_zh*.properties</exclude>
                     <exclude>applicationContext-resources.xml</exclude>
                     <exclude>struts.xml</exclude>
                 </excludes>
