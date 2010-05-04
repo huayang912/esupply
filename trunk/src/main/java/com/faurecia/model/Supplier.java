@@ -3,15 +3,12 @@ package com.faurecia.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
 @Table(name="supplier")
 public class Supplier extends BaseObject {
 
@@ -48,7 +45,7 @@ public class Supplier extends BaseObject {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Role)) {
+        if (!(o instanceof Supplier)) {
             return false;
         }
 
