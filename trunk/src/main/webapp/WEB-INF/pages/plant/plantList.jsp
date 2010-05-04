@@ -21,6 +21,11 @@
     <display:column property="code" sortable="true" href="editPlant.html" 
         paramId="code" paramProperty="code" titleKey="plant.code"/>
     <display:column property="name" sortable="true" titleKey="plant.name"/>
+    <display:column property="address1" sortable="true" titleKey="plant.address1"/>
+    <display:column property="address2" sortable="true" titleKey="plant.address2"/>
+    <display:column property="contactPerson" sortable="true" titleKey="plant.contactPerson"/>
+    <display:column property="phone" sortable="true" titleKey="plant.phone"/>
+    <display:column property="fax" sortable="true" titleKey="plant.fax"/>
     
     <display:setProperty name="paging.banner.item_name" value="plant"/>
     <display:setProperty name="paging.banner.items_name" value="plants"/>
