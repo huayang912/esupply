@@ -107,7 +107,7 @@ public class UserAction extends BaseAction implements Preparable {
             user = userManager.getUserByUsername(request.getRemoteUser());
         } else {
             user = new User();
-            user.addRole(new Role(Constants.USER_ROLE));
+            user.addRole(new Role(Constants.PLANT_ADMIN_ROLE));
         }
 
         if (user.getUsername() != null) {

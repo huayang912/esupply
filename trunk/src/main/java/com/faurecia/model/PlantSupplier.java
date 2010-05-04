@@ -1,13 +1,25 @@
 package com.faurecia.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
 
 @Entity
-public class PlantSupplier extends BaseObject {
+@Table(name = "plant_supplier", uniqueConstraints = { @UniqueConstraint(columnNames = {
+		"supplier_code", "plant_code" }) })
+public class PlantSupplier extends BaseObject implements Serializable {
 
 	/**
 	 * 
@@ -15,7 +27,11 @@ public class PlantSupplier extends BaseObject {
 	private static final long serialVersionUID = -6616983854718294391L;
 
 	private int id;
+	private Supplier supplier;
+	private Plant plant;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int getId() {
 		return id;
 	}
@@ -24,40 +40,58 @@ public class PlantSupplier extends BaseObject {
 		this.id = id;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "supplier_code")
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "plant_code")
+	public Plant getPlant() {
+		return plant;
+	}
+
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
+
 	/**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof PlantSupplier)) {
-            return false;
-        }
+	 * @see java.lang.Comparable#compareTo(Object)
+	 */
+	public int compareTo(Object object) {
+		PlantSupplier myClass = (PlantSupplier) object;
+		return new CompareToBuilder().append(this.id, myClass.id)
+				.toComparison();
+	}
 
-        final PlantSupplier plantSupplier = (PlantSupplier) o;
-
-        return id == plantSupplier.id;
-
-    }
-    
 	/**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return id;
-    }
+	 * @see java.lang.Object#equals(Object)
+	 */
+	public boolean equals(Object object) {
+		if (!(object instanceof PlantSupplier)) {
+			return false;
+		}
+		PlantSupplier rhs = (PlantSupplier) object;
+		return new EqualsBuilder().append(this.id, rhs.id).isEquals();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
-                .append(this.id)
-                .toString();
-    }
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(-1510998443, -783399761).append(this.id)
+				.toHashCode();
+	}
 
-    public int compareTo(Object o) {
-        return (equals(o) ? 0 : -1);
-    }
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return new ToStringBuilder(this).append("id", this.id).toString();
+	}
 }

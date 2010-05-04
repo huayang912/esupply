@@ -6,5 +6,9 @@
         <mapping class="com.faurecia.model.User"/>
         <mapping class="com.faurecia.model.Role"/>
         <mapping class="com.faurecia.model.Plant"/>
+        <mapping class="com.faurecia.model.Item"/>
+        <mapping class="com.faurecia.model.Supplier"/>
+        <mapping class="com.faurecia.model.SupplierItem"/>
+        <mapping class="com.faurecia.model.PlantSupplier"/>
     </session-factory>
 </hibernate-configuration>
