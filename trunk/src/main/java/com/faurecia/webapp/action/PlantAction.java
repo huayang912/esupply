@@ -9,8 +9,10 @@ import com.faurecia.model.Plant;
 import com.faurecia.service.GenericManager;
 
 public class PlantAction extends BaseAction {
+
+	private static final long serialVersionUID = 1L;
 	private GenericManager<Plant, String> plantManager;
-	private List plants;
+	private List<Plant> plants;
 	private Plant plant;
 	private String code;
 
@@ -18,7 +20,7 @@ public class PlantAction extends BaseAction {
 		this.plantManager = plantManager;
 	}
 
-	public List getPlants() {
+	public List<Plant> getPlants() {
 		return plants;
 	}
 
