@@ -24,7 +24,7 @@ public class Plant extends BaseObject implements Serializable {
 	private String fax;
 	
 	@Id 
-	@Column(length=10)
+	@Column(length=20)
 	public String getCode() {
 		return code;
 	}

@@ -1,26 +1,30 @@
 package com.faurecia.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 @Entity
-@Table(name="supplier")
-public class Supplier extends BaseObject {
+@Table(name = "supplier")
+public class Supplier extends BaseObject implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -429716729199456024L;
 	private String code;
-	private String description;
-	
-	@Id 
-	@Column(length=10)
+	private String name;
+
+	@Id
+	@Column(length = 20)
 	public String getCode() {
 		return code;
 	}
@@ -29,50 +33,47 @@ public class Supplier extends BaseObject {
 		this.code = code;
 	}
 
-	@Column(nullable=false,length=50,unique=true)
-	public String getDescription() {
-		return description;
+	@Column(nullable = true, length = 50)
+	public String getName() {
+		return name;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
+
 	/**
-     * {@inheritDoc}
-     */
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Supplier)) {
-            return false;
-        }
+	 * @see java.lang.Comparable#compareTo(Object)
+	 */
+	public int compareTo(Object object) {
+		Supplier myClass = (Supplier) object;
+		return new CompareToBuilder().append(this.code, myClass.code)
+				.toComparison();
+	}
 
-        final Supplier supplier = (Supplier) o;
-
-        return !(code != null ? !code.equals(supplier.code) : supplier.code != null);
-
-    }
-    
 	/**
-     * {@inheritDoc}
-     */
-    public int hashCode() {
-        return (code != null ? code.hashCode() : 0);
-    }
+	 * @see java.lang.Object#equals(Object)
+	 */
+	public boolean equals(Object object) {
+		if (!(object instanceof Supplier)) {
+			return false;
+		}
+		Supplier rhs = (Supplier) object;
+		return new EqualsBuilder().append(this.code, rhs.code).isEquals();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE)
-                .append(this.code)
-                .toString();
-    }
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	public int hashCode() {
+		return new HashCodeBuilder(-1873980145, 11289259).append(this.code)
+				.toHashCode();
+	}
 
-    public int compareTo(Object o) {
-        return (equals(o) ? 0 : -1);
-    }
-
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return new ToStringBuilder(this).append("code", this.code).toString();
+	}
 }
