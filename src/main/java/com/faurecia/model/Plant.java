@@ -17,6 +17,11 @@ public class Plant extends BaseObject implements Serializable {
 	private static final long serialVersionUID = -1175522302415845678L;
 	private String code;
 	private String name;
+	private String address1;
+	private String address2;
+	private String contactPerson;
+	private String phone;
+	private String fax;
 	
 	@Id 
 	@Column(length=10)
@@ -35,6 +40,51 @@ public class Plant extends BaseObject implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Column(nullable=true,length=255)
+	public String getAddress1() {
+		return address1;
+	}
+
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	
+	@Column(nullable=true,length=255)
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	@Column(name="contact_person",nullable=true,length=50)
+	public String getContactPerson() {
+		return contactPerson;
+	}
+
+	public void setContactPerson(String contactPerson) {
+		this.contactPerson = contactPerson;
+	}
+
+	@Column(nullable=true,length=50)
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(nullable=true,length=50)
+	public String getFax() {
+		return fax;
+	}
+
+	public void setFax(String fax) {
+		this.fax = fax;
 	}
 
 	/**

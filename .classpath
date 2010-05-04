@@ -229,5 +229,6 @@
 			<attribute name="javadoc_location" value="jar:file:/D:/FJY/mvn.repository/com/opensymphony/xwork/2.0.4/xwork-2.0.4-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/commons-net/commons-net/2.0/commons-net-2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
