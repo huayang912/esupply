@@ -7,8 +7,8 @@
     <artifactId>esupply</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>AppFuse Struts 2 Application</name>
-    <url>http://www.mycompany.com</url>
+    <name>E-Supply</name>
+    <url>http://www.faurecia.com</url>
 
     <prerequisites>
         <maven>2.0.6</maven>
@@ -960,7 +960,7 @@
         <jdbc.artifactId>jtds</jdbc.artifactId>
         <jdbc.version>1.2</jdbc.version>
         <jdbc.driverClassName>net.sourceforge.jtds.jdbc.Driver</jdbc.driverClassName>
-        <jdbc.url>jdbc:jtds:sqlserver://localhost:1433/esupply</jdbc.url>
+        <jdbc.url>jdbc:jtds:sqlserver://localhost:1433;instance=SQLEXPRESS;databaseName=esupply</jdbc.url>
         <jdbc.username>sa</jdbc.username>
         <jdbc.password>sa</jdbc.password>    		
     
