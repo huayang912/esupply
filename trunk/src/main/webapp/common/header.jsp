@@ -6,13 +6,12 @@
 </c:if>
 
 <div id="branding">
-<ul style="list-style: none outside none;">
-	<li style="float: left; padding: 10px;"><a
-		href="<fmt:message key="company.url"/>"> <img
+<ul>
+	<li><a href="<fmt:message key="company.url"/>"> <img
 		style="border-width: 0px;"
 		src="<c:url value="/images/logofaurecia.gif"/>"
 		alt="Equipement supplier for the automotive industry" /> </a></li>
-	<li style="float: left;">
+	<li>
 	<h1><a href="<c:url value='/'/>"> <fmt:message
 		key="webapp.name" /> </a></h1>
 	<p><fmt:message key="webapp.tagline" /></p>
