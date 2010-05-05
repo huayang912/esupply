@@ -14,8 +14,8 @@
 		cssClass="text medium" /></div>
 	</div>
 	</li>
-	<s:textfield key="plant.address1" theme="xhtml" cssClass="text large" />
-	<s:textfield key="plant.address2" theme="xhtml" cssClass="text large" />
+	<li><s:textfield key="plant.address1" theme="xhtml" cssClass="text large" /></li>
+	<li><s:textfield key="plant.address2" theme="xhtml" cssClass="text large" /></li>
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.contactPerson"
@@ -24,7 +24,7 @@
 		cssClass="text medium" /></div>
 	</div>
 	</li>
-	<s:textfield key="plant.fax" theme="xhtml" cssClass="text medium" />
+	<li><s:textfield key="plant.fax" theme="xhtml" cssClass="text medium" /></li>
 
 	<li class="buttonBar bottom"><s:submit cssClass="button"
 		method="save" key="button.save" theme="simple" /> <c:if
