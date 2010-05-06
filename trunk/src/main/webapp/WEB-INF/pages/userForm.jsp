@@ -72,30 +72,7 @@
 		cssClass="text medium" /></div>
 	</div>
 	</li>
-
-	<s:textfield key="user.website" required="true" cssClass="text large" />
-
-	<li><label class="desc"><fmt:message
-		key="user.address.address" /></label>
-	<div class="group">
-	<div><s:textfield key="user.address.address" theme="xhtml"
-		cssClass="text large" labelposition="bottom" /></div>
-	<div class="left"><s:textfield key="user.address.city"
-		theme="xhtml" required="true" cssClass="text medium"
-		labelposition="bottom" /></div>
-	<div><s:textfield key="user.address.province" theme="xhtml"
-		required="true" cssClass="text state" labelposition="bottom" /></div>
-	<div class="left"><s:textfield key="user.address.postalCode"
-		theme="xhtml" required="true" cssClass="text medium"
-		labelposition="bottom" /></div>
-	<div><s:set name="country" value="user.address.country"
-		scope="page" /> <appfuse:country name="user.address.country"
-		prompt="" default="${country}" />
-	<p><label for="user.address.country"> <fmt:message
-		key="user.address.country" /> <span class="req">*</span> </label></p>
-	</div>
-	</div>
-	</li>
+	
 	<c:choose>
 		<c:when test="${param.from == 'list'}">
 			<li>

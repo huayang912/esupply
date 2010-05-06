@@ -6,7 +6,7 @@
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN"/>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN"/>
-        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/admins.html">
+        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/admins.html?roleType=ROLE_ADMIN">
             <Item name="ViewAdmin" title="menu.admin.admins" page="/admin/admins.html?roleType=ROLE_ADMIN"/>
             <Item name="ViewPlantAdmin" title="menu.admin.plantAdmins" page="/admin/admins.html?roleType=ROLE_PLANT_ADMIN"/>
             <Item name="PlantMenu" title="menu.viewPlant" page="/admin/plants.html" roles="ROLE_ADMIN"/>
