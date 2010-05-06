@@ -50,6 +50,8 @@ public class User extends BaseObject implements Serializable, UserDetails {
     private boolean accountExpired;
     private boolean accountLocked;
     private boolean credentialsExpired;
+    private Plant plant;
+    private Supplier supplier;
 
     /**
      * Default constructor - creates a new instance with no values set.
@@ -339,4 +341,24 @@ public class User extends BaseObject implements Serializable, UserDetails {
         }
         return sb.toString();
     }
+
+    @ManyToOne
+	@JoinColumn(name = "plant_code", nullable=true)
+	public Plant getPlant() {
+		return plant;
+	}
+
+	public void setPlant(Plant plant) {
+		this.plant = plant;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "supplier_code", nullable=true)
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 }
