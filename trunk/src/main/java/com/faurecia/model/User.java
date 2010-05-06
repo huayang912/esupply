@@ -6,6 +6,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,6 +24,12 @@ import java.util.Set;
  */
 @Entity
 @Table(name="app_user")
+@NamedQueries ({
+    @NamedQuery(
+        name = "findUsersByRole",
+        query = " select u from User u where :role in elements(u.roles) "
+        )
+})
 public class User extends BaseObject implements Serializable, UserDetails {
     private static final long serialVersionUID = 3832626162173359411L;
 

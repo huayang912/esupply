@@ -1,20 +1,23 @@
 package com.faurecia.service.impl;
 
-import org.springframework.security.providers.dao.DaoAuthenticationProvider;
-import org.springframework.security.providers.dao.SaltSource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.jws.WebService;
+import javax.persistence.EntityExistsException;
+
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.providers.encoding.PasswordEncoder;
 import org.springframework.security.userdetails.UsernameNotFoundException;
+
 import com.faurecia.dao.UserDao;
+import com.faurecia.model.Role;
 import com.faurecia.model.User;
 import com.faurecia.service.UserExistsException;
 import com.faurecia.service.UserManager;
 import com.faurecia.service.UserService;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.dao.DataIntegrityViolationException;
-
-import javax.jws.WebService;
-import javax.persistence.EntityExistsException;
-import java.util.List;
 
 
 /**
@@ -126,5 +129,11 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
      */
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         return (User) dao.loadUserByUsername(username);
+    }
+    
+    public List<User> getUsersByRole(Role role) {    	
+    	Map<String, Object> queryParam = new HashMap<String, Object>();
+    	queryParam.put("role", role);
+    	return dao.findByNamedQuery("findUsersByRole", queryParam);
     }
 }

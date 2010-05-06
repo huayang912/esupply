@@ -61,6 +61,16 @@ public class Constants {
      * The name of the Plant Administrator role, as specified in web.xml
      */
     public static final String PLANT_ADMIN_ROLE = "ROLE_PLANT_ADMIN";
+    
+    /**
+     * The name of the Plant USER role, as specified in web.xml
+     */
+    public static final String PLANT_USER_ROLE = "ROLE_PLANT_USER";
+    
+    /**
+     * The name of the Vendor role, as specified in web.xml
+     */
+    public static final String VENDOR_ROLE = "ROLE_VENDOR";
 
     /**
      * The name of the user's role list, a request-scoped attribute
