@@ -7,6 +7,10 @@
         <property name="authorizedRoles" value="ROLE_ADMIN"/>
     </bean>
     
+    <bean id="plantAdminInterceptor" class="com.faurecia.webapp.interceptor.UserRoleAuthorizationInterceptor">
+        <property name="authorizedRoles" value="ROLE_PLANT_ADMIN"/>
+    </bean>
+    
     <bean id="signupAction" class="com.faurecia.webapp.action.SignupAction" scope="prototype">
         <property name="userManager" ref="userManager"/>
         <property name="roleManager" ref="roleManager"/>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.userdetails.UsernameNotFoundException;
 import com.faurecia.dao.UserDao;
+import com.faurecia.model.Role;
 import com.faurecia.model.User;
 
 
@@ -60,5 +61,7 @@ public interface UserManager extends UniversalManager {
      *
      * @param userId the user's id
      */
-    void removeUser(String userId);
+    void removeUser(String userId); 
+    
+    List<User> getUsersByRole(Role role);
 }
