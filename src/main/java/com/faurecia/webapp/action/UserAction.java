@@ -87,7 +87,17 @@ public class UserAction extends BaseAction implements Preparable {
 		args.add(user.getFullName());
 		saveMessage(getText("user.deleted", args));
 
-		return SUCCESS;
+		if (Constants.ADMIN_ROLE.equals(roleType)
+				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
+			return "adminSuccess";
+		} else if (Constants.PLANT_USER_ROLE.equals(roleType)
+				|| Constants.VENDOR_ROLE.equals(roleType)) {
+			return "userSuccess";
+		} else {
+			log.warn("Trying to back to user list with role not specified.");
+			
+			return "mainMenu";
+		}
 	}
 
 	/**
@@ -172,7 +182,18 @@ public class UserAction extends BaseAction implements Preparable {
 		if (!"list".equals(from)) {
 			return "mainMenu";
 		}
-		return "cancel";
+		
+		if (Constants.ADMIN_ROLE.equals(roleType)
+				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
+			return "adminCancel";
+		} else if (Constants.PLANT_USER_ROLE.equals(roleType)
+				|| Constants.VENDOR_ROLE.equals(roleType)) {
+			return "userCancel";
+		} else {
+			log.warn("Trying to back to user list with role not specified.");
+			
+			return "mainMenu";
+		}
 	}
 
 	/**
@@ -240,7 +261,18 @@ public class UserAction extends BaseAction implements Preparable {
 				} catch (MailException me) {
 					addActionError(me.getCause().getLocalizedMessage());
 				}
-				return SUCCESS;
+				
+				if (Constants.ADMIN_ROLE.equals(roleType)
+						|| Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
+					return "adminSuccess";
+				} else if (Constants.PLANT_USER_ROLE.equals(roleType)
+						|| Constants.VENDOR_ROLE.equals(roleType)) {
+					return "userSuccess";
+				} else {
+					log.warn("Trying to back to user list with role not specified.");
+					
+					return "mainMenu";
+				}
 			} else {
 				saveMessage(getText("user.updated.byAdmin", args));
 				return INPUT;
@@ -256,7 +288,7 @@ public class UserAction extends BaseAction implements Preparable {
 	 * @throws IOException
 	 */
 	public String list() throws IOException {
-		
+
 		if (Constants.ADMIN_ROLE.equals(roleType)) {
 			Role role = this.roleManager.getRole(Constants.ADMIN_ROLE);
 			users = userManager.getUsersByRole(role);
@@ -270,10 +302,12 @@ public class UserAction extends BaseAction implements Preparable {
 			Role role = this.roleManager.getRole(Constants.VENDOR_ROLE);
 			users = userManager.getUsersByRole(role);
 		} else {
+			
+			log.warn("Trying to list user with role not specified.");
+			
 			ServletActionContext.getResponse().sendError(
 					HttpServletResponse.SC_NOT_FOUND);
-
-			log.warn("Trying to list user with role not specified.");
+			
 		}
 
 		return SUCCESS;
