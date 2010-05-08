@@ -13,6 +13,7 @@ import org.springframework.security.providers.encoding.PasswordEncoder;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 
 import com.faurecia.dao.UserDao;
+import com.faurecia.model.Plant;
 import com.faurecia.model.Role;
 import com.faurecia.model.User;
 import com.faurecia.service.UserExistsException;
@@ -20,7 +21,7 @@ import com.faurecia.service.UserManager;
 import com.faurecia.service.UserService;
 
 
-/**
+/**s
  * Implementation of UserManager interface.
  *
  * @author <a href="mailto:matt@raibledesigns.com">Matt Raible</a>
@@ -48,7 +49,7 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
+	/**
      * {@inheritDoc}
      */
     public User getUser(String userId) {
@@ -136,4 +137,20 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
     	queryParam.put("role", role);
     	return dao.findByNamedQuery("findUsersByRole", queryParam);
     }
+	
+	public List<User> getPlantUsers(Plant plant, Role role) {
+		Map<String, Object> queryParam = new HashMap<String, Object>();
+    	queryParam.put("plant", plant);
+    	queryParam.put("role", role);
+    	
+    	return dao.findByNamedQuery("findPlantUsers", queryParam);
+	}
+
+	public List<User> getSuppliers(Plant plant, Role role) {
+		Map<String, Object> queryParam = new HashMap<String, Object>();
+    	queryParam.put("plant", plant);
+    	queryParam.put("role", role);
+    	
+    	return dao.findByNamedQuery("findSuppliers", queryParam);
+	}
 }

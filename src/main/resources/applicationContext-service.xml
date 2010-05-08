@@ -148,5 +148,14 @@
 		</constructor-arg>
 	</bean>
 	
+	<bean id="supplierManager" class="com.faurecia.service.impl.SupplierManagerImpl">
+		<property name="supplierDao">
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Supplier" />
+			</bean>
+		</property>
+	</bean>
+	
 	<bean id="orderManager" class="com.faurecia.service.impl.OrderServiceImpl"/>
 </beans>

@@ -151,12 +151,17 @@
 			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
 
+		<action name="editPlantProfile" class="com.faurecia.webapp.action.PlantAction" method="edit">
+			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
 		<action name="savePlant" class="com.faurecia.webapp.action.PlantAction"
 			method="save">
 			<result name="input">/WEB-INF/pages/plant/plantForm.jsp</result>
-			<result name="cancel" type="redirect-action">plants</result>
-			<result name="delete" type="redirect-action">plants</result>
-			<result name="success" type="redirect-action">plants</result>
+			<result name="cancel" type="redirect-action">admin/plants</result>
+			<result name="delete" type="redirect-action">admin/plants</result>
+			<result name="success" type="redirect-action">admin/plants</result>
 		</action>
 	</package>
 

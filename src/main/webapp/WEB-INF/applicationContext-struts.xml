@@ -22,6 +22,8 @@
     <bean id="userAction" class="com.faurecia.webapp.action.UserAction" scope="prototype">
         <property name="userManager" ref="userManager"/>
         <property name="roleManager" ref="roleManager"/>
+        <property name="plantManager" ref="plantManager"/>
+        <property name="supplierManager" ref="supplierManager"/>
         <property name="mailEngine" ref="mailEngine"/>
         <property name="mailMessage" ref="mailMessage"/>
         <property name="templateName" value="accountCreated.vm"/>
