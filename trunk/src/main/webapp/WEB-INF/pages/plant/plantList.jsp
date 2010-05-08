@@ -7,7 +7,7 @@
 
 <c:set var="buttons">
     <input type="button" style="margin-right: 5px"
-        onclick="location.href='<c:url value="/plant/editPlant.html"/>'"
+        onclick="location.href='<c:url value="/editPlant.html?from=list"/>'"
         value="<fmt:message key="button.add"/>"/>
     
     <input type="button" onclick="location.href='<c:url value="/mainMenu.html"/>'"
@@ -18,7 +18,7 @@
 
 <s:set name="plants" value="plants" scope="request"/>
 <display:table name="plants" class="table" requestURI="" id="plantList" export="true" pagesize="25">
-    <display:column property="code" sortable="true" href="editPlant.html" 
+    <display:column property="code" sortable="true" url="/editPlant.html?from=list" 
         paramId="code" paramProperty="code" titleKey="plant.code"/>
     <display:column property="name" sortable="true" titleKey="plant.name"/>
     <display:column property="address1" sortable="true" titleKey="plant.address1"/>

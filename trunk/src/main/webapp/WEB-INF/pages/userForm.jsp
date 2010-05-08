@@ -72,7 +72,22 @@
 		cssClass="text medium" /></div>
 	</div>
 	</li>
-	
+	<c:choose>
+		<c:when test="${roleType == 'ROLE_PLANT_ADMIN'}">
+			<li>
+			<div class="left"><s:select key="user.userPlant.code"
+				list="%{plants}" listKey="code" listValue="name" theme="xhtml"
+				required="true"></s:select></div>
+			</li>
+		</c:when>
+		<c:when test="${roleType == 'ROLE_VENDOR'}">
+			<li>
+			<div class="left"><s:select key="user.userSupplier.code"
+				list="%{suppliers}" listKey="code" listValue="name" theme="xhtml"
+				required="true"></s:select></div>
+			</li>
+		</c:when>
+	</c:choose>
 	<c:choose>
 		<c:when test="${param.from == 'list'}">
 			<li>
@@ -91,27 +106,6 @@
 				fieldValue="true" theme="simple" /> <label
 				for="user.credentialsExpired" class="choice"><fmt:message
 				key="user.credentialsExpired" /></label></fieldset>
-			</li>
-			<li>
-			<fieldset><legend><fmt:message
-				key="userProfile.assignRoles" /></legend>
-			<table class="pickList">
-				<tr>
-					<th class="pickLabel"><label class="required"><fmt:message
-						key="user.availableRoles" /></label></th>
-					<td></td>
-					<th class="pickLabel"><label class="required"><fmt:message
-						key="user.roles" /></label></th>
-				</tr>
-				<c:set var="leftList" value="${availableRoles}" scope="request" />
-				<s:set name="rightList" value="user.roleList" scope="request" />
-				<c:import url="/WEB-INF/pages/pickList.jsp">
-					<c:param name="listCount" value="1" />
-					<c:param name="leftId" value="availableRoles" />
-					<c:param name="rightId" value="userRoles" />
-				</c:import>
-			</table>
-			</fieldset>
 			</li>
 		</c:when>
 		<c:otherwise>

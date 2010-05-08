@@ -4,8 +4,9 @@
         <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
     </Displayers>
     <Menus>
-        <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN"/>
-        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN"/>
+        <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>
+        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>
+        
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/admins.html?roleType=ROLE_ADMIN">
             <Item name="ViewAdmin" title="menu.admin.admins" page="/admin/admins.html?roleType=ROLE_ADMIN"/>
             <Item name="ViewPlantAdmin" title="menu.admin.plantAdmins" page="/admin/admins.html?roleType=ROLE_PLANT_ADMIN"/>
@@ -15,6 +16,11 @@
             <Item name="FlushCache" title="menu.flushCache" page="/admin/flushCache.html"/>
             <Item name="Clickstream" title="menu.clickstream" page="/admin/clickstreams.jsp"/>
         </Menu>
-        <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN"/>        
+        <Menu name="PlantAdminMenu" title="menu.plantAdmin" description="Plant Admin Menu" roles="ROLE_PLANT_ADMIN" width="120" page="/editPlantProfile.html">
+        	<Item name="PlantMenu" title="menu.plant" description="Plant Menu" page="/editPlantProfile.html" roles="ROLE_PLANT_ADMIN"/>
+            <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>
+            <Item name="ViewVendor" title="menu.admin.vendors" page="/admin/users.html?roleType=ROLE_VENDOR"/>
+        </Menu>
+        <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>        
     </Menus>
 </MenuConfig>

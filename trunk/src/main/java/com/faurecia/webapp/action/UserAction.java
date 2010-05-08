@@ -17,8 +17,12 @@ import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 
 import com.faurecia.Constants;
+import com.faurecia.model.Plant;
 import com.faurecia.model.Role;
+import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
+import com.faurecia.service.GenericManager;
+import com.faurecia.service.SupplierManager;
 import com.faurecia.service.UserExistsException;
 import com.faurecia.webapp.util.RequestUtil;
 import com.opensymphony.xwork2.Preparable;
@@ -28,10 +32,14 @@ import com.opensymphony.xwork2.Preparable;
  */
 public class UserAction extends BaseAction implements Preparable {
 	private static final long serialVersionUID = 6776558938712115191L;
-	private List users;
+	private List<User> users;
 	private User user;
 	private String id;
 	private String roleType;
+	private List<Plant> plants;
+	private List<Supplier> suppliers;
+	private GenericManager<Plant, String> plantManager;
+	private SupplierManager supplierManager;
 
 	/**
 	 * Grab the entity from the database before populating with request
@@ -52,7 +60,7 @@ public class UserAction extends BaseAction implements Preparable {
 	 * 
 	 * @return list of users
 	 */
-	public List getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
@@ -74,6 +82,22 @@ public class UserAction extends BaseAction implements Preparable {
 
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
+	}
+
+	public List<Plant> getPlants() {
+		return plants;
+	}
+
+	public List<Supplier> getSuppliers() {
+		return suppliers;
+	}
+
+	public void setPlantManager(GenericManager<Plant, String> plantManager) {
+		this.plantManager = plantManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
 	}
 
 	/**
@@ -136,7 +160,7 @@ public class UserAction extends BaseAction implements Preparable {
 		} else if (editProfile) {
 			user = userManager.getUserByUsername(request.getRemoteUser());
 		} else {
-			user = new User();
+			user = new User();			
 			// user.addRole(new Role(Constants.PLANT_ADMIN_ROLE));
 		}
 
@@ -159,6 +183,8 @@ public class UserAction extends BaseAction implements Preparable {
 				}
 			}
 		}
+			
+		this.prepareEdit();
 
 		return SUCCESS;
 	}
@@ -208,16 +234,17 @@ public class UserAction extends BaseAction implements Preparable {
 		Integer originalVersion = user.getVersion();
 
 		boolean isNew = ("".equals(getRequest().getParameter("user.version")));
-		// only attempt to change roles if user is admin
-		// for other users, prepare() method will handle populating
-		if (getRequest().isUserInRole(Constants.ADMIN_ROLE)) {
-			user.getRoles().clear(); // APF-788: Removing roles from user
-			// doesn't work
-			String[] userRoles = getRequest().getParameterValues("userRoles");
 
-			for (int i = 0; userRoles != null && i < userRoles.length; i++) {
-				String roleName = userRoles[i];
-				user.addRole(roleManager.getRole(roleName));
+		//为新增用户添加角色
+		if (isNew) {
+			user.addRole(roleManager.getRole(roleType));
+			
+			//工厂管理员维护工厂用户和供应商时，默认填写新增用户的工厂属性
+			if (Constants.PLANT_USER_ROLE.equals(roleType) ||
+					Constants.VENDOR_ROLE.equals(roleType)) {
+				String userCode = this.getRequest().getRemoteUser();
+				User plantAdmin = this.userManager.getUserByUsername(userCode);
+				user.setUserPlant(plantAdmin.getUserPlant());
 			}
 		}
 
@@ -239,6 +266,8 @@ public class UserAction extends BaseAction implements Preparable {
 			user.setVersion(originalVersion);
 			// redisplay the unencrypted passwords
 			user.setPassword(user.getConfirmPassword());
+			
+			this.prepareEdit();
 			return INPUT;
 		}
 
@@ -275,6 +304,7 @@ public class UserAction extends BaseAction implements Preparable {
 				}
 			} else {
 				saveMessage(getText("user.updated.byAdmin", args));
+				this.prepareEdit();
 				return INPUT;
 			}
 		}
@@ -296,11 +326,15 @@ public class UserAction extends BaseAction implements Preparable {
 			Role role = this.roleManager.getRole(Constants.PLANT_ADMIN_ROLE);
 			users = userManager.getUsersByRole(role);
 		} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
+			String userCode = this.getRequest().getRemoteUser();
+			User user = this.userManager.getUserByUsername(userCode);
 			Role role = this.roleManager.getRole(Constants.PLANT_USER_ROLE);
-			users = userManager.getUsersByRole(role);
+			users = userManager.getPlantUsers(user.getUserPlant(), role);
 		} else if (Constants.VENDOR_ROLE.equals(roleType)) {
+			String userCode = this.getRequest().getRemoteUser();
+			User user = this.userManager.getUserByUsername(userCode);
 			Role role = this.roleManager.getRole(Constants.VENDOR_ROLE);
-			users = userManager.getUsersByRole(role);
+			users = userManager.getSuppliers(user.getUserPlant(), role);
 		} else {
 			
 			log.warn("Trying to list user with role not specified.");
@@ -311,5 +345,15 @@ public class UserAction extends BaseAction implements Preparable {
 		}
 
 		return SUCCESS;
+	}
+	
+	private void prepareEdit(){
+		if (Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
+			this.plants = this.plantManager.getAll();
+		} else if (Constants.VENDOR_ROLE.equals(roleType)) {	
+			String userCode = this.getRequest().getRemoteUser();
+			User user = this.userManager.getUserByUsername(userCode);
+			this.suppliers = this.supplierManager.getSuppliersByPlant(user.getUserPlant());
+		}
 	}
 }
