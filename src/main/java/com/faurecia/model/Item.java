@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -25,13 +27,24 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Table(name = "item",
     uniqueConstraints={@UniqueConstraint(columnNames={"plant_code", "code"})}
 )
+@NamedQueries ({
+	@NamedQuery(
+	        name = "findItemByPlant",
+	        query = " select i from Item i where i.plant = :plant"
+	        ),
+	        
+    @NamedQuery(
+        name = "findItemByPlantAndItem",
+        query = " select i from Item i inner join i.plant p where p.code = :plantCode and i.code = :itemCode"
+        )
+})
 public class Item extends BaseObject implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1071131332587672817L;
-	private int id;
+	private Integer id;
 	private Plant plant;
 	private String code;
 	private String description;
@@ -39,12 +52,12 @@ public class Item extends BaseObject implements Serializable {
 	private List<SupplierItem> supplierItems;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

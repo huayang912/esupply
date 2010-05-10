@@ -15,6 +15,7 @@
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload.html"/>
             <Item name="FlushCache" title="menu.flushCache" page="/admin/flushCache.html"/>
             <Item name="Clickstream" title="menu.clickstream" page="/admin/clickstreams.jsp"/>
+            <Item name="TestOrder" title="menu.testOrder" page="/testOrder.html"/>
         </Menu>
         <Menu name="PlantAdminMenu" title="menu.plantAdmin" description="Plant Admin Menu" roles="ROLE_PLANT_ADMIN" width="120" page="/editPlantProfile.html">
         	<Item name="PlantMenu" title="menu.plant" description="Plant Menu" page="/editPlantProfile.html" roles="ROLE_PLANT_ADMIN"/>

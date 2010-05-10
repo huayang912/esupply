@@ -33,5 +33,9 @@
         <property name="userManager" ref="userManager"/>
         <property name="mailEngine" ref="mailEngine"/>
         <property name="mailMessage" ref="mailMessage"/>
-    </bean>    
+    </bean>   
+    
+    <bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction" scope="prototype">
+        <property name="purchaseOrderManager" ref="purchaseOrderManager"/>
+    </bean> 
 </beans>

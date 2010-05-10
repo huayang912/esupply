@@ -60,8 +60,4 @@
     -->
 
     <!-- Add new DAOs here -->
-	<bean id="plantDao" class="com.faurecia.dao.hibernate.GenericDaoHibernate">
-        <constructor-arg value="com.faurecia.model.Plant"/>
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
 </beans>
