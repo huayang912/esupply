@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -18,6 +20,17 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 @Entity
 @Table(name = "supplier_item", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"item_id", "supplier_code" }) })
+@NamedQueries ({
+	@NamedQuery(
+	        name = "findSupplierItemByItem",
+	        query = " select si from SupplierItem si where si.item = :item"
+	        ),
+	        
+    @NamedQuery(
+        name = "findSupplierItemByItemAndSupplier",
+        query = " select si from SupplierItem si where si.item = :item and si.supplier = :supplier"
+        )
+})
 public class SupplierItem extends BaseObject {
 
 	/**
@@ -25,18 +38,18 @@ public class SupplierItem extends BaseObject {
 	 */
 	private static final long serialVersionUID = 6706868456977861841L;
 
-	private int id;
+	private Integer id;
 	private Item item;
 	private Supplier supplier;
 	private String supplierItemCode;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -60,7 +73,7 @@ public class SupplierItem extends BaseObject {
 		this.supplier = supplier;
 	}
 
-	@Column(nullable = false, length = 20)
+	@Column(name= "supplier_item_code", nullable = false, length = 20)
 	public String getSupplierItemCode() {
 		return supplierItemCode;
 	}

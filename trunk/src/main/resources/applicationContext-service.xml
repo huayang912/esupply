@@ -23,6 +23,8 @@
 			pointcut="execution(* *..service.UserManager.saveUser(..))" order="1" />
 		<aop:advisor id="managerTx" advice-ref="txAdvice"
 			pointcut="execution(* *..service.*Manager.*(..))" order="2" />
+		<aop:advisor id="purchaseOrderManagerTx" advice-ref="purchaseOrderManagerAdvice"
+			pointcut="execution(* *..service.PurchaseOrderManager.*(..))" order="3" />
 	</aop:config>
 
 	<!-- Enable @Transactional support -->
@@ -40,6 +42,12 @@
 			<!-- http://issues.appfuse.org/browse/APF-556 -->
 			<!--tx:method name="get*" read-only="true"/-->
 			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="purchaseOrderManagerAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="NOT_SUPPORTED" />
 		</tx:attributes>
 	</tx:advice>
 
@@ -147,15 +155,65 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="supplierManager" class="com.faurecia.service.impl.SupplierManagerImpl">
-		<property name="supplierDao">
+		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
 				autowire="byType">
 				<constructor-arg value="com.faurecia.model.Supplier" />
 			</bean>
-		</property>
+		</constructor-arg>
 	</bean>
-	
-	<bean id="orderManager" class="com.faurecia.service.impl.OrderServiceImpl"/>
+
+	<bean id="plantSupplierManager" class="com.faurecia.service.impl.PlantSupplierManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PlantSupplier" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="itemManager" class="com.faurecia.service.impl.ItemManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Item" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="supplierItemManager" class="com.faurecia.service.impl.SupplierItemManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.SupplierItem" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="inboundLogManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.InboundLog" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="purchaseOrderManager" class="com.faurecia.service.impl.PurchaseOrderManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PurchaseOrder" />
+			</bean>
+		</constructor-arg>
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
+		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
+		<property name="inboundLogManager" ref="inboundLogManager" />
+	</bean>
 </beans>

@@ -163,6 +163,11 @@
 			<result name="delete" type="redirect-action">admin/plants</result>
 			<result name="success" type="redirect-action">admin/plants</result>
 		</action>
+		
+		<action name="testOrder" class="purchaseOrderAction"
+			method="test">
+			<result name="success" type="redirect-action">admin/plants</result>
+		</action>
 	</package>
 
 	<!-- Actions in this package will be prefixed with /admin/ -->

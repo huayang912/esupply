@@ -9,21 +9,16 @@ import com.faurecia.model.Plant;
 import com.faurecia.model.Supplier;
 import com.faurecia.service.SupplierManager;
 
-public class SupplierManagerImpl extends UniversalManagerImpl implements SupplierManager {
+public class SupplierManagerImpl extends GenericManagerImpl<Supplier, String> implements SupplierManager {
 
-	GenericDao<Supplier, String> dao;
-	
-	public GenericDao<Supplier, String> getSupplierDao() {
-		return dao;
-	}
 
-	public void setSupplierDao(GenericDao<Supplier, String> dao) {
-		this.dao = dao;
+	public SupplierManagerImpl(GenericDao<Supplier, String> genericDao) {
+		super(genericDao);
 	}
 
 	public List<Supplier> getSuppliersByPlant(Plant plant) {
-		Map<String, Object> queryParam = new HashMap<String, Object>();
-    	queryParam.put("plant", plant);
-    	return this.dao.findByNamedQuery("findSuppliersByPlant", queryParam);
-	}	
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+		queryParams.put("plant", plant);
+    	return this.genericDao.findByNamedQuery("findSuppliersByPlant", queryParams);
+	}
 }
