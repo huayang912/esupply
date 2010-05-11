@@ -11,4 +11,12 @@
             <message key="errors.required"/>
         </field-validator>
     </field>
+    <field name="plant.confirmFtpPassword">
+        <field-validator type="fieldexpression">
+            <param name="expression">
+                (plant.confirmFtpPassword.equals(plant.FtpPassword))
+            </param> 
+            <message key="errors.twofields"/>
+        </field-validator>
+    </field>
 </validators>

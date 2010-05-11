@@ -23,7 +23,7 @@
 			pointcut="execution(* *..service.UserManager.saveUser(..))" order="1" />
 		<aop:advisor id="managerTx" advice-ref="txAdvice"
 			pointcut="execution(* *..service.*Manager.*(..))" order="2" />
-		<aop:advisor id="purchaseOrderManagerTx" advice-ref="purchaseOrderManagerAdvice"
+		<aop:advisor id="purchaseOrderManagerTx" advice-ref="notSupportTXAdvice"
 			pointcut="execution(* *..service.PurchaseOrderManager.*(..))" order="3" />
 	</aop:config>
 
@@ -45,7 +45,7 @@
 		</tx:attributes>
 	</tx:advice>
 
-	<tx:advice id="purchaseOrderManagerAdvice">
+	<tx:advice id="notSupportTXAdvice">
 		<tx:attributes>
 			<tx:method name="*" propagation="NOT_SUPPORTED" />
 		</tx:attributes>
