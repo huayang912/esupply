@@ -1,11 +1,11 @@
 package com.faurecia.service.impl;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.net.SocketException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -16,6 +16,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.orm.ObjectRetrievalFailureException;
 
 import com.faurecia.dao.GenericDao;
@@ -46,6 +47,9 @@ public class PurchaseOrderManagerImpl extends
 		GenericManagerImpl<PurchaseOrder, String> implements
 		PurchaseOrderManager {
 
+	private String BACKUP_DIRECTORY_FULL_PATH = "D:\\1\\ORDERS\\";
+	private String SUCCESS_BACKUP_DIRECTORY = "success";
+	private String ERROR_BACKUP_DIRECTORY = "error";
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
@@ -100,10 +104,11 @@ public class PurchaseOrderManagerImpl extends
 		Date nowDate = new Date();
 		try {
 			try {
-				ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser, ftpPassword, ftpPath);
+				ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser,
+						ftpPassword, ftpPath);
 				fileNameList = ftpClientUtil.getFileList(ftpPath);
-			} catch (SocketException e) {
-			} catch (IOException e) {
+			} catch (Exception e) {
+				// 访问FTP服务器失败
 			}
 
 			if (fileNameList != null && fileNameList.size() > 0) {
@@ -111,40 +116,88 @@ public class PurchaseOrderManagerImpl extends
 				for (int i = 0; i < fileNameList.size(); i++) {
 
 					String fileName = fileNameList.get(i);
+					String filePrefix = fileName.substring(0, fileName
+							.lastIndexOf('.'));
+					String fileSuffix = fileName.substring(fileName
+							.lastIndexOf('.') - 1);
+					File tempFile = null;
+					InputStream inputStream = null;
 					try {
-						InputStream inputStream = ftpClientUtil
-								.downFile(fileName);
-						
-						InboundLog inboundLog = new InboundLog();
-						inboundLog.setCreateDate(nowDate);
-						inboundLog.setCreateUser(user);
-						inboundLog.setDataType("ORDERS");
-						inboundLog.setFileName(fileName);
-						inboundLog.setLastModifyDate(nowDate);
-						inboundLog.setLastModifyUser(user);
-						
-						SaveSingleFile(inputStream, inboundLog);
-						
-						//本地备份文件
-						if (inboundLog.getInboundResult() == "success") {
-							
-						} else {
-							
-						}
+						tempFile = File.createTempFile(filePrefix, fileSuffix);
+						ftpClientUtil.download(fileName, tempFile
+								.getAbsolutePath());
+						inputStream = new FileInputStream(tempFile);
 					} catch (IOException e) {
+						// 下载文件失败
+					}
 
+					//to-do 检索inboundLog
+					InboundLog inboundLog = new InboundLog();
+					inboundLog.setCreateDate(nowDate);
+					inboundLog.setCreateUser(user);
+					inboundLog.setDataType("ORDERS");
+					inboundLog.setFileName(fileName);
+					inboundLog.setLastModifyDate(nowDate);
+					inboundLog.setLastModifyUser(user);
+
+					PurchaseOrder po = SaveSingleFile(inputStream, inboundLog);
+
+					String localBackupDirectory = null;
+					File backupFile = null;
+					try {
+						// 备份文件
+						if (inboundLog.getInboundResult() == "success") {
+							localBackupDirectory = BACKUP_DIRECTORY_FULL_PATH
+									+ SUCCESS_BACKUP_DIRECTORY;
+						} else {
+							localBackupDirectory = BACKUP_DIRECTORY_FULL_PATH
+									+ ERROR_BACKUP_DIRECTORY;
+						}
+
+						FileUtils.forceMkdir(new File(localBackupDirectory));
+
+						backupFile = new File(localBackupDirectory
+								+ File.separator + fileName);
+
+						FileUtils.copyFile(tempFile, backupFile);
+
+						// 删除Ftp文件
+						ftpClientUtil.deleteFile(fileName);
+
+						try {
+							FileUtils.forceDelete(tempFile);
+						} catch (IOException ex) {
+							//删除temp文件失败
+						}
+						
+						inboundLog.setFullFilePath(backupFile.getAbsolutePath());
+					} catch (Exception ex) {
+						inboundLog.setInboundResult(ex.getMessage());
+						// 本地文件备份失败
+						if (po != null) {
+							// 手工回滚
+							this.genericDao.remove(po.getPoNo());
+						}
+
+						if (backupFile != null) {
+							try {
+								FileUtils.forceDelete(backupFile);
+							} catch (IOException e) {
+								// 删除备份文件失败
+							}
+						}
+					} finally {
+						this.inboundLogManager.save(inboundLog);
 					}
 				}
 			}
-		} catch (Exception ex) {
-
 		} finally {
 			try {
 				if (ftpClientUtil != null) {
 					ftpClientUtil.closeServer();
 				}
 			} catch (IOException e) {
-
+				// Ftp关闭失败
 			}
 		}
 	}
@@ -164,7 +217,8 @@ public class PurchaseOrderManagerImpl extends
 		}
 	}
 
-	private void SaveSingleFile(InputStream inputStream, InboundLog inboundLog) {
+	private PurchaseOrder SaveSingleFile(InputStream inputStream,
+			InboundLog inboundLog) {
 
 		try {
 			ORDERS02 order = unmarshalOrder(inputStream);
@@ -181,6 +235,8 @@ public class PurchaseOrderManagerImpl extends
 			this.purchaseOrderManager.save(purchaseOrder);
 
 			inboundLog.setInboundResult("success");
+
+			return purchaseOrder;
 
 		} catch (JAXBException jaxbException) {
 			log.error("Error occur when unmarshal ORDERS.", jaxbException);
@@ -201,14 +257,16 @@ public class PurchaseOrderManagerImpl extends
 			inboundLog.setInboundResult("fail");
 			inboundLog.setMemo(exception.getMessage());
 		}
+
+		return null;
 	}
 
-	public ORDERS02 unmarshalOrder(InputStream stream) throws JAXBException {
+	private ORDERS02 unmarshalOrder(InputStream stream) throws JAXBException {
 		ORDERS02 o = (ORDERS02) unmarshaller.unmarshal(stream);
 		return o;
 	}
 
-	public PurchaseOrder ORDERS02ToPO(final ORDERS02 order)
+	private PurchaseOrder ORDERS02ToPO(final ORDERS02 order)
 			throws DataConvertException {
 
 		PurchaseOrder po = new PurchaseOrder();

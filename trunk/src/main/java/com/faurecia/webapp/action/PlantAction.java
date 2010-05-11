@@ -62,12 +62,13 @@ public class PlantAction extends BaseAction {
 		HttpServletRequest request = getRequest();
 		boolean editProfile = (request.getRequestURI().indexOf("editPlantProfile") > -1);
 		
-		
 		if (this.code != null) {
 			plant = this.plantManager.get(code);
+			plant.setConfirmFtpPassword(plant.getFtpPassword());
 		} else if (editProfile) {
 			User user = userManager.getUserByUsername(request.getRemoteUser());
 			plant = user.getUserPlant();
+			plant.setConfirmFtpPassword(plant.getFtpPassword());
 		} else {
 			plant = new Plant();
 		}
