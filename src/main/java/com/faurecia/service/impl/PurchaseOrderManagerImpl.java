@@ -1,14 +1,11 @@
 package com.faurecia.service.impl;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +13,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.orm.ObjectRetrievalFailureException;
 
 import com.faurecia.dao.GenericDao;
@@ -41,15 +37,10 @@ import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
 import com.faurecia.service.SupplierItemManager;
 import com.faurecia.service.SupplierManager;
-import com.faurecia.util.FTPClientUtil;
 
 public class PurchaseOrderManagerImpl extends
 		GenericManagerImpl<PurchaseOrder, String> implements
 		PurchaseOrderManager {
-
-	private String BACKUP_DIRECTORY_FULL_PATH = "D:\\1\\ORDERS\\";
-	private String SUCCESS_BACKUP_DIRECTORY = "success";
-	private String ERROR_BACKUP_DIRECTORY = "error";
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
@@ -97,111 +88,6 @@ public class PurchaseOrderManagerImpl extends
 		this.inboundLogManager = inboundLogManager;
 	}
 
-	public void DownloadFiles(String ftpServer, int ftpPort, String ftpUser,
-			String ftpPassword, String ftpPath, String user) {
-		FTPClientUtil ftpClientUtil = new FTPClientUtil();
-		List<String> fileNameList = null;
-		Date nowDate = new Date();
-		try {
-			try {
-				ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser,
-						ftpPassword, ftpPath);
-				fileNameList = ftpClientUtil.getFileList(ftpPath);
-			} catch (Exception e) {
-				// 访问FTP服务器失败
-			}
-
-			if (fileNameList != null && fileNameList.size() > 0) {
-				Collections.sort(fileNameList);
-				for (int i = 0; i < fileNameList.size(); i++) {
-
-					String fileName = fileNameList.get(i);
-					String filePrefix = fileName.substring(0, fileName
-							.lastIndexOf('.'));
-					String fileSuffix = fileName.substring(fileName
-							.lastIndexOf('.') - 1);
-					File tempFile = null;
-					InputStream inputStream = null;
-					try {
-						tempFile = File.createTempFile(filePrefix, fileSuffix);
-						ftpClientUtil.download(fileName, tempFile
-								.getAbsolutePath());
-						inputStream = new FileInputStream(tempFile);
-					} catch (IOException e) {
-						// 下载文件失败
-					}
-
-					//to-do 检索inboundLog
-					InboundLog inboundLog = new InboundLog();
-					inboundLog.setCreateDate(nowDate);
-					inboundLog.setCreateUser(user);
-					inboundLog.setDataType("ORDERS");
-					inboundLog.setFileName(fileName);
-					inboundLog.setLastModifyDate(nowDate);
-					inboundLog.setLastModifyUser(user);
-
-					PurchaseOrder po = SaveSingleFile(inputStream, inboundLog);
-
-					String localBackupDirectory = null;
-					File backupFile = null;
-					try {
-						// 备份文件
-						if (inboundLog.getInboundResult() == "success") {
-							localBackupDirectory = BACKUP_DIRECTORY_FULL_PATH
-									+ SUCCESS_BACKUP_DIRECTORY;
-						} else {
-							localBackupDirectory = BACKUP_DIRECTORY_FULL_PATH
-									+ ERROR_BACKUP_DIRECTORY;
-						}
-
-						FileUtils.forceMkdir(new File(localBackupDirectory));
-
-						backupFile = new File(localBackupDirectory
-								+ File.separator + fileName);
-
-						FileUtils.copyFile(tempFile, backupFile);
-
-						// 删除Ftp文件
-						ftpClientUtil.deleteFile(fileName);
-
-						try {
-							FileUtils.forceDelete(tempFile);
-						} catch (IOException ex) {
-							//删除temp文件失败
-						}
-						
-						inboundLog.setFullFilePath(backupFile.getAbsolutePath());
-					} catch (Exception ex) {
-						inboundLog.setInboundResult(ex.getMessage());
-						// 本地文件备份失败
-						if (po != null) {
-							// 手工回滚
-							this.genericDao.remove(po.getPoNo());
-						}
-
-						if (backupFile != null) {
-							try {
-								FileUtils.forceDelete(backupFile);
-							} catch (IOException e) {
-								// 删除备份文件失败
-							}
-						}
-					} finally {
-						this.inboundLogManager.save(inboundLog);
-					}
-				}
-			}
-		} finally {
-			try {
-				if (ftpClientUtil != null) {
-					ftpClientUtil.closeServer();
-				}
-			} catch (IOException e) {
-				// Ftp关闭失败
-			}
-		}
-	}
-
 	public void ReloadFile(InboundLog inboundLog, String userCode) {
 
 		try {
@@ -217,7 +103,7 @@ public class PurchaseOrderManagerImpl extends
 		}
 	}
 
-	private PurchaseOrder SaveSingleFile(InputStream inputStream,
+	public PurchaseOrder SaveSingleFile(InputStream inputStream,
 			InboundLog inboundLog) {
 
 		try {

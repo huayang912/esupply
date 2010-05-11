@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+	
+	<bean id="dataInboundOutboundJob" class="com.faurecia.job.DataInboundOutboundJob">
+		<property name="plantManager" ref="plantManager"/>
+	</bean>
+	
+	<bean id="dataInboundOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="dataInboundOutboundJob"/>
+	  <property name="targetMethod" value="run"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	
+	<bean id="dataInboundOutboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	  <property name="jobDetail" ref="dataInboundOutboundJobDetail"/>
+		<!-- 10 seconds -->
+	  <property name="startDelay" value="10000"/>
+		<!-- repeat every 15 mins -->
+	  <property name="repeatInterval" value="900000"/>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="dataInboundOutboundJobTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>
