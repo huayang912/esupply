@@ -8,6 +8,7 @@
     <menu:displayMenu name="UserMenu"/>
     <menu:displayMenu name="AdminMenu"/>
     <menu:displayMenu name="PlantAdminMenu"/>
+    <menu:displayMenu name="ItemMenu"/>
     <menu:displayMenu name="Logout"/>
 </ul>
 </menu:useMenuDisplayer>

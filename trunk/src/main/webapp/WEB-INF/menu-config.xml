@@ -21,6 +21,7 @@
             <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>
             <Item name="ViewVendor" title="menu.admin.vendors" page="/admin/users.html?roleType=ROLE_VENDOR"/>
         </Menu>
+        <Menu name="ItemMenu" title="menu.item" description="Item Menu" page="/editItemDetail.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>
         <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>        
     </Menus>
 </MenuConfig>

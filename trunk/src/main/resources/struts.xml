@@ -163,6 +163,26 @@
 			<result name="delete" type="redirect-action">admin/plants</result>
 			<result name="success" type="redirect-action">admin/plants</result>
 		</action>
+		
+		<!-- Item -->
+		<action name="editItem" class="com.faurecia.webapp.action.ItemAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/item/itemForm.jsp</result>
+			<result name="error">/WEB-INF/pages/item/itemList.jsp</result>
+		</action>
+
+		<action name="editItemDetail" class="com.faurecia.webapp.action.ItemAction" method="edit">
+			<result name="success">/WEB-INF/pages/item/itemForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="saveItem" class="com.faurecia.webapp.action.ItemAction"
+			method="save">
+			<result name="input">/WEB-INF/pages/plant/itemForm.jsp</result>
+			<result name="cancel" type="redirect-action">items</result>
+			<result name="delete" type="redirect-action">items</result>
+			<result name="success" type="redirect-action">items</result>
+		</action>
 	</package>
 
 	<!-- Actions in this package will be prefixed with /admin/ -->
