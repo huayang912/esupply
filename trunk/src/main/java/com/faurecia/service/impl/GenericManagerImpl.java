@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.DetachedCriteria;
+
 import com.faurecia.dao.GenericDao;
 import com.faurecia.service.GenericManager;
 
@@ -94,5 +96,9 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
      */
     public void remove(PK id) {
         genericDao.remove(id);
+    }
+    
+    public List<T> findByCriteria(DetachedCriteria criteria) {
+    	return this.genericDao.findByCriteria(criteria);
     }
 }

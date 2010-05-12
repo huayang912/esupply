@@ -13,6 +13,8 @@
 	<div><s:textfield key="item.description" cssClass="text medium" /></div>
 	</div>
 	</li>
+	<s:submit cssClass="button" method="list" key="button.search"
+			theme="simple" />
 </s:form>
 
 <c:set var="buttons">

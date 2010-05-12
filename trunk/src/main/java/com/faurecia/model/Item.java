@@ -62,7 +62,7 @@ public class Item extends BaseObject implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "plant_code")
+	@JoinColumn(name = "plant_code", nullable=false)
 	public Plant getPlant() {
 		return plant;
 	}

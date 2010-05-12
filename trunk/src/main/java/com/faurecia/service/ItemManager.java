@@ -7,6 +7,8 @@ import com.faurecia.model.Plant;
 
 
 public interface ItemManager extends GenericManager<Item, Integer> {
+	List<Item> getItems(Item item);
+	
 	List<Item> getItemByPlant(Plant plant);
 	
 	Item getItemByPlantAndItem(Plant plant, Item item);

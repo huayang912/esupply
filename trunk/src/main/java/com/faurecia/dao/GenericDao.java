@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 
 /**
  * Generic DAO (Data Access Object) with common methods to CRUD POJOs.
@@ -71,4 +73,8 @@ public interface GenericDao <T, PK extends Serializable> {
      * @return a list of the records found
      */
     List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams);
+    
+    List<T> findByCriteria(DetachedCriteria criteria);
+    
+    List<T> findByExample(T exampleEntity);
 }
