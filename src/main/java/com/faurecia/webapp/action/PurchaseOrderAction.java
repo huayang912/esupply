@@ -15,8 +15,8 @@ public class PurchaseOrderAction extends BaseAction {
 	}
 	
 	public String test() {
-		this.purchaseOrderManager.DownloadFiles("10.20.96.130", 21, "commonuser",
-				"test123", "/storage/team/dingxin/ORDERS", "su");
+//		this.purchaseOrderManager.DownloadFiles("10.20.96.130", 21, "commonuser",
+//				"test123", "/storage/team/dingxin/ORDERS", "su");
 		
 		return SUCCESS;
 	}

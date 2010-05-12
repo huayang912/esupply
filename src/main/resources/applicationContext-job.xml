@@ -6,6 +6,8 @@
 	
 	<bean id="dataInboundOutboundJob" class="com.faurecia.job.DataInboundOutboundJob">
 		<property name="plantManager" ref="plantManager"/>
+		<property name="inboundLogManager" ref="inboundLogManager"/>
+		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
 	</bean>
 	
 	<bean id="dataInboundOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -16,10 +18,10 @@
 	
 	<bean id="dataInboundOutboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
 	  <property name="jobDetail" ref="dataInboundOutboundJobDetail"/>
-		<!-- 10 seconds -->
+		<!-- 10 seconds delay -->
 	  <property name="startDelay" value="10000"/>
-		<!-- repeat every 15 mins -->
-	  <property name="repeatInterval" value="900000"/>
+		<!-- repeat every 1 mins -->
+	  <property name="repeatInterval" value="60000"/>
 	</bean>
 	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">

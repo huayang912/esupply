@@ -22,6 +22,7 @@ public class FTPClientUtil {
 	protected transient final Log log = LogFactory.getLog(getClass());
 	public static final int BINARY_FILE_TYPE = FTP.BINARY_FILE_TYPE;
 	public static final int ASCII_FILE_TYPE = FTP.ASCII_FILE_TYPE;
+	public static final String SEPERATE = "/";
 
 	// path should not the path from root index
 	// or some FTP server would go to root as '/'.

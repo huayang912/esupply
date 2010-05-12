@@ -16,14 +16,16 @@ import com.faurecia.model.InboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.util.DateUtil;
 import com.faurecia.util.FTPClientUtil;
 
 public class DataInboundOutboundJob {
 
 	private final Log log = LogFactory.getLog(getClass());
 	private GenericManager<Plant, String> plantManager;
-	private GenericManager<InboundLog, Integer> inboundLogManager;
+	private InboundLogManager inboundLogManager;
 	private PurchaseOrderManager purchaseOrderManager;
 	private final String[] dataTypeArray = new String[] { "ORDERS" };
 
@@ -31,39 +33,51 @@ public class DataInboundOutboundJob {
 		this.plantManager = plantManager;
 	}
 
-	public void setInboundLogManager(
-			GenericManager<InboundLog, Integer> inboundLogManager) {
+	public void setInboundLogManager(InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
 	}
 
-	public void setPurchaseOrderManager(
-			PurchaseOrderManager purchaseOrderManager) {
+	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
 		this.purchaseOrderManager = purchaseOrderManager;
 	}
 
 	public void run() {
+		log.info("Start run data inbound job.");
+		Date nowDate = new Date();
 		List<Plant> plantList = this.plantManager.getAll();
 		if (plantList != null && plantList.size() > 0) {
 			for (int i = 0; i < plantList.size(); i++) {
 				Plant plant = plantList.get(i);
 
-				DownloadFiles(plant.getFtpServer(), plant.getFtpPort(), plant.getFtpUser(),
-						plant.getFtpPassword(), plant.getFtpPath(), plant.getTempFileDirectory(),
-						plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), "job");
+				if (plant.getNextInboundDate() == null || nowDate.compareTo(plant.getNextInboundDate()) > 0) {
+					log.info("Start inbound data for plant: " + plant.getName() + ".");
+					DownloadFiles(plant.getFtpServer(), plant.getFtpPort(), plant.getFtpUser(), plant.getFtpPassword(), plant.getFtpPath(), plant
+							.getTempFileDirectory(), plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), nowDate, "service");
+
+					// 设置下次运行时间
+					if (plant.getNextInboundDate() == null)
+					{
+						plant.setNextInboundDate(nowDate);
+					}
+					plant.setNextInboundDate(DateUtil.AddTime(plant.getNextInboundDate(), plant.getInboundIntervalType(), plant.getInboundInterval()));
+					log.info("Set next inbound date: " + DateUtil.getDateTime("MM/dd/yyyy HH:mm:ss.SSS", plant.getNextInboundDate()) + ".");
+					this.plantManager.save(plant);
+					log.info("End inbound data for plant: " + plant.getName() + ".");
+				}
 			}
+		} else {
+			log.info("No plant found.");
 		}
+		log.info("End run data inbound job.");
 	}
 
-	public void DownloadFiles(String ftpServer, int ftpPort, String ftpUser,
-			String ftpPassword, String ftpPath, String tempFileDirectory,
-			String archiveFileDirectory, String errorFileDirectory, String user) {
+	private void DownloadFiles(String ftpServer, int ftpPort, String ftpUser, String ftpPassword, String ftpPath, String tempFileDirectory,
+			String archiveFileDirectory, String errorFileDirectory, Date nowDate, String user) {
 		FTPClientUtil ftpClientUtil = new FTPClientUtil();
 
-		Date nowDate = new Date();
-
 		try {
-			ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser,
-					ftpPassword, ftpPath);
+			log.info("Connect to ftp server: " + ftpServer + ".");
+			ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser, ftpPassword, ftpPath);
 		} catch (Exception e) {
 			log.error("Error logon to ftp server.", e);
 		}
@@ -72,10 +86,12 @@ public class DataInboundOutboundJob {
 			String dataType = dataTypeArray[i];
 			List<String> fileNameList = null;
 			try {
-				fileNameList = ftpClientUtil.getFileList(ftpPath
-						+ File.separator + dataType);
+				String ftpDirectory = ftpPath + FTPClientUtil.SEPERATE + dataType;
+				ftpClientUtil.changeDirectory(ftpDirectory);
+				log.info("Fetching files in directory: " + ftpDirectory + ".");
+				fileNameList = ftpClientUtil.getFileList(".");
 			} catch (Exception e) {
-				log.error("Error list file on ftp server.", e);
+				log.error("Error fetching file on ftp server.", e);
 				continue;
 			}
 
@@ -83,17 +99,19 @@ public class DataInboundOutboundJob {
 				Collections.sort(fileNameList);
 				for (int j = 0; j < fileNameList.size(); j++) {
 
-					String fileName = fileNameList.get(i); // 获取下载文件名
-					String filePrefix = fileName.substring(0, fileName
-							.lastIndexOf('.'));
-					String fileSuffix = fileName.substring(fileName
-							.lastIndexOf('.') - 1);
+					String fileName = fileNameList.get(j); // 获取下载文件名
+					String filePrefix = fileName.substring(0, fileName.lastIndexOf('.'));
+					String fileSuffix = fileName.substring(fileName.lastIndexOf('.') - 1);
 
-					InboundLog inboundLog = new InboundLog();
-					inboundLog.setDataType(dataType);
-					inboundLog.setFileName(fileName);
-					inboundLog.setCreateDate(nowDate);
-					inboundLog.setCreateUser(user);
+					// 查找是否已经记录过日志
+					InboundLog inboundLog = this.inboundLogManager.getInboundLogByDataTypeAndFileName(dataType, fileName);
+					if (inboundLog == null) {
+						inboundLog = new InboundLog();
+						inboundLog.setDataType(dataType);
+						inboundLog.setFileName(fileName);
+						inboundLog.setCreateDate(nowDate);
+						inboundLog.setCreateUser(user);
+					}
 					inboundLog.setLastModifyDate(nowDate);
 					inboundLog.setLastModifyUser(user);
 
@@ -101,55 +119,61 @@ public class DataInboundOutboundJob {
 					InputStream inputStream = null;
 					try {
 						// 下载文件至临时目录
-						tempFile = File.createTempFile(filePrefix, fileSuffix,
-								new File(tempFileDirectory + File.separator
-										+ dataType));
-						ftpClientUtil.download(fileName, tempFile
-								.getAbsolutePath());
+						String tempDirString = tempFileDirectory + File.separator + dataType;
+						File tempDir = new File(tempDirString);
+						FileUtils.forceMkdir(tempDir);
+						
+						log.info("Download file: " + fileName + " to temperary folder: " + tempDirString + ".");
+						tempFile = File.createTempFile(filePrefix, fileSuffix, tempDir);
+						ftpClientUtil.download(fileName, tempFile.getAbsolutePath());
 
 						inputStream = new FileInputStream(tempFile);
 					} catch (IOException ex) {
+						log.error("Error download file: " + fileName + ".", ex);
 						inboundLog.setInboundResult("fail");
 						inboundLog.setMemo(ex.getMessage());
-						
+
 						this.inboundLogManager.save(inboundLog);
-						
+
 						continue;
 					}
 
+					// 记录至数据库
 					PurchaseOrder po = null;
 					if (dataType.equals("ORDERS")) {
-						po = this.purchaseOrderManager.SaveSingleFile(
-								inputStream, inboundLog);
+						log.info("Processing file: " + fileName);
+						po = this.purchaseOrderManager.SaveSingleFile(inputStream, inboundLog);
 					}
 
 					String localBackupDirectory = null;
 					File backupFile = null;
-
 					try {
 						// 备份文件
 						if (inboundLog.getInboundResult() == "success") {
-							localBackupDirectory = archiveFileDirectory
-									+ File.separator + dataType;
+							localBackupDirectory = archiveFileDirectory + File.separator + dataType;
+							log.info("Processing file: " + fileName + " success, back up file to archive directory: " + localBackupDirectory);
 						} else {
-							localBackupDirectory = errorFileDirectory
-									+ File.separator + dataType;
+							localBackupDirectory = errorFileDirectory + File.separator + dataType;
+							log.info("Processing file: " + fileName + " fail, back up file to error directory: " + localBackupDirectory);
 						}
 
 						FileUtils.forceMkdir(new File(localBackupDirectory));
 
-						backupFile = new File(localBackupDirectory
-								+ File.separator + fileName);
+						backupFile = new File(localBackupDirectory + File.separator + fileName);
 
 						FileUtils.copyFile(tempFile, backupFile);
-
-						inboundLog
-								.setFullFilePath(backupFile.getAbsolutePath());
+						log.info("Backup file: " + fileName + " success.");
+						
+						inboundLog.setFullFilePath(backupFile.getAbsolutePath());
 
 						// 删除Ftp文件
 						ftpClientUtil.deleteFile(fileName);
+						log.info("Delete file: " + fileName + " on ftp success.");
 
 						try {
+							if (inputStream != null) {
+								inputStream.close();
+							}
 							FileUtils.forceDelete(tempFile);
 						} catch (IOException ex) {
 							// 删除temp文件失败，不影响流程，所以单独捕获

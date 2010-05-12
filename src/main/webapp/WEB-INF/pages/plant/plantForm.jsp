@@ -44,28 +44,28 @@
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.ftpServer"
-		theme="xhtml" cssClass="text medium" /></div>
+		theme="xhtml" required="true" cssClass="text medium" /></div>
 	<div><s:textfield key="plant.ftpPort" theme="xhtml"
-		cssClass="text medium" /></div>
+		required="true" cssClass="text medium" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.ftpUser" theme="xhtml"
-		cssClass="text medium" /></div>
+		required="true" cssClass="text medium" /></div>
 	<div><s:textfield key="plant.ftpPath" theme="xhtml"
-		cssClass="text medium" /></div>
+		required="true" cssClass="text medium" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div class="left"><s:password key="plant.ftpPassword"
-		showPassword="true" theme="xhtml" cssClass="text medium"
+		showPassword="true" theme="xhtml" required="true" cssClass="text medium"
 		onchange="passwordChanged(this)" /></div>
 	<div><s:password key="plant.confirmFtpPassword" theme="xhtml"
-		showPassword="true" cssClass="text medium"
+		showPassword="true" required="true" cssClass="text medium"
 		onchange="passwordChanged(this)" /></div>
 	</div>
 	</li>
@@ -73,36 +73,36 @@
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.tempFileDirectory"
-		theme="xhtml" cssClass="text medium" /></div>
+		theme="xhtml" required="true" cssClass="text medium" /></div>
 	<div><s:textfield key="plant.archiveFileDirectory" theme="xhtml"
-		cssClass="text medium" /></div>
+		required="true" cssClass="text medium" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.errorFileDirectory"
-		theme="xhtml" cssClass="text medium" /></div>
+		required="true" theme="xhtml" cssClass="text medium" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div class="left"><s:select key="plant.inboundIntervalType"
-		list="{'Year', 'Month', 'Week', 'Day', 'Hour', 'Minitus'}"
+		list="%{dateType}"
 		theme="xhtml"></s:select></div>
 	<div><s:textfield key="plant.inboundInterval" theme="xhtml"
-		cssClass="text medium" /></div>
+		required="true" cssClass="text medium" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div class="left"><s:select key="plant.outboundIntervalType"
-		list="{'Year', 'Month', 'Week', 'Day', 'Hour', 'Minitus'}"
+		list="%{dateType}"
 		theme="xhtml"></s:select></div>
 	<div><s:textfield key="plant.outboundInterval" theme="xhtml"
-		cssClass="text medium" /></div>
+		required="true" cssClass="text medium" /></div>
 	</div>
 	</li>
 
