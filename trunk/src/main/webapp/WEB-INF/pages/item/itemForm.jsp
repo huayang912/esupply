@@ -8,7 +8,7 @@
 </head>
 
 <s:form name="itemForm" action="saveItem" method="post" validate="true">
-	<li style="display: none"><s:hidden key="item.id" /> <input
+	<li style="display: none"><s:hidden key="item.id" /> <s:hidden key="item.plant.code" /><input
 		type="hidden" name="from" value="${param.from}" /> <input
 		type="hidden" name="roleType" value="${roleType}" /></li>
 	<li class="buttonBar right"><c:set var="buttons">
