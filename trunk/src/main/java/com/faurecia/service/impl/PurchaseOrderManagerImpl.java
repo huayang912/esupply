@@ -32,6 +32,7 @@ import com.faurecia.model.order.ORDERS02E1EDP19;
 import com.faurecia.model.order.ORDERS02E1EDP20;
 import com.faurecia.service.DataConvertException;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.ItemManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
@@ -47,7 +48,7 @@ public class PurchaseOrderManagerImpl extends
 	private ItemManager itemManager;
 	private SupplierItemManager supplierItemManager;
 	private GenericManager<PurchaseOrder, String> purchaseOrderManager;
-	private GenericManager<InboundLog, Integer> inboundLogManager;
+	private InboundLogManager inboundLogManager;
 	private Unmarshaller unmarshaller;
 
 	public PurchaseOrderManagerImpl(GenericDao<PurchaseOrder, String> genericDao)
@@ -84,7 +85,7 @@ public class PurchaseOrderManagerImpl extends
 	}
 
 	public void setInboundLogManager(
-			GenericManager<InboundLog, Integer> inboundLogManager) {
+			InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
 	}
 

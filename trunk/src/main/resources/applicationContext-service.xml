@@ -192,7 +192,7 @@
 		</constructor-arg>
 	</bean>
 
-	<bean id="inboundLogManager" class="com.faurecia.service.impl.GenericManagerImpl">
+	<bean id="inboundLogManager" class="com.faurecia.service.impl.InboundLogManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
 				autowire="byType">

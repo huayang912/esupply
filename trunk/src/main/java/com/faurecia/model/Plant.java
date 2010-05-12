@@ -33,10 +33,10 @@ public class Plant extends BaseObject implements Serializable {
 	private String tempFileDirectory;
 	private String archiveFileDirectory;
 	private String errorFileDirectory;
-	private String inboundIntervalType;
+	private Integer inboundIntervalType;
 	private Integer inboundInterval;
 	private Date nextInboundDate;
-	private String outboundIntervalType;
+	private Integer outboundIntervalType;
 	private Integer outboundInterval;
 	private Date nextOutboundDate;
 
@@ -185,12 +185,12 @@ public class Plant extends BaseObject implements Serializable {
 		this.errorFileDirectory = errorFileDirectory;
 	}
 
-	@Column(name = "inbound_interval_type", nullable = true, length = 50)
-	public String getInboundIntervalType() {
+	@Column(name = "inbound_interval_type", nullable = true)
+	public Integer getInboundIntervalType() {
 		return inboundIntervalType;
 	}
 
-	public void setInboundIntervalType(String inboundIntervalType) {
+	public void setInboundIntervalType(Integer inboundIntervalType) {
 		this.inboundIntervalType = inboundIntervalType;
 	}
 
@@ -203,12 +203,12 @@ public class Plant extends BaseObject implements Serializable {
 		this.inboundInterval = inboundInterval;
 	}
 
-	@Column(name = "outbound_interval_type", nullable = true, length = 50)
-	public String getOutboundIntervalType() {
+	@Column(name = "outbound_interval_type", nullable = true)
+	public Integer getOutboundIntervalType() {
 		return outboundIntervalType;
 	}
 
-	public void setOutboundIntervalType(String outboundIntervalType) {
+	public void setOutboundIntervalType(Integer outboundIntervalType) {
 		this.outboundIntervalType = outboundIntervalType;
 	}
 

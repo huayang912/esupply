@@ -1,7 +1,10 @@
 package com.faurecia.webapp.action;
 
 import java.net.MalformedURLException;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
@@ -17,6 +20,7 @@ public class PlantAction extends BaseAction {
 	private List<Plant> plants;
 	private Plant plant;
 	private String code;
+	private Map<Integer, String> dateType;
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -24,6 +28,10 @@ public class PlantAction extends BaseAction {
 
 	public List<Plant> getPlants() {
 		return plants;
+	}
+
+	public Map<Integer, String> getDateType() {
+		return dateType;
 	}
 
 	public String list() {
@@ -73,6 +81,8 @@ public class PlantAction extends BaseAction {
 			plant = new Plant();
 		}
 
+		prepareEdit();
+		
 		return SUCCESS;
 	}
 
@@ -84,14 +94,25 @@ public class PlantAction extends BaseAction {
 		boolean isNew = (plant.getCode() == null);
 
 		plant = this.plantManager.save(plant);
-
+		plant.setConfirmFtpPassword(plant.getFtpPassword());
+		
 		String key = (isNew) ? "plant.added" : "plant.updated";
 		saveMessage(getText(key));
 
 		if (!isNew) {
+			prepareEdit();
 			return INPUT;
 		} else {
 			return SUCCESS;
 		}
+	}
+	
+	private void prepareEdit() {
+		this.dateType = new HashMap<Integer, String>();
+		this.dateType.put(Calendar.YEAR, "Year");
+		this.dateType.put(Calendar.MONTH, "Month");
+		this.dateType.put(Calendar.DATE, "Day");
+		this.dateType.put(Calendar.HOUR, "Hour");
+		this.dateType.put(Calendar.MINUTE, "Minute");
 	}
 }

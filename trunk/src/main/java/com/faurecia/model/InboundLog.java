@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -18,6 +20,12 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 
 @Entity
 @Table(name = "inbound_log")
+@NamedQueries ({
+	@NamedQuery(
+	        name = "findInboundLogByDataTypeAndFileName",
+	        query = " select il from InboundLog il where il.dataType = :dataType and il.fileName = :fileName"
+	        )	       
+})
 public class InboundLog extends BaseObject {
 
 	/**
@@ -86,7 +94,7 @@ public class InboundLog extends BaseObject {
 		this.fileName = fileName;
 	}
 
-	@Column(name="full_file_path",nullable=false,length=255)
+	@Column(name="full_file_path",nullable=true,length=255)
 	public String getFullFilePath() {
 		return fullFilePath;
 	}
