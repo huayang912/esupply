@@ -144,6 +144,7 @@
 		</action>
 
 		<!-- Add additional actions here -->
+		<!-- Plant -->
 		<action name="editPlant" class="com.faurecia.webapp.action.PlantAction"
 			method="edit">
 			<interceptor-ref name="adminCheck" />
@@ -151,7 +152,8 @@
 			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
 
-		<action name="editPlantProfile" class="com.faurecia.webapp.action.PlantAction" method="edit">
+		<action name="editPlantProfile" class="com.faurecia.webapp.action.PlantAction"
+			method="edit">
 			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
@@ -163,17 +165,17 @@
 			<result name="delete" type="redirect-action">admin/plants</result>
 			<result name="success" type="redirect-action">admin/plants</result>
 		</action>
-		
+
 		<!-- Item -->
+		<action name="items" class="com.faurecia.webapp.action.ItemAction"
+			method="list">
+			<result>/WEB-INF/pages/item/itemList.jsp</result>
+		</action>
+
 		<action name="editItem" class="com.faurecia.webapp.action.ItemAction"
 			method="edit">
 			<result name="success">/WEB-INF/pages/item/itemForm.jsp</result>
 			<result name="error">/WEB-INF/pages/item/itemList.jsp</result>
-		</action>
-
-		<action name="editItemDetail" class="com.faurecia.webapp.action.ItemAction" method="edit">
-			<result name="success">/WEB-INF/pages/item/itemForm.jsp</result>
-			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
 		<action name="saveItem" class="com.faurecia.webapp.action.ItemAction"
