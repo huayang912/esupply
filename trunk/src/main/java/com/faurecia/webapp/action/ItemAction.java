@@ -42,10 +42,6 @@ public class ItemAction extends BaseAction {
 	}
 	
 	public String cancel() {
-		if (!"list".equals(from)) {
-			return "mainMenu";
-		}
-		
 		return CANCEL;
 	}
 
@@ -63,6 +59,7 @@ public class ItemAction extends BaseAction {
 		}  else {
 			item = new Item();
 		}
+		
 		return SUCCESS;
 	}
 

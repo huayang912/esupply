@@ -38,4 +38,8 @@
     <bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction" scope="prototype">
         <property name="purchaseOrderManager" ref="purchaseOrderManager"/>
     </bean> 
+    
+    <bean id="itemAction" class="com.faurecia.webapp.action.ItemAction" scope="prototype">
+        <property name="itemManager" ref="itemManager"/>
+    </bean> 
 </beans>

@@ -5,9 +5,19 @@
 <meta name="heading" content="<fmt:message key='itemList.heading'/>" />
 </head>
 
+<s:form name="itemForm" action="items" method="post" validate="true">
+	<li>
+	<div>
+	<div class="left"><s:textfield key="item.code"
+		cssClass="text medium" /></div>
+	<div><s:textfield key="item.description" cssClass="text medium" /></div>
+	</div>
+	</li>
+</s:form>
+
 <c:set var="buttons">
 	<input type="button" style="margin-right: 5px"
-		onclick="location.href='<c:url value="/editItem.html?from=list"/>'"
+		onclick="location.href='<c:url value="/editItem.html"/>'"
 		value="<fmt:message key="button.add"/>" />
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
@@ -18,12 +28,13 @@
 
 <display:table name="items" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="items" pagesize="25" class="table"
-	export="true">	
-    <display:column property="id" sortable="true" url="/editItem.html?from=list" 
-        paramId="id" paramProperty="id" titleKey="item.id"/>
-    <display:column property="code" sortable="true" titleKey="item.code"/>
-    <display:column property="description" sortable="true" titleKey="item.description"/>
-    <display:column property="uom" sortable="true" titleKey="item.uom"/>
+	export="true">
+	<display:column property="id" sortable="true" url="/editItem.html"
+		paramId="id" paramProperty="id" titleKey="item.id" />
+	<display:column property="code" sortable="true" titleKey="item.code" />
+	<display:column property="description" sortable="true"
+		titleKey="item.description" />
+	<display:column property="uom" sortable="true" titleKey="item.uom" />
 
 	<display:setProperty name="paging.banner.item_name" value="item" />
 	<display:setProperty name="paging.banner.items_name" value="items" />
