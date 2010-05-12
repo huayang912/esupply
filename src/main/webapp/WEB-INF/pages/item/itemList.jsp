@@ -4,7 +4,8 @@
 <title><fmt:message key="itemList.title" /></title>
 <meta name="heading" content="<fmt:message key='itemList.heading'/>" />
 </head>
-
+<table>
+<tr><td>
 <s:form name="itemForm" action="items" method="post" validate="true">
 	<li>
 	<div>
@@ -13,10 +14,11 @@
 	<div><s:textfield key="item.description" cssClass="text medium" /></div>
 	</div>
 	</li>
-	<s:submit cssClass="button" method="list" key="button.search"
-			theme="simple" />
+	<li class="buttonBar right"><s:submit cssClass="button"
+		method="list" key="button.search" theme="simple" /></li>
 </s:form>
-
+</td></tr>
+<tr><td>
 <c:set var="buttons">
 	<input type="button" style="margin-right: 5px"
 		onclick="location.href='<c:url value="/editItem.html"/>'"
@@ -31,9 +33,8 @@
 <display:table name="items" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="items" pagesize="25" class="table"
 	export="true">
-	<display:column property="id" sortable="true" url="/editItem.html"
-		paramId="id" paramProperty="id" titleKey="item.id" />
-	<display:column property="code" sortable="true" titleKey="item.code" />
+	<display:column property="code" sortable="true" url="/editItem.html"
+		paramId="id" paramProperty="id" titleKey="item.code" />
 	<display:column property="description" sortable="true"
 		titleKey="item.description" />
 	<display:column property="uom" sortable="true" titleKey="item.uom" />
@@ -47,7 +48,8 @@
 </display:table>
 
 <c:out value="${buttons}" escapeXml="false" />
-
+</td></tr>
+</table>
 <script type="text/javascript">
     highlightTableRows("items");
 </script>
