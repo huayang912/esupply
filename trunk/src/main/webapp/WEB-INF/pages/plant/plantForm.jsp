@@ -112,7 +112,8 @@
 
 <script type="text/javascript">
     Form.focusFirstElement($("plantForm"));
-
+    highlightFormElements();
+    
     function passwordChanged(passwordField) {
         if (passwordField.name == "plant.ftpPassword") {
             var origPassword = "<s:property value="plant.ftpPassword"/>";

@@ -2,7 +2,6 @@ package com.faurecia.webapp.action;
 
 import java.util.List;
 
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -12,7 +11,10 @@ import com.faurecia.service.ItemManager;
 
 public class ItemAction extends BaseAction {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6064722808180238396L;
 	private ItemManager itemManager;
 	private List<Item> items;
 	private Item item;
