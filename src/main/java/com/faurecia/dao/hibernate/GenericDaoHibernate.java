@@ -1,11 +1,5 @@
 package com.faurecia.dao.hibernate;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import com.faurecia.dao.GenericDao;
-import org.springframework.orm.ObjectRetrievalFailureException;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,6 +7,14 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+import com.faurecia.dao.GenericDao;
 
 /**
  * This class serves as the Base class for all other DAOs - namely to hold
@@ -122,5 +124,20 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
            queryName, 
            params, 
            values);
+   }
+   
+   @SuppressWarnings("unchecked")
+   public List<T> findByCriteria(DetachedCriteria criteria) {
+	   return getHibernateTemplate().findByCriteria(criteria);
+   }
+   
+   @SuppressWarnings("unchecked")
+   public List<T> findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults) {
+	   return getHibernateTemplate().findByCriteria(criteria, firstResult, maxResults);
+   }
+   
+   @SuppressWarnings("unchecked")
+   public List<T> findByExample(T exampleEntity) {
+	   return getHibernateTemplate().findByExample(exampleEntity);
    }
 }

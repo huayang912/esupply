@@ -3,6 +3,8 @@ package com.faurecia.service;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+
 /**
  * Generic Manager that talks to GenericDao to CRUD POJOs.
  *
@@ -52,4 +54,6 @@ public interface GenericManager<T, PK extends Serializable> {
      * @param id the identifier (primary key) of the object to remove
      */
     void remove(PK id);
+    
+    List<T> findByCriteria(DetachedCriteria criteria);
 }

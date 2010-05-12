@@ -2,6 +2,10 @@ package com.faurecia.webapp.action;
 
 import java.util.List;
 
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import com.faurecia.model.Item;
 import com.faurecia.model.User;
 import com.faurecia.service.ItemManager;
@@ -25,7 +29,23 @@ public class ItemAction extends BaseAction {
 	public String list() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
-		items = itemManager.getItemByPlant(user.getUserPlant());
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);
+		criteria.add(Restrictions.eq("plant", user.getUserPlant()));
+		
+		if (item != null) {
+			if (item.getCode() != null && item.getCode().trim().length() != 0)
+			{
+				criteria.add(Restrictions.eq("code", item.getCode()));
+			}
+			
+			if (item.getDescription() != null && item.getDescription().trim().length() != 0)
+			{
+				criteria.add(Restrictions.eq("description", item.getDescription()));
+			}
+		}
+		
+		items = itemManager.findByCriteria(criteria);
 		return SUCCESS;
 	}
 

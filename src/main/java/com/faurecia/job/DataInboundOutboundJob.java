@@ -80,6 +80,7 @@ public class DataInboundOutboundJob {
 			ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser, ftpPassword, ftpPath);
 		} catch (Exception e) {
 			log.error("Error logon to ftp server.", e);
+			return;
 		}
 
 		for (int i = 0; i < dataTypeArray.length; i++) {

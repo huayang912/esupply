@@ -16,6 +16,10 @@ public class ItemManagerImpl extends GenericManagerImpl<Item, Integer>
 		super(genericDao);
 	}
 
+	public List<Item> getItems(Item item) {
+		return this.genericDao.findByExample(item);
+	}
+	
 	public List<Item> getItemByPlant(Plant plant) {
 		Map<String, Object> queryParams = new HashMap<String, Object>();
 		queryParams.put("plant", plant);
