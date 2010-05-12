@@ -23,6 +23,7 @@
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>
+        	<Item name="SupplierMenu" title="menu.supplier" description="Supplier Menu" page="/suppliers.html" roles="ROLE_PLANT_USER"/>
         </Menu>
         <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>        
     </Menus>

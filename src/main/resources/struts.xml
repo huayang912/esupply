@@ -180,10 +180,30 @@
 
 		<action name="saveItem" class="com.faurecia.webapp.action.ItemAction"
 			method="save">
-			<result name="input">/WEB-INF/pages/plant/itemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
 			<result name="cancel" type="redirect-action">items</result>
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
+		</action>
+		
+		<!-- Supplier -->
+		<action name="suppliers" class="com.faurecia.webapp.action.SupplierAction"
+			method="list">
+			<result>/WEB-INF/pages/supplier/supplierList.jsp</result>
+		</action>
+
+		<action name="editSupplier" class="com.faurecia.webapp.action.SupplierAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="error">/WEB-INF/pages/supplier/supplierList.jsp</result>
+		</action>
+
+		<action name="saveSupplier" class="com.faurecia.webapp.action.SupplierAction"
+			method="save">
+			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="cancel" type="redirect-action">suppliers</result>
+			<result name="delete" type="redirect-action">suppliers</result>
+			<result name="success" type="redirect-action">suppliers</result>
 		</action>
 	</package>
 

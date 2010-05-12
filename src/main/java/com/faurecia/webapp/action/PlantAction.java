@@ -15,7 +15,10 @@ import com.faurecia.service.GenericManager;
 
 public class PlantAction extends BaseAction {
 
-	private static final long serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -33601379593125595L;
 	private GenericManager<Plant, String> plantManager;
 	private List<Plant> plants;
 	private Plant plant;
