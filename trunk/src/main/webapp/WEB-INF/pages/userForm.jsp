@@ -37,7 +37,7 @@
 		</c:otherwise>
 	</c:choose></li>
 
-	<s:textfield key="user.username" cssClass="text large" required="true" />
+	<s:textfield key="user.username" cssClass="text medium" required="true" />
 
 	<c:if test="${cookieLogin != 'true'}">
 		<li>
