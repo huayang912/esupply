@@ -13,8 +13,6 @@
         value="<fmt:message key="button.done"/>"/>
 </c:set>
 
-<c:out value="${buttons}" escapeXml="false" />
-
 <s:set name="plants" value="plants" scope="request"/>
 <display:table name="plants" class="table" requestURI="" id="plantList" export="true" pagesize="25">
     <display:column property="code" sortable="true" url="/editPlant.html?from=list" 

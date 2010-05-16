@@ -10,11 +10,11 @@
 <s:form name="itemForm" action="saveItem" method="post" validate="true">
 	<li style="display: none"><s:hidden key="item.id" /> <s:hidden
 		key="item.plant.code" /></li>
-	<li class="buttonBar right"><c:set var="buttons">
+	<c:set var="buttons">
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
 		<s:submit key="button.cancel" method="cancel" />
-	</c:set> <c:out value="${buttons}" escapeXml="false" /></li>
+	</c:set> 
 
 	<li><s:textfield key="item.code" cssClass="text medium"
 		required="true" /></li>

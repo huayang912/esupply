@@ -18,7 +18,7 @@
 	</c:if> <s:if test="user.version == null">
 		<input type="hidden" name="encryptPass" value="true" />
 	</s:if></li>
-	<li class="buttonBar right"><c:set var="buttons">
+	<c:set var="buttons">
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
 
@@ -27,7 +27,7 @@
 				onclick="return confirmDelete('user')" />
 		</c:if>
 		<s:submit key="button.cancel" method="cancel" />
-	</c:set> <c:out value="${buttons}" escapeXml="false" /></li>
+	</c:set> 
 	<li class="info"><c:choose>
 		<c:when test="${param.from == 'list'}">
 			<p><fmt:message key="userProfile.admin.message" /></p>

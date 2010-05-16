@@ -20,8 +20,7 @@
 		cssClass="text medium" />
 	<li><s:select key="purchaseOrder.status"
 		list="%{status}" theme="xhtml" /></li>
-	<div><s:submit method="list" key="button.search" theme="simple" /><c:out
-		value="${buttons}" escapeXml="false" /></div>
+	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
