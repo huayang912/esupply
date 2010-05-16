@@ -176,6 +176,9 @@ label.desc {
     line-height: 1.3em;
     display: block;
     font-weight: bold;
+    width:150px;
+    float:left;
+    text-align:right;
 }
 
 /* wwlbl is from Struts and this is needed to make things work properly with IE 7 */

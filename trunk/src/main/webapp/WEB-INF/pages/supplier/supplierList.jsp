@@ -5,28 +5,20 @@
 <meta name="heading"
 	content="<fmt:message key='plantSupplierList.heading'/>" />
 </head>
-
-<s:form name="supplierForm" action="suppliers" method="post"
-	validate="true">
-	<li>
-	<div>
-	<div class="left"><s:textfield key="plantSupplier.supplier.code"
-		cssClass="text medium" /></div>
-	<div><s:textfield key="plantSupplier.supplierName"
-		cssClass="text medium" /></div>
-	</div>
-	</li>
-	<s:submit cssClass="button" method="list" key="button.search"
-		theme="simple" />
-</s:form>
-
 <c:set var="buttons">
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
-
-<c:out value="${buttons}" escapeXml="false" />
+<s:form name="supplierForm" action="suppliers" method="post"
+	validate="true">
+	<div class="left"><s:textfield key="plantSupplier.supplier.code"
+		cssClass="text medium" /></div>
+	<div><s:textfield key="plantSupplier.supplierName"
+		cssClass="text medium" /></div>
+	<div><s:submit method="list" key="button.search" theme="simple" /><c:out
+		value="${buttons}" escapeXml="false" /></div>
+</s:form>
 
 <display:table name="plantSuppliers" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="plantSuppliers" pagesize="25"
