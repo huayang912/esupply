@@ -3,6 +3,7 @@
 <head>
 <title><fmt:message key="itemList.title" /></title>
 <meta name="heading" content="<fmt:message key='itemList.heading'/>" />
+<meta name="menu" content="PlantUserMenu" />
 </head>
 <c:set var="buttons">
 	<input type="button" 
