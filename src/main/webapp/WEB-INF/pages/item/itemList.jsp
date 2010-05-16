@@ -4,31 +4,21 @@
 <title><fmt:message key="itemList.title" /></title>
 <meta name="heading" content="<fmt:message key='itemList.heading'/>" />
 </head>
-<table>
-<tr><td>
-<s:form name="itemForm" action="items" method="post" validate="true">
-	<li>
-	<div>
-	<div class="left"><s:textfield key="item.code"
-		cssClass="text medium" /></div>
-	<div><s:textfield key="item.description" cssClass="text medium" /></div>
-	</div>
-	</li>
-	<li class="buttonBar right"><s:submit cssClass="button"
-		method="list" key="button.search" theme="simple" /></li>
-</s:form>
-</td></tr>
-<tr><td>
 <c:set var="buttons">
-	<input type="button" style="margin-right: 5px"
+	<input type="button" 
 		onclick="location.href='<c:url value="/editItem.html"/>'"
 		value="<fmt:message key="button.add"/>" />
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
-
-<c:out value="${buttons}" escapeXml="false" />
+<s:form name="itemForm" action="items" method="post" validate="true">
+	<div class="left"><s:textfield key="item.code"
+		cssClass="text medium" /></div>
+	<div><s:textfield key="item.description" cssClass="text medium" /></div>
+	<div><s:submit method="list" key="button.search" theme="simple" />
+	<c:out value="${buttons}" escapeXml="false" /></div>
+</s:form>
 
 <display:table name="items" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="items" pagesize="25" class="table"
@@ -50,10 +40,7 @@
 	<display:setProperty name="export.csv.filename" value="item List.csv" />
 	<display:setProperty name="export.pdf.filename" value="item List.pdf" />
 </display:table>
-
 <c:out value="${buttons}" escapeXml="false" />
-</td></tr>
-</table>
 <script type="text/javascript">
     highlightTableRows("items");
 </script>

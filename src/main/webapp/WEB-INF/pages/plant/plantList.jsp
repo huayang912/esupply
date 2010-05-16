@@ -6,10 +6,9 @@
 </head>
 
 <c:set var="buttons">
-    <input type="button" style="margin-right: 5px"
+    <input type="button" 
         onclick="location.href='<c:url value="/editPlant.html?from=list"/>'"
-        value="<fmt:message key="button.add"/>"/>
-    
+        value="<fmt:message key="button.add"/>"/>    
     <input type="button" onclick="location.href='<c:url value="/mainMenu.html"/>'"
         value="<fmt:message key="button.done"/>"/>
 </c:set>

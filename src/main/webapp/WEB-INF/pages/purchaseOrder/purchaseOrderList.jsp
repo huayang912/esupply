@@ -5,42 +5,24 @@
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderList.heading'/>" />
 </head>
-
-<s:form name="purchaseOrderForm" action="purchaseOrders" method="post"
-	validate="true">
-	<li style="display: none"><input type="hidden" name="page"
-		value="1" /><input type="hidden" name="pageSize" value="25" /></li>
-
-	<li>
-	<div>
-	<div class="left"><s:textfield key="purchaseOrder.poNo"
-		cssClass="text medium" /></div>
-	<div><s:select key="purchaseOrder.status" list="%{status}"
-		theme="xhtml"></s:select></div>
-	</div>
-	</li>
-
-	<li>
-	<div>
-	<div class="left"><s:textfield key="purchaseOrder.createDateFrom"
-		cssClass="text medium" /></div>
-	<div><s:textfield key="purchaseOrder.createDateTo"
-		cssClass="text medium" /></div>
-	</div>
-	</li>
-
-	<div>
-		<s:submit cssClass="button" method="list" key="button.search"
-		theme="simple" /></div>
-</s:form>
-
 <c:set var="buttons">
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
-
-<c:out value="${buttons}" escapeXml="false" />
+<s:form name="purchaseOrderForm" action="purchaseOrders" method="post"
+	validate="true">
+	<div style="display:none;">
+		<input type="hidden" name="page" value="1" />
+		<input type="hidden" name="pageSize" value="25" />
+	</div>
+	<s:textfield key="purchaseOrder.poNo"
+		cssClass="text medium" />
+	<li><s:select key="purchaseOrder.status"
+		list="%{status}" theme="xhtml" /></li>
+	<div><s:submit method="list" key="button.search" theme="simple" /><c:out
+		value="${buttons}" escapeXml="false" /></div>
+</s:form>
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="purchaseOrders" class="table"
