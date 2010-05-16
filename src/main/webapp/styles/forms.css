@@ -13,6 +13,8 @@ form ul {
     list-style: none;
     width: 100%;
     padding: 0;
+    border:1px solid #CCCCCC;
+    padding:10px;
 }
 
 /* Fixes for forms around everything in JSF */
@@ -182,7 +184,11 @@ label.desc {
 }
 
 /* wwlbl is from Struts and this is needed to make things work properly with IE 7 */
-div.wwlbl { display: block !important }
+div.wwlbl { 
+	display: block !important;
+	float:left;
+	text-align:right;
+}
 
 p label {
     font-weight: normal;
