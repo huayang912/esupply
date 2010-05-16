@@ -75,6 +75,9 @@
 		<column>inbound_interval</column>
 		<column>outbound_interval_type</column>
 		<column>outbound_interval</column>
+		<column>error_log_email1</column>
+		<column>error_log_email2</column>
+		<column>supplier_notify_email</column>
 		<row>
 			<value description="code">1033</value>
 			<value description="name">FGW-Faurecia Wuhan</value>
@@ -91,6 +94,9 @@
 			<value description="inbound_interval">1</value>
 			<value description="outbound_interval_type">12</value>
 			<value description="outbound_interval">1</value>
+			<value description="error_log_email1">jackey.ding@kingmall-it.com</value>
+			<value description="error_log_email2">jackey.ding@kingmall-it.com</value>
+			<value description="supplier_notify_email">jackey.ding@kingmall-it.com</value>
 		</row>
 	</table>
 </dataset>

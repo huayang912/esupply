@@ -1,0 +1,4 @@
+Supplier ${plantSupplier.supplierName} created.
+
+Username: ${user.username}
+Password: ${user.confirmPassword}

@@ -7,8 +7,10 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
@@ -16,6 +18,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.orm.ObjectRetrievalFailureException;
 
 import com.faurecia.Constants;
@@ -40,6 +44,7 @@ import com.faurecia.service.DataConvertException;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.ItemManager;
+import com.faurecia.service.MailEngine;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
 import com.faurecia.service.RoleManager;
@@ -47,9 +52,7 @@ import com.faurecia.service.SupplierItemManager;
 import com.faurecia.service.SupplierManager;
 import com.faurecia.service.UserManager;
 
-public class PurchaseOrderManagerImpl extends
-		GenericManagerImpl<PurchaseOrder, String> implements
-		PurchaseOrderManager {
+public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, String> implements PurchaseOrderManager {
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
@@ -61,8 +64,12 @@ public class PurchaseOrderManagerImpl extends
 	private UserManager userManager;
 	private RoleManager roleManager;
 
-	public PurchaseOrderManagerImpl(GenericDao<PurchaseOrder, String> genericDao)
-			throws JAXBException {
+	protected MailEngine mailEngine;
+	protected SimpleMailMessage mailMessage;
+	protected String errorLogTemplateName;
+	protected String supplierCreatedTemplateName;
+
+	public PurchaseOrderManagerImpl(GenericDao<PurchaseOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.order");
 		unmarshaller = jc.createUnmarshaller();
@@ -76,8 +83,7 @@ public class PurchaseOrderManagerImpl extends
 		this.supplierManager = supplierManager;
 	}
 
-	public void setPlantSupplierManager(
-			PlantSupplierManager plantSupplierManager) {
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
 
@@ -97,32 +103,44 @@ public class PurchaseOrderManagerImpl extends
 		this.roleManager = roleManager;
 	}
 
-	public void setPurchaseOrderManager(
-			GenericManager<PurchaseOrder, String> purchaseOrderManager) {
+	public void setPurchaseOrderManager(GenericManager<PurchaseOrder, String> purchaseOrderManager) {
 		this.purchaseOrderManager = purchaseOrderManager;
 	}
 
-	public void setInboundLogManager(
-			InboundLogManager inboundLogManager) {
+	public void setInboundLogManager(InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
 	}
-	
+
+	public void setMailEngine(MailEngine mailEngine) {
+		this.mailEngine = mailEngine;
+	}
+
+	public void setMailMessage(SimpleMailMessage mailMessage) {
+		this.mailMessage = mailMessage;
+	}
+
+	public void setErrorLogTemplateName(String errorLogTemplateName) {
+		this.errorLogTemplateName = errorLogTemplateName;
+	}
+
+	public void setSupplierCreatedTemplateName(String supplierCreatedTemplateName) {
+		this.supplierCreatedTemplateName = supplierCreatedTemplateName;
+	}
+
 	public PurchaseOrder get(String poNo, boolean includeDetail) {
 		PurchaseOrder purchaseOrder = this.genericDao.get(poNo);
-		
-		if (includeDetail && purchaseOrder.getPurchaseOrderDetailList() != null
-				&& purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
-			
+
+		if (includeDetail && purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
+
 		}
-			
+
 		return purchaseOrder;
 	}
 
 	public void ReloadFile(InboundLog inboundLog, String userCode) {
 
 		try {
-			FileInputStream stream = new FileInputStream(inboundLog
-					.getFullFilePath());
+			FileInputStream stream = new FileInputStream(inboundLog.getFullFilePath());
 			SaveSingleFile(stream, inboundLog);
 		} catch (FileNotFoundException fileNotFoundException) {
 			inboundLog.setMemo(fileNotFoundException.getMessage());
@@ -133,8 +151,7 @@ public class PurchaseOrderManagerImpl extends
 		}
 	}
 
-	public PurchaseOrder SaveSingleFile(InputStream inputStream,
-			InboundLog inboundLog) {
+	public PurchaseOrder SaveSingleFile(InputStream inputStream, InboundLog inboundLog) {
 
 		try {
 			ORDERS02 order = unmarshalOrder(inputStream);
@@ -159,12 +176,10 @@ public class PurchaseOrderManagerImpl extends
 			inboundLog.setInboundResult("fail");
 			inboundLog.setMemo(jaxbException.getMessage());
 		} catch (DataConvertException dataConvertException) {
-			log.error("Error occur when convert ORDERS to PO.",
-					dataConvertException);
+			log.error("Error occur when convert ORDERS to PO.", dataConvertException);
 			inboundLog.setInboundResult("fail");
 
-			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException
-					.getObject();
+			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
 			inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
 			inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
 			inboundLog.setMemo(dataConvertException.getMessage());
@@ -182,8 +197,7 @@ public class PurchaseOrderManagerImpl extends
 		return o;
 	}
 
-	private PurchaseOrder ORDERS02ToPO(final ORDERS02 order)
-			throws DataConvertException {
+	private PurchaseOrder ORDERS02ToPO(final ORDERS02 order) throws DataConvertException {
 
 		PurchaseOrder po = new PurchaseOrder();
 		po.setStatus("Open");
@@ -196,8 +210,7 @@ public class PurchaseOrderManagerImpl extends
 
 			po.setPoNo(order.getIDOC().getE1EDK01().getBELNR()); // po number
 
-			List<ORDERS02E1EDK03> ORDERS02E1EDK03List = order.getIDOC()
-					.getE1EDK03();
+			List<ORDERS02E1EDK03> ORDERS02E1EDK03List = order.getIDOC().getE1EDK03();
 			if (ORDERS02E1EDK03List != null && ORDERS02E1EDK03List.size() > 0) {
 				for (int i = 0; i < ORDERS02E1EDK03List.size(); i++) {
 					ORDERS02E1EDK03 E1EDK03 = ORDERS02E1EDK03List.get(i);
@@ -209,8 +222,7 @@ public class PurchaseOrderManagerImpl extends
 				}
 			}
 
-			List<ORDERS02E1EDKA1> ORDERS02E1EDKA1List = order.getIDOC()
-					.getE1EDKA1();
+			List<ORDERS02E1EDKA1> ORDERS02E1EDKA1List = order.getIDOC().getE1EDKA1();
 			if (ORDERS02E1EDKA1List != null && ORDERS02E1EDKA1List.size() > 0) {
 				for (int i = 0; i < ORDERS02E1EDKA1List.size(); i++) {
 					ORDERS02E1EDKA1 E1EDKA1 = ORDERS02E1EDKA1List.get(i);
@@ -225,10 +237,7 @@ public class PurchaseOrderManagerImpl extends
 						try {
 							supplier = this.supplierManager.get(supplierCode); // supplier
 						} catch (ObjectRetrievalFailureException ex) {
-							log
-									.info("Supplier not found with the given supplier code: "
-											+ supplierCode
-											+ ", try to create a new one.");
+							log.info("Supplier not found with the given supplier code: " + supplierCode + ", try to create a new one.");
 
 							supplier = new Supplier();
 							supplier.setCode(supplierCode);
@@ -241,44 +250,43 @@ public class PurchaseOrderManagerImpl extends
 			}
 
 			/*
-			po.setPlant(plant);
-			po.setPlantName(plant.getName());
-			po.setPlantAddress1(plant.getAddress1());
-			po.setPlantAddress2(plant.getAddress2());
-			po.setPlantContactPerson(plant.getContactPerson());
-			po.setPlantPhone(plant.getPhone());
-			po.setPlantFax(plant.getFax());
-			*/
+			 * po.setPlant(plant); po.setPlantName(plant.getName());
+			 * po.setPlantAddress1(plant.getAddress1());
+			 * po.setPlantAddress2(plant.getAddress2());
+			 * po.setPlantContactPerson(plant.getContactPerson());
+			 * po.setPlantPhone(plant.getPhone());
+			 * po.setPlantFax(plant.getFax());
+			 */
 
-			PlantSupplier plantSupplier = this.plantSupplierManager
-					.getPlantSupplier(plant, supplier);
+			PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, supplier);
 
 			if (plantSupplier == null) {
-				log.info("The relationship between Plant: " + plant.getCode()
-						+ " and Supplier: " + supplier.getCode()
+				log.info("The relationship between Plant: " + plant.getCode() + " and Supplier: " + supplier.getCode()
 						+ " not found, try to create a new one.");
 
 				plantSupplier = new PlantSupplier();
 				plantSupplier.setSupplierName(supplierE1EDKA1.getNAME1());
 				plantSupplier.setSupplierAddress1(supplierE1EDKA1.getSTRAS());
 				plantSupplier.setSupplierAddress2(supplierE1EDKA1.getSTRS2());
-				plantSupplier.setSupplierContactPerson(supplierE1EDKA1
-						.getPERNR());
+				plantSupplier.setSupplierContactPerson(supplierE1EDKA1.getPERNR());
 				plantSupplier.setSupplierPhone(supplierE1EDKA1.getTELF1());
 				plantSupplier.setSupplierFax(supplierE1EDKA1.getTELFX());
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
 
-				plantSupplier = this.plantSupplierManager.save(plantSupplier);	
-				
-				//生成供应商帐号
+				plantSupplier = this.plantSupplierManager.save(plantSupplier);
+
+				// 生成供应商帐号
 				User supplierUser = new User();
-				supplierUser.setUsername(String.valueOf(plantSupplier.getId() + 10000));  //使用plantSupplier.id + 100000作为供应商用户的名称
+				supplierUser.setUsername(String.valueOf(plantSupplier.getId() + 10000)); // 使用plantSupplier.id
+				// +
+				// 100000作为供应商用户的名称
 				supplierUser.setEnabled(true);
 				supplierUser.setAccountExpired(false);
 				supplierUser.setAccountLocked(false);
-				supplierUser.setEmail("");
-				supplierUser.setPassword(RandomStringUtils.random(6, true, true));	
+				supplierUser.setEmail(plant.getSupplierNotifyEmail());
+				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
+				supplierUser.setConfirmPassword(supplierUser.getPassword());
 				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
 				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
 				supplierUser.setUserSupplier(supplier);
@@ -287,50 +295,56 @@ public class PurchaseOrderManagerImpl extends
 				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
 				supplierUser.setRoles(roles);
 				this.userManager.saveUser(supplierUser);
+
+				try {
+					// Email通知
+					log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
+					mailMessage.setTo(plant.getSupplierNotifyEmail());
+					Map<String, Object> model = new HashMap<String, Object>();
+					model.put("plantSupplier", plantSupplier);
+					model.put("user", supplierUser);
+					mailMessage.setSubject("Supplier " + plantSupplier.getSupplier().getCode() + " Created");
+					mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
+					log.info("Send supplier created email successful.");
+				} catch (MailException ex) {
+					log.error("Error when send supplier create mail.", ex);
+				}
 			}
 
 			po.setPlantSupplier(plantSupplier);
 			/*
-			po.setSupplierName(plantSupplier.getSupplierName());
-			po.setSupplierAddress1(plantSupplier.getSupplierAddress1());
-			po.setSupplierAddress2(plantSupplier.getSupplierAddress2());
-			po.setSupplierContactPerson(plantSupplier
-					.getSupplierContactPerson());
-			po.setSupplierPhone(plantSupplier.getSupplierPhone());
-			po.setSupplierFax(plantSupplier.getSupplierFax());
-			*/
-			
+			 * po.setSupplierName(plantSupplier.getSupplierName());
+			 * po.setSupplierAddress1(plantSupplier.getSupplierAddress1());
+			 * po.setSupplierAddress2(plantSupplier.getSupplierAddress2());
+			 * po.setSupplierContactPerson(plantSupplier
+			 * .getSupplierContactPerson());
+			 * po.setSupplierPhone(plantSupplier.getSupplierPhone());
+			 * po.setSupplierFax(plantSupplier.getSupplierFax());
+			 */
+
 			// ----------------------------po detail---------------------
-			List<ORDERS02E1EDP01> ORDERS02E1EDP01List = order.getIDOC()
-					.getE1EDP01();
+			List<ORDERS02E1EDP01> ORDERS02E1EDP01List = order.getIDOC().getE1EDP01();
 
 			if (ORDERS02E1EDP01List != null && ORDERS02E1EDP01List.size() > 0) {
 				for (int i = 0; i < ORDERS02E1EDP01List.size(); i++) {
 
 					ORDERS02E1EDP01 E1EDP01 = ORDERS02E1EDP01List.get(i);
 
-					List<ORDERS02E1EDP19> ORDERS02E1EDP19List = E1EDP01
-							.getE1EDP19();
+					List<ORDERS02E1EDP19> ORDERS02E1EDP19List = E1EDP01.getE1EDP19();
 					Item item = null;
 					SupplierItem supplierItem = null;
 					String supplierItemCode = null;
 
-					if (ORDERS02E1EDP19List != null
-							&& ORDERS02E1EDP19List.size() > 0) {
+					if (ORDERS02E1EDP19List != null && ORDERS02E1EDP19List.size() > 0) {
 						for (int j = 0; j < ORDERS02E1EDP19List.size(); j++) {
-							ORDERS02E1EDP19 E1EDP19 = ORDERS02E1EDP19List
-									.get(j);
+							ORDERS02E1EDP19 E1EDP19 = ORDERS02E1EDP19List.get(j);
 
 							if ("001".equals(E1EDP19.getQUALF())) {
 								String itemCode = E1EDP19.getIDTNR();
 
-								item = this.itemManager.getItemByPlantAndItem(
-										plant, itemCode);
+								item = this.itemManager.getItemByPlantAndItem(plant, itemCode);
 								if (item == null) {
-									log
-											.info("Item not found with the given item code: "
-													+ itemCode
-													+ ", try to create a new one.");
+									log.info("Item not found with the given item code: " + itemCode + ", try to create a new one.");
 
 									item = new Item();
 									item.setCode(itemCode);
@@ -343,65 +357,47 @@ public class PurchaseOrderManagerImpl extends
 							} else if ("002".equals(E1EDP19.getQUALF())) {
 								supplierItemCode = E1EDP19.getIDTNR();
 
-								supplierItem = this.supplierItemManager
-										.getSupplierItemByItemAndSupplier(item,
-												supplier);
+								supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
 
 								if (supplierItem == null) {
-									log
-											.info("The relationship between Item: "
-													+ item.getCode()
-													+ " and Supplier: "
-													+ supplier.getCode()
-													+ " not found, try to create a new one.");
+									log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
+											+ " not found, try to create a new one.");
 
 									supplierItem = new SupplierItem();
 									supplierItem.setItem(item);
 									supplierItem.setSupplier(supplier);
-									supplierItem
-											.setSupplierItemCode(supplierItemCode);
+									supplierItem.setSupplierItemCode(supplierItemCode);
 
-									supplierItem = this.supplierItemManager
-											.save(supplierItem);
+									supplierItem = this.supplierItemManager.save(supplierItem);
 								}
 							}
 						}
 					}
 
-					List<ORDERS02E1EDP20> ORDERS02E1EDP20List = E1EDP01
-							.getE1EDP20();
+					List<ORDERS02E1EDP20> ORDERS02E1EDP20List = E1EDP01.getE1EDP20();
 
-					if (ORDERS02E1EDP20List != null
-							&& ORDERS02E1EDP20List.size() > 0) {
+					if (ORDERS02E1EDP20List != null && ORDERS02E1EDP20List.size() > 0) {
 
 						for (int k = 0; k < ORDERS02E1EDP20List.size(); k++) {
 
-							ORDERS02E1EDP20 E1EDP20 = ORDERS02E1EDP20List
-									.get(k);
+							ORDERS02E1EDP20 E1EDP20 = ORDERS02E1EDP20List.get(k);
 
 							PurchaseOrderDetail purchaseOrderDetail = new PurchaseOrderDetail();
 
 							purchaseOrderDetail.setSequence(E1EDP01.getPOSEX()); // 序号
 							purchaseOrderDetail.setItem(item);
 							purchaseOrderDetail.setPurchaseOrder(po);
-							purchaseOrderDetail.setDeliveryDate(dateFormat
-									.parse(E1EDP20.getEDATU()));
-							purchaseOrderDetail.setQty(new BigDecimal(E1EDP20
-									.getWMENG()));
+							purchaseOrderDetail.setDeliveryDate(dateFormat.parse(E1EDP20.getEDATU()));
+							purchaseOrderDetail.setQty(new BigDecimal(E1EDP20.getWMENG()));
 							purchaseOrderDetail.setUom(E1EDP01.getMENEE());
 
 							if (supplierItemCode != null) {
-								purchaseOrderDetail
-										.setSupplierItemCode(supplierItemCode);
+								purchaseOrderDetail.setSupplierItemCode(supplierItemCode);
 							} else {
-								supplierItem = this.supplierItemManager
-										.getSupplierItemByItemAndSupplier(item,
-												supplier);
+								supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
 
 								if (supplierItem != null) {
-									purchaseOrderDetail
-											.setSupplierItemCode(supplierItem
-													.getSupplierItemCode());
+									purchaseOrderDetail.setSupplierItemCode(supplierItem.getSupplierItemCode());
 								}
 							}
 

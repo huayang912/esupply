@@ -39,6 +39,9 @@ public class Plant extends BaseObject implements Serializable {
 	private Integer outboundIntervalType;
 	private Integer outboundInterval;
 	private Date nextOutboundDate;
+	private String errorLogEmail1;
+	private String errorLogEmail2;
+	private String supplierNotifyEmail;
 
 	@Id
 	@Column(length = 20)
@@ -139,7 +142,7 @@ public class Plant extends BaseObject implements Serializable {
 	public void setFtpPassword(String ftpPassword) {
 		this.ftpPassword = ftpPassword;
 	}
-	
+
 	@Transient
 	public String getConfirmFtpPassword() {
 		return confirmFtpPassword;
@@ -239,6 +242,33 @@ public class Plant extends BaseObject implements Serializable {
 		this.nextOutboundDate = nextOutboundDate;
 	}
 
+	@Column(name="error_log_email1", nullable = true, length = 255)
+	public String getErrorLogEmail1() {
+		return errorLogEmail1;
+	}
+
+	public void setErrorLogEmail1(String errorLogEmail1) {
+		this.errorLogEmail1 = errorLogEmail1;
+	}
+	
+	@Column(name="error_log_email2", nullable = true, length = 255)
+	public String getErrorLogEmail2() {
+		return errorLogEmail2;
+	}
+
+	public void setErrorLogEmail2(String errorLogEmail2) {
+		this.errorLogEmail2 = errorLogEmail2;
+	}
+
+	@Column(name="supplier_notify_email", nullable = true, length = 255)
+	public String getSupplierNotifyEmail() {
+		return supplierNotifyEmail;
+	}
+
+	public void setSupplierNotifyEmail(String supplierNotifyEmail) {
+		this.supplierNotifyEmail = supplierNotifyEmail;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -267,8 +297,7 @@ public class Plant extends BaseObject implements Serializable {
 	 * {@inheritDoc}
 	 */
 	public String toString() {
-		return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append(
-				this.code).toString();
+		return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).append(this.code).toString();
 	}
 
 	public int compareTo(Object o) {
