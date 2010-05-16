@@ -4,6 +4,7 @@
 <title><fmt:message key="plantSupplierList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='plantSupplierList.heading'/>" />
+	<meta name="menu" content="PlantAdminMenu"/>
 </head>
 <c:set var="buttons">
 	<input type="button"
