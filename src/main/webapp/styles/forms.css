@@ -396,8 +396,8 @@ fieldset ol li {
 
 /* ----- Buttons ----- */
 input.button,button {
-	width: 6em;
-	padding: 2px 2px 0 0; /* fix for IE */
+	/*width: 6em;
+	padding: 2px 2px 0 0;  fix for IE */
 }
 
 /* revert to normal for Firefox */
