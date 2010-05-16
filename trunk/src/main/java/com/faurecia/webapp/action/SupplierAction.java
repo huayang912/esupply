@@ -23,6 +23,7 @@ public class SupplierAction extends BaseAction {
 	private List<PlantSupplier> plantSuppliers;
 	private PlantSupplier plantSupplier;
 	private int id;
+	private boolean editProfile;
 
 	public List<PlantSupplier> getPlantSuppliers() {
 		return plantSuppliers;
@@ -46,6 +47,14 @@ public class SupplierAction extends BaseAction {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean isEditProfile() {
+		return editProfile;
+	}
+
+	public void setEditProfile(boolean editProfile) {
+		this.editProfile = editProfile;
 	}
 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {

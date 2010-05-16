@@ -5,6 +5,7 @@
 <meta name="heading" content="<fmt:message key='itemDetail.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
+<meta name="menu" content="PlantUserMenu" />
 </head>
 
 <s:form name="itemForm" action="saveItem" method="post" validate="true">
@@ -14,7 +15,7 @@
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
 		<s:submit key="button.cancel" method="cancel" />
-	</c:set> 
+	</c:set>
 
 	<li><s:textfield key="item.code" cssClass="text medium"
 		required="true" /></li>

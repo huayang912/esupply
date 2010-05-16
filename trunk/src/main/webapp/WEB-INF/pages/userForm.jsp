@@ -3,7 +3,23 @@
 <head>
 <title><fmt:message key="userProfile.title" /></title>
 <meta name="heading" content="<fmt:message key='userProfile.heading'/>" />
-<meta name="menu" content="UserMenu" />
+<c:choose>
+	<c:when test="${editProfile}">
+		<meta name="menu" content="UserMenu" />
+	</c:when>
+	<c:otherwise>
+		<c:choose>
+			<c:when
+				test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN'}">
+				<meta name="menu" content="AdminMenu" />
+			</c:when>
+			<c:when
+				test="${roleType == 'ROLE_PLANT_USER' or roleType == 'ROLE_VENDOR'}">
+				<meta name="menu" content="PlantAdminMenu" />
+			</c:when>
+		</c:choose>
+	</c:otherwise>
+</c:choose>
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
 </head>
@@ -27,7 +43,7 @@
 				onclick="return confirmDelete('user')" />
 		</c:if>
 		<s:submit key="button.cancel" method="cancel" />
-	</c:set> 
+	</c:set>
 	<li class="info"><c:choose>
 		<c:when test="${param.from == 'list'}">
 			<p><fmt:message key="userProfile.admin.message" /></p>

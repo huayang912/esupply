@@ -6,6 +6,16 @@
 	content="<fmt:message key='plantSupplierDetail.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
+
+<c:choose>
+	<c:when
+		test="${editProfile}">
+		<meta name="menu" content="SupplierProfileMenu" />
+	</c:when>
+	<c:otherwise>
+		<meta name="menu" content="PlantUserMenu" />
+	</c:otherwise>
+</c:choose>
 </head>
 
 <s:form name="plantSupplierForm" action="saveSupplier"

@@ -5,6 +5,7 @@
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderList.heading'/>" />
 </head>
+<meta name="menu" content="OrderMenu" />
 <c:set var="buttons">
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"

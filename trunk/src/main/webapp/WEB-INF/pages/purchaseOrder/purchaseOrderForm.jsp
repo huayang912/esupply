@@ -6,6 +6,7 @@
 	content="<fmt:message key='purchaseOrderDetail.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
+<meta name="menu" content="OrderMenu" />
 </head>
 
 <s:form name="purchaseOrderForm" action="savePurchaseOrder"
