@@ -52,9 +52,14 @@
 
 	<li>
 	<div>
-	<div class="left"><s:textfield key="plant.ftpUser" theme="xhtml"
-		required="true" cssClass="text medium" /></div>
-	<div><s:textfield key="plant.ftpPath" theme="xhtml"
+	<div><s:textfield key="plant.ftpPath" required="true"
+		theme="xhtml" cssClass="text large" /></div>
+	</div>
+	</li>
+
+	<li>
+	<div>
+	<div><s:textfield key="plant.ftpUser" theme="xhtml"
 		required="true" cssClass="text medium" /></div>
 	</div>
 	</li>
@@ -62,8 +67,8 @@
 	<li>
 	<div>
 	<div class="left"><s:password key="plant.ftpPassword"
-		showPassword="true" theme="xhtml" required="true" cssClass="text medium"
-		onchange="passwordChanged(this)" /></div>
+		showPassword="true" theme="xhtml" required="true"
+		cssClass="text medium" onchange="passwordChanged(this)" /></div>
 	<div><s:password key="plant.confirmFtpPassword" theme="xhtml"
 		showPassword="true" required="true" cssClass="text medium"
 		onchange="passwordChanged(this)" /></div>
@@ -72,25 +77,29 @@
 
 	<li>
 	<div>
-	<div class="left"><s:textfield key="plant.tempFileDirectory"
-		theme="xhtml" required="true" cssClass="text medium" /></div>
-	<div><s:textfield key="plant.archiveFileDirectory" theme="xhtml"
-		required="true" cssClass="text medium" /></div>
+	<div><s:textfield key="plant.tempFileDirectory" required="true"
+		theme="xhtml" cssClass="text large" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
-	<div class="left"><s:textfield key="plant.errorFileDirectory"
-		required="true" theme="xhtml" cssClass="text medium" /></div>
+	<div><s:textfield key="plant.archiveFileDirectory" theme="xhtml"
+		required="true" cssClass="text large" /></div>
+	</div>
+	</li>
+
+	<li>
+	<div>
+	<div><s:textfield key="plant.errorFileDirectory" required="true"
+		theme="xhtml" cssClass="text large" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div class="left"><s:select key="plant.inboundIntervalType"
-		list="%{dateType}"
-		theme="xhtml"></s:select></div>
+		list="%{dateType}" theme="xhtml"></s:select></div>
 	<div><s:textfield key="plant.inboundInterval" theme="xhtml"
 		required="true" cssClass="text medium" /></div>
 	</div>
@@ -99,10 +108,30 @@
 	<li>
 	<div>
 	<div class="left"><s:select key="plant.outboundIntervalType"
-		list="%{dateType}"
-		theme="xhtml"></s:select></div>
+		list="%{dateType}" theme="xhtml"></s:select></div>
 	<div><s:textfield key="plant.outboundInterval" theme="xhtml"
 		required="true" cssClass="text medium" /></div>
+	</div>
+	</li>
+
+	<li>
+	<div>
+	<div><s:textfield key="plant.errorLogEmail1" theme="xhtml"
+		cssClass="text large" /></div>
+	</div>
+	</li>
+
+	<li>
+	<div>
+	<div><s:textfield key="plant.errorLogEmail2" theme="xhtml"
+		cssClass="text large" /></div>
+	</div>
+	</li>
+
+	<li>
+	<div>
+	<div><s:textfield key="plant.supplierNotifyEmail" theme="xhtml"
+		cssClass="text large" /></div>
 	</div>
 	</li>
 
