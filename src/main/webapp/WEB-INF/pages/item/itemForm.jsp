@@ -15,17 +15,14 @@
 			onclick="onFormSubmit(this.form)" />
 		<s:submit key="button.cancel" method="cancel" />
 	</c:set> <c:out value="${buttons}" escapeXml="false" /></li>
-	<li class="info">
-	<p><fmt:message key="itemDetail.info.message" /></p>
-	</li>
 
-	<li><s:textfield key="item.code" cssClass="text large"
+	<li><s:textfield key="item.code" cssClass="text medium"
 		required="true" /></li>
 
 	<li><s:textfield key="item.description" cssClass="text large"
 		required="true" /></li>
 
-	<li><s:textfield key="item.Uom" required="true"
+	<li><s:textfield key="item.uom" required="true"
 		cssClass="text medium" /></li>
 	<li class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></li>

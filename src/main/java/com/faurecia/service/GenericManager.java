@@ -55,5 +55,9 @@ public interface GenericManager<T, PK extends Serializable> {
      */
     void remove(PK id);
     
-    List<T> findByCriteria(DetachedCriteria criteria);
+    List findByCriteria(DetachedCriteria criteria);
+    
+    List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults);
+    
+    List<T> findByExample(T exampleEntity);
 }

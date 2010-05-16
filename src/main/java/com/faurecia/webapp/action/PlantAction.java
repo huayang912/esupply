@@ -23,7 +23,6 @@ public class PlantAction extends BaseAction {
 	private List<Plant> plants;
 	private Plant plant;
 	private String code;
-	private Map<Integer, String> dateType;
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -34,6 +33,13 @@ public class PlantAction extends BaseAction {
 	}
 
 	public Map<Integer, String> getDateType() {
+		Map<Integer, String> dateType = new HashMap<Integer, String>();
+		dateType.put(Calendar.YEAR, "Year");
+		dateType.put(Calendar.MONTH, "Month");
+		dateType.put(Calendar.DATE, "Day");
+		dateType.put(Calendar.HOUR, "Hour");
+		dateType.put(Calendar.MINUTE, "Minute");
+		
 		return dateType;
 	}
 
@@ -84,8 +90,6 @@ public class PlantAction extends BaseAction {
 			plant = new Plant();
 		}
 
-		prepareEdit();
-		
 		return SUCCESS;
 	}
 
@@ -103,19 +107,9 @@ public class PlantAction extends BaseAction {
 		saveMessage(getText(key));
 
 		if (!isNew) {
-			prepareEdit();
 			return INPUT;
 		} else {
 			return SUCCESS;
 		}
-	}
-	
-	private void prepareEdit() {
-		this.dateType = new HashMap<Integer, String>();
-		this.dateType.put(Calendar.YEAR, "Year");
-		this.dateType.put(Calendar.MONTH, "Month");
-		this.dateType.put(Calendar.DATE, "Day");
-		this.dateType.put(Calendar.HOUR, "Hour");
-		this.dateType.put(Calendar.MINUTE, "Minute");
 	}
 }

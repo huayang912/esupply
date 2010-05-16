@@ -27,8 +27,12 @@
     <display:column property="phone" sortable="true" titleKey="plant.phone"/>
     <display:column property="fax" sortable="true" titleKey="plant.fax"/>
     
-    <display:setProperty name="paging.banner.item_name" value="plant"/>
-    <display:setProperty name="paging.banner.items_name" value="plants"/>
+    <display:setProperty name="paging.banner.item_name">
+		<fmt:message key="plant.plant" />
+	</display:setProperty>
+	<display:setProperty name="paging.banner.items_name">
+		<fmt:message key="plant.plants" />
+	</display:setProperty>
     
     <display:setProperty name="export.excel.filename" value="Plant List.xls"/>
     <display:setProperty name="export.csv.filename" value="Plant List.csv"/>

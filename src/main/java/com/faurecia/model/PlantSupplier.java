@@ -72,6 +72,11 @@ public class PlantSupplier extends BaseObject implements Serializable {
 
 	@Column(name = "supplier_name", nullable = true, length = 50)
 	public String getSupplierName() {
+		if (supplierName != null && supplierName.trim().length() > 0) {
+			return supplierName;
+		} else if (supplier != null) {
+			return supplier.getName();
+		}
 		return supplierName;
 	}
 

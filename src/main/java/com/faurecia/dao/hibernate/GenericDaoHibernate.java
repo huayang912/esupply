@@ -127,12 +127,12 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
    }
    
    @SuppressWarnings("unchecked")
-   public List<T> findByCriteria(DetachedCriteria criteria) {
+   public List findByCriteria(DetachedCriteria criteria) {
 	   return getHibernateTemplate().findByCriteria(criteria);
    }
    
    @SuppressWarnings("unchecked")
-   public List<T> findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults) {
+   public List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults) {
 	   return getHibernateTemplate().findByCriteria(criteria, firstResult, maxResults);
    }
    

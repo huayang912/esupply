@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -27,14 +28,13 @@ public class PurchaseOrder extends BaseObject {
 	 */
 	private static final long serialVersionUID = 1875870080239908794L;
 	private String poNo;
-	private Plant plant;
+	private PlantSupplier plantSupplier;
 	private String plantName;
 	private String plantAddress1;
 	private String plantAddress2;
 	private String plantContactPerson;
 	private String plantPhone;
 	private String plantFax;
-	private Supplier supplier;
 	private String supplierName;
 	private String supplierAddress1;
 	private String supplierAddress2;
@@ -42,10 +42,13 @@ public class PurchaseOrder extends BaseObject {
 	private String supplierPhone;
 	private String supplierFax;
 	private Date CreateDate;
+	private Date CreateDateFrom;
+	private Date CreateDateTo;
+	private String Status;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
 
-	@Id 
-	@Column(name = "po_no", length=20)
+	@Id
+	@Column(name = "po_no", length = 20)
 	public String getPoNo() {
 		return poNo;
 	}
@@ -53,19 +56,24 @@ public class PurchaseOrder extends BaseObject {
 	public void setPoNo(String poNo) {
 		this.poNo = poNo;
 	}
-	
+
 	@ManyToOne
-	@JoinColumn(name = "plant_code")
-	public Plant getPlant() {
-		return plant;
+	@JoinColumn(name = "plant_supplier_id")
+	public PlantSupplier getPlantSupplier() {
+		return plantSupplier;
 	}
 
-	public void setPlant(Plant plant) {
-		this.plant = plant;
+	public void setPlantSupplier(PlantSupplier plantSupplier) {
+		this.plantSupplier = plantSupplier;
 	}
 
-	@Column(name = "plant_name", nullable=false, length=50)
+	@Column(name = "plant_name", nullable = false, length = 50)
 	public String getPlantName() {
+		if (plantName != null && plantName.trim().length() > 0) {
+			return plantName;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getPlant().getName();
+		}
 		return plantName;
 	}
 
@@ -73,8 +81,13 @@ public class PurchaseOrder extends BaseObject {
 		this.plantName = plantName;
 	}
 
-	@Column(name = "plant_address1", nullable=true, length=255)
+	@Column(name = "plant_address1", nullable = true, length = 255)
 	public String getPlantAddress1() {
+		if (plantAddress1 != null && plantAddress1.trim().length() > 0) {
+			return plantAddress1;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getPlant().getAddress1();
+		}
 		return plantAddress1;
 	}
 
@@ -82,8 +95,13 @@ public class PurchaseOrder extends BaseObject {
 		this.plantAddress1 = plantAddress1;
 	}
 
-	@Column(name = "plant_address2", nullable=true, length=255)
+	@Column(name = "plant_address2", nullable = true, length = 255)
 	public String getPlantAddress2() {
+		if (plantAddress2 != null && plantAddress2.trim().length() > 0) {
+			return plantAddress2;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getPlant().getAddress2();
+		}
 		return plantAddress2;
 	}
 
@@ -91,8 +109,13 @@ public class PurchaseOrder extends BaseObject {
 		this.plantAddress2 = plantAddress2;
 	}
 
-	@Column(name = "plant_contact_person", nullable=true, length=50)
+	@Column(name = "plant_contact_person", nullable = true, length = 50)
 	public String getPlantContactPerson() {
+		if (plantContactPerson != null && plantContactPerson.trim().length() > 0) {
+			return plantContactPerson;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getPlant().getContactPerson();
+		}
 		return plantContactPerson;
 	}
 
@@ -100,8 +123,13 @@ public class PurchaseOrder extends BaseObject {
 		this.plantContactPerson = plantContactPerson;
 	}
 
-	@Column(name = "plant_phone", nullable=true, length=50)
+	@Column(name = "plant_phone", nullable = true, length = 50)
 	public String getPlantPhone() {
+		if (plantPhone != null && plantPhone.trim().length() > 0) {
+			return plantPhone;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getPlant().getPhone();
+		}
 		return plantPhone;
 	}
 
@@ -109,8 +137,13 @@ public class PurchaseOrder extends BaseObject {
 		this.plantPhone = plantPhone;
 	}
 
-	@Column(name = "plant_fax", nullable=true, length=50)
+	@Column(name = "plant_fax", nullable = true, length = 50)
 	public String getPlantFax() {
+		if (plantFax != null && plantFax.trim().length() > 0) {
+			return plantFax;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getPlant().getFax();
+		}
 		return plantFax;
 	}
 
@@ -118,18 +151,13 @@ public class PurchaseOrder extends BaseObject {
 		this.plantFax = plantFax;
 	}
 
-	@ManyToOne
-	@JoinColumn(name = "supplier_code")
-	public Supplier getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
-
-	@Column(name = "supplier_name", nullable=true, length=50)
+	@Column(name = "supplier_name", nullable = true, length = 50)
 	public String getSupplierName() {
+		if (supplierName != null && supplierName.trim().length() > 0) {
+			return supplierName;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getSupplierName();
+		}
 		return supplierName;
 	}
 
@@ -137,8 +165,13 @@ public class PurchaseOrder extends BaseObject {
 		this.supplierName = supplierName;
 	}
 
-	@Column(name = "supplier_address1", nullable=true, length=255)
+	@Column(name = "supplier_address1", nullable = true, length = 255)
 	public String getSupplierAddress1() {
+		if (supplierAddress1 != null && supplierAddress1.trim().length() > 0) {
+			return supplierAddress1;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getSupplierAddress1();
+		}
 		return supplierAddress1;
 	}
 
@@ -146,8 +179,13 @@ public class PurchaseOrder extends BaseObject {
 		this.supplierAddress1 = supplierAddress1;
 	}
 
-	@Column(name = "supplier_address2", nullable=true, length=255)
+	@Column(name = "supplier_address2", nullable = true, length = 255)
 	public String getSupplierAddress2() {
+		if (supplierAddress2 != null && supplierAddress2.trim().length() > 0) {
+			return supplierAddress2;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getSupplierAddress2();
+		}
 		return supplierAddress2;
 	}
 
@@ -155,8 +193,13 @@ public class PurchaseOrder extends BaseObject {
 		this.supplierAddress2 = supplierAddress2;
 	}
 
-	@Column(name = "supplier_contact_person", nullable=true, length=50)
+	@Column(name = "supplier_contact_person", nullable = true, length = 50)
 	public String getSupplierContactPerson() {
+		if (supplierContactPerson != null && supplierContactPerson.trim().length() > 0) {
+			return supplierContactPerson;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getSupplierContactPerson();
+		}
 		return supplierContactPerson;
 	}
 
@@ -164,8 +207,13 @@ public class PurchaseOrder extends BaseObject {
 		this.supplierContactPerson = supplierContactPerson;
 	}
 
-	@Column(name = "supplier_phone", nullable=true, length=50)
+	@Column(name = "supplier_phone", nullable = true, length = 50)
 	public String getSupplierPhone() {
+		if (supplierPhone != null && supplierPhone.trim().length() > 0) {
+			return supplierPhone;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getSupplierPhone();
+		}
 		return supplierPhone;
 	}
 
@@ -173,8 +221,13 @@ public class PurchaseOrder extends BaseObject {
 		this.supplierPhone = supplierPhone;
 	}
 
-	@Column(name = "supplier_fax", nullable=true, length=50)
+	@Column(name = "supplier_fax", nullable = true, length = 50)
 	public String getSupplierFax() {
+		if (supplierFax != null && supplierFax.trim().length() > 0) {
+			return supplierFax;
+		} else if (plantSupplier != null) {
+			return plantSupplier.getSupplierFax();
+		}
 		return supplierFax;
 	}
 
@@ -182,7 +235,7 @@ public class PurchaseOrder extends BaseObject {
 		this.supplierFax = supplierFax;
 	}
 
-	@Column(name = "create_date", nullable=false)
+	@Column(name = "create_date", nullable = false)
 	public Date getCreateDate() {
 		return CreateDate;
 	}
@@ -191,22 +244,48 @@ public class PurchaseOrder extends BaseObject {
 		CreateDate = createDate;
 	}
 
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="purchaseOrder")
+	@Column(name = "status", nullable = false, length = 20)
+	public String getStatus() {
+		return Status;
+	}
+
+	public void setStatus(String status) {
+		Status = status;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
 	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
 		return purchaseOrderDetailList;
 	}
 
-	public void setPurchaseOrderDetailList(
-			List<PurchaseOrderDetail> purchaseOrderDetailList) {
+	public void setPurchaseOrderDetailList(List<PurchaseOrderDetail> purchaseOrderDetailList) {
 		this.purchaseOrderDetailList = purchaseOrderDetailList;
 	}
-	
+
 	public void addPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
 		if (purchaseOrderDetailList == null) {
 			purchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
 		}
-		
+
 		purchaseOrderDetailList.add(purchaseOrderDetail);
+	}
+
+	@Transient
+	public Date getCreateDateFrom() {
+		return CreateDateFrom;
+	}
+
+	public void setCreateDateFrom(Date createDateFrom) {
+		CreateDateFrom = createDateFrom;
+	}
+
+	@Transient
+	public Date getCreateDateTo() {
+		return CreateDateTo;
+	}
+
+	public void setCreateDateTo(Date createDateTo) {
+		CreateDateTo = createDateTo;
 	}
 
 	/**
@@ -220,8 +299,7 @@ public class PurchaseOrder extends BaseObject {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(-1408229217, 585973395).append(this.poNo)
-				.toHashCode();
+		return new HashCodeBuilder(-1408229217, 585973395).append(this.poNo).toHashCode();
 	}
 
 	/**
@@ -240,7 +318,6 @@ public class PurchaseOrder extends BaseObject {
 	 */
 	public int compareTo(Object object) {
 		PurchaseOrder myClass = (PurchaseOrder) object;
-		return new CompareToBuilder().append(this.poNo, myClass.poNo)
-				.toComparison();
+		return new CompareToBuilder().append(this.poNo, myClass.poNo).toComparison();
 	}
 }

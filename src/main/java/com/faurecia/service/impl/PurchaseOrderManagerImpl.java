@@ -88,6 +88,17 @@ public class PurchaseOrderManagerImpl extends
 			InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
 	}
+	
+	public PurchaseOrder get(String poNo, boolean includeDetail) {
+		PurchaseOrder purchaseOrder = this.genericDao.get(poNo);
+		
+		if (includeDetail && purchaseOrder.getPurchaseOrderDetailList() != null
+				&& purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
+			
+		}
+			
+		return purchaseOrder;
+	}
 
 	public void ReloadFile(InboundLog inboundLog, String userCode) {
 
@@ -112,11 +123,11 @@ public class PurchaseOrderManagerImpl extends
 			PurchaseOrder purchaseOrder = ORDERS02ToPO(order);
 
 			if (inboundLog.getPlant() == null) {
-				inboundLog.setPlant(purchaseOrder.getPlant());
+				inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
 			}
 
 			if (inboundLog.getSupplier() == null) {
-				inboundLog.setSupplier(purchaseOrder.getSupplier());
+				inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
 			}
 
 			this.purchaseOrderManager.save(purchaseOrder);
@@ -136,8 +147,8 @@ public class PurchaseOrderManagerImpl extends
 
 			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException
 					.getObject();
-			inboundLog.setPlant(purchaseOrder.getPlant());
-			inboundLog.setSupplier(purchaseOrder.getSupplier());
+			inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
+			inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
 			inboundLog.setMemo(dataConvertException.getMessage());
 		} catch (Exception exception) {
 			log.error("Error occur.", exception);
@@ -157,6 +168,7 @@ public class PurchaseOrderManagerImpl extends
 			throws DataConvertException {
 
 		PurchaseOrder po = new PurchaseOrder();
+		po.setStatus("Open");
 
 		try {
 			Plant plant = null;
@@ -210,6 +222,7 @@ public class PurchaseOrderManagerImpl extends
 				}
 			}
 
+			/*
 			po.setPlant(plant);
 			po.setPlantName(plant.getName());
 			po.setPlantAddress1(plant.getAddress1());
@@ -217,6 +230,7 @@ public class PurchaseOrderManagerImpl extends
 			po.setPlantContactPerson(plant.getContactPerson());
 			po.setPlantPhone(plant.getPhone());
 			po.setPlantFax(plant.getFax());
+			*/
 
 			PlantSupplier plantSupplier = this.plantSupplierManager
 					.getPlantSupplier(plant, supplier);
@@ -240,7 +254,8 @@ public class PurchaseOrderManagerImpl extends
 				plantSupplier = this.plantSupplierManager.save(plantSupplier);
 			}
 
-			po.setSupplier(plantSupplier.getSupplier());
+			po.setPlantSupplier(plantSupplier);
+			/*
 			po.setSupplierName(plantSupplier.getSupplierName());
 			po.setSupplierAddress1(plantSupplier.getSupplierAddress1());
 			po.setSupplierAddress2(plantSupplier.getSupplierAddress2());
@@ -248,7 +263,8 @@ public class PurchaseOrderManagerImpl extends
 					.getSupplierContactPerson());
 			po.setSupplierPhone(plantSupplier.getSupplierPhone());
 			po.setSupplierFax(plantSupplier.getSupplierFax());
-
+			*/
+			
 			// ----------------------------po detail---------------------
 			List<ORDERS02E1EDP01> ORDERS02E1EDP01List = order.getIDOC()
 					.getE1EDP01();

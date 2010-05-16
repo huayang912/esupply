@@ -8,9 +8,11 @@ import com.faurecia.model.PurchaseOrder;
 public interface PurchaseOrderManager extends
 		GenericManager<PurchaseOrder, String> {
 
-	public PurchaseOrder SaveSingleFile(InputStream inputStream,
+	PurchaseOrder get(String poNo, boolean includeDetail);
+	
+	PurchaseOrder SaveSingleFile(InputStream inputStream,
 			InboundLog inboundLog);
 	
-	public void ReloadFile(InboundLog inboundLog, String userCode);
+	void ReloadFile(InboundLog inboundLog, String userCode);
 
 }

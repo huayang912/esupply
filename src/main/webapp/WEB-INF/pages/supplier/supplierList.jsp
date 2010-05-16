@@ -1,8 +1,9 @@
 <%@ include file="/common/taglibs.jsp"%>
 
 <head>
-<title><fmt:message key="supplierList.title" /></title>
-<meta name="heading" content="<fmt:message key='supplierList.heading'/>" />
+<title><fmt:message key="plantSupplierList.title" /></title>
+<meta name="heading"
+	content="<fmt:message key='plantSupplierList.heading'/>" />
 </head>
 
 <s:form name="supplierForm" action="suppliers" method="post"
@@ -32,7 +33,7 @@
 	class="table" export="true">
 	<display:column property="supplier.code" sortable="true"
 		url="/editSupplier.html" paramId="id" paramProperty="id"
-		titleKey="plantSupplier.supplier.code" />
+		titleKey="plantSupplier.supplierCode" />
 	<display:column property="supplierName" sortable="true"
 		titleKey="plantSupplier.supplierName" />
 	<display:column property="supplierAddress1" sortable="true"
@@ -46,10 +47,12 @@
 	<display:column property="supplierFax" sortable="true"
 		titleKey="plantSupplier.supplierFax" />
 
-	<display:setProperty name="paging.banner.plantSupplier_name"
-		value="plantSupplier" />
-	<display:setProperty name="paging.banner.plantSuppliers_name"
-		value="plantSuppliers" />
+	<display:setProperty name="paging.banner.item_name">
+		<fmt:message key="plantSupplier.supplier" />
+	</display:setProperty>
+	<display:setProperty name="paging.banner.items_name">
+		<fmt:message key="plantSupplier.suppliers" />
+	</display:setProperty>
 
 	<display:setProperty name="export.excel.filename"
 		value="plantSupplier List.xls" />

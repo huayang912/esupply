@@ -9,6 +9,7 @@
     <menu:displayMenu name="AdminMenu"/>
     <menu:displayMenu name="PlantAdminMenu"/>
     <menu:displayMenu name="PlantUserMenu"/>
+    <menu:displayMenu name="OrderMenu"/>
     <menu:displayMenu name="Logout"/>
 </ul>
 </menu:useMenuDisplayer>

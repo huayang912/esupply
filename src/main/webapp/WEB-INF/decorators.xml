@@ -3,6 +3,7 @@
         <pattern>/40*.jsp</pattern>
         <pattern>/*ajax=true*</pattern>
         <pattern>/scripts/dojo/*</pattern>
+        <pattern>/scripts/calendar/*</pattern> 
         <pattern>/struts/dojo/*</pattern> 
         <pattern>/resources/*</pattern>
     </excludes> 

@@ -17,11 +17,9 @@
 			onclick="onFormSubmit(this.form)" />
 		<s:submit key="button.cancel" method="cancel" />
 	</c:set> <c:out value="${buttons}" escapeXml="false" /></li>
-	<li class="info">
-	<p><fmt:message key="plantSupplierDetail.info.message" /></p>
-	</li>
-
+	
 	<li><s:textfield key="plantSupplier.supplier.code"
+	    title="plantSupplier.supplierCode"
 		cssClass="text large" required="true" /></li>
 
 	<li><s:textfield key="plantSupplier.supplierName"
