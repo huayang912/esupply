@@ -215,5 +215,7 @@
 		<property name="supplierItemManager" ref="supplierItemManager" />
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="inboundLogManager" ref="inboundLogManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
 	</bean>
 </beans>

@@ -7,14 +7,18 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.orm.ObjectRetrievalFailureException;
 
+import com.faurecia.Constants;
 import com.faurecia.dao.GenericDao;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Item;
@@ -22,8 +26,10 @@ import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
+import com.faurecia.model.Role;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.SupplierItem;
+import com.faurecia.model.User;
 import com.faurecia.model.order.ORDERS02;
 import com.faurecia.model.order.ORDERS02E1EDK03;
 import com.faurecia.model.order.ORDERS02E1EDKA1;
@@ -36,8 +42,10 @@ import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.ItemManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.RoleManager;
 import com.faurecia.service.SupplierItemManager;
 import com.faurecia.service.SupplierManager;
+import com.faurecia.service.UserManager;
 
 public class PurchaseOrderManagerImpl extends
 		GenericManagerImpl<PurchaseOrder, String> implements
@@ -50,6 +58,8 @@ public class PurchaseOrderManagerImpl extends
 	private GenericManager<PurchaseOrder, String> purchaseOrderManager;
 	private InboundLogManager inboundLogManager;
 	private Unmarshaller unmarshaller;
+	private UserManager userManager;
+	private RoleManager roleManager;
 
 	public PurchaseOrderManagerImpl(GenericDao<PurchaseOrder, String> genericDao)
 			throws JAXBException {
@@ -77,6 +87,14 @@ public class PurchaseOrderManagerImpl extends
 
 	public void setSupplierItemManager(SupplierItemManager supplierItemManager) {
 		this.supplierItemManager = supplierItemManager;
+	}
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
+
+	public void setRoleManager(RoleManager roleManager) {
+		this.roleManager = roleManager;
 	}
 
 	public void setPurchaseOrderManager(
@@ -214,7 +232,7 @@ public class PurchaseOrderManagerImpl extends
 
 							supplier = new Supplier();
 							supplier.setCode(supplierCode);
-							supplier.setName(E1EDKA1.getNAME1());
+							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
 						}
@@ -251,7 +269,24 @@ public class PurchaseOrderManagerImpl extends
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
 
-				plantSupplier = this.plantSupplierManager.save(plantSupplier);
+				plantSupplier = this.plantSupplierManager.save(plantSupplier);	
+				
+				//生成供应商帐号
+				User supplierUser = new User();
+				supplierUser.setUsername(String.valueOf(plantSupplier.getId() + 10000));  //使用plantSupplier.id + 100000作为供应商用户的名称
+				supplierUser.setEnabled(true);
+				supplierUser.setAccountExpired(false);
+				supplierUser.setAccountLocked(false);
+				supplierUser.setEmail("");
+				supplierUser.setPassword(RandomStringUtils.random(6, true, true));	
+				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setUserSupplier(supplier);
+				supplierUser.setUserPlant(plant);
+				Set<Role> roles = new HashSet<Role>();
+				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
+				supplierUser.setRoles(roles);
+				this.userManager.saveUser(supplierUser);
 			}
 
 			po.setPlantSupplier(plantSupplier);
