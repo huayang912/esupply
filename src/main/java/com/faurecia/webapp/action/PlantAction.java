@@ -23,6 +23,7 @@ public class PlantAction extends BaseAction {
 	private List<Plant> plants;
 	private Plant plant;
 	private String code;
+	private boolean editProfile;
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -60,6 +61,14 @@ public class PlantAction extends BaseAction {
 		this.plant = plant;
 	}
 	
+	public boolean isEditProfile() {
+		return editProfile;
+	}
+
+	public void setEditProfile(boolean editProfile) {
+		this.editProfile = editProfile;
+	}
+
 	public String cancel() {
 		if (!"list".equals(from)) {
 			return "mainMenu";
@@ -77,7 +86,7 @@ public class PlantAction extends BaseAction {
 
 	public String edit() throws JAXBException, MalformedURLException {
 		HttpServletRequest request = getRequest();
-		boolean editProfile = (request.getRequestURI().indexOf("editPlantProfile") > -1);
+		editProfile = (request.getRequestURI().indexOf("editPlantProfile") > -1);
 		
 		if (this.code != null) {
 			plant = this.plantManager.get(code);

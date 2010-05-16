@@ -3,31 +3,26 @@
 <head>
 <title><fmt:message key="userList.title" /></title>
 <meta name="heading" content="<fmt:message key='userList.heading'/>" />
-<meta name="menu" content="AdminMenu" />
+<c:choose>
+	<c:when
+		test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN'}">
+		<meta name="menu" content="AdminMenu" />
+	</c:when>
+	<c:when
+		test="${roleType == 'ROLE_PLANT_USER' or roleType == 'ROLE_VENDOR'}">
+		<meta name="menu" content="PlantAdminMenu" />
+	</c:when>
+</c:choose>
 </head>
 
 <c:set var="buttons">
 	<c:choose>
-		<c:when
-			test="${roleType == 'ROLE_ADMIN'}">
+		<c:when test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN'}">
 			<input type="button" style="margin-right: 5px"
 				onclick="location.href='<c:url value="/editAdmin.html?method=Add&from=list&roleType=${roleType}"/>'"
 				value="<fmt:message key="button.add"/>" />
 		</c:when>
-		<c:when
-			test="${roleType == 'ROLE_PLANT_ADMIN'}">
-			<input type="button" style="margin-right: 5px"
-				onclick="location.href='<c:url value="/editAdmin.html?method=Add&from=list&roleType=${roleType}"/>'"
-				value="<fmt:message key="button.add"/>" />
-		</c:when>
-		<c:when
-			test="${roleType == 'ROLE_PLANT_USER'}">
-			<input type="button" style="margin-right: 5px"
-				onclick="location.href='<c:url value="/editUser.html?method=Add&from=list&roleType=${roleType}"/>'"
-				value="<fmt:message key="button.add"/>" />
-		</c:when>
-		<c:when
-			test="${roleType == 'ROLE_VENDOR'}">
+		<c:when test="${roleType == 'ROLE_PLANT_USER' or roleType == 'ROLE_VENDOR'}">
 			<input type="button" style="margin-right: 5px"
 				onclick="location.href='<c:url value="/editUser.html?method=Add&from=list&roleType=${roleType}"/>'"
 				value="<fmt:message key="button.add"/>" />
@@ -44,29 +39,13 @@
 	requestURI="" defaultsort="1" id="users" pagesize="25" class="table"
 	export="true">
 	<c:choose>
-		<c:when
-			test="${roleType == 'ROLE_ADMIN'}">
+		<c:when test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN'}">
 			<display:column property="username" escapeXml="true" sortable="true"
 				titleKey="user.username" style="width: 25%"
 				url="/editAdmin.html?from=list&roleType=${roleType}" paramId="id"
 				paramProperty="id" />
 		</c:when>
-		<c:when
-			test="${roleType == 'ROLE_PLANT_ADMIN'}">
-			<display:column property="username" escapeXml="true" sortable="true"
-				titleKey="user.username" style="width: 25%"
-				url="/editAdmin.html?from=list&roleType=${roleType}" paramId="id"
-				paramProperty="id" />
-		</c:when>
-		<c:when
-			test="${roleType == 'ROLE_PLANT_USER'}">
-			<display:column property="username" escapeXml="true" sortable="true"
-				titleKey="user.username" style="width: 25%"
-				url="/editUser.html?from=list&roleType=${roleType}" paramId="id"
-				paramProperty="id" />
-		</c:when>
-		<c:when
-			test="${roleType == 'ROLE_VENDOR'}">
+		<c:when test="${roleType == 'ROLE_PLANT_USER' or roleType == 'ROLE_VENDOR'}">
 			<display:column property="username" escapeXml="true" sortable="true"
 				titleKey="user.username" style="width: 25%"
 				url="/editUser.html?from=list&roleType=${roleType}" paramId="id"

@@ -40,6 +40,7 @@ public class UserAction extends BaseAction implements Preparable {
 	private List<Supplier> suppliers;
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
+	private boolean editProfile;
 
 	/**
 	 * Grab the entity from the database before populating with request
@@ -100,6 +101,14 @@ public class UserAction extends BaseAction implements Preparable {
 		this.supplierManager = supplierManager;
 	}
 
+	public boolean isEditProfile() {
+		return editProfile;
+	}
+
+	public void setEditProfile(boolean editProfile) {
+		this.editProfile = editProfile;
+	}
+
 	/**
 	 * Delete the user passed in.
 	 * 
@@ -134,7 +143,7 @@ public class UserAction extends BaseAction implements Preparable {
 	 */
 	public String edit() throws IOException {
 		HttpServletRequest request = getRequest();
-		boolean editProfile = (request.getRequestURI().indexOf("editProfile") > -1);
+		editProfile = (request.getRequestURI().indexOf("editProfile") > -1);
 
 		// if URL is "editProfile" - make sure it's the current user
 		if (editProfile) {
