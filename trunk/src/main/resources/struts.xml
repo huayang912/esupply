@@ -191,6 +191,12 @@
 			method="list">
 			<result>/WEB-INF/pages/supplier/supplierList.jsp</result>
 		</action>
+		
+		<action name="editSupplierProfile" class="com.faurecia.webapp.action.SupplierAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
 
 		<action name="editSupplier" class="com.faurecia.webapp.action.SupplierAction"
 			method="edit">

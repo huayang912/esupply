@@ -42,4 +42,8 @@
     <bean id="itemAction" class="com.faurecia.webapp.action.ItemAction" scope="prototype">
         <property name="itemManager" ref="itemManager"/>
     </bean> 
+    
+    <bean id="supplierAction" class="com.faurecia.webapp.action.SupplierAction" scope="prototype">
+        <property name="plantSupplierManager" ref="plantSupplierManager"/>
+    </bean> 
 </beans>

@@ -2,12 +2,14 @@ package com.faurecia.webapp.action;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.User;
-import com.faurecia.service.GenericManager;
+import com.faurecia.service.PlantSupplierManager;
 
 public class SupplierAction extends BaseAction {
 	/**
@@ -17,7 +19,7 @@ public class SupplierAction extends BaseAction {
 	/**
 	 * 
 	 */
-	private GenericManager<PlantSupplier, Integer> plantSupplierManager;
+	private PlantSupplierManager plantSupplierManager;
 	private List<PlantSupplier> plantSuppliers;
 	private PlantSupplier plantSupplier;
 	private int id;
@@ -46,7 +48,7 @@ public class SupplierAction extends BaseAction {
 		this.id = id;
 	}
 
-	public void setPlantSupplierManager(GenericManager<PlantSupplier, Integer> plantSupplierManager) {
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
 
@@ -76,6 +78,10 @@ public class SupplierAction extends BaseAction {
 	}
 
 	public String cancel() {
+		if (!"list".equals(from)) {
+			return "mainMenu";
+		}
+		
 		return CANCEL;
 	}
 
@@ -87,9 +93,14 @@ public class SupplierAction extends BaseAction {
 	}
 
 	public String edit() throws Exception {
-
+		HttpServletRequest request = getRequest();
+		boolean editProfile = (request.getRequestURI().indexOf("editSupplierProfile") > -1);
+		
 		if (this.id != 0) {
 			plantSupplier = this.plantSupplierManager.get(id);
+		} else if (editProfile) {
+			User user = userManager.getUserByUsername(request.getRemoteUser());
+			this.plantSupplier = this.plantSupplierManager.getPlantSupplier(user.getUserPlant(), user.getUserSupplier());
 		} else {
 			plantSupplier = new PlantSupplier();
 		}
