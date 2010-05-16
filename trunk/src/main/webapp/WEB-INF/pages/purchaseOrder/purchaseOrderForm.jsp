@@ -41,13 +41,6 @@
 	</li>
 
 	<li>
-	<div class="left"><s:label key="purchaseOrder.plantAddress2"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.supplierAddress2"
-		cssClass="text medium" /></div>
-	</li>
-
-	<li>
 	<div class="left"><s:label key="purchaseOrder.plantContactPerson"
 		cssClass="text medium" /></div>
 	<div><s:label key="purchaseOrder.supplierContactPerson"
