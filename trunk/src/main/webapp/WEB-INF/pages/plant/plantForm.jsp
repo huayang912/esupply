@@ -8,7 +8,7 @@
 <s:form id="plantForm" action="savePlant" method="post" validate="true">
 	<li style="display: none"><input type="hidden" name="from"
 		value="${param.from}" /></li>
-	<li class="buttonBar right"><c:set var="buttons">
+	<c:set var="buttons">
 		<s:submit cssClass="button" method="save" key="button.save"
 			theme="simple" />
 		<c:if test="${param.from == 'list' and not empty plant.code}">
@@ -17,7 +17,7 @@
 		</c:if>
 		<s:submit cssClass="button" method="cancel" key="button.cancel"
 			theme="simple" />
-	</c:set><c:out value="${buttons}" escapeXml="false" /></li>
+	</c:set>
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.code" theme="xhtml"

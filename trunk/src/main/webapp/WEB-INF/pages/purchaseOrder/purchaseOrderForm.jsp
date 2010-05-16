@@ -10,66 +10,55 @@
 
 <s:form name="purchaseOrderForm" action="savePurchaseOrder"
 	method="post" validate="true">
-	<li style="display: none"><s:hidden key="purchaseOrder.poNo" /></li>
-	<li class="buttonBar right"><c:set var="buttons">
+	<div style="display: none"><s:hidden key="purchaseOrder.poNo" /></div>
+	<c:set var="buttons">
 		<s:submit key="button.cancel" method="cancel" />
-	</c:set> <c:out value="${buttons}" escapeXml="false" /></li>
+	</c:set> 
 
-	<li>
-	<div>
-	<div class="left"><s:label
-		key="purchaseOrder.plantSupplier.plant.code" cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.plantSupplier.supplier.code"
-		cssClass="text medium" /></div>
-	</div>
-	</li>
-
-	<li>
-	<div>
-	<div class="left"><s:label key="purchaseOrder.plantName"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.supplierName"
-		cssClass="text medium" /></div>
-	</div>
-	</li>
-
-	<li>
-	<div class="left"><s:label key="purchaseOrder.plantAddress1"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.supplierAddress1"
-		cssClass="text medium" /></div>
-	</li>
-
-	<li>
-	<div class="left"><s:label key="purchaseOrder.plantContactPerson"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.supplierContactPerson"
-		cssClass="text medium" /></div>
-	</li>
-
-	<li>
-	<div class="left"><s:label key="purchaseOrder.plantPhone"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.supplierPhone"
-		cssClass="text medium" /></div>
-	</li>
-
-	<li>
-	<div>
-	<div class="left"><s:label key="purchaseOrder.plantFax"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.supplierFax"
-		cssClass="text medium" /></div>
-	</div>
-	</li>
-
-	<li>
-	<div>
-	<div class="left"><s:label key="purchaseOrder.createDate"
-		cssClass="text medium" /></div>
-	<div><s:label key="purchaseOrder.status" cssClass="text medium" /></div>
-	</div>
-	</li>
+	<table width="100%">
+		<tr>
+			<td><s:label key="purchaseOrder.plantSupplier.plant.code"
+				cssClass="text medium" /></td>
+			<td><s:label key="purchaseOrder.plantSupplier.supplier.code"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="purchaseOrder.plantName"
+				cssClass="text medium" /></td>
+			<td><s:label key="purchaseOrder.supplierName"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="purchaseOrder.plantAddress1"
+				cssClass="text medium" /></td>
+			<td><s:label key="purchaseOrder.supplierAddress1"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="purchaseOrder.plantContactPerson"
+				cssClass="text medium" /></td>
+			<td><s:label key="purchaseOrder.supplierContactPerson"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="purchaseOrder.plantPhone"
+				cssClass="text medium" /></td>
+			<td><s:label key="purchaseOrder.supplierPhone"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="purchaseOrder.plantFax" cssClass="text medium" />
+			</td>
+			<td><s:label key="purchaseOrder.supplierFax"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="purchaseOrder.createDate"
+				cssClass="text medium" /></td>
+			<td><s:label key="purchaseOrder.status" cssClass="text medium" />
+			</td>
+		</tr>
+	</table>
 
 	<display:table name="purchaseOrder.purchaseOrderDetailList"
 		cellspacing="0" cellpadding="0" requestURI=""
@@ -90,11 +79,9 @@
 			titleKey="purchaseOrderDetail.shipQty" />
 	</display:table>
 
-	<li class="buttonBar bottom"><c:out value="${buttons}"
-		escapeXml="false" /></li>
+	<div class="buttonBar bottom"><c:out value="${buttons}"
+		escapeXml="false" /></div>
 </s:form>
-
-
 
 <script type="text/javascript">
 		Form.focusFirstElement(document.forms["purchaseOrderForm"]);

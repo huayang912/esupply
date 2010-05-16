@@ -16,8 +16,8 @@
 	<div class="left"><s:textfield key="item.code"
 		cssClass="text medium" /></div>
 	<div><s:textfield key="item.description" cssClass="text medium" /></div>
-	<div><s:submit method="list" key="button.search" theme="simple" />
-	<c:out value="${buttons}" escapeXml="false" /></div>
+	<div class="formbotton"><s:submit method="list" key="button.search" theme="simple" />
+	</div>
 </s:form>
 
 <display:table name="items" cellspacing="0" cellpadding="0"
