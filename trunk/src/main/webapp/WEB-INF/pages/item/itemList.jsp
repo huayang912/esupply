@@ -39,8 +39,12 @@
 		titleKey="item.description" />
 	<display:column property="uom" sortable="true" titleKey="item.uom" />
 
-	<display:setProperty name="paging.banner.item_name" value="item" />
-	<display:setProperty name="paging.banner.items_name" value="items" />
+	<display:setProperty name="paging.banner.item_name">
+		<fmt:message key="item.item" />
+	</display:setProperty>
+	<display:setProperty name="paging.banner.items_name">
+		<fmt:message key="item.items" />
+	</display:setProperty>
 
 	<display:setProperty name="export.excel.filename" value="item List.xls" />
 	<display:setProperty name="export.csv.filename" value="item List.csv" />

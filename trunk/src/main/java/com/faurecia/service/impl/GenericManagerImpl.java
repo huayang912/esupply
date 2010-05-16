@@ -98,7 +98,15 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
         genericDao.remove(id);
     }
     
-    public List<T> findByCriteria(DetachedCriteria criteria) {
+    public List findByCriteria(DetachedCriteria criteria) {
     	return this.genericDao.findByCriteria(criteria);
     }
+    
+    public List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults) {
+    	return this.genericDao.findByCriteria(criteria, firstResult, maxResults);
+    }
+    
+    public List<T> findByExample(T exampleEntity) {
+    	return this.genericDao.findByExample(exampleEntity);
+    }    
 }

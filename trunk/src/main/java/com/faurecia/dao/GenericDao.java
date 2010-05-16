@@ -74,7 +74,9 @@ public interface GenericDao <T, PK extends Serializable> {
      */
     List<T> findByNamedQuery(String queryName, Map<String, Object> queryParams);
     
-    List<T> findByCriteria(DetachedCriteria criteria);
+    List findByCriteria(DetachedCriteria criteria);
+    
+    List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults);
     
     List<T> findByExample(T exampleEntity);
 }

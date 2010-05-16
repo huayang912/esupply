@@ -37,6 +37,7 @@ public class PurchaseOrderDetail extends BaseObject {
 	private String uom;
 	private BigDecimal qty;
 	private Date deliveryDate;
+	private BigDecimal shipQty;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -113,6 +114,15 @@ public class PurchaseOrderDetail extends BaseObject {
 		this.deliveryDate = deliveryDate;
 	}
 
+	@Column(nullable = false, precision = 9, scale = 2)
+	public BigDecimal getShipQty() {
+		return shipQty;
+	}
+
+	public void setShipQty(BigDecimal shipQty) {
+		this.shipQty = shipQty;
+	}
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */

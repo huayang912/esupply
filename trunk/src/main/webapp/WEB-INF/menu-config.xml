@@ -10,7 +10,7 @@
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/admins.html?roleType=ROLE_ADMIN">
             <Item name="ViewAdmin" title="menu.admin.admins" page="/admin/admins.html?roleType=ROLE_ADMIN"/>
             <Item name="ViewPlantAdmin" title="menu.admin.plantAdmins" page="/admin/admins.html?roleType=ROLE_PLANT_ADMIN"/>
-            <Item name="PlantMenu" title="menu.viewPlant" page="/admin/plants.html" roles="ROLE_ADMIN"/>
+            <Item name="PlantMenu" title="menu.plants" page="/admin/plants.html" roles="ROLE_ADMIN"/>
             <Item name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers.html"/>            
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload.html"/>
             <Item name="FlushCache" title="menu.flushCache" page="/admin/flushCache.html"/>
@@ -24,6 +24,9 @@
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>
         	<Item name="SupplierMenu" title="menu.supplier" description="Supplier Menu" page="/suppliers.html" roles="ROLE_PLANT_USER"/>
+        </Menu>
+        <Menu name="OrderMenu" title="menu.order" description="Order Menu" roles="ROLE_PLANT_USER,ROLE_VENDOR" width="120" page="/purchaseOrders.html">
+        	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
         </Menu>
         <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>        
     </Menus>
