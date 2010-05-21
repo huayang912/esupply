@@ -4,6 +4,8 @@
 <title><fmt:message key="purchaseOrderList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderList.heading'/>" />
+<script type="text/javascript"
+	src="<c:url value='/scripts/DateTimeCalendar.js'/>"></script>
 </head>
 <meta name="menu" content="OrderMenu" />
 <c:set var="buttons">
@@ -13,14 +15,15 @@
 </c:set>
 <s:form name="purchaseOrderForm" action="purchaseOrders" method="post"
 	validate="true">
-	<div style="display:none;">
-		<input type="hidden" name="page" value="1" />
-		<input type="hidden" name="pageSize" value="25" />
-	</div>
-	<s:textfield key="purchaseOrder.poNo"
+	<div style="display: none;"><input type="hidden" name="page"
+		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
+	<s:textfield key="purchaseOrder.poNo" cssClass="text medium" />
+	<li><s:select key="purchaseOrder.status" list="%{status}"
+		theme="xhtml" /></li>
+	<s:textfield key="purchaseOrder.createDateFrom"
 		cssClass="text medium" />
-	<li><s:select key="purchaseOrder.status"
-		list="%{status}" theme="xhtml" /></li>
+	<li><s:textfield key="purchaseOrder.createDateTo"
+		cssClass="text medium" /></li>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
@@ -38,7 +41,7 @@
 		sortProperty="s.code" titleKey="purchaseOrder.supplierCode" />
 	<display:column property="plantSupplier.supplierName" sortable="true"
 		sortProperty="ps.supplierName" titleKey="purchaseOrder.supplierName" />
-	<display:column property="createDate" format="{0,date,yyyy-MM-dd}"
+	<display:column property="createDate" format="{0,date,MM/dd/yyyy}"
 		sortable="true" titleKey="purchaseOrder.createDate" />
 	<display:column property="status" sortable="true"
 		titleKey="purchaseOrder.status" />
@@ -59,11 +62,5 @@
 <c:out value="${buttons}" escapeXml="false" />
 
 <script type="text/javascript">
-    highlightTableRows("purchaseOrders");
-    
-    Calendar.setup({inputField: "releaseDate", 
-    	ifFormat    : "%m/%d/%Y",      // the date format
-        button: "releaseDateCal"
-            }); 
-    
+    highlightTableRows("purchaseOrders");    
 </script>

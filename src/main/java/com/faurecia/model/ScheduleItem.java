@@ -1,8 +1,10 @@
 package com.faurecia.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,56 +12,54 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-@Table(name = "po_detail",
-    uniqueConstraints={@UniqueConstraint(columnNames={"po_no", "sequence"})}
-)
-public class PurchaseOrderDetail extends BaseObject {
+@Table(name = "schedule_item")
+public class ScheduleItem extends BaseObject {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1287735014566260376L;
+	private static final long serialVersionUID = 4094731904619615672L;
 
 	private Integer id;
-	private PurchaseOrder purchaseOrder;
+	private Schedule schedule;
 	private String sequence;
 	private Item item;
 	private String itemDescription;
 	private String supplierItemCode;
 	private String uom;
-	private BigDecimal qty;
-	private Date deliveryDate;
-	private BigDecimal shipQty;
-
+	private BigDecimal receivedQty;
+	private Integer releaseNo;
+	private List<ScheduleItemDetail> scheduleItemDetailList;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
 		return id;
 	}
-	
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "po_no", nullable=false)
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
+	@JoinColumn(name = "schedule_no", nullable=false)
+	public Schedule getSchedule() {
+		return schedule;
 	}
 
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
-
+	
 	@Column(nullable = false, length = 10)
 	public String getSequence() {
 		return sequence;
@@ -111,33 +111,41 @@ public class PurchaseOrderDetail extends BaseObject {
 		this.uom = uom;
 	}
 
-	@Column(nullable = false, precision = 9, scale = 2)
-	public BigDecimal getQty() {
-		return qty;
+	@Column(name="received_qty", nullable = true, precision = 9, scale = 2)
+	public BigDecimal getReceivedQty() {
+		return receivedQty;
 	}
 
-	public void setQty(BigDecimal qty) {
-		this.qty = qty;
+	public void setReceivedQty(BigDecimal receivedQty) {
+		this.receivedQty = receivedQty;
 	}
 
-	@Column(name="delivery_date", nullable = false)
-	public Date getDeliveryDate() {
-		return deliveryDate;
+	@Column(name="release_no", nullable = true)
+	public Integer getReleaseNo() {
+		return releaseNo;
 	}
 
-	public void setDeliveryDate(Date deliveryDate) {
-		this.deliveryDate = deliveryDate;
+	public void setReleaseNo(Integer releaseNo) {
+		this.releaseNo = releaseNo;
 	}
 
-	@Column(nullable = true, precision = 9, scale = 2)
-	public BigDecimal getShipQty() {
-		return shipQty;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "scheduleItem")
+	public List<ScheduleItemDetail> getScheduleItemDetailList() {
+		return scheduleItemDetailList;
 	}
 
-	public void setShipQty(BigDecimal shipQty) {
-		this.shipQty = shipQty;
+	public void setScheduleItemDetailList(List<ScheduleItemDetail> scheduleItemDetailList) {
+		this.scheduleItemDetailList = scheduleItemDetailList;
 	}
 	
+	public void addScheduleItemDetail(ScheduleItemDetail scheduleItemDetail) {
+		if (scheduleItemDetailList == null) {
+			scheduleItemDetailList = new ArrayList<ScheduleItemDetail>();
+		}
+
+		scheduleItemDetailList.add(scheduleItemDetail);
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -149,18 +157,17 @@ public class PurchaseOrderDetail extends BaseObject {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(-704754133, 1431455743).append(this.id)
-				.toHashCode();
+		return new HashCodeBuilder(1030150661, -1810211589).append(this.id).toHashCode();
 	}
 
 	/**
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
-		if (!(object instanceof PurchaseOrderDetail)) {
+		if (!(object instanceof ScheduleItem)) {
 			return false;
 		}
-		PurchaseOrderDetail rhs = (PurchaseOrderDetail) object;
+		ScheduleItem rhs = (ScheduleItem) object;
 		return new EqualsBuilder().append(this.id, rhs.id).isEquals();
 	}
 
@@ -168,9 +175,8 @@ public class PurchaseOrderDetail extends BaseObject {
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(Object object) {
-		PurchaseOrderDetail myClass = (PurchaseOrderDetail) object;
-		return new CompareToBuilder().append(this.id, myClass.id)
-				.toComparison();
+		ScheduleItem myClass = (ScheduleItem) object;
+		return new CompareToBuilder().append(this.id, myClass.id).toComparison();
 	}
 
 }

@@ -185,13 +185,13 @@
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
-		
+
 		<!-- Supplier -->
 		<action name="suppliers" class="com.faurecia.webapp.action.SupplierAction"
 			method="list">
 			<result>/WEB-INF/pages/supplier/supplierList.jsp</result>
 		</action>
-		
+
 		<action name="editSupplierProfile" class="com.faurecia.webapp.action.SupplierAction"
 			method="edit">
 			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
@@ -211,21 +211,27 @@
 			<result name="delete" type="redirect-action">suppliers</result>
 			<result name="success" type="redirect-action">suppliers</result>
 		</action>
-		
+
 		<!-- Order -->
 		<action name="purchaseOrders" class="com.faurecia.webapp.action.PurchaseOrderAction"
 			method="list">
-			<result>/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp</result>
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp</result>
+			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp</result>
 		</action>
 
 		<action name="editPurchaseOrder" class="com.faurecia.webapp.action.PurchaseOrderAction"
 			method="edit">
-			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderForm.jsp</result>
-			<result name="error">/WEB-INF/pages/purchaseOrder/purchaseOrderForm.jsp</result>
+			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/purchaseOrder/purchaseOrderForm.jsp
+			</result>
 		</action>
 
 		<action name="savePurchaseOrder" class="com.faurecia.webapp.action.PurchaseOrderAction"
-			method="save">			
+			method="save">
 			<result name="cancel" type="redirect-action">purchaseOrders</result>
 		</action>
 	</package>

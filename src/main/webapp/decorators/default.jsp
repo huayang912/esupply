@@ -30,7 +30,7 @@
             </div>
 
             <c:set var="currentMenu" scope="request"><decorator:getProperty property="meta.menu"/></c:set>
-            <c:if test="${currentMenu == 'AdminMenu'}">
+            <c:if test="${currentMenu == 'AdminMenu' and false}">
             <div id="sub">
                 <menu:useMenuDisplayer name="Velocity" config="cssVerticalMenu.vm" permissions="rolesAdapter">
                     <menu:displayMenu name="AdminMenu"/>

@@ -168,15 +168,15 @@ public class PurchaseOrderAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
 		}
 		
-//		if (purchaseOrder.getCreateDateFrom() != null) {
-//			selectCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
-//			selectCountCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
-//		}
-//		
-//		if (purchaseOrder.getCreateDateTo() != null) {
-//			selectCriteria.add(Restrictions.le("createDate", purchaseOrder.getCreateDateTo()));
-//			selectCountCriteria.add(Restrictions.le("createDate", purchaseOrder.getCreateDateTo()));
-//		}
+		if (purchaseOrder.getCreateDateFrom() != null) {
+			selectCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
+			selectCountCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
+		}
+		
+		if (purchaseOrder.getCreateDateTo() != null) {
+			selectCriteria.add(Restrictions.le("createDate", purchaseOrder.getCreateDateTo()));
+			selectCountCriteria.add(Restrictions.le("createDate", purchaseOrder.getCreateDateTo()));
+		}
 			
 		if (sort != null && sort.trim().length() > 0) {
 			paginatedList.setSortCriterion(sort);
