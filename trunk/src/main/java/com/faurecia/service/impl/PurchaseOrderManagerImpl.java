@@ -54,15 +54,15 @@ import com.faurecia.service.UserManager;
 
 public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, String> implements PurchaseOrderManager {
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<PurchaseOrderDetail, String> purchaseOrderDetailManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
 	private SupplierItemManager supplierItemManager;
-	private GenericManager<PurchaseOrder, String> purchaseOrderManager;
 	private InboundLogManager inboundLogManager;
-	private Unmarshaller unmarshaller;
 	private UserManager userManager;
 	private RoleManager roleManager;
+	private Unmarshaller unmarshaller;
 
 	protected MailEngine mailEngine;
 	protected SimpleMailMessage mailMessage;
@@ -77,6 +77,10 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, String> purchaseOrderDetailManager) {
+		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
 	}
 
 	public void setSupplierManager(SupplierManager supplierManager) {
@@ -101,10 +105,6 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 	public void setRoleManager(RoleManager roleManager) {
 		this.roleManager = roleManager;
-	}
-
-	public void setPurchaseOrderManager(GenericManager<PurchaseOrder, String> purchaseOrderManager) {
-		this.purchaseOrderManager = purchaseOrderManager;
 	}
 
 	public void setInboundLogManager(InboundLogManager inboundLogManager) {
@@ -165,7 +165,21 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
 			}
 
-			this.purchaseOrderManager.save(purchaseOrder);
+			// //如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
+			// if (this.purchaseOrderManager.exists(purchaseOrder.getPoNo())) {
+			// this.purchaseOrderManager.remove(purchaseOrder.getPoNo());
+			// }
+
+			// 保存采购单
+			if (purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
+				for (int index = 0; index < purchaseOrder.getPurchaseOrderDetailList().size(); index++) {
+					PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(index);
+					this.purchaseOrderDetailManager.save(purchaseOrderDetail);
+				}
+			}
+			else {
+				this.save(purchaseOrder);
+			}
 
 			inboundLog.setInboundResult("success");
 
@@ -241,7 +255,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 							supplier = new Supplier();
 							supplier.setCode(supplierCode);
-							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
+							supplier.setName(E1EDKA1.getNAME1());
 
 							supplier = this.supplierManager.save(supplier);
 						}
@@ -332,6 +346,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 					List<ORDERS02E1EDP19> ORDERS02E1EDP19List = E1EDP01.getE1EDP19();
 					Item item = null;
+					String itemDescription = null;
 					SupplierItem supplierItem = null;
 					String supplierItemCode = null;
 
@@ -341,18 +356,26 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 							if ("001".equals(E1EDP19.getQUALF())) {
 								String itemCode = E1EDP19.getIDTNR();
+								try {
+									// 零件号如果是全数字，则要把前置0去掉
+									itemCode = Long.toString((Long.parseLong(itemCode)));
+								} catch (NumberFormatException ex) {
+								}
 
 								item = this.itemManager.getItemByPlantAndItem(plant, itemCode);
+								itemDescription = E1EDP19.getKTEXT();
+
 								if (item == null) {
 									log.info("Item not found with the given item code: " + itemCode + ", try to create a new one.");
 
 									item = new Item();
 									item.setCode(itemCode);
-									item.setDescription("");
+									item.setDescription(E1EDP19.getKTEXT());
 									item.setPlant(plant);
 									item.setUom(E1EDP01.getMENEE());
 
 									item = this.itemManager.save(item);
+
 								}
 							} else if ("002".equals(E1EDP19.getQUALF())) {
 								supplierItemCode = E1EDP19.getIDTNR();
@@ -386,6 +409,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 							purchaseOrderDetail.setSequence(E1EDP01.getPOSEX()); // 序号
 							purchaseOrderDetail.setItem(item);
+							purchaseOrderDetail.setItemDescription(itemDescription);
 							purchaseOrderDetail.setPurchaseOrder(po);
 							purchaseOrderDetail.setDeliveryDate(dateFormat.parse(E1EDP20.getEDATU()));
 							purchaseOrderDetail.setQty(new BigDecimal(E1EDP20.getWMENG()));

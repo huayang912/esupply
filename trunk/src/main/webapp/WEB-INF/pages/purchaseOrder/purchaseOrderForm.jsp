@@ -68,7 +68,7 @@
 			titleKey="purchaseOrderDetail.sequence" />
 		<display:column property="item.code"
 			titleKey="purchaseOrderDetail.itemCode" />
-		<display:column property="item.description"
+		<display:column property="itemDescription"
 			titleKey="purchaseOrderDetail.itemDescription" />
 		<display:column property="supplierItemCode"
 			titleKey="purchaseOrderDetail.supplierItemCode" />

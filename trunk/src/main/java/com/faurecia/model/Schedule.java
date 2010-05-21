@@ -7,12 +7,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -20,14 +21,15 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-@Table(name = "po")
-public class PurchaseOrder extends BaseObject {
+@Table(name = "schedule")
+public class Schedule extends BaseObject {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1875870080239908794L;
-	private String poNo;
+	private static final long serialVersionUID = 2516848938509001570L;
+
+	private String scheduleNo;
 	private PlantSupplier plantSupplier;
 	private String plantName;
 	private String plantAddress1;
@@ -41,20 +43,19 @@ public class PurchaseOrder extends BaseObject {
 	private String supplierContactPerson;
 	private String supplierPhone;
 	private String supplierFax;
-	private Date createDate;
-	private Date createDateFrom;
-	private Date createDateTo;
+	private Date createDate;	
 	private String status;
-	private List<PurchaseOrderDetail> purchaseOrderDetailList;
+	private int version;
+	private List<ScheduleItem> scheduleItemList;
 
 	@Id
-	@Column(name = "po_no", length = 20)
-	public String getPoNo() {
-		return poNo;
+	@Column(name = "schedule_no", length = 20)
+	public String getScheduleNo() {
+		return scheduleNo;
 	}
 
-	public void setPoNo(String poNo) {
-		this.poNo = poNo;
+	public void setScheduleNo(String scheduleNo) {
+		this.scheduleNo = scheduleNo;
 	}
 
 	@ManyToOne
@@ -253,71 +254,64 @@ public class PurchaseOrder extends BaseObject {
 		this.status = status;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
-	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
-		return purchaseOrderDetailList;
+	@Column(name = "version", nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	public int getVersion() {
+		return version;
 	}
 
-	public void setPurchaseOrderDetailList(List<PurchaseOrderDetail> purchaseOrderDetailList) {
-		this.purchaseOrderDetailList = purchaseOrderDetailList;
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
-	public void addPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
-		if (purchaseOrderDetailList == null) {
-			purchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "schedule")
+	public List<ScheduleItem> getScheduleItemList() {
+		return scheduleItemList;
+	}
+
+	public void setScheduleItemList(List<ScheduleItem> scheduleItemList) {
+		this.scheduleItemList = scheduleItemList;
+	}
+
+	public void addScheduleItem(ScheduleItem scheduleItem) {
+		if (scheduleItemList == null) {
+			scheduleItemList = new ArrayList<ScheduleItem>();
 		}
 
-		purchaseOrderDetailList.add(purchaseOrderDetail);
+		scheduleItemList.add(scheduleItem);
 	}
-
-	@Transient
-	public Date getCreateDateFrom() {
-		return this.createDateFrom;
-	}
-
-	public void setCreateDateFrom(Date createDateFrom) {
-		this.createDateFrom = createDateFrom;
-	}
-
-	@Transient
-	public Date getCreateDateTo() {
-		return this.createDateTo;
-	}
-
-	public void setCreateDateTo(Date createDateTo) {
-		this.createDateTo = createDateTo;
-	}
-
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return new ToStringBuilder(this).append("poNo", this.poNo).toString();
+		return new ToStringBuilder(this).append("scheduleNo", this.scheduleNo).toString();
 	}
 
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(-1408229217, 585973395).append(this.poNo).toHashCode();
+		return new HashCodeBuilder(1494713807, -1279037605).append(this.scheduleNo).toHashCode();
 	}
 
 	/**
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
-		if (!(object instanceof PurchaseOrder)) {
+		if (!(object instanceof Schedule)) {
 			return false;
 		}
-		PurchaseOrder rhs = (PurchaseOrder) object;
-		return new EqualsBuilder().append(this.poNo, rhs.poNo).isEquals();
+		Schedule rhs = (Schedule) object;
+		return new EqualsBuilder().append(this.scheduleNo, rhs.scheduleNo).isEquals();
 	}
 
 	/**
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(Object object) {
-		PurchaseOrder myClass = (PurchaseOrder) object;
-		return new CompareToBuilder().append(this.poNo, myClass.poNo).toComparison();
+		Schedule myClass = (Schedule) object;
+		return new CompareToBuilder().append(this.scheduleNo, myClass.scheduleNo).toComparison();
 	}
+
 }

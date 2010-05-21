@@ -15,9 +15,11 @@ import org.apache.commons.logging.LogFactory;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PurchaseOrder;
+import com.faurecia.model.Schedule;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.ScheduleManager;
 import com.faurecia.util.DateUtil;
 import com.faurecia.util.FTPClientUtil;
 
@@ -27,6 +29,8 @@ public class DataInboundOutboundJob {
 	private GenericManager<Plant, String> plantManager;
 	private InboundLogManager inboundLogManager;
 	private PurchaseOrderManager purchaseOrderManager;
+	private ScheduleManager scheduleManager;
+	//private final String[] dataTypeArray = new String[] { "ORDERS", "DELFOR" };
 	private final String[] dataTypeArray = new String[] { "ORDERS" };
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
@@ -39,6 +43,10 @@ public class DataInboundOutboundJob {
 
 	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
 		this.purchaseOrderManager = purchaseOrderManager;
+	}
+
+	public void setScheduleManager(ScheduleManager scheduleManager) {
+		this.scheduleManager = scheduleManager;
 	}
 
 	public void run() {
@@ -87,7 +95,7 @@ public class DataInboundOutboundJob {
 			String dataType = dataTypeArray[i];
 			List<String> fileNameList = null;
 			try {
-				String ftpDirectory = ftpPath + FTPClientUtil.SEPERATE + dataType;
+				String ftpDirectory = ftpPath + FTPClientUtil.SEPERATE + dataType + FTPClientUtil.SEPERATE + "INP";
 				ftpClientUtil.changeDirectory(ftpDirectory);
 				log.info("Fetching files in directory: " + ftpDirectory + ".");
 				fileNameList = ftpClientUtil.getFileList(".");
@@ -140,10 +148,13 @@ public class DataInboundOutboundJob {
 					}
 
 					// 记录至数据库
+					log.info("Processing file: " + fileName);
 					PurchaseOrder po = null;
+					Schedule schedule = null;
 					if (dataType.equals("ORDERS")) {
-						log.info("Processing file: " + fileName);
 						po = this.purchaseOrderManager.SaveSingleFile(inputStream, inboundLog);
+					} else if (dataType.equals("DELFOR")) {
+						schedule = this.scheduleManager.SaveSingleFile(inputStream, inboundLog);
 					}
 
 					String localBackupDirectory = null;
@@ -186,9 +197,14 @@ public class DataInboundOutboundJob {
 						inboundLog.setMemo(ex.getMessage());
 
 						// 本地文件备份失败
-						if (po != null) {
+						if (po != null && po.getPoNo() != null) {
 							// 手工回滚
 							this.purchaseOrderManager.remove(po.getPoNo());
+						}
+						
+						if (schedule != null && schedule.getScheduleNo() != null) {
+							// 手工回滚
+							this.scheduleManager.remove(schedule.getScheduleNo());
 						}
 
 						if (backupFile != null) {
