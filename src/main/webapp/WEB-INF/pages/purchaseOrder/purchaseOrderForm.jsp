@@ -4,19 +4,20 @@
 <title><fmt:message key="purchaseOrderDetail.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderDetail.heading'/>" />
-<script type="text/javascript"
-	src="<c:url value='/scripts/selectbox.js'/>"></script>
 <meta name="menu" content="OrderMenu" />
 </head>
 
 <s:form name="purchaseOrderForm" action="savePurchaseOrder"
 	method="post" validate="true">
-	<div style="display: none"><s:hidden key="purchaseOrder.poNo" /></div>
 	<c:set var="buttons">
 		<s:submit key="button.cancel" method="cancel" />
-	</c:set> 
+	</c:set>
 
 	<table width="100%">
+		<tr>
+			<td><s:label key="purchaseOrder.poNo" cssClass="text medium" /></td>
+			<td></td>
+		</tr>
 		<tr>
 			<td><s:label key="purchaseOrder.plantSupplier.plant.code"
 				cssClass="text medium" /></td>

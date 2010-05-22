@@ -15,4 +15,6 @@ public interface ScheduleManager extends GenericManager<Schedule, String> {
 	Schedule GetLastestScheduleByUser(User user);
 	
 	int GetLastestScheduleVersion(Plant plant, Supplier supplier);
+	
+	Schedule get(String scheduleNo, boolean includeDetail);
 }

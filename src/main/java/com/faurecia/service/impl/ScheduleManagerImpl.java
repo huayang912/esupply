@@ -209,6 +209,20 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			return 0;
 		}
 	}
+	
+	public Schedule get(String scheduleNo, boolean includeDetail) {
+		Schedule schedule = this.get(scheduleNo);
+		
+		if (includeDetail && schedule.getScheduleItemList() != null && schedule.getScheduleItemList().size() > 0) {
+			for (int f = 0; f < schedule.getScheduleItemList().size(); f++) {
+				if (schedule.getScheduleItemList().get(f).getScheduleItemDetailList() != null 
+						&& schedule.getScheduleItemList().get(f).getScheduleItemDetailList().size() > 0) {					
+				}
+			}
+		}
+		
+		return schedule;
+	}
 
 	private DELFOR02 unmarshalOrder(InputStream stream) throws JAXBException {
 		DELFOR02 d = (DELFOR02) unmarshaller.unmarshal(stream);

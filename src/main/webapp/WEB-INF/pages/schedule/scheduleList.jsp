@@ -40,7 +40,7 @@
 	requestURI="" defaultsort="1" id="schedules" class="table"
 	export="true">
 	<display:column property="scheduleNo" sortable="true"
-		url="/editSchedule.html" paramId="scheduleNo" paramProperty="scheduleNo"
+		url="/editSchedule.html?from=list" paramId="scheduleNo" paramProperty="scheduleNo"
 		titleKey="schedule.scheduleNo" />
 	<display:column property="plantSupplier.plant.code" sortable="true"
 		sortProperty="p.code" titleKey="schedule.plantCode" />
