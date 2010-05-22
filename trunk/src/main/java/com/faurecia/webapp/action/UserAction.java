@@ -36,8 +36,6 @@ public class UserAction extends BaseAction implements Preparable {
 	private User user;
 	private String id;
 	private String roleType;
-	private List<Plant> plants;
-	private List<Supplier> suppliers;
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private boolean editProfile;
@@ -86,11 +84,13 @@ public class UserAction extends BaseAction implements Preparable {
 	}
 
 	public List<Plant> getPlants() {
-		return plants;
+		return this.plantManager.getAll();
 	}
 
 	public List<Supplier> getSuppliers() {
-		return suppliers;
+		String userCode = this.getRequest().getRemoteUser();
+		User user = this.userManager.getUserByUsername(userCode);
+		return this.supplierManager.getSuppliersByPlant(user.getUserPlant());
 	}
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
@@ -193,8 +193,6 @@ public class UserAction extends BaseAction implements Preparable {
 			}
 		}
 			
-		this.prepareEdit();
-
 		return SUCCESS;
 	}
 
@@ -276,7 +274,6 @@ public class UserAction extends BaseAction implements Preparable {
 			// redisplay the unencrypted passwords
 			user.setPassword(user.getConfirmPassword());
 			
-			this.prepareEdit();
 			return INPUT;
 		}
 
@@ -313,7 +310,6 @@ public class UserAction extends BaseAction implements Preparable {
 				}
 			} else {
 				saveMessage(getText("user.updated.byAdmin", args));
-				this.prepareEdit();
 				return INPUT;
 			}
 		}
@@ -354,15 +350,5 @@ public class UserAction extends BaseAction implements Preparable {
 		}
 
 		return SUCCESS;
-	}
-	
-	private void prepareEdit(){
-		if (Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
-			this.plants = this.plantManager.getAll();
-		} else if (Constants.VENDOR_ROLE.equals(roleType)) {	
-			String userCode = this.getRequest().getRemoteUser();
-			User user = this.userManager.getUserByUsername(userCode);
-			this.suppliers = this.supplierManager.getSuppliersByPlant(user.getUserPlant());
-		}
 	}
 }

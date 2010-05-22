@@ -51,7 +51,7 @@ public class PurchaseOrderDetail extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "po_no", nullable=false)
+	@JoinColumn(name = "po_no", nullable=true)
 	public PurchaseOrder getPurchaseOrder() {
 		return purchaseOrder;
 	}
