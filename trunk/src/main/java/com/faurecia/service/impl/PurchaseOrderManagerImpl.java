@@ -54,7 +54,6 @@ import com.faurecia.service.UserManager;
 
 public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, String> implements PurchaseOrderManager {
 	private GenericManager<Plant, String> plantManager;
-	private GenericManager<PurchaseOrderDetail, String> purchaseOrderDetailManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
@@ -77,10 +76,6 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
-	}
-
-	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, String> purchaseOrderDetailManager) {
-		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
 	}
 
 	public void setSupplierManager(SupplierManager supplierManager) {
@@ -131,7 +126,16 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		PurchaseOrder purchaseOrder = this.genericDao.get(poNo);
 
 		if (includeDetail && purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
-
+			List<PurchaseOrderDetail> purchaseOrderDetailList = purchaseOrder.getPurchaseOrderDetailList();
+			purchaseOrder.setPurchaseOrderDetailList(null);
+			
+			//过滤掉需求数量是0的明细
+			for(int i = 0; i < purchaseOrderDetailList.size(); i++) {
+				if (purchaseOrderDetailList.get(i).getQty().compareTo(new BigDecimal(0)) != 0) {
+					purchaseOrder.addPurchaseOrderDetail(purchaseOrderDetailList.get(i));
+				}
+			}
+				
 		}
 
 		return purchaseOrder;
@@ -186,8 +190,11 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 			inboundLog.setInboundResult("fail");
 
 			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
-			inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
-			inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
+			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null)
+			{
+				inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
+				inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
+			}
 			inboundLog.setMemo(dataConvertException.getMessage());
 		} catch (Exception exception) {
 			log.error("Error occur.", exception);

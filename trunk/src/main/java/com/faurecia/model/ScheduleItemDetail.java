@@ -53,7 +53,7 @@ public class ScheduleItemDetail extends BaseObject {
 		this.scheduleItem = scheduleItem;
 	}
 
-	@Column(name="schedule_type", nullable = false, length = 10)
+	@Column(name="schedule_type", nullable = false, length = 50)
 	public String getScheduleType() {
 		return scheduleType;
 	}
