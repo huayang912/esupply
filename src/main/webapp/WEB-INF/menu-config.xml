@@ -28,6 +28,8 @@
         </Menu>
         <Menu name="OrderMenu" title="menu.order" description="Order Menu" roles="ROLE_PLANT_USER,ROLE_VENDOR" width="120" page="/purchaseOrders.html">
         	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
+        	<Menu name="ScheduleMenu" title="menu.schedule" description="Schedule Menu" page="/editScheduleProfile.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
+        	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
         </Menu>
         <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>        
     </Menus>
