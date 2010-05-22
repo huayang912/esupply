@@ -42,7 +42,6 @@ public class Schedule extends BaseObject {
 	private String supplierPhone;
 	private String supplierFax;
 	private Date createDate;	
-	private String status;
 	private int version;
 	private List<ScheduleItem> scheduleItemList;
 
@@ -241,15 +240,6 @@ public class Schedule extends BaseObject {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-
-	@Column(name = "status", nullable = false, length = 20)
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	@Column(name = "version", nullable = false)

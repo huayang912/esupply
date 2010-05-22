@@ -62,11 +62,12 @@ public class DataInboundOutboundJob {
 							.getTempFileDirectory(), plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), nowDate, "service");
 
 					// 设置下次运行时间
-					if (plant.getNextInboundDate() == null)
-					{
+					if (plant.getNextInboundDate() == null) {
 						plant.setNextInboundDate(nowDate);
 					}
-					plant.setNextInboundDate(DateUtil.AddTime(plant.getNextInboundDate(), plant.getInboundIntervalType(), plant.getInboundInterval()));
+					plant
+							.setNextInboundDate(DateUtil.AddTime(plant.getNextInboundDate(), plant.getInboundIntervalType(), plant
+									.getInboundInterval()));
 					log.info("Set next inbound date: " + DateUtil.getDateTime("MM/dd/yyyy HH:mm:ss.SSS", plant.getNextInboundDate()) + ".");
 					this.plantManager.save(plant);
 					log.info("End inbound data for plant: " + plant.getName() + ".");
@@ -130,7 +131,7 @@ public class DataInboundOutboundJob {
 						String tempDirString = tempFileDirectory + File.separator + dataType;
 						File tempDir = new File(tempDirString);
 						FileUtils.forceMkdir(tempDir);
-						
+
 						log.info("Download file: " + fileName + " to temperary folder: " + tempDirString + ".");
 						tempFile = File.createTempFile(filePrefix, fileSuffix, tempDir);
 						ftpClientUtil.download(fileName, tempFile.getAbsolutePath());
@@ -150,10 +151,16 @@ public class DataInboundOutboundJob {
 					log.info("Processing file: " + fileName);
 					PurchaseOrder po = null;
 					Schedule schedule = null;
-					if (dataType.equals("ORDERS")) {
-						po = this.purchaseOrderManager.SaveSingleFile(inputStream, inboundLog);
-					} else if (dataType.equals("DELFOR")) {
-						schedule = this.scheduleManager.SaveSingleFile(inputStream, inboundLog);
+					try {
+						if (dataType.equals("ORDERS")) {
+							po = this.purchaseOrderManager.SaveSingleFile(inputStream, inboundLog);
+						} else if (dataType.equals("DELFOR")) {
+							schedule = this.scheduleManager.SaveSingleFile(inputStream, inboundLog);
+						}
+					} catch (Exception ex) {
+						log.error("Error when save file to database.", ex);
+						inboundLog.setInboundResult("fail");
+						inboundLog.setMemo(ex.getMessage());
 					}
 
 					String localBackupDirectory = null;
@@ -174,7 +181,7 @@ public class DataInboundOutboundJob {
 
 						FileUtils.copyFile(tempFile, backupFile);
 						log.info("Backup file: " + fileName + " success.");
-						
+
 						inboundLog.setFullFilePath(backupFile.getAbsolutePath());
 
 						// 删除Ftp文件
@@ -200,7 +207,7 @@ public class DataInboundOutboundJob {
 							// 手工回滚
 							this.purchaseOrderManager.remove(po.getPoNo());
 						}
-						
+
 						if (schedule != null && schedule.getScheduleNo() != null) {
 							// 手工回滚
 							this.scheduleManager.remove(schedule.getScheduleNo());

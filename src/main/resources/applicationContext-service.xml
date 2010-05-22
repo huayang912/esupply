@@ -25,6 +25,8 @@
 			pointcut="execution(* *..service.*Manager.*(..))" order="2" />
 		<aop:advisor id="purchaseOrderManagerTx" advice-ref="notSupportTXAdvice"
 			pointcut="execution(* *..service.PurchaseOrderManager.*(..))" order="3" />
+		<aop:advisor id="scheudleManagerTx" advice-ref="notSupportTXAdvice"
+			pointcut="execution(* *..service.ScheduleManager.*(..))" order="4" />
 	</aop:config>
 
 	<!-- Enable @Transactional support -->
@@ -215,7 +217,6 @@
 				<constructor-arg value="com.faurecia.model.PurchaseOrder" />
 			</bean>
 		</constructor-arg>
-		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager" />
 		<property name="plantManager" ref="plantManager" />
 		<property name="supplierManager" ref="supplierManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
@@ -229,7 +230,7 @@
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
-	
+
 	<bean id="scheduleManager" class="com.faurecia.service.impl.ScheduleManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"

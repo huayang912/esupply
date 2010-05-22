@@ -149,8 +149,11 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			inboundLog.setInboundResult("fail");
 
 			Schedule schedule = (Schedule) dataConvertException.getObject();
-			inboundLog.setPlant(schedule.getPlantSupplier().getPlant());
-			inboundLog.setSupplier(schedule.getPlantSupplier().getSupplier());
+			if (schedule != null && schedule.getPlantSupplier() != null)
+			{
+				inboundLog.setPlant(schedule.getPlantSupplier().getPlant());
+				inboundLog.setSupplier(schedule.getPlantSupplier().getSupplier());
+			}
 			inboundLog.setMemo(dataConvertException.getMessage());
 		} catch (Exception exception) {
 			log.error("Error occur.", exception);
@@ -178,7 +181,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			DELFOR02E1EDK09 E1EDK09 = delfor.getIDOC().getE1EDK09();
 
 			schedule.setScheduleNo(E1EDK09.getVTRNR()); // po number
-			schedule.setCreateDate(dateFormat.parse(E1EDK09.getABNRD()));
+			schedule.setCreateDate(dateFormat.parse(delfor.getIDOC().getEDIDC40().getCREDAT()));
 			
 			List<DELFOR02E1EDKA1> DELFOR02E1EDKA1List = E1EDK09.getE1EDKA1();
 			if (DELFOR02E1EDKA1List != null && DELFOR02E1EDKA1List.size() > 0) {
@@ -308,7 +311,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							supplierItem = new SupplierItem();
 							supplierItem.setItem(item);
 							supplierItem.setSupplier(supplier);
-							supplierItem.setSupplierItemCode(supplierItemCode);
+							supplierItem.setSupplierItemCode(supplierItemCode);				
 
 							supplierItem = this.supplierItemManager.save(supplierItem);
 						}
@@ -339,25 +342,25 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							String scheduleType = E1EDP16.getETTYP();
 							String dateType = E1EDP16.getPRGRS();
 
-							if (scheduleType == "R") {
+							if ("R".equals(scheduleType)) {
 								scheduleItemDetail.setScheduleType("Backlog + Immediate Requirement");
-							} else if (scheduleType == "1") {
+							} else if ("1".equals(scheduleType)) {
 								scheduleItemDetail.setScheduleType("Firm");
-							} else// if (scheduleType == "4")
+							} else// if ("4".equals(scheduleType))
 							{
 								scheduleItemDetail.setScheduleType("Forecast");
 							}
 
-							if (dateType == "M") {
+							if ("M".equals(dateType)) {
 								scheduleItemDetail.setDateType("Month");
-							} else if (dateType == "W") {
+							} else if ("W".equals(dateType)) {
 								scheduleItemDetail.setDateType("Week");
 							} else {
 								scheduleItemDetail.setDateType("Day");
 							}
 							
 							scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
-							scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUB()));
+							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
 							
