@@ -218,8 +218,10 @@
 			<interceptor-ref name="defaultStack">
 				<param name="validation.includeMethods">list</param>
 			</interceptor-ref>
-			<result name="input">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp</result>
-			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp</result>
+			<result name="input">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp
+			</result>
 		</action>
 
 		<action name="editPurchaseOrder" class="com.faurecia.webapp.action.PurchaseOrderAction"
@@ -234,7 +236,7 @@
 			method="save">
 			<result name="cancel" type="redirect-action">purchaseOrders</result>
 		</action>
-		
+
 		<!-- Schedule -->
 		<action name="schedules" class="com.faurecia.webapp.action.ScheduleAction"
 			method="list">
@@ -244,7 +246,7 @@
 			<result name="input">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 			<result name="success">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 		</action>
-		
+
 		<action name="editSchedule" class="com.faurecia.webapp.action.ScheduleAction"
 			method="edit">
 			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp
@@ -252,7 +254,7 @@
 			<result name="error">/WEB-INF/pages/schedule/scheduleForm.jsp
 			</result>
 		</action>
-		
+
 		<action name="editScheduleProfile" class="com.faurecia.webapp.action.ScheduleAction"
 			method="edit">
 			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
