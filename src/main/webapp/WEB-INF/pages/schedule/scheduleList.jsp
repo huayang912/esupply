@@ -1,11 +1,15 @@
 <%@ include file="/common/taglibs.jsp"%>
 
+<script type="text/javascript">
+	var cal = new CalendarPopup();   
+</script>
+
 <head>
 <title><fmt:message key="scheduleList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='scheduleList.heading'/>" />
 <script type="text/javascript"
-	src="<c:url value='/scripts/DateTimeCalendar.js'/>"></script>
+	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
 <meta name="menu" content="OrderMenu" />
 <c:set var="buttons">
@@ -18,9 +22,17 @@
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
 	<s:textfield key="schedule.createDateFrom"
-		cssClass="text medium" />
-	<li><s:textfield key="schedule.createDateTo"
-		cssClass="text medium" /></li>
+		cssClass="text medium" name="dateFrom" />
+	<A HREF="#"
+    	onClick="cal.select(document.forms['scheduleForm'].dateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+    	NAME="anchDateFrom" ID="anchDateFrom">select</A>
+    	
+	<s:textfield key="schedule.createDateTo"
+		cssClass="text medium" name="dateTo" />
+	<A HREF="#"
+    	onClick="cal.select(document.forms['scheduleForm'].dateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+    	NAME="anchDateTo" ID="anchDateTo">select</A>
+    	
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
@@ -58,5 +70,5 @@
 <c:out value="${buttons}" escapeXml="false" />
 
 <script type="text/javascript">
-    highlightTableRows("schedules");    
+    //highlightTableRows("schedules");    
 </script>
