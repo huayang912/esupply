@@ -177,7 +177,17 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 		List<Schedule> scheduleList = this.findByCriteria(criteria);
 		if (scheduleList != null && scheduleList.size() > 0) {
-			return scheduleList.get(0);
+			Schedule schedule = scheduleList.get(0);
+			
+			if (schedule.getScheduleItemList() != null && schedule.getScheduleItemList().size() > 0) {
+				for (int f = 0; f < schedule.getScheduleItemList().size(); f++) {
+					if (schedule.getScheduleItemList().get(f).getScheduleItemDetailList() != null 
+							&& schedule.getScheduleItemList().get(f).getScheduleItemDetailList().size() > 0) {					
+					}
+				}
+			}
+			
+			return schedule;
 		}
 		return null;
 	}

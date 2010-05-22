@@ -165,6 +165,7 @@ public class ScheduleAction extends BaseAction {
 			schedule = this.scheduleManager.get(scheduleNo);
 		} else if (editProfile) {
 			User user = userManager.getUserByUsername(request.getRemoteUser());
+			schedule = this.scheduleManager.GetLastestScheduleByUser(user);
 		}
 		
 		return SUCCESS;
