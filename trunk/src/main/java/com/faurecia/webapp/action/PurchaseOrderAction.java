@@ -110,21 +110,8 @@ public class PurchaseOrderAction extends BaseAction {
 
 	public String list() {
 		if (purchaseOrder == null) {
-			Date date = new Date();
 			purchaseOrder = new PurchaseOrder();
 			purchaseOrder.setStatus("Open");
-			try {
-				purchaseOrder.setCreateDateTo(
-						DateUtil.convertStringToDate(DateUtil.getDate(date))
-						);
-				
-				date = DateUtil.AddTime(date, Calendar.DATE, -7);
-				purchaseOrder.setCreateDateFrom(
-						DateUtil.convertStringToDate(DateUtil.getDate(date))
-						);
-			} catch (ParseException e) {
-				
-			}
 		}
 			
 		pageSize = pageSize == 0 ? 25 : pageSize;
@@ -154,6 +141,8 @@ public class PurchaseOrderAction extends BaseAction {
 			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
+			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
+			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
