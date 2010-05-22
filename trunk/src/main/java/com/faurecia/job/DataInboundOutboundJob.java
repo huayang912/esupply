@@ -30,8 +30,7 @@ public class DataInboundOutboundJob {
 	private InboundLogManager inboundLogManager;
 	private PurchaseOrderManager purchaseOrderManager;
 	private ScheduleManager scheduleManager;
-	//private final String[] dataTypeArray = new String[] { "ORDERS", "DELFOR" };
-	private final String[] dataTypeArray = new String[] { "ORDERS" };
+	private final String[] dataTypeArray = new String[] { "ORDERS", "DELFOR" };
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;

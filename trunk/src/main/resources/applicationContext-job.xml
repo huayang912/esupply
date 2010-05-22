@@ -8,6 +8,7 @@
 		<property name="plantManager" ref="plantManager"/>
 		<property name="inboundLogManager" ref="inboundLogManager"/>
 		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
+		<property name="scheduleManager" ref="scheduleManager"/>
 	</bean>
 	
 	<bean id="dataInboundOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
