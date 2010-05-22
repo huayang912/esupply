@@ -10,8 +10,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -41,7 +44,9 @@ public class Schedule extends BaseObject {
 	private String supplierContactPerson;
 	private String supplierPhone;
 	private String supplierFax;
-	private Date createDate;	
+	private Date createDate;
+	private Date createDateFrom;
+	private Date createDateTo;
 	private int version;
 	private List<ScheduleItem> scheduleItemList;
 
@@ -242,6 +247,24 @@ public class Schedule extends BaseObject {
 		this.createDate = createDate;
 	}
 
+	@Transient
+	public Date getCreateDateFrom() {
+		return createDateFrom;
+	}
+
+	public void setCreateDateFrom(Date createDateFrom) {
+		this.createDateFrom = createDateFrom;
+	}
+
+	@Transient
+	public Date getCreateDateTo() {
+		return createDateTo;
+	}
+
+	public void setCreateDateTo(Date createDateTo) {
+		this.createDateTo = createDateTo;
+	}
+
 	@Column(name = "version", nullable = false)
 	public int getVersion() {
 		return version;
@@ -267,7 +290,7 @@ public class Schedule extends BaseObject {
 
 		scheduleItemList.add(scheduleItem);
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

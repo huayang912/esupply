@@ -15,6 +15,9 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.orm.ObjectRetrievalFailureException;
@@ -149,8 +152,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			inboundLog.setInboundResult("fail");
 
 			Schedule schedule = (Schedule) dataConvertException.getObject();
-			if (schedule != null && schedule.getPlantSupplier() != null)
-			{
+			if (schedule != null && schedule.getPlantSupplier() != null) {
 				inboundLog.setPlant(schedule.getPlantSupplier().getPlant());
 				inboundLog.setSupplier(schedule.getPlantSupplier().getSupplier());
 			}
@@ -162,6 +164,40 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		}
 
 		return null;
+	}
+
+	public Schedule GetLastestScheduleByUser(User user) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(Schedule.class);
+
+		criteria.createAlias("plantSupplier", "ps");
+
+		criteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
+		criteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
+		criteria.add(Restrictions.eq("version", this.GetLastestScheduleVersion(user.getUserPlant(), user.getUserSupplier())));
+
+		List<Schedule> scheduleList = this.findByCriteria(criteria);
+		if (scheduleList != null && scheduleList.size() > 0) {
+			return scheduleList.get(0);
+		}
+		return null;
+	}
+
+	public int GetLastestScheduleVersion(Plant plant, Supplier supplier) {
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(Schedule.class).setProjection(Projections.max("version"));
+
+		criteria.createAlias("plantSupplier", "ps");
+
+		criteria.add(Restrictions.eq("ps.plant", plant));
+		criteria.add(Restrictions.eq("ps.supplier", supplier));
+
+		List list = this.findByCriteria(criteria);
+
+		if (list.get(0) != null) {
+			return Integer.parseInt(list.get(0).toString());
+		} else {
+			return 0;
+		}
 	}
 
 	private DELFOR02 unmarshalOrder(InputStream stream) throws JAXBException {
@@ -182,7 +218,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 			schedule.setScheduleNo(E1EDK09.getVTRNR()); // po number
 			schedule.setCreateDate(dateFormat.parse(delfor.getIDOC().getEDIDC40().getCREDAT()));
-			
+
 			List<DELFOR02E1EDKA1> DELFOR02E1EDKA1List = E1EDK09.getE1EDKA1();
 			if (DELFOR02E1EDKA1List != null && DELFOR02E1EDKA1List.size() > 0) {
 				for (int i = 0; i < DELFOR02E1EDKA1List.size(); i++) {
@@ -265,6 +301,10 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 			schedule.setPlantSupplier(plantSupplier);
 
+			// 查找最大版本
+			int version = GetLastestScheduleVersion(plantSupplier.getPlant(), plantSupplier.getSupplier());
+			schedule.setVersion(version + 1);
+
 			// ----------------------------schedule item---------------------
 			List<DELFOR02E1EDP10> E1EDP10List = E1EDK09.getE1EDP10();
 			if (E1EDP10List != null && E1EDP10List.size() > 0) {
@@ -311,7 +351,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							supplierItem = new SupplierItem();
 							supplierItem.setItem(item);
 							supplierItem.setSupplier(supplier);
-							supplierItem.setSupplierItemCode(supplierItemCode);				
+							supplierItem.setSupplierItemCode(supplierItemCode);
 
 							supplierItem = this.supplierItemManager.save(supplierItem);
 						}
@@ -358,12 +398,12 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							} else {
 								scheduleItemDetail.setDateType("Day");
 							}
-							
+
 							scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
 							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
-							
+
 							scheduleItem.addScheduleItemDetail(scheduleItemDetail);
 						}
 					}
