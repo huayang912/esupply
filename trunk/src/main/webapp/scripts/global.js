@@ -109,12 +109,13 @@ function move(list,to) {
 /*  This function is to select all options in a multi-valued <select> */
 function selectAll(elementId) {
     var element = document.getElementById(elementId);
-    len = element.length;
-    if (len != 0) {
-        for (i = 0; i < len; i++) {
-            element.options[i].selected = true;
-        }
-    }
+    if(element != null){
+    	len = element.length;
+    	if (len != 0) {
+    		for (i = 0; i < len; i++) {
+    			element.options[i].selected = true;
+    		}
+    	}
 }
 
 /* This function is used to select a checkbox by passing
