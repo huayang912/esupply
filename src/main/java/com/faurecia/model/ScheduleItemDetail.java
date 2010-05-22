@@ -44,7 +44,7 @@ public class ScheduleItemDetail extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "schedule_item_id", nullable=false)
+	@JoinColumn(name = "schedule_item_id", nullable=true)
 	public ScheduleItem getScheduleItem() {
 		return scheduleItem;
 	}

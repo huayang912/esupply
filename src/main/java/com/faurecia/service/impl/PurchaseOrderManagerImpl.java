@@ -165,21 +165,13 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
 			}
 
-			// //如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
-			// if (this.purchaseOrderManager.exists(purchaseOrder.getPoNo())) {
-			// this.purchaseOrderManager.remove(purchaseOrder.getPoNo());
-			// }
+			// 如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
+			if (this.exists(purchaseOrder.getPoNo())) {
+				this.remove(purchaseOrder.getPoNo());
+			}
 
 			// 保存采购单
-			if (purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
-				for (int index = 0; index < purchaseOrder.getPurchaseOrderDetailList().size(); index++) {
-					PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(index);
-					this.purchaseOrderDetailManager.save(purchaseOrderDetail);
-				}
-			}
-			else {
-				this.save(purchaseOrder);
-			}
+			this.save(purchaseOrder);		
 
 			inboundLog.setInboundResult("success");
 
