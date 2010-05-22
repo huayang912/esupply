@@ -80,7 +80,7 @@ public class ScheduleItemDetail extends BaseObject {
 		this.dateFrom = dateFrom;
 	}
 
-	@Column(name = "date_from", nullable = false)
+	@Column(name = "date_to", nullable = false)
 	public Date getDateTo() {
 		return dateTo;
 	}
