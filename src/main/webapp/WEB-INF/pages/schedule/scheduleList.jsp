@@ -58,5 +58,5 @@
 <c:out value="${buttons}" escapeXml="false" />
 
 <script type="text/javascript">
-    highlightTableRows("purchaseOrders");    
+    highlightTableRows("schedules");    
 </script>
