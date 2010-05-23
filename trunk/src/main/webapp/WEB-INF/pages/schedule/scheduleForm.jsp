@@ -9,7 +9,7 @@
 
 <s:form name="scheduleForm" action="saveSchedule" method="post"
 	validate="true">
-	
+
 	<input type="hidden" name="from" value="${param.from}" />
 
 	<c:set var="buttons">
@@ -28,9 +28,8 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><s:label key="schedule.plantSupplier.plant.code"
-						cssClass="text medium" /></td>
-					<td><s:label key="schedule.plantSupplier.supplier.code"
+					<td><s:label key="schedule.plantCode" cssClass="text medium" /></td>
+					<td><s:label key="schedule.supplierCode"
 						cssClass="text medium" /></td>
 				</tr>
 				<tr>
@@ -66,9 +65,9 @@
 				cellspacing="0">
 				<thead>
 					<tr>
-						<th><fmt:message key="scheduleItem.Item.Code" /></th>
-						<th><fmt:message key="scheduleItem.Item.Description" /></th>
-						<th><fmt:message key="scheduleItem.SupplierItemCode" /></th>
+						<th><fmt:message key="scheduleDetail.itemCode" /></th>
+						<th><fmt:message key="scheduleDetail.itemDescription" /></th>
+						<th><fmt:message key="scheduleDetail.supplierItemCode" /></th>
 						<s:iterator id="scheduleType"
 							value="%{scheduleView.scheduleHead.scheduleTypeList}">
 							<th>${scheduleType}</th>
@@ -82,7 +81,8 @@
 						<td></td>
 						<s:iterator id="dateFrom"
 							value="%{scheduleView.scheduleHead.dateFromList}">
-							<td>${dateFrom}</td>
+							<td><fmt:formatDate value="${dateFrom}" pattern="MM/dd/yyyy" />
+							</td>
 						</s:iterator>
 					</tr>
 					<tr class="even">
@@ -91,7 +91,7 @@
 						<td></td>
 						<s:iterator id="dateTo"
 							value="%{scheduleView.scheduleHead.dateToList}">
-							<td>${dateTo}</td>
+							<td><fmt:formatDate value="${dateTo}" pattern="MM/dd/yyyy" /></td>
 						</s:iterator>
 					</tr>
 					<s:iterator id="scheduleBody"
@@ -106,7 +106,7 @@
 						<td>${scheduleBody.itemDescription}</td>
 						<td>${scheduleBody.supplierItemCode}</td>
 						<s:iterator id="qty" value="#scheduleBody.qtyList">
-							<td>${qty}</td>
+							<td><fmt:formatNumber value="${qty}" pattern="#,###.##" /></td>
 						</s:iterator>
 						</tr>
 					</s:iterator>
