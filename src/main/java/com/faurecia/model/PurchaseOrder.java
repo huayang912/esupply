@@ -67,6 +67,14 @@ public class PurchaseOrder extends BaseObject {
 		this.plantSupplier = plantSupplier;
 	}
 
+	@Transient
+	public String getPlantCode() {
+		if (this.plantSupplier != null) {
+			return this.plantSupplier.getPlant().getCode();
+		}
+		return null;
+	}
+	
 	@Column(name = "plant_name", nullable = false, length = 50)
 	public String getPlantName() {
 		if (plantName != null && plantName.trim().length() > 0) {
@@ -151,6 +159,14 @@ public class PurchaseOrder extends BaseObject {
 		this.plantFax = plantFax;
 	}
 
+	@Transient
+	public String getSupplierCode() {
+		if (this.plantSupplier != null) {
+			return this.plantSupplier.getSupplier().getCode();
+		}
+		return null;
+	}
+	
 	@Column(name = "supplier_name", nullable = true, length = 50)
 	public String getSupplierName() {
 		if (supplierName != null && supplierName.trim().length() > 0) {

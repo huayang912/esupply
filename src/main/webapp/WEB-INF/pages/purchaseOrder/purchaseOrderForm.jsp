@@ -19,9 +19,9 @@
 			<td></td>
 		</tr>
 		<tr>
-			<td><s:label key="purchaseOrder.plantSupplier.plant.code"
+			<td><s:label key="purchaseOrder.plantCode"
 				cssClass="text medium" /></td>
-			<td><s:label key="purchaseOrder.plantSupplier.supplier.code"
+			<td><s:label key="purchaseOrder.supplierCode"
 				cssClass="text medium" /></td>
 		</tr>
 		<tr>

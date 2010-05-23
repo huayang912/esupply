@@ -25,15 +25,15 @@
 	<li><s:select key="purchaseOrder.status" list="%{status}"
 		theme="xhtml" /></li>
 	<s:textfield key="purchaseOrder.createDateFrom"
-		cssClass="text medium" name="dateFrom" />
+		cssClass="text medium" />
 	<A HREF="#"
-    	onClick="cal.select(document.forms['purchaseOrderForm'].dateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-    	NAME="anchDateFrom" ID="anchDateFrom">select</A>  			
+    	onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+    	NAME="anchDateFrom" ID="anchDateFrom"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>  			
 	<s:textfield key="purchaseOrder.createDateTo"
-		cssClass="text medium" name="dateTo" />
+		cssClass="text medium" />
 	<A HREF="#"
-    	onClick="cal.select(document.forms['purchaseOrderForm'].dateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-    	NAME="anchDateTo" ID="anchDateTo">select</A>
+    	onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+    	NAME="anchDateTo" ID="anchDateTo"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
@@ -43,23 +43,25 @@
 	<display:column property="poNo" sortable="true"
 		url="/editPurchaseOrder.html" paramId="poNo" paramProperty="poNo"
 		titleKey="purchaseOrder.poNo" />
-	<display:column property="plantSupplier.plant.code" sortable="true"
+	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="purchaseOrder.plantCode" />
-	<display:column property="plantSupplier.plant.name" sortable="true"
+	<display:column property="plantName" sortable="true"
 		sortProperty="p.name" titleKey="purchaseOrder.plantName" />
-	<display:column property="plantSupplier.supplier.code" sortable="true"
+	<display:column property="supplierCode" sortable="true"
 		sortProperty="s.code" titleKey="purchaseOrder.supplierCode" />
-	<display:column property="plantSupplier.supplierName" sortable="true"
+	<display:column property="supplierName" sortable="true"
 		sortProperty="ps.supplierName" titleKey="purchaseOrder.supplierName" />
 	<display:column property="createDate" format="{0,date,MM/dd/yyyy}"
 		sortable="true" titleKey="purchaseOrder.createDate" />
 	<display:column property="status" sortable="true"
 		titleKey="purchaseOrder.status" />
 
-	<display:setProperty name="paging.banner.item_name"
-		value="Purchase Order" />
-	<display:setProperty name="paging.banner.items_name"
-		value="Purchase Orders" />
+	<display:setProperty name="paging.banner.item_name">
+		<fmt:message key="purchaseOrder.purchaseOrder" />
+	</display:setProperty>
+	<display:setProperty name="paging.banner.items_name">
+		<fmt:message key="purchaseOrder.purchaseOrders" />
+	</display:setProperty>
 
 	<display:setProperty name="export.excel.filename"
 		value="purchaseOrder List.xls" />

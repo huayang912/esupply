@@ -67,6 +67,14 @@ public class Schedule extends BaseObject {
 	public void setPlantSupplier(PlantSupplier plantSupplier) {
 		this.plantSupplier = plantSupplier;
 	}
+	
+	@Transient
+	public String getPlantCode() {
+		if (this.plantSupplier != null) {
+			return this.plantSupplier.getPlant().getCode();
+		}
+		return null;
+	}
 
 	@Column(name = "plant_name", nullable = false, length = 50)
 	public String getPlantName() {
@@ -150,6 +158,14 @@ public class Schedule extends BaseObject {
 
 	public void setPlantFax(String plantFax) {
 		this.plantFax = plantFax;
+	}
+	
+	@Transient
+	public String getSupplierCode() {
+		if (this.plantSupplier != null) {
+			return this.plantSupplier.getSupplier().getCode();
+		}
+		return null;
 	}
 
 	@Column(name = "supplier_name", nullable = true, length = 50)
