@@ -161,12 +161,8 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 			ORDERS02 order = unmarshalOrder(inputStream);
 			PurchaseOrder purchaseOrder = ORDERS02ToPO(order);
 
-			if (inboundLog.getPlant() == null) {
-				inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
-			}
-
-			if (inboundLog.getSupplier() == null) {
-				inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
+			if (inboundLog.getPlantSupplier() == null) {
+				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
 			}
 
 			// 如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
@@ -192,8 +188,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
 			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null)
 			{
-				inboundLog.setPlant(purchaseOrder.getPlantSupplier().getPlant());
-				inboundLog.setSupplier(purchaseOrder.getPlantSupplier().getSupplier());
+				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
 			}
 			inboundLog.setMemo(dataConvertException.getMessage());
 		} catch (Exception exception) {
@@ -254,7 +249,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 							supplier = new Supplier();
 							supplier.setCode(supplierCode);
-							supplier.setName(E1EDKA1.getNAME1());
+							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
 						}

@@ -49,6 +49,7 @@ public class Item extends BaseObject implements Serializable {
 	private String code;
 	private String description;
 	private String uom;
+	private Integer unitCount;
 	private List<SupplierItem> supplierItems;
 
 	@Id
@@ -96,6 +97,15 @@ public class Item extends BaseObject implements Serializable {
 
 	public void setUom(String uom) {
 		this.uom = uom;
+	}
+
+	@Column(name="unit_count", nullable = true)
+	public Integer getUnitCount() {
+		return unitCount;
+	}
+
+	public void setUnitCount(Integer unitCount) {
+		this.unitCount = unitCount;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "item")

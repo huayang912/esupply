@@ -21,6 +21,7 @@
         	<Item name="PlantMenu" title="menu.plant" description="Plant Menu" page="/editPlantProfile.html" roles="ROLE_PLANT_ADMIN"/>
             <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>
             <Item name="ViewVendor" title="menu.admin.vendors" page="/admin/users.html?roleType=ROLE_VENDOR"/>
+            <Item name="InboundLogsMenu" title="menu.admin.inboundLogs" page="/inboundLogs.html"/>
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>

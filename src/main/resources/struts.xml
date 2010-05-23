@@ -265,6 +265,16 @@
 			method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
+		
+		<!-- Log -->
+		<action name="inboundLogs" class="com.faurecia.webapp.action.InboundLogAction"
+			method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
+			<result name="success">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
+		</action>
 	</package>
 
 	<!-- Actions in this package will be prefixed with /admin/ -->

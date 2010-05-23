@@ -128,12 +128,8 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			DELFOR02 delfor = unmarshalOrder(inputStream);
 			Schedule schedule = DELFOR02ToSchedule(delfor);
 
-			if (inboundLog.getPlant() == null) {
-				inboundLog.setPlant(schedule.getPlantSupplier().getPlant());
-			}
-
-			if (inboundLog.getSupplier() == null) {
-				inboundLog.setSupplier(schedule.getPlantSupplier().getSupplier());
+			if (inboundLog.getPlantSupplier() == null) {
+				inboundLog.setPlantSupplier(schedule.getPlantSupplier());
 			}
 
 			// ±£´æ²É¹ºµ¥
@@ -153,8 +149,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 			Schedule schedule = (Schedule) dataConvertException.getObject();
 			if (schedule != null && schedule.getPlantSupplier() != null) {
-				inboundLog.setPlant(schedule.getPlantSupplier().getPlant());
-				inboundLog.setSupplier(schedule.getPlantSupplier().getSupplier());
+				inboundLog.setPlantSupplier(schedule.getPlantSupplier());
 			}
 			inboundLog.setMemo(dataConvertException.getMessage());
 		} catch (Exception exception) {
@@ -262,7 +257,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 							supplier = new Supplier();
 							supplier.setCode(supplierCode);
-							supplier.setName(E1EDKA1.getNAME1());
+							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
 						}
