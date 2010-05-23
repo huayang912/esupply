@@ -1,11 +1,15 @@
 <%@ include file="/common/taglibs.jsp"%>
 
+<script type="text/javascript">
+	var cal = new CalendarPopup();   
+</script>
+
 <head>
 <title><fmt:message key="purchaseOrderList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderList.heading'/>" />
 <script type="text/javascript"
-	src="<c:url value='/scripts/DateTimeCalendar.js'/>"></script>
+	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
 <meta name="menu" content="OrderMenu" />
 <c:set var="buttons">
@@ -21,9 +25,15 @@
 	<li><s:select key="purchaseOrder.status" list="%{status}"
 		theme="xhtml" /></li>
 	<s:textfield key="purchaseOrder.createDateFrom"
-		cssClass="text medium" />
-	<li><s:textfield key="purchaseOrder.createDateTo"
-		cssClass="text medium" /></li>
+		cssClass="text medium" name="dateFrom" />
+	<A HREF="#"
+    	onClick="cal.select(document.forms['purchaseOrderForm'].dateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+    	NAME="anchDateFrom" ID="anchDateFrom">select</A>  			
+	<s:textfield key="purchaseOrder.createDateTo"
+		cssClass="text medium" name="dateTo" />
+	<A HREF="#"
+    	onClick="cal.select(document.forms['purchaseOrderForm'].dateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+    	NAME="anchDateTo" ID="anchDateTo">select</A>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
