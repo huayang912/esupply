@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -34,8 +35,7 @@ public class InboundLog extends BaseObject {
 	private static final long serialVersionUID = -18012686953934265L;
 
 	private Integer id;
-	private Plant plant;
-	private Supplier supplier;
+	private PlantSupplier plantSupplier;
 	private String dataType;
 	private String fileName;
 	private String fullFilePath;
@@ -45,6 +45,8 @@ public class InboundLog extends BaseObject {
 	private String lastModifyUser;
 	private String inboundResult;
 	private String memo;
+	private Date createDateFrom;
+	private Date createDateTo;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -57,23 +59,13 @@ public class InboundLog extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "plant_code", nullable=true)
-	public Plant getPlant() {
-		return plant;
+	@JoinColumn(name = "plant_supplier_id")
+	public PlantSupplier getPlantSupplier() {
+		return plantSupplier;
 	}
 
-	public void setPlant(Plant plant) {
-		this.plant = plant;
-	}
-
-	@ManyToOne
-	@JoinColumn(name = "supplier_code", nullable=true)
-	public Supplier getSupplier() {
-		return supplier;
-	}
-
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
+	public void setPlantSupplier(PlantSupplier plantSupplier) {
+		this.plantSupplier = plantSupplier;
 	}
 
 	@Column(name="data_type",nullable=false,length=50)
@@ -156,7 +148,23 @@ public class InboundLog extends BaseObject {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	@Transient
+	public Date getCreateDateFrom() {
+		return createDateFrom;
+	}
 
+	public void setCreateDateFrom(Date createDateFrom) {
+		this.createDateFrom = createDateFrom;
+	}
+
+	@Transient
+	public Date getCreateDateTo() {
+		return createDateTo;
+	}
+
+	public void setCreateDateTo(Date createDateTo) {
+		this.createDateTo = createDateTo;
+	}
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
