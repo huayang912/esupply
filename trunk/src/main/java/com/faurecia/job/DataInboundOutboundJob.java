@@ -30,7 +30,7 @@ public class DataInboundOutboundJob {
 	private InboundLogManager inboundLogManager;
 	private PurchaseOrderManager purchaseOrderManager;
 	private ScheduleManager scheduleManager;
-	private final String[] dataTypeArray = new String[] { "ORDERS", "DELFOR" };
+	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS" };
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -154,7 +154,7 @@ public class DataInboundOutboundJob {
 					try {
 						if (dataType.equals("ORDERS")) {
 							po = this.purchaseOrderManager.SaveSingleFile(inputStream, inboundLog);
-						} else if (dataType.equals("DELFOR")) {
+						} else if (dataType.equals("DELINS")) {
 							schedule = this.scheduleManager.SaveSingleFile(inputStream, inboundLog);
 						}
 					} catch (Exception ex) {
