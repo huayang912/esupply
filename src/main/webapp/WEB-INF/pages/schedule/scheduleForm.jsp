@@ -8,7 +8,7 @@
 </head>
 
 <s:form name="scheduleForm" action="saveSchedule" method="post"
-	validate="true">
+	validate="true" >
 
 	<input type="hidden" name="from" value="${param.from}" />
 
@@ -60,7 +60,7 @@
 					<td><s:label key="schedule.supplierFax" cssClass="text medium" /></td>
 				</tr>
 			</table>
-
+</ul>
 			<table id="purchaseOrderDetailList" cellpadding="0" class="table"
 				cellspacing="0">
 				<thead>
