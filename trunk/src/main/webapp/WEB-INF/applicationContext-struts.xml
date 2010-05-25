@@ -39,6 +39,10 @@
         <property name="purchaseOrderManager" ref="purchaseOrderManager"/>
     </bean> 
     
+    <bean id="scheduleAction" class="com.faurecia.webapp.action.ScheduleAction" scope="prototype">
+        <property name="supplierManager" ref="supplierManager"/>
+    </bean> 
+    
     <bean id="itemAction" class="com.faurecia.webapp.action.ItemAction" scope="prototype">
         <property name="itemManager" ref="itemManager"/>
     </bean> 
