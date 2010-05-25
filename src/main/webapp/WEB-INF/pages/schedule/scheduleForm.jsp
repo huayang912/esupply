@@ -61,6 +61,7 @@
 				</tr>
 			</table>
 </ul>
+
 			<table id="purchaseOrderDetailList" cellpadding="0" class="table"
 				cellspacing="0">
 				<thead>
@@ -116,6 +117,7 @@
 	</c:choose>
 	<div class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></div>
+		<ul style="border:0px">
 </s:form>
 
 <script type="text/javascript">
