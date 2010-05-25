@@ -213,6 +213,10 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			scheduleItemIdIist.add(resultSet.getInt(1));
 		}
 		
+		if (scheduleItemIdIist.size() == 0) {
+			return null;	
+		}
+		
 		DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleItem.class);
 		criteria.add(Restrictions.in("id", scheduleItemIdIist));
 		criteria.addOrder(Order.asc("sequence"));
