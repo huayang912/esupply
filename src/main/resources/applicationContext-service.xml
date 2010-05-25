@@ -231,6 +231,15 @@
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 
+	<bean id="scheduleItemManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.ScheduleItem" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
 	<bean id="scheduleManager" class="com.faurecia.service.impl.ScheduleManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -238,6 +247,8 @@
 				<constructor-arg value="com.faurecia.model.Schedule" />
 			</bean>
 		</constructor-arg>
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="scheduleItemManager" ref="scheduleItemManager" />
 		<property name="plantManager" ref="plantManager" />
 		<property name="supplierManager" ref="supplierManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />

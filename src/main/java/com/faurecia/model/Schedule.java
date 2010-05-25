@@ -36,6 +36,7 @@ public class Schedule extends BaseObject {
 	private String plantContactPerson;
 	private String plantPhone;
 	private String plantFax;
+	private String supplierCode;
 	private String supplierName;
 	private String supplierAddress1;
 	private String supplierAddress2;
@@ -43,9 +44,6 @@ public class Schedule extends BaseObject {
 	private String supplierPhone;
 	private String supplierFax;
 	private Date createDate;
-	private Date createDateFrom;
-	private Date createDateTo;
-	private int version;
 	private List<ScheduleItem> scheduleItemList;
 
 	@Id
@@ -162,10 +160,18 @@ public class Schedule extends BaseObject {
 	
 	@Transient
 	public String getSupplierCode() {
+		if (this.supplierCode != null && this.supplierCode.trim().length() > 0) {
+			return this.supplierCode;
+		}
+		
 		if (this.plantSupplier != null) {
 			return this.plantSupplier.getSupplier().getCode();
 		}
 		return null;
+	}
+	
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
 	}
 
 	@Column(name = "supplier_name", nullable = true, length = 50)
@@ -260,34 +266,7 @@ public class Schedule extends BaseObject {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
-	@Transient
-	public Date getCreateDateFrom() {
-		return createDateFrom;
-	}
-
-	public void setCreateDateFrom(Date createDateFrom) {
-		this.createDateFrom = createDateFrom;
-	}
-
-	@Transient
-	public Date getCreateDateTo() {
-		return createDateTo;
-	}
-
-	public void setCreateDateTo(Date createDateTo) {
-		this.createDateTo = createDateTo;
-	}
-
-	@Column(name = "version", nullable = false)
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "schedule")
 	public List<ScheduleItem> getScheduleItemList() {
 		return scheduleItemList;

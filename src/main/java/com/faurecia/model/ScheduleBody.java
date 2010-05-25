@@ -2,6 +2,7 @@ package com.faurecia.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ScheduleBody {
@@ -9,6 +10,8 @@ public class ScheduleBody {
 	private String itemCode;
 	private String supplierItemCode;
 	private String itemDescription;
+	private Date createDate;
+	private Integer releaseNo;
 	private List<BigDecimal> qtyList;
 	public ScheduleBody() {
 		this.qtyList = new ArrayList<BigDecimal>();
@@ -30,6 +33,18 @@ public class ScheduleBody {
 	}
 	public void setItemDescription(String itemDescription) {
 		this.itemDescription = itemDescription;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Integer getReleaseNo() {
+		return releaseNo;
+	}
+	public void setReleaseNo(Integer releaseNo) {
+		this.releaseNo = releaseNo;
 	}
 	public List<BigDecimal> getQtyList() {
 		return qtyList;

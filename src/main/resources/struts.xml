@@ -240,18 +240,18 @@
 		<!-- Schedule -->
 		<action name="schedules" class="com.faurecia.webapp.action.ScheduleAction"
 			method="list">
-			<interceptor-ref name="defaultStack">
-				<param name="validation.includeMethods">list</param>
-			</interceptor-ref>
-			<result name="input">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 			<result name="success">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 		</action>
 
 		<action name="editSchedule" class="com.faurecia.webapp.action.ScheduleAction"
 			method="edit">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">edit</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp
 			</result>
-			<result name="error">/WEB-INF/pages/schedule/scheduleForm.jsp
+			<result name="error">/WEB-INF/pages/schedule/scheduleList.jsp
 			</result>
 		</action>
 
@@ -265,7 +265,7 @@
 			method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
-		
+
 		<!-- Log -->
 		<action name="inboundLogs" class="com.faurecia.webapp.action.InboundLogAction"
 			method="list">

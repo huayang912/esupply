@@ -24,10 +24,6 @@
 
 			<table width="100%">
 				<tr>
-					<td><s:label key="schedule.scheduleNo" cssClass="text medium" /></td>
-					<td></td>
-				</tr>
-				<tr>
 					<td><s:label key="schedule.plantCode" cssClass="text medium" /></td>
 					<td><s:label key="schedule.supplierCode"
 						cssClass="text medium" /></td>
@@ -66,6 +62,8 @@
 				cellspacing="0">
 				<thead>
 					<tr>
+						<th><fmt:message key="scheduleDetail.createDate" /></th>
+						<th><fmt:message key="scheduleDetail.releaseNo" /></th>
 						<th><fmt:message key="scheduleDetail.itemCode" /></th>
 						<th><fmt:message key="scheduleDetail.itemDescription" /></th>
 						<th><fmt:message key="scheduleDetail.supplierItemCode" /></th>
@@ -80,6 +78,8 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
+						<td></td>
 						<s:iterator id="dateFrom"
 							value="%{scheduleView.scheduleHead.dateFromList}">
 							<td><fmt:formatDate value="${dateFrom}" pattern="MM/dd/yyyy" />
@@ -87,6 +87,8 @@
 						</s:iterator>
 					</tr>
 					<tr class="even">
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -103,6 +105,8 @@
 						<s:else>
 							<tr class="even">
 						</s:else>
+						<td><fmt:formatDate value="${scheduleBody.createDate}" pattern="MM/dd/yyyy" /></td>
+						<td>${scheduleBody.releaseNo}</td>
 						<td>${scheduleBody.itemCode}</td>
 						<td>${scheduleBody.itemDescription}</td>
 						<td>${scheduleBody.supplierItemCode}</td>
