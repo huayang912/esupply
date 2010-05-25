@@ -121,7 +121,7 @@
 	</c:choose>
 	<div class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></div>
-		<ul style="border:0px">
+		<ul style="border:0px;padding:0px;margin:0px">
 </s:form>
 
 <script type="text/javascript">

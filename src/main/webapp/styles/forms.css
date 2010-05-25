@@ -11,10 +11,10 @@ form {
 form ul {
 	position: relative;
 	list-style: none;
-	width: 98%;
+	width: 100%;
 	padding: 0;
 	border: 1px solid #CCCCCC;
-	padding: 10px;
+	margin-left:0;
 }
 
 /* Fixes for forms around everything in JSF */
