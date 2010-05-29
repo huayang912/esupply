@@ -262,4 +262,13 @@
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
+	
+	<bean id="deliverOrderManager" class="com.faurecia.service.impl.DeliverOrderManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.DeliverOrder" />
+			</bean>
+		</constructor-arg>
+	</bean>
 </beans>

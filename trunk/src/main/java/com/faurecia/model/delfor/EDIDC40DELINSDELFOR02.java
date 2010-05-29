@@ -405,7 +405,7 @@ public class EDIDC40DELINSDELFOR02 {
      *     {@link String }
      *     
      */
-    public void setTABNAM(String value) {
+    public void SNDPRN(String value) {
         this.tabnam = value;
     }
 

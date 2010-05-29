@@ -18,5 +18,8 @@
 		<mapping class="com.faurecia.model.Schedule" />
 		<mapping class="com.faurecia.model.ScheduleItem" />
 		<mapping class="com.faurecia.model.ScheduleItemDetail" />
+		<mapping class="com.faurecia.model.DeliverOrder" />
+		<mapping class="com.faurecia.model.DeliverOrderDetail" />
+		<mapping class="com.faurecia.model.OutboundLog" />
 	</session-factory>
 </hibernate-configuration>

@@ -1,6 +1,7 @@
 package com.faurecia.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -49,7 +50,7 @@ public class Item extends BaseObject implements Serializable {
 	private String code;
 	private String description;
 	private String uom;
-	private Integer unitCount;
+	private BigDecimal unitCount;
 	private List<SupplierItem> supplierItems;
 
 	@Id
@@ -99,12 +100,12 @@ public class Item extends BaseObject implements Serializable {
 		this.uom = uom;
 	}
 
-	@Column(name="unit_count", nullable = true)
-	public Integer getUnitCount() {
+	@Column(name="unit_count", nullable = true, precision = 9, scale = 2)
+	public BigDecimal getUnitCount() {
 		return unitCount;
 	}
 
-	public void setUnitCount(Integer unitCount) {
+	public void setUnitCount(BigDecimal unitCount) {
 		this.unitCount = unitCount;
 	}
 

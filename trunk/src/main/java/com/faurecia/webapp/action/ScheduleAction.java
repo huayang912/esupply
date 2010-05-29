@@ -82,6 +82,11 @@ public class ScheduleAction extends BaseAction {
 										insertPosion = k;
 										break;
 									} else if (dateFrom.compareTo(scheduleItemDetail.getDateFrom()) == 0) {
+										if (scheduleType.equals(scheduleItemDetail.getScheduleType())) {
+											insertPosion = -2;
+											break;
+										}
+										
 										if ("Backlog + Immediate Requirement".equals(scheduleItemDetail.getScheduleType())
 												&& "Firm".equals(scheduleType)) {
 											insertPosion = k;
@@ -97,14 +102,16 @@ public class ScheduleAction extends BaseAction {
 									}
 								}
 
-								if (insertPosion != -1) {
-									scheduleView.getScheduleHead().getScheduleTypeList().add(insertPosion, scheduleItemDetail.getScheduleType());
-									scheduleView.getScheduleHead().getDateFromList().add(insertPosion, scheduleItemDetail.getDateFrom());
-									scheduleView.getScheduleHead().getDateToList().add(insertPosion, scheduleItemDetail.getDateTo());
-								} else {
-									scheduleView.getScheduleHead().getScheduleTypeList().add(scheduleItemDetail.getScheduleType());
-									scheduleView.getScheduleHead().getDateFromList().add(scheduleItemDetail.getDateFrom());
-									scheduleView.getScheduleHead().getDateToList().add(scheduleItemDetail.getDateTo());
+								if (insertPosion > -2) {
+									if (insertPosion != -1) {
+										scheduleView.getScheduleHead().getScheduleTypeList().add(insertPosion, scheduleItemDetail.getScheduleType());
+										scheduleView.getScheduleHead().getDateFromList().add(insertPosion, scheduleItemDetail.getDateFrom());
+										scheduleView.getScheduleHead().getDateToList().add(insertPosion, scheduleItemDetail.getDateTo());
+									} else {
+										scheduleView.getScheduleHead().getScheduleTypeList().add(scheduleItemDetail.getScheduleType());
+										scheduleView.getScheduleHead().getDateFromList().add(scheduleItemDetail.getDateFrom());
+										scheduleView.getScheduleHead().getDateToList().add(scheduleItemDetail.getDateTo());
+									}
 								}
 							}
 						}

@@ -44,7 +44,7 @@ public class PlantAction extends BaseAction {
 		return dateType;
 	}
 
-	public String list() {
+	public String list() {		
 		plants = plantManager.getAll();
 		return SUCCESS;
 	}
