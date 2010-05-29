@@ -1,10 +1,14 @@
 package com.faurecia.webapp.action;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -13,9 +17,12 @@ import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
+import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.PurchaseOrder;
+import com.faurecia.model.PurchaseOrderDetail;
 import com.faurecia.model.User;
 import com.faurecia.service.DeliveryOrderManager;
+import com.faurecia.service.GenericManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
 public class DeliveryOrderAction extends BaseAction {
@@ -24,6 +31,7 @@ public class DeliveryOrderAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = -5177104341924305525L;
 	private DeliveryOrderManager deliveryOrderManager;
+	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
 
 	private PaginatedListUtil<DeliveryOrder> paginatedList;
 	private int pageSize;
@@ -31,14 +39,15 @@ public class DeliveryOrderAction extends BaseAction {
 	private String sort;
 	private String dir;
 	private DeliveryOrder deliveryOrder;
-	private String soNo;	
-
-	public DeliveryOrderManager getDeliveryOrderManager() {
-		return deliveryOrderManager;
-	}
+	private String doNo;	
+	private List<PurchaseOrderDetail> purchaseOrderDetailList;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
 		this.deliveryOrderManager = deliveryOrderManager;
+	}
+	
+	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager) {
+		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
 	}
 
 	public PaginatedListUtil<DeliveryOrder> getPaginatedList() {
@@ -97,12 +106,20 @@ public class DeliveryOrderAction extends BaseAction {
 		this.deliveryOrder = deliveryOrder;
 	}
 
-	public String getSoNo() {
-		return soNo;
+	public String getDoNo() {
+		return doNo;
 	}
 
-	public void setSoNo(String soNo) {
-		this.soNo = soNo;
+	public void setDoNo(String doNo) {
+		this.doNo = doNo;
+	}
+	
+	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
+		return purchaseOrderDetailList;
+	}
+
+	public void setPurchaseOrderDetailList(List<PurchaseOrderDetail> purchaseOrderDetailList) {
+		this.purchaseOrderDetailList = purchaseOrderDetailList;
 	}
 
 	public String list() {
@@ -184,7 +201,45 @@ public class DeliveryOrderAction extends BaseAction {
 	}
 
 	public String edit() throws Exception {
-	//	deliveryOrder = this.deliveryOrderManager.get(this.soNo, true);
+		if (this.doNo != null) {
+			deliveryOrder = this.deliveryOrderManager.get(doNo);
+		}  else if (purchaseOrderDetailList != null) {
+			
+			DeliveryOrder deliveryOrder = null;
+			
+			for (int i = 1; i < purchaseOrderDetailList.size(); i++) {
+				PurchaseOrderDetail purchaseOrderDetail = this.purchaseOrderDetailManager.get(purchaseOrderDetailList.get(i).getId());
+				BigDecimal currentShipQty = purchaseOrderDetailList.get(i).getCurrentShipQty();
+				
+				if (BigDecimal.ZERO.compareTo(currentShipQty) < 0) {
+					if (deliveryOrder == null) {
+						PurchaseOrder purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
+						deliveryOrder = new DeliveryOrder();
+						deliveryOrder.setDoNo("1111111111");
+						deliveryOrder.setCreateDate(new Date());
+						deliveryOrder.setIsExport(false);
+						
+						BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
+					}
+					
+					DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
+					deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
+					
+					BeanUtils.copyProperties(deliveryOrderDetail, purchaseOrderDetail);
+					
+					deliveryOrderDetail.setQty(currentShipQty);
+					deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
+					deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
+					deliveryOrderDetail.setReferenceSequence(purchaseOrderDetail.getSequence());
+					deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
+				}
+			}
+			
+			if (deliveryOrder != null) {
+				this.deliveryOrderManager.save(deliveryOrder);
+			}
+		}
+		
 		return SUCCESS;
 	}
 }
