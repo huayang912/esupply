@@ -28,7 +28,7 @@
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="dataInboundOutboundJobTrigger" />
+				<ref bean="dataInboundJobTrigger" />
 			</list>
 		</property>
 	</bean>
