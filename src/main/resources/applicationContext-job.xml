@@ -4,21 +4,21 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
 	default-lazy-init="true">
 	
-	<bean id="dataInboundOutboundJob" class="com.faurecia.job.DataInboundOutboundJob">
+	<bean id="dataInboundJob" class="com.faurecia.job.DataInboundJob">
 		<property name="plantManager" ref="plantManager"/>
 		<property name="inboundLogManager" ref="inboundLogManager"/>
 		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
 		<property name="scheduleManager" ref="scheduleManager"/>
 	</bean>
 	
-	<bean id="dataInboundOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-	  <property name="targetObject" ref="dataInboundOutboundJob"/>
+	<bean id="dataInboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="dataInboundJob"/>
 	  <property name="targetMethod" value="run"/>
 	  <property name="concurrent" value="false"/>
 	</bean>
 	
-	<bean id="dataInboundOutboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-	  <property name="jobDetail" ref="dataInboundOutboundJobDetail"/>
+	<bean id="dataInboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	  <property name="jobDetail" ref="dataInboundJobDetail"/>
 		<!-- 10 seconds delay -->
 	  <property name="startDelay" value="10000"/>
 		<!-- repeat every 1 mins -->

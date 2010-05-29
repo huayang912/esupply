@@ -23,7 +23,7 @@ import com.faurecia.service.ScheduleManager;
 import com.faurecia.util.DateUtil;
 import com.faurecia.util.FTPClientUtil;
 
-public class DataInboundOutboundJob {
+public class DataInboundJob {
 
 	private final Log log = LogFactory.getLog(getClass());
 	private GenericManager<Plant, String> plantManager;
