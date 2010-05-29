@@ -21,7 +21,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "do")
-public class DeliverOrder extends BaseObject {
+public class DeliveryOrder extends BaseObject {
 
 	/**
 	 * 
@@ -43,10 +43,12 @@ public class DeliverOrder extends BaseObject {
 	private String supplierPhone;
 	private String supplierFax;
 	private Date createDate;
+	private Date createDateFrom;
+	private Date createDateTo;
 	private Date startDate;
 	private Date endDate;
 	private Boolean isExport;
-	private List<DeliverOrderDetail> deliverOrderDetailList;
+	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -288,23 +290,41 @@ public class DeliverOrder extends BaseObject {
 		this.isExport = isExport;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliverOrder")
-	public List<DeliverOrderDetail> getDeliverOrderDetailList() {
-		return deliverOrderDetailList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliveryOrder")
+	public List<DeliveryOrderDetail> getDeliveryOrderDetailList() {
+		return deliveryOrderDetailList;
 	}
 
-	public void setDeliverOrderDetailList(List<DeliverOrderDetail> deliverOrderDetailList) {
-		this.deliverOrderDetailList = deliverOrderDetailList;
+	public void setDeliveryOrderDetailList(List<DeliveryOrderDetail> deliveryOrderDetailList) {
+		this.deliveryOrderDetailList = deliveryOrderDetailList;
 	}
 
-	public void addDeliverOrderDetail(DeliverOrderDetail deliverOrderDetail) {
-		if (deliverOrderDetailList == null) {
-			deliverOrderDetailList = new ArrayList<DeliverOrderDetail>();
+	public void addDeliveryOrderDetail(DeliveryOrderDetail deliveryOrderDetail) {
+		if (deliveryOrderDetailList == null) {
+			deliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
 		}
 
-		deliverOrderDetailList.add(deliverOrderDetail);
+		deliveryOrderDetailList.add(deliveryOrderDetail);
 	}
 	
+	@Transient
+	public Date getCreateDateFrom() {
+		return createDateFrom;
+	}
+
+	public void setCreateDateFrom(Date createDateFrom) {
+		this.createDateFrom = createDateFrom;
+	}
+
+	@Transient
+	public Date getCreateDateTo() {
+		return createDateTo;
+	}
+
+	public void setCreateDateTo(Date createDateTo) {
+		this.createDateTo = createDateTo;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
@@ -323,10 +343,10 @@ public class DeliverOrder extends BaseObject {
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
-		if (!(object instanceof DeliverOrder)) {
+		if (!(object instanceof DeliveryOrder)) {
 			return false;
 		}
-		DeliverOrder rhs = (DeliverOrder) object;
+		DeliveryOrder rhs = (DeliveryOrder) object;
 		return new EqualsBuilder().append(
 				this.doNo, rhs.doNo).isEquals();
 	}
@@ -335,7 +355,7 @@ public class DeliverOrder extends BaseObject {
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(Object object) {
-		DeliverOrder myClass = (DeliverOrder) object;
+		DeliveryOrder myClass = (DeliveryOrder) object;
 		return new CompareToBuilder().append(this.doNo, myClass.doNo)
 				.toComparison();
 	}

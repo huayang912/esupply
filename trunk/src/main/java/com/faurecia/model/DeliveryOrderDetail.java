@@ -18,14 +18,14 @@ import org.apache.commons.lang.builder.CompareToBuilder;
 
 @Entity
 @Table(name = "do_detail")
-public class DeliverOrderDetail extends BaseObject {
+public class DeliveryOrderDetail extends BaseObject {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3412376376621262495L;
 	private Integer id;
-	private DeliverOrder deliverOrder;
+	private DeliveryOrder deliveryOrder;
 	private String sequence;
 	private Item item;
 	private String itemDescription;
@@ -49,12 +49,12 @@ public class DeliverOrderDetail extends BaseObject {
 	
 	@ManyToOne
 	@JoinColumn(name = "do_no", nullable=true)
-	public DeliverOrder getDeliverOrder() {
-		return deliverOrder;
+	public DeliveryOrder getDeliveryOrder() {
+		return deliveryOrder;
 	}
 
-	public void setDeliverOrder(DeliverOrder deliverOrder) {
-		this.deliverOrder = deliverOrder;
+	public void setDeliveryOrder(DeliveryOrder deliveryOrder) {
+		this.deliveryOrder = deliveryOrder;
 	}
 
 	@Column(nullable = false, length = 10)
@@ -171,10 +171,10 @@ public class DeliverOrderDetail extends BaseObject {
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
-		if (!(object instanceof DeliverOrderDetail)) {
+		if (!(object instanceof DeliveryOrderDetail)) {
 			return false;
 		}
-		DeliverOrderDetail rhs = (DeliverOrderDetail) object;
+		DeliveryOrderDetail rhs = (DeliveryOrderDetail) object;
 		return new EqualsBuilder().append(
 				this.id, rhs.id).isEquals();
 	}
@@ -183,7 +183,7 @@ public class DeliverOrderDetail extends BaseObject {
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(Object object) {
-		DeliverOrderDetail myClass = (DeliverOrderDetail) object;
+		DeliveryOrderDetail myClass = (DeliveryOrderDetail) object;
 		return new CompareToBuilder().append(this.id, myClass.id)
 				.toComparison();
 	}
