@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -39,6 +40,7 @@ public class PurchaseOrderDetail extends BaseObject {
 	private BigDecimal qty;
 	private Date deliveryDate;
 	private BigDecimal shipQty;
+	private BigDecimal currentShipQty;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -136,6 +138,15 @@ public class PurchaseOrderDetail extends BaseObject {
 
 	public void setShipQty(BigDecimal shipQty) {
 		this.shipQty = shipQty;
+	}
+	
+	@Transient
+	public BigDecimal getCurrentShipQty() {
+		return currentShipQty;
+	}
+
+	public void setCurrentShipQty(BigDecimal currentShipQty) {
+		this.currentShipQty = currentShipQty;
 	}
 	
 	/**

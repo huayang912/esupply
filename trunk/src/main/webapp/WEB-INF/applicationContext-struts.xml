@@ -50,4 +50,9 @@
     <bean id="supplierAction" class="com.faurecia.webapp.action.SupplierAction" scope="prototype">
         <property name="plantSupplierManager" ref="plantSupplierManager"/>
     </bean> 
+    
+    <bean id="deliveryOrderAction" class="com.faurecia.webapp.action.DeliveryOrderAction" scope="prototype">
+        <property name="deliveryOrderManager" ref="deliveryOrderManager"/>
+        <property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager"/>
+    </bean> 
 </beans>

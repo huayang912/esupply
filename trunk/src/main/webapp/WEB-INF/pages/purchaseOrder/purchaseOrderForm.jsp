@@ -7,10 +7,11 @@
 <meta name="menu" content="OrderMenu" />
 </head>
 
-<s:form name="purchaseOrderForm" action="savePurchaseOrder"
+<s:form name="purchaseOrderForm" action="editDeliveryOrder"
 	method="post" validate="true">
 	<c:set var="buttons">
-		<s:submit key="button.cancel" method="cancel" />
+		<s:submit key="button.save" />
+		<input type="button" value="<fmt:message key="button.cancel"/>" onclick="window.location.href='cancelPurchaseOrder.html'"/> 		
 	</c:set>
 
 	<table width="100%">
@@ -64,9 +65,9 @@
 
 	<display:table name="purchaseOrder.purchaseOrderDetailList"
 		cellspacing="0" cellpadding="0" requestURI=""
-		id="purchaseOrderDetailList" class="table">
-		<display:column property="sequence"
-			titleKey="purchaseOrderDetail.sequence" />
+		id="purchaseOrderDetail" class="table" > 
+		<display:column	property="sequence" 
+		titleKey="purchaseOrderDetail.sequence" />
 		<display:column property="item.code"
 			titleKey="purchaseOrderDetail.itemCode" />
 		<display:column property="itemDescription"
@@ -77,12 +78,15 @@
 		<display:column property="deliveryDate" format="{0,date,yyyy-MM-dd}"
 			titleKey="purchaseOrderDetail.deliveryDate" />
 		<display:column property="qty" titleKey="purchaseOrderDetail.qty" />
-		<display:column property="shipQty"
-			titleKey="purchaseOrderDetail.shipQty" />
+		<display:column titleKey="purchaseOrderDetail.shipQty" >
+			<input type="hidden" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].id" value="<c:out value="${purchaseOrderDetail.id}"/>"/>
+			<input type="text" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].currentShipQty" value="" class="text medium"/>
+		</display:column>
 	</display:table>
 
-	<div class="buttonBar bottom"><c:out value="${buttons}"
-		escapeXml="false" /></div>
+	<div class="buttonBar bottom">
+	<div align="right"><c:out value="${buttons}" escapeXml="false" /></div>
+	</div>
 </s:form>
 
 <script type="text/javascript">
