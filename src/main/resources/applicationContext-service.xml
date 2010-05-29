@@ -263,11 +263,11 @@
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 	
-	<bean id="deliverOrderManager" class="com.faurecia.service.impl.DeliverOrderManagerImpl">
+	<bean id="deliveryOrderManager" class="com.faurecia.service.impl.DeliveryOrderManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
 				autowire="byType">
-				<constructor-arg value="com.faurecia.model.DeliverOrder" />
+				<constructor-arg value="com.faurecia.model.DeliveryOrder" />
 			</bean>
 		</constructor-arg>
 	</bean>

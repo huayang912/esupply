@@ -16,8 +16,8 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.dao.GenericDao;
-import com.faurecia.model.DeliverOrder;
-import com.faurecia.model.DeliverOrderDetail;
+import com.faurecia.model.DeliveryOrder;
+import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.Plant;
 import com.faurecia.model.delvry.DELVRY03;
 import com.faurecia.model.delvry.DELVRY03E1ADRM1;
@@ -27,21 +27,21 @@ import com.faurecia.model.delvry.DELVRY03E1EDL41;
 import com.faurecia.model.delvry.DELVRY03E1EDT13;
 import com.faurecia.model.delvry.DESADVDELVRY03;
 import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
-import com.faurecia.service.DeliverOrderManager;
+import com.faurecia.service.DeliveryOrderManager;
 
 import freemarker.template.utility.StringUtil;
 
-public class DeliverOrderManagerImpl extends GenericManagerImpl<DeliverOrder, String> implements DeliverOrderManager {
+public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, String> implements DeliveryOrderManager {
 
 	private Marshaller marshaller;
-	public DeliverOrderManagerImpl(GenericDao<DeliverOrder, String> genericDao) throws JAXBException {
+	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.delvry");
 		marshaller = jc.createMarshaller();
 	}
 	
-	public List<DeliverOrder> getUnexportDeliverOrderByPlant(Plant plant) {
-		DetachedCriteria criteria = DetachedCriteria.forClass(DeliverOrder.class);
+	public List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant) {
+		DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
 		
 		criteria.add(Restrictions.eq("plantSupplier.plant", plant));
 		criteria.add(Restrictions.eq("isExport", false));
@@ -50,7 +50,7 @@ public class DeliverOrderManagerImpl extends GenericManagerImpl<DeliverOrder, St
 		return this.findByCriteria(criteria);
 	}
 
-	public File exportDeliverOrder(DeliverOrder deliverOrder, File filePath, String filePrefix, String fileSuffix) throws JAXBException, IOException {
+	public File exportDeliveryOrder(DeliveryOrder deliveryOrder, File filePath, String filePrefix, String fileSuffix) throws JAXBException, IOException {
 		DELVRY03 DELVRY = new DELVRY03();
 		
 		DESADVDELVRY03 DESADVDELVRY = new DESADVDELVRY03();
@@ -71,91 +71,91 @@ public class DeliverOrderManagerImpl extends GenericManagerImpl<DeliverOrder, St
 		DESADVDELVRY.setEDIDC40(EDIDC40);
 		
 		List<DELVRY03E1EDL20> E1EDL20List = DESADVDELVRY.getE1EDL20();
-		AddE1EDL20List(E1EDL20List, deliverOrder);
+		AddE1EDL20List(E1EDL20List, deliveryOrder);
 		
 		DELVRY.setIDOC(DESADVDELVRY);
 		
 		return marshalOrder(DELVRY, filePath, filePrefix, fileSuffix);
 	}
 	
-	private void AddE1EDL20List(List<DELVRY03E1EDL20> E1EDL20List, DeliverOrder deliverOrder) {
+	private void AddE1EDL20List(List<DELVRY03E1EDL20> E1EDL20List, DeliveryOrder deliveryOrder) {
 		DELVRY03E1EDL20 E1EDL20 = new DELVRY03E1EDL20();
 		E1EDL20.setSEGMENT("1");
-		E1EDL20.setVBELN(deliverOrder.getDoNo());
+		E1EDL20.setVBELN(deliveryOrder.getDoNo());
 		
 		List<DELVRY03E1ADRM1> E1ADRM1List = E1EDL20.getE1ADRM1();
-		addE1ADRM1List(E1ADRM1List, deliverOrder);
+		addE1ADRM1List(E1ADRM1List, deliveryOrder);
 		
 		List<DELVRY03E1EDT13> E1EDT13List = E1EDL20.getE1EDT13();
-		addE1EDT13List(E1EDT13List, deliverOrder);
+		addE1EDT13List(E1EDT13List, deliveryOrder);
 		
 		List<DELVRY03E1EDL24> E1EDL24List = E1EDL20.getE1EDL24();
-		addE1EDL24List(E1EDL24List, deliverOrder.getDeliverOrderDetailList());
+		addE1EDL24List(E1EDL24List, deliveryOrder.getDeliveryOrderDetailList());
 		
 		E1EDL20List.add(E1EDL20);
 	}
 	
-	private void addE1ADRM1List(List<DELVRY03E1ADRM1> E1ADRM1List, DeliverOrder deliverOrder) {
+	private void addE1ADRM1List(List<DELVRY03E1ADRM1> E1ADRM1List, DeliveryOrder deliveryOrder) {
 		DELVRY03E1ADRM1 AG = new DELVRY03E1ADRM1();
 		AG.setSEGMENT("1");
 		AG.setPARTNERQ("AG");
-		AG.setPARTNERID(deliverOrder.getPlantSupplier().getSupplier().getCode());		
+		AG.setPARTNERID(deliveryOrder.getPlantSupplier().getSupplier().getCode());		
 		E1ADRM1List.add(AG);
 		
 		DELVRY03E1ADRM1 LF = new DELVRY03E1ADRM1();
 		LF.setSEGMENT("1");
 		LF.setPARTNERQ("LF");
-		LF.setPARTNERID(deliverOrder.getPlantSupplier().getSupplier().getCode());		
+		LF.setPARTNERID(deliveryOrder.getPlantSupplier().getSupplier().getCode());		
 		E1ADRM1List.add(LF);
 		
 		DELVRY03E1ADRM1 WE = new DELVRY03E1ADRM1();
 		WE.setSEGMENT("1");
 		WE.setPARTNERQ("WE");
-		WE.setPARTNERID(deliverOrder.getPlantSupplier().getPlant().getCode());		
+		WE.setPARTNERID(deliveryOrder.getPlantSupplier().getPlant().getCode());		
 		E1ADRM1List.add(WE);
 	}
 	
-	private void addE1EDT13List(List<DELVRY03E1EDT13> E1EDT13List, DeliverOrder deliverOrder) {
+	private void addE1EDT13List(List<DELVRY03E1EDT13> E1EDT13List, DeliveryOrder deliveryOrder) {
 		DateFormat format = new SimpleDateFormat("yyyyMMdd");
 		
 		DELVRY03E1EDT13 E1EDT13 = new DELVRY03E1EDT13();
 		E1EDT13.setSEGMENT("1");
 		E1EDT13.setQUALF("007");
-		E1EDT13.setNTANF(format.format(deliverOrder.getStartDate()));
-		E1EDT13.setNTEND(format.format(deliverOrder.getEndDate()));
+		E1EDT13.setNTANF(format.format(deliveryOrder.getStartDate()));
+		E1EDT13.setNTEND(format.format(deliveryOrder.getEndDate()));
 		
 		E1EDT13List.add(E1EDT13);
 	}
 	
-	private void addE1EDL24List(List<DELVRY03E1EDL24> E1EDL24List, List<DeliverOrderDetail> deliverOrderDetailList) {
-		for(int i = 0; i < deliverOrderDetailList.size(); i++) {
-			DeliverOrderDetail deliverOrderDetail = deliverOrderDetailList.get(i);
-			E1EDL24List.add(prepareE1EDL24(i, deliverOrderDetail));
+	private void addE1EDL24List(List<DELVRY03E1EDL24> E1EDL24List, List<DeliveryOrderDetail> deliveryOrderDetailList) {
+		for(int i = 0; i < deliveryOrderDetailList.size(); i++) {
+			DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
+			E1EDL24List.add(prepareE1EDL24(i, deliveryOrderDetail));
 		}
 	}
 	
-	private DELVRY03E1EDL24 prepareE1EDL24(int position, DeliverOrderDetail deliverOrderDetail) {
+	private DELVRY03E1EDL24 prepareE1EDL24(int position, DeliveryOrderDetail deliveryOrderDetail) {
 		DELVRY03E1EDL24 E1EDL24 = new DELVRY03E1EDL24();
 		
 		E1EDL24.setSEGMENT("1");
 		E1EDL24.setPOSNR(StringUtil.leftPad(String.valueOf(position * 10), 4, '0'));
-		E1EDL24.setKDMAT(deliverOrderDetail.getItem().getCode());
-		E1EDL24.setLFIMG(String.valueOf(deliverOrderDetail.getQty()));
-		E1EDL24.setVRKME(deliverOrderDetail.getUom());
+		E1EDL24.setKDMAT(deliveryOrderDetail.getItem().getCode());
+		E1EDL24.setLFIMG(String.valueOf(deliveryOrderDetail.getQty()));
+		E1EDL24.setVRKME(deliveryOrderDetail.getUom());
 		
 		List<DELVRY03E1EDL41> E1EDL41List = E1EDL24.getE1EDL41();
-		addE1EDL41List(E1EDL41List, deliverOrderDetail);
+		addE1EDL41List(E1EDL41List, deliveryOrderDetail);
 		
 		return E1EDL24;
 	}
 	
-	private void addE1EDL41List(List<DELVRY03E1EDL41> E1EDL41List, DeliverOrderDetail deliverOrderDetail) {
+	private void addE1EDL41List(List<DELVRY03E1EDL41> E1EDL41List, DeliveryOrderDetail deliveryOrderDetail) {
 		DELVRY03E1EDL41 E1EDL41 = new DELVRY03E1EDL41();
 		
 		E1EDL41.setSEGMENT("1");
 		E1EDL41.setQUALI("001");
-		E1EDL41.setBSTNR(deliverOrderDetail.getReferenceOrderNo());
-		E1EDL41.setPOSEX(deliverOrderDetail.getReferenceSequence());
+		E1EDL41.setBSTNR(deliveryOrderDetail.getReferenceOrderNo());
+		E1EDL41.setPOSEX(deliveryOrderDetail.getReferenceSequence());
 		
 		E1EDL41List.add(E1EDL41);
 	}

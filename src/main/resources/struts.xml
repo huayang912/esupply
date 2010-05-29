@@ -265,7 +265,19 @@
 			method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
-
+		
+		<!-- Delivery Order -->
+		<action name="deliveryOrders" class="com.faurecia.webapp.action.DeliveryOrderAction"
+			method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
+		</action>
+		
 		<!-- Log -->
 		<action name="inboundLogs" class="com.faurecia.webapp.action.InboundLogAction"
 			method="list">

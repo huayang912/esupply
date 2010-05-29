@@ -13,9 +13,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.faurecia.model.DeliverOrder;
+import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.Plant;
-import com.faurecia.service.DeliverOrderManager;
+import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.OutboundLogManager;
 import com.faurecia.util.DateUtil;
@@ -25,15 +25,15 @@ public class DataOutboundJob {
 	
 	private final Log log = LogFactory.getLog(getClass());
 	private GenericManager<Plant, String> plantManager;
-	private DeliverOrderManager deliverOrderManager;
+	private DeliveryOrderManager deliveryOrderManager;
 	private OutboundLogManager outboundLogManager;
 	
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
 	}
 	
-	public void setDeliverOrderManager(DeliverOrderManager deliverOrderManager) {
-		this.deliverOrderManager = deliverOrderManager;
+	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
+		this.deliveryOrderManager = deliveryOrderManager;
 	}
 
 	public void setOutboundLogManager(OutboundLogManager outboundLogManager) {
@@ -81,11 +81,11 @@ public class DataOutboundJob {
 			return;
 		}
 		
-		List<DeliverOrder> deliverOrderList = this.deliverOrderManager.getUnexportDeliverOrderByPlant(plant);
-		if (deliverOrderList != null && deliverOrderList.size() > 0) {
-			for(int i = 0; i < deliverOrderList.size(); i++) {
+		List<DeliveryOrder> deliveryOrderList = this.deliveryOrderManager.getUnexportDeliveryOrderByPlant(plant);
+		if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
+			for(int i = 0; i < deliveryOrderList.size(); i++) {
 				try {
-					DeliverOrder deliverOrder = deliverOrderList.get(i);
+					DeliveryOrder deliveryOrder = deliveryOrderList.get(i);
 					
 					String tempDirString = plant.getTempFileDirectory() + File.separator + "DESADV";
 					File filePath = new File(tempDirString);
@@ -93,14 +93,14 @@ public class DataOutboundJob {
 					
 					DateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss_SSS");
 					String fileName = "DESADV_" + plant.getCode() + format.format(new Date());
-					File file = this.deliverOrderManager.exportDeliverOrder(deliverOrder, filePath, fileName, "xml");
+					File file = this.deliveryOrderManager.exportDeliveryOrder(deliveryOrder, filePath, fileName, "xml");
 					
 					String ftpDirectory = plant.getFtpPath() + FTPClientUtil.SEPERATE + "DESADV" + FTPClientUtil.SEPERATE + "INP";
 					ftpClientUtil.changeDirectory(ftpDirectory);
 					ftpClientUtil.uploadFile(file.getAbsolutePath(), fileName + ".xml");
 					
-					deliverOrder.setIsExport(true);
-					this.deliverOrderManager.save(deliverOrder);
+					deliveryOrder.setIsExport(true);
+					this.deliveryOrderManager.save(deliveryOrder);
 					
 					file.deleteOnExit();
 				} catch (JAXBException e) {
