@@ -54,6 +54,8 @@ public class DeliveryOrderAction extends BaseAction {
 	private String poNo;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
 	
+	private List<DeliveryOrderDetail> deliveryOrderDetailList;
+	
 	private int plantSupplierId;
 	private Date dateFrom;
 
@@ -167,6 +169,14 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setPurchaseOrderDetailList(List<PurchaseOrderDetail> purchaseOrderDetailList) {
 		this.purchaseOrderDetailList = purchaseOrderDetailList;
+	}
+	
+	public List<DeliveryOrderDetail> getDeliveryOrderDetailList() {
+		return deliveryOrderDetailList;
+	}
+
+	public void setDeliveryOrderDetailList(List<DeliveryOrderDetail> deliveryOrderDetailList) {
+		this.deliveryOrderDetailList = deliveryOrderDetailList;
 	}
 
 	public String list() {
@@ -293,10 +303,10 @@ public class DeliveryOrderAction extends BaseAction {
 							&& scheduleItemDetail.getScheduleType().equals("Firm")) {
 						if (deliveryOrder == null) {
 							deliveryOrder = new DeliveryOrder();
+							BeanUtils.copyProperties(deliveryOrder, schedule);
+							
 							deliveryOrder.setCreateDate(new Date());
 							deliveryOrder.setIsExport(false);
-							
-							BeanUtils.copyProperties(deliveryOrder, schedule);
 						}
 						
 						DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
@@ -319,28 +329,31 @@ public class DeliveryOrderAction extends BaseAction {
 		} else if (deliveryOrder != null) {
 
 			List<DeliveryOrderDetail> noneZeroDeliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
-			for (int i = 1; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
-				DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
-				BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
+			if(deliveryOrderDetailList != null)
+			{
+				for (int i = 1; i < deliveryOrderDetailList.size(); i++) {
+					DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
+					BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
 
-				if (BigDecimal.ZERO.compareTo(currentQty) < 0) {
-					if (deliveryOrderDetail.getOrderQty().compareTo(currentQty) < 0) {
-						List<String> args = new ArrayList<String>();
-						args.add(deliveryOrderDetail.getItemDescription());
-						saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
-						return "poInput";
+					if (BigDecimal.ZERO.compareTo(currentQty) < 0) {
+						if (deliveryOrderDetail.getOrderQty().compareTo(currentQty) < 0) {
+							List<String> args = new ArrayList<String>();
+							args.add(deliveryOrderDetail.getItemDescription());
+							saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
+							return "doInput";
+						}
+						
+						noneZeroDeliveryOrderDetailList.add(deliveryOrderDetail);
 					}
-
-					noneZeroDeliveryOrderDetailList.add(deliveryOrderDetail);
 				}
 			}
 
 			if (noneZeroDeliveryOrderDetailList.size() > 0) {
 				deliveryOrder.setDeliveryOrderDetailList(noneZeroDeliveryOrderDetailList);
-				deliveryOrder = this.deliveryOrderManager.save(deliveryOrder);
+				deliveryOrder = this.deliveryOrderManager.saveDeliveryOrder(deliveryOrder);
 			} else {
 				saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
-				return "poInput";
+				return "doInput";
 			}
 		}
 

@@ -20,7 +20,22 @@
 	<table width="100%">
 		<tr>
 			<td><s:label key="deliveryOrder.doNo" cssClass="text medium" /></td>
-			<td></td>
+			<td>
+				<s:hidden name="deliveryOrder.plantCode" key="deliveryOrder.plantCode"/>
+				<s:hidden name="deliveryOrder.supplierCode" key="deliveryOrder.supplierCode" /> 
+				<s:hidden name="deliveryOrder.plantName" key="deliveryOrder.plantName" />
+				<s:hidden name="deliveryOrder.supplierName" key="deliveryOrder.supplierName" /> 
+				<s:hidden name="deliveryOrder.plantAddress1" key="deliveryOrder.plantAddress1" />
+				<s:hidden name="deliveryOrder.supplierAddress1" key="deliveryOrder.supplierAddress1" />
+				<s:hidden name="deliveryOrder.plantContactPerson" key="deliveryOrder.plantContactPerson" />
+				<s:hidden name="deliveryOrder.supplierContactPerson" key="deliveryOrder.supplierContactPerson" />
+				<s:hidden name="deliveryOrder.supplierPhone" key="deliveryOrder.supplierPhone" />
+				<s:hidden name="deliveryOrder.plantPhone" key="deliveryOrder.plantPhone" />
+				<s:hidden name="deliveryOrder.plantFax" key="deliveryOrder.plantFax" />
+				<s:hidden name="deliveryOrder.supplierFax" key="deliveryOrder.supplierFax" />
+				<s:hidden name="deliveryOrder.createDate" key="deliveryOrder.createDate" />
+				<s:hidden name="deliveryOrder.plantSupplier.id" key="deliveryOrder.plantSupplier.id" />
+			</td>
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.plantCode"
@@ -53,8 +68,7 @@
 				cssClass="text medium" /></td>
 		</tr>
 		<tr>
-			<td><s:label key="deliveryOrder.plantFax" cssClass="text medium" />
-			</td>
+			<td><s:label key="deliveryOrder.plantFax" cssClass="text medium" /></td>
 			<td><s:label key="deliveryOrder.supplierFax"
 				cssClass="text medium" /></td>
 		</tr>
@@ -83,12 +97,14 @@
 			<display:column property="qty" titleKey="deliveryOrderDetail.qty" />
 		</c:if>
 		<c:if test="${empty deliveryOrder.doNo}">
-			<display:column titleKey="deliveryOrderDetail.Qty">
-				<input type="text"
-					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].currentQty"
-					value="${purchaseOrderDetail.qty}" class="text medium" />
+			<display:column titleKey="deliveryOrderDetail.qty">
+				<input type="text" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].currentQty" value="${deliveryOrderDetail.currentQty}" class="text medium" />
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].orderQty" value="<c:out value="${deliveryOrderDetail.orderQty}"/>"/>
 			</display:column>
 		</c:if>
+		
+	
+		
 	</display:table>
 
 	<div class="buttonBar bottom">

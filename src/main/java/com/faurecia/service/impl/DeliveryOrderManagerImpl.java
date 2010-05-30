@@ -23,6 +23,7 @@ import com.faurecia.dao.GenericDao;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.Plant;
+import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
 import com.faurecia.model.delvry.DELVRY03;
@@ -36,6 +37,7 @@ import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.NumberControlManager;
+import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
 
 import freemarker.template.utility.StringUtil;
@@ -46,6 +48,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
 	private PurchaseOrderManager purchaseOrderManager;
 	private Marshaller marshaller;
+	private PlantSupplierManager plantSupplierManager;
 
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
@@ -65,6 +68,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		this.purchaseOrderManager = purchaseOrderManager;
 	}
 
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
+		this.plantSupplierManager = plantSupplierManager;
+	}
+	
 	public DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException,
 			InvocationTargetException {
 
@@ -76,18 +83,17 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			if (deliveryOrder == null) {
 				purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
 				deliveryOrder = new DeliveryOrder();
+				BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
+				
 				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
 				deliveryOrder.setCreateDate(new Date());
 				deliveryOrder.setIsExport(false);
-
-				BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
 			}
 
 			DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
-			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
-
 			BeanUtils.copyProperties(deliveryOrderDetail, purchaseOrderDetail);
-
+			
+			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
 			deliveryOrderDetail.setQty(purchaseOrderDetail.getCurrentShipQty());
 			deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
 			deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
@@ -110,21 +116,17 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	}
 
 	public DeliveryOrder saveDeliveryOrder(DeliveryOrder deliveryOrder) throws IllegalAccessException, InvocationTargetException {
-
-		deliveryOrder.setDoNo(this.numberControlManager.generateNumber(deliveryOrder.getPlantSupplier().getDoNoPrefix(), 10));
-		deliveryOrder.setCreateDate(new Date());
-		deliveryOrder.setIsExport(false);
+		
+		PlantSupplier plantSupplier = this.plantSupplierManager.get(deliveryOrder.getPlantSupplier().getId());
+		deliveryOrder.setPlantSupplier(plantSupplier);
+		deliveryOrder.setDoNo(this.numberControlManager.generateNumber(plantSupplier.getDoNoPrefix(), 10));
 
 		List<DeliveryOrderDetail> deliveryOrderDetailList = deliveryOrder.getDeliveryOrderDetailList();
 
 		for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
 
-			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
-			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
-
+			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);		
 			deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
-			deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
-
 		}
 		this.save(deliveryOrder);
 
