@@ -14,7 +14,7 @@ import com.faurecia.model.PurchaseOrderDetail;
 
 public interface DeliveryOrderManager extends GenericManager<DeliveryOrder, String> {
 
-	DeliveryOrder createDeliverOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException, InvocationTargetException;
+	DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException, InvocationTargetException;
 	
 	List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant);
 

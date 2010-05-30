@@ -13,7 +13,8 @@
 		<c:if test="${empty deliveryOrder.doNo}">
 			<s:submit key="button.save" />
 		</c:if>
-		<input type="button" value="<fmt:message key="button.cancel"/>" onclick="window.location.href='cancelDeliveryOrder.html'"/> 		
+		<input type="button" value="<fmt:message key="button.cancel"/>"
+			onclick="window.location.href='cancelDeliveryOrder.html'" />
 	</c:set>
 
 	<table width="100%">
@@ -65,10 +66,10 @@
 	</table>
 
 	<display:table name="deliveryOrder.deliveryOrderDetailList"
-		cellspacing="0" cellpadding="0" requestURI=""
-		id="deliveryOrderDetail" class="table" > 
-		<display:column	property="sequence" 
-		titleKey="deliveryOrderDetail.sequence" />
+		cellspacing="0" cellpadding="0" requestURI="" id="deliveryOrderDetail"
+		class="table">
+		<display:column property="sequence"
+			titleKey="deliveryOrderDetail.sequence" />
 		<display:column property="item.code"
 			titleKey="deliveryOrderDetail.itemCode" />
 		<display:column property="itemDescription"
@@ -76,8 +77,18 @@
 		<display:column property="supplierItemCode"
 			titleKey="deliveryOrderDetail.supplierItemCode" />
 		<display:column property="uom" titleKey="deliveryOrderDetail.uom" />
-		<display:column property="orderQty" titleKey="deliveryOrderDetail.orderQty" />
-		<display:column property="qty" titleKey="deliveryOrderDetail.qty" />
+		<display:column property="orderQty"
+			titleKey="deliveryOrderDetail.orderQty" />
+		<c:if test="${not empty deliveryOrder.doNo}">
+			<display:column property="qty" titleKey="deliveryOrderDetail.qty" />
+		</c:if>
+		<c:if test="${empty deliveryOrder.doNo}">
+			<display:column titleKey="deliveryOrderDetail.Qty">
+				<input type="text"
+					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].currentQty"
+					value="${purchaseOrderDetail.qty}" class="text medium" />
+			</display:column>
+		</c:if>
 	</display:table>
 
 	<div class="buttonBar bottom">
