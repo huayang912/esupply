@@ -39,6 +39,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	private String supplierContactPerson;
 	private String supplierPhone;
 	private String supplierFax;
+	private String doNoPrefix;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -127,6 +128,15 @@ public class PlantSupplier extends BaseObject implements Serializable {
 
 	public void setSupplierFax(String supplierFax) {
 		this.supplierFax = supplierFax;
+	}
+
+	@Column(name = "do_no_prefix", length = 4)
+	public String getDoNoPrefix() {
+		return doNoPrefix;
+	}
+
+	public void setDoNoPrefix(String doNoPrefix) {
+		this.doNoPrefix = doNoPrefix;
 	}
 
 	/**

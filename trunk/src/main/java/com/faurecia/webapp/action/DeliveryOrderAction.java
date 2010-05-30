@@ -1,14 +1,13 @@
 package com.faurecia.webapp.action;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -17,8 +16,6 @@ import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
-import com.faurecia.model.DeliveryOrderDetail;
-import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
 import com.faurecia.model.User;
 import com.faurecia.service.DeliveryOrderManager;
@@ -39,13 +36,15 @@ public class DeliveryOrderAction extends BaseAction {
 	private String sort;
 	private String dir;
 	private DeliveryOrder deliveryOrder;
-	private String doNo;	
+	private String doNo;
+	
+	private String poNo;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
 		this.deliveryOrderManager = deliveryOrderManager;
 	}
-	
+
 	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager) {
 		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
 	}
@@ -89,9 +88,9 @@ public class DeliveryOrderAction extends BaseAction {
 	public void setDir(String dir) {
 		this.dir = dir;
 	}
-	
+
 	public Map<String, String> getStatus() {
-		Map<String, String> status = new HashMap<String, String>(); 
+		Map<String, String> status = new HashMap<String, String>();
 		status.put("", "All");
 		status.put("Open", "Open");
 		status.put("Close", "Close");
@@ -113,7 +112,15 @@ public class DeliveryOrderAction extends BaseAction {
 	public void setDoNo(String doNo) {
 		this.doNo = doNo;
 	}
-	
+
+	public String getPoNo() {
+		return poNo;
+	}
+
+	public void setPoNo(String poNo) {
+		this.poNo = poNo;
+	}
+
 	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
 		return purchaseOrderDetailList;
 	}
@@ -126,18 +133,17 @@ public class DeliveryOrderAction extends BaseAction {
 		if (deliveryOrder == null) {
 			deliveryOrder = new DeliveryOrder();
 		}
-			
+
 		pageSize = pageSize == 0 ? 25 : pageSize;
-		page  = page == 0 ? 1 : page;
+		page = page == 0 ? 1 : page;
 
 		paginatedList = new PaginatedListUtil<DeliveryOrder>();
 		paginatedList.setPageNumber(page);
 		paginatedList.setObjectsPerPage(pageSize);
 
 		DetachedCriteria selectCriteria = DetachedCriteria.forClass(DeliveryOrder.class);
-		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(DeliveryOrder.class)
-			.setProjection(Projections.count("doNo"));
-		
+		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(DeliveryOrder.class).setProjection(Projections.count("doNo"));
+
 		selectCriteria.createAlias("plantSupplier", "ps");
 		selectCriteria.createAlias("ps.plant", "p");
 		selectCriteria.createAlias("ps.supplier", "s");
@@ -159,31 +165,28 @@ public class DeliveryOrderAction extends BaseAction {
 			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
-		
+
 		if (deliveryOrder.getDoNo() != null && deliveryOrder.getDoNo().trim().length() > 0) {
 			selectCriteria.add(Restrictions.like("poNo", deliveryOrder.getDoNo().trim()));
 			selectCountCriteria.add(Restrictions.like("poNo", deliveryOrder.getDoNo().trim()));
 		}
-		
+
 		if (deliveryOrder.getCreateDateFrom() != null) {
 			selectCriteria.add(Restrictions.ge("createDate", deliveryOrder.getCreateDateFrom()));
 			selectCountCriteria.add(Restrictions.ge("createDate", deliveryOrder.getCreateDateFrom()));
 		}
-		
+
 		if (deliveryOrder.getCreateDateTo() != null) {
 			selectCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
 			selectCountCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
 		}
-			
+
 		if (sort != null && sort.trim().length() > 0) {
 			paginatedList.setSortCriterion(sort);
-			if (SortOrderEnum.DESCENDING.equals(dir))
-			{
+			if (SortOrderEnum.DESCENDING.equals(dir)) {
 				selectCriteria.addOrder(Order.desc(sort));
 				paginatedList.setSortDirection(SortOrderEnum.DESCENDING);
-			}
-			else
-			{
+			} else {
 				selectCriteria.addOrder(Order.asc(sort));
 				paginatedList.setSortDirection(SortOrderEnum.ASCENDING);
 			}
@@ -191,7 +194,7 @@ public class DeliveryOrderAction extends BaseAction {
 
 		paginatedList.setList(this.deliveryOrderManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
 		this.deliveryOrderManager.findByCriteria(selectCountCriteria);
-		paginatedList.setFullListSize(Integer.parseInt(this.deliveryOrderManager.findByCriteria(selectCountCriteria).get(0).toString()));			
+		paginatedList.setFullListSize(Integer.parseInt(this.deliveryOrderManager.findByCriteria(selectCountCriteria).get(0).toString()));
 
 		return SUCCESS;
 	}
@@ -203,43 +206,40 @@ public class DeliveryOrderAction extends BaseAction {
 	public String edit() throws Exception {
 		if (this.doNo != null) {
 			deliveryOrder = this.deliveryOrderManager.get(doNo);
-		}  else if (purchaseOrderDetailList != null) {
-			
-			DeliveryOrder deliveryOrder = null;
-			
+		} else if (purchaseOrderDetailList != null) {
+
+			List<PurchaseOrderDetail> noneZeroPurchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
 			for (int i = 1; i < purchaseOrderDetailList.size(); i++) {
 				PurchaseOrderDetail purchaseOrderDetail = this.purchaseOrderDetailManager.get(purchaseOrderDetailList.get(i).getId());
 				BigDecimal currentShipQty = purchaseOrderDetailList.get(i).getCurrentShipQty();
+				purchaseOrderDetail.setCurrentShipQty(currentShipQty);
 				
-				if (BigDecimal.ZERO.compareTo(currentShipQty) < 0) {
-					if (deliveryOrder == null) {
-						PurchaseOrder purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
-						deliveryOrder = new DeliveryOrder();
-						deliveryOrder.setDoNo("1111111111");
-						deliveryOrder.setCreateDate(new Date());
-						deliveryOrder.setIsExport(false);
-						
-						BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
+				if (poNo == null) {
+					poNo = purchaseOrderDetail.getPurchaseOrder().getPoNo();
+				}
+
+				if (currentShipQty != null && BigDecimal.ZERO.compareTo(currentShipQty) < 0) {
+					if ((purchaseOrderDetail.getShipQty() != null && currentShipQty.add(purchaseOrderDetail.getShipQty()).compareTo(
+							purchaseOrderDetail.getQty()) > 0)
+							|| (purchaseOrderDetail.getShipQty() == null && currentShipQty.compareTo(purchaseOrderDetail.getQty()) > 0)) {
+						List<String> args = new ArrayList<String>();
+						args.add(purchaseOrderDetail.getItemDescription());
+						saveMessage(getText("errors.purchaseOrder.shipQtyExcceed", args));
+						return "poInput";
 					}
 					
-					DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
-					deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
-					
-					BeanUtils.copyProperties(deliveryOrderDetail, purchaseOrderDetail);
-					
-					deliveryOrderDetail.setQty(currentShipQty);
-					deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
-					deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
-					deliveryOrderDetail.setReferenceSequence(purchaseOrderDetail.getSequence());
-					deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
+					noneZeroPurchaseOrderDetailList.add(purchaseOrderDetail);
 				}
 			}
-			
-			if (deliveryOrder != null) {
-				this.deliveryOrderManager.save(deliveryOrder);
+
+			if (noneZeroPurchaseOrderDetailList.size() > 0) {
+				deliveryOrder = this.deliveryOrderManager.createDeliverOrder(noneZeroPurchaseOrderDetailList);
+			} else {
+				saveMessage(getText("errors.purchaseOrder.createDo.emptyDetail"));
+				return "poInput";
 			}
 		}
-		
+
 		return SUCCESS;
 	}
 }

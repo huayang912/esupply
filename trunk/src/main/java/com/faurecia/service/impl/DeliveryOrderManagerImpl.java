@@ -3,14 +3,18 @@ package com.faurecia.service.impl;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
@@ -19,6 +23,8 @@ import com.faurecia.dao.GenericDao;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.Plant;
+import com.faurecia.model.PurchaseOrder;
+import com.faurecia.model.PurchaseOrderDetail;
 import com.faurecia.model.delvry.DELVRY03;
 import com.faurecia.model.delvry.DELVRY03E1ADRM1;
 import com.faurecia.model.delvry.DELVRY03E1EDL20;
@@ -28,16 +34,67 @@ import com.faurecia.model.delvry.DELVRY03E1EDT13;
 import com.faurecia.model.delvry.DESADVDELVRY03;
 import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
 import com.faurecia.service.DeliveryOrderManager;
+import com.faurecia.service.GenericManager;
+import com.faurecia.service.NumberControlManager;
 
 import freemarker.template.utility.StringUtil;
 
 public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, String> implements DeliveryOrderManager {
 
+	private NumberControlManager numberControlManager;
+	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
 	private Marshaller marshaller;
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.delvry");
 		marshaller = jc.createMarshaller();
+	}
+	
+	public void setNumberControlManager(NumberControlManager numberControlManager) {
+		this.numberControlManager = numberControlManager;
+	}
+
+	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager) {
+		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
+	}
+
+	public DeliveryOrder createDeliverOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException, InvocationTargetException {
+		
+		DeliveryOrder deliveryOrder = null;
+		for (int i = 1; i < purchaseOrderDetailList.size(); i++) {
+			PurchaseOrderDetail purchaseOrderDetail = purchaseOrderDetailList.get(i);
+			
+			if (deliveryOrder == null) {
+				PurchaseOrder purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
+				deliveryOrder = new DeliveryOrder();
+				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
+				deliveryOrder.setCreateDate(new Date());
+				deliveryOrder.setIsExport(false);
+				
+				BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
+			}
+			
+			DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
+			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
+			
+			BeanUtils.copyProperties(deliveryOrderDetail, purchaseOrderDetail);
+			
+			deliveryOrderDetail.setQty(purchaseOrderDetail.getCurrentShipQty());
+			deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
+			deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
+			deliveryOrderDetail.setReferenceSequence(purchaseOrderDetail.getSequence());
+			deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
+			
+			if (purchaseOrderDetail.getShipQty() == null) { 
+				purchaseOrderDetail.setShipQty(BigDecimal.ZERO);
+			}
+			
+			purchaseOrderDetail.setShipQty(purchaseOrderDetail.getShipQty().add(purchaseOrderDetail.getCurrentShipQty()));
+			
+			this.purchaseOrderDetailManager.save(purchaseOrderDetail);
+		}
+		
+		return deliveryOrder;
 	}
 	
 	public List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant) {

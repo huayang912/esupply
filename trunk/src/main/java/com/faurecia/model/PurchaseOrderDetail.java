@@ -149,6 +149,15 @@ public class PurchaseOrderDetail extends BaseObject {
 		this.currentShipQty = currentShipQty;
 	}
 	
+	@Transient
+	public BigDecimal getRemainQty() {
+		if (shipQty != null) {
+			return qty.subtract(shipQty);
+		} else {
+			return qty;
+		}
+	}
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */

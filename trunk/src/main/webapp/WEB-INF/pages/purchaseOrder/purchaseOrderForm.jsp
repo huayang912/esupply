@@ -78,9 +78,10 @@
 		<display:column property="deliveryDate" format="{0,date,yyyy-MM-dd}"
 			titleKey="purchaseOrderDetail.deliveryDate" />
 		<display:column property="qty" titleKey="purchaseOrderDetail.qty" />
-		<display:column titleKey="purchaseOrderDetail.shipQty" >
+		<display:column property="shipQty" titleKey="purchaseOrderDetail.shipQty" />
+		<display:column titleKey="purchaseOrderDetail.currentShipQty" >
 			<input type="hidden" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].id" value="<c:out value="${purchaseOrderDetail.id}"/>"/>
-			<input type="text" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].currentShipQty" value="" class="text medium"/>
+			<input type="text" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].currentShipQty" value="${purchaseOrderDetail.remainQty}" class="text medium"/>
 		</display:column>
 	</display:table>
 
