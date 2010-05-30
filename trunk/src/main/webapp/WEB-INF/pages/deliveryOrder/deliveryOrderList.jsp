@@ -39,7 +39,7 @@
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
 	<display:column property="doNo" sortable="true"
-		url="/editdeliveryOrder.html" paramId="doNo" paramProperty="doNo"
+		url="/editDeliveryOrder.html" paramId="doNo" paramProperty="doNo"
 		titleKey="deliveryOrder.doNo" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />

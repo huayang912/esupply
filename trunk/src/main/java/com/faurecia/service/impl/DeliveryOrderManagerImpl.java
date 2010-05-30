@@ -106,6 +106,13 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		
 		return this.findByCriteria(criteria);
 	}
+	
+	public DeliveryOrder get(String doNo, boolean includeDetail) {
+		DeliveryOrder deliveryOrder = this.genericDao.get(doNo);
+		if (includeDetail && deliveryOrder.getDeliveryOrderDetailList() != null && deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
+		}
+		return deliveryOrder;
+	}
 
 	public File exportDeliveryOrder(DeliveryOrder deliveryOrder, File filePath, String filePrefix, String fileSuffix) throws JAXBException, IOException {
 		DELVRY03 DELVRY = new DELVRY03();

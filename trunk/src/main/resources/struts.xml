@@ -290,6 +290,11 @@
 			</result>
 		</action>
 
+		<action name="cancelDeliveryOrder" class="com.faurecia.webapp.action.DeliveryOrderAction"
+			method="cancel">
+			<result name="cancel" type="redirect-action">deliveryOrders</result>
+		</action>
+		
 		<!-- Log -->
 		<action name="inboundLogs" class="com.faurecia.webapp.action.InboundLogAction"
 			method="list">
