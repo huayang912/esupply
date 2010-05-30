@@ -2,12 +2,14 @@ package com.faurecia.webapp.action;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
@@ -17,11 +19,19 @@ import org.hibernate.criterion.Restrictions;
 import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
+import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrderDetail;
+import com.faurecia.model.Schedule;
+import com.faurecia.model.ScheduleItem;
+import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.User;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.PlantSupplierManager;
+import com.faurecia.service.ScheduleManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
+
+import freemarker.template.utility.StringUtil;
 
 public class DeliveryOrderAction extends BaseAction {
 	/**
@@ -30,6 +40,8 @@ public class DeliveryOrderAction extends BaseAction {
 	private static final long serialVersionUID = -5177104341924305525L;
 	private DeliveryOrderManager deliveryOrderManager;
 	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
+	private PlantSupplierManager plantSupplierManager;
+	private ScheduleManager scheduleManager;
 
 	private PaginatedListUtil<DeliveryOrder> paginatedList;
 	private int pageSize;
@@ -41,6 +53,9 @@ public class DeliveryOrderAction extends BaseAction {
 
 	private String poNo;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
+	
+	private int plantSupplierId;
+	private Date dateFrom;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
 		this.deliveryOrderManager = deliveryOrderManager;
@@ -48,6 +63,14 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager) {
 		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
+	}
+
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
+		this.plantSupplierManager = plantSupplierManager;
+	}
+
+	public void setScheduleManager(ScheduleManager scheduleManager) {
+		this.scheduleManager = scheduleManager;
 	}
 
 	public PaginatedListUtil<DeliveryOrder> getPaginatedList() {
@@ -120,6 +143,22 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setPoNo(String poNo) {
 		this.poNo = poNo;
+	}
+
+	public int getPlantSupplierId() {
+		return plantSupplierId;
+	}
+
+	public void setPlantSupplierId(int plantSupplierId) {
+		this.plantSupplierId = plantSupplierId;
+	}
+
+	public Date getDateFrom() {
+		return dateFrom;
+	}
+
+	public void setDateFrom(Date dateFrom) {
+		this.dateFrom = dateFrom;
 	}
 
 	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
@@ -238,6 +277,44 @@ public class DeliveryOrderAction extends BaseAction {
 			} else {
 				saveMessage(getText("errors.purchaseOrder.createDo.emptyDetail"));
 				return "poInput";
+			}
+		} else if (plantSupplierId > 0) {
+			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
+			Schedule schedule = this.scheduleManager.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode());
+			
+			int sequence = 1;
+			for (int i = 0; i < schedule.getScheduleItemList().size(); i++) {
+				ScheduleItem scheduleItem = schedule.getScheduleItemList().get(i);
+				
+				for (int j = 0; j < scheduleItem.getScheduleItemDetailList().size(); j++) {
+					ScheduleItemDetail scheduleItemDetail = scheduleItem.getScheduleItemDetailList().get(j);
+					
+					if (scheduleItemDetail.getDateFrom().compareTo(dateFrom) == 0
+							&& scheduleItemDetail.getScheduleType().equals("Firm")) {
+						if (deliveryOrder == null) {
+							deliveryOrder = new DeliveryOrder();
+							deliveryOrder.setCreateDate(new Date());
+							deliveryOrder.setIsExport(false);
+							
+							BeanUtils.copyProperties(deliveryOrder, schedule);
+						}
+						
+						DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
+						deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
+						
+						deliveryOrderDetail.setSequence(StringUtil.leftPad(String.valueOf(sequence++ * 10), 4, '0'));
+						deliveryOrderDetail.setItem(scheduleItem.getItem());
+						deliveryOrderDetail.setItemDescription(scheduleItem.getItemDescription());
+						deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode());
+						deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
+						deliveryOrderDetail.setUom(scheduleItem.getUom());
+						deliveryOrderDetail.setCurrentQty(scheduleItemDetail.getReleaseQty());
+						deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
+						deliveryOrderDetail.setReferenceOrderNo(schedule.getScheduleNo());
+						deliveryOrderDetail.setReferenceSequence(scheduleItem.getSequence());
+						deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
+					}
+				}
 			}
 		} else if (deliveryOrder != null) {
 

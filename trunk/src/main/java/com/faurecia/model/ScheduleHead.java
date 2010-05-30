@@ -1,52 +1,24 @@
 package com.faurecia.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleHead {
-	private List<String> scheduleTypeList;
-	private List<Date> dateFromList;
-	private List<Date> dateToList;
+	private List<Map<String, Object>> headList;
 	public ScheduleHead() {
-		this.scheduleTypeList = new ArrayList<String>();
-		this.dateFromList = new ArrayList<Date>();
-		this.dateToList = new ArrayList<Date>();
+		this.headList = new ArrayList<Map<String, Object>>();
 	}
-	public List<String> getScheduleTypeList() {
-		return scheduleTypeList;
+	public List<Map<String, Object>> getHeadList() {
+		return headList;
 	}
-	public void setScheduleTypeList(List<String> scheduleTypeList) {
-		this.scheduleTypeList = scheduleTypeList;
+	public void setHeadList(List<Map<String, Object>> headList) {
+		this.headList = headList;
 	}
-	public void addScheduleType(String scheduleType) {
-		if (scheduleTypeList == null) {
-			scheduleTypeList = new ArrayList<String>();
+	public void addHead(Map<String, Object> head) {
+		if (headList == null) {
+			headList = new ArrayList<Map<String, Object>>();
 		}
-		scheduleTypeList.add(scheduleType);
-	}
-	public List<Date> getDateFromList() {
-		return dateFromList;
-	}
-	public void setDateFromList(List<Date> dateFromList) {
-		this.dateFromList = dateFromList;
-	}
-	public void addDateFrom(Date dateFrom) {
-		if (dateFromList == null) {
-			dateFromList = new ArrayList<Date>();
-		}
-		dateFromList.add(dateFrom);
-	}
-	public List<Date> getDateToList() {
-		return dateToList;
-	}
-	public void setDateToList(List<Date> dateToList) {
-		this.dateToList = dateToList;
-	}
-	public void addDateTo(Date dateTo) {
-		if (dateToList == null) {
-			dateToList = new ArrayList<Date>();
-		}
-		dateToList.add(dateTo);
+		headList.add(head);
 	}
 }

@@ -160,7 +160,7 @@ public class DeliveryOrderDetail extends BaseObject {
 		return currentQty;
 	}
 
-	public void setCurrentShipQty(BigDecimal currentQty) {
+	public void setCurrentQty(BigDecimal currentQty) {
 		this.currentQty = currentQty;
 	}
 	
