@@ -20,6 +20,7 @@
 		</c:when>
 	</c:choose>
 
+	<s:hidden name="from" value="list"/>
 	<s:textfield key="schedule.createDate" cssClass="text medium"
 		required="true" />
 	<A HREF="#"

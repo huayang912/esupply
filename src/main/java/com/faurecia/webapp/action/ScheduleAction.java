@@ -2,9 +2,14 @@ package com.faurecia.webapp.action;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.httpclient.util.DateParseException;
+import org.apache.commons.httpclient.util.DateUtil;
 
 import com.faurecia.Constants;
 import com.faurecia.model.Schedule;
@@ -58,11 +63,14 @@ public class ScheduleAction extends BaseAction {
 		return this.supplierManager.getSuppliersByPlant(user.getUserPlant());
 	}
 
-	public ScheduleView getScheduleView() {
+	public ScheduleView getScheduleView() throws DateParseException {
 		if (scheduleView == null) {
 			scheduleView = new ScheduleView();
 
 			if (schedule != null) {
+				
+				Date dateNow = DateUtil.parseDate(DateUtil.formatDate(new Date()));
+				
 				if (schedule.getScheduleItemList() != null && schedule.getScheduleItemList().size() > 0) {
 					for (int i = 0; i < schedule.getScheduleItemList().size(); i++) {
 						ScheduleItem scheduleItem = schedule.getScheduleItemList().get(i);
@@ -72,9 +80,10 @@ public class ScheduleAction extends BaseAction {
 								ScheduleItemDetail scheduleItemDetail = scheduleItem.getScheduleItemDetailList().get(j);
 
 								int insertPosion = -1;
-								for (int k = 0; k < scheduleView.getScheduleHead().getDateFromList().size(); k++) {
-									String scheduleType = scheduleView.getScheduleHead().getScheduleTypeList().get(k);
-									Date dateFrom = scheduleView.getScheduleHead().getDateFromList().get(k);
+								for (int k = 0; k < scheduleView.getScheduleHead().getHeadList().size(); k++) {
+									Map<String, Object> head = scheduleView.getScheduleHead().getHeadList().get(k);
+									String scheduleType = (String)head.get("scheduleType");
+									Date dateFrom = (Date)head.get("dateFrom");
 									// Date dateTo =
 									// scheduleView.getScheduleHead().getDateToList().get(k);
 
@@ -103,14 +112,23 @@ public class ScheduleAction extends BaseAction {
 								}
 
 								if (insertPosion > -2) {
-									if (insertPosion != -1) {
-										scheduleView.getScheduleHead().getScheduleTypeList().add(insertPosion, scheduleItemDetail.getScheduleType());
-										scheduleView.getScheduleHead().getDateFromList().add(insertPosion, scheduleItemDetail.getDateFrom());
-										scheduleView.getScheduleHead().getDateToList().add(insertPosion, scheduleItemDetail.getDateTo());
+									Map<String, Object> head = new HashMap<String, Object>();
+									head.put("scheduleType", scheduleItemDetail.getScheduleType());
+									head.put("dateFrom", scheduleItemDetail.getDateFrom());
+									head.put("dateTo", scheduleItemDetail.getDateTo());															
+									
+									if ((dateNow.compareTo(scheduleItemDetail.getDateFrom()) <= 0
+											|| dateNow.compareTo(scheduleItemDetail.getDateTo()) >= 0)
+											&& scheduleItemDetail.getScheduleType().equals("Firm")) {
+										head.put("createDo", true);
 									} else {
-										scheduleView.getScheduleHead().getScheduleTypeList().add(scheduleItemDetail.getScheduleType());
-										scheduleView.getScheduleHead().getDateFromList().add(scheduleItemDetail.getDateFrom());
-										scheduleView.getScheduleHead().getDateToList().add(scheduleItemDetail.getDateTo());
+										head.put("createDo", false);
+									}
+									
+									if (insertPosion != -1) {
+										scheduleView.getScheduleHead().getHeadList().add(insertPosion, head);
+									} else {
+										scheduleView.getScheduleHead().getHeadList().add(head);
 									}
 								}
 							}
@@ -130,9 +148,10 @@ public class ScheduleAction extends BaseAction {
 						scheduleBody.setSupplierItemCode(scheduleItem.getSupplierItemCode());
 						scheduleView.addScheduleBody(scheduleBody);
 
-						for (int j = 0; j < scheduleView.getScheduleHead().getDateFromList().size(); j++) {
-							String scheduleType = scheduleView.getScheduleHead().getScheduleTypeList().get(j);
-							Date dateFrom = scheduleView.getScheduleHead().getDateFromList().get(j);
+						for (int j = 0; j < scheduleView.getScheduleHead().getHeadList().size(); j++) {
+							Map<String, Object> head = scheduleView.getScheduleHead().getHeadList().get(j);
+							String scheduleType = (String)head.get("scheduleType");
+							Date dateFrom = (Date)head.get("dateFrom");					
 
 							boolean findMatch = false;
 							if (scheduleItem.getScheduleItemDetailList() != null && scheduleItem.getScheduleItemDetailList().size() > 0) {

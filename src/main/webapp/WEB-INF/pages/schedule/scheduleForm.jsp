@@ -8,7 +8,7 @@
 </head>
 
 <s:form name="scheduleForm" action="saveSchedule" method="post"
-	validate="true" >
+	validate="true">
 
 	<input type="hidden" name="from" value="${param.from}" />
 
@@ -56,7 +56,7 @@
 					<td><s:label key="schedule.supplierFax" cssClass="text medium" /></td>
 				</tr>
 			</table>
-</ul>
+			</ul>
 
 			<table id="purchaseOrderDetailList" cellpadding="0" class="table"
 				cellspacing="0">
@@ -67,9 +67,18 @@
 						<th><fmt:message key="scheduleDetail.itemCode" /></th>
 						<th><fmt:message key="scheduleDetail.itemDescription" /></th>
 						<th><fmt:message key="scheduleDetail.supplierItemCode" /></th>
-						<s:iterator id="scheduleType"
-							value="%{scheduleView.scheduleHead.scheduleTypeList}">
-							<th>${scheduleType}</th>
+						<s:iterator id="head"
+							value="%{scheduleView.scheduleHead.headList}">
+							<c:choose>
+								<c:when test="${head.createDo}">
+									<th><a
+										href="editDeliveryOrder.html?plantSupplierId=${schedule.plantSupplier.id}&dateFrom=<fmt:formatDate value="${head.dateFrom}" pattern="MM/dd/yyyy" />">${head.scheduleType}</a>
+									</th>
+								</c:when>
+								<c:otherwise>
+									<th>${head.scheduleType}</th>
+								</c:otherwise>
+							</c:choose>
 						</s:iterator>
 					</tr>
 				</thead>
@@ -79,9 +88,9 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
+						<td><fmt:message key="scheduleDetail.eta" /></td>
 						<s:iterator id="dateFrom"
-							value="%{scheduleView.scheduleHead.dateFromList}">
+							value="%{scheduleView.scheduleHead.headList}">
 							<td><fmt:formatDate value="${dateFrom}" pattern="MM/dd/yyyy" />
 							</td>
 						</s:iterator>
@@ -93,7 +102,7 @@
 						<td></td>
 						<td></td>
 						<s:iterator id="dateTo"
-							value="%{scheduleView.scheduleHead.dateToList}">
+							value="%{scheduleView.scheduleHead.headList}">
 							<td><fmt:formatDate value="${dateTo}" pattern="MM/dd/yyyy" /></td>
 						</s:iterator>
 					</tr>
@@ -105,7 +114,8 @@
 						<s:else>
 							<tr class="even">
 						</s:else>
-						<td><fmt:formatDate value="${scheduleBody.createDate}" pattern="MM/dd/yyyy" /></td>
+						<td><fmt:formatDate value="${scheduleBody.createDate}"
+							pattern="MM/dd/yyyy" /></td>
 						<td>${scheduleBody.releaseNo}</td>
 						<td>${scheduleBody.itemCode}</td>
 						<td>${scheduleBody.itemDescription}</td>
@@ -121,7 +131,7 @@
 	</c:choose>
 	<div class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></div>
-		<ul style="border:0px;padding:0px;margin:0px">
+	<ul style="border: 0px; padding: 0px; margin: 0px">
 </s:form>
 
 <script type="text/javascript">
