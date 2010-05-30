@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -36,6 +37,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	private BigDecimal orderQty;
 	private String referenceOrderNo;
 	private String referenceSequence;
+	private BigDecimal currentQty;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -151,6 +153,15 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setReferenceSequence(String referenceSequence) {
 		this.referenceSequence = referenceSequence;
+	}
+	
+	@Transient
+	public BigDecimal getCurrentQty() {
+		return currentQty;
+	}
+
+	public void setCurrentShipQty(BigDecimal currentQty) {
+		this.currentQty = currentQty;
 	}
 	
 	/**

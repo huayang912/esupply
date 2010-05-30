@@ -16,6 +16,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
+import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.PurchaseOrderDetail;
 import com.faurecia.model.User;
 import com.faurecia.service.DeliveryOrderManager;
@@ -37,7 +38,7 @@ public class DeliveryOrderAction extends BaseAction {
 	private String dir;
 	private DeliveryOrder deliveryOrder;
 	private String doNo;
-	
+
 	private String poNo;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
 
@@ -205,7 +206,7 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public String edit() throws Exception {
 		if (this.doNo != null) {
-			deliveryOrder = this.deliveryOrderManager.get(doNo,true);
+			deliveryOrder = this.deliveryOrderManager.get(doNo, true);
 		} else if (purchaseOrderDetailList != null) {
 
 			List<PurchaseOrderDetail> noneZeroPurchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
@@ -213,7 +214,7 @@ public class DeliveryOrderAction extends BaseAction {
 				PurchaseOrderDetail purchaseOrderDetail = this.purchaseOrderDetailManager.get(purchaseOrderDetailList.get(i).getId());
 				BigDecimal currentShipQty = purchaseOrderDetailList.get(i).getCurrentShipQty();
 				purchaseOrderDetail.setCurrentShipQty(currentShipQty);
-				
+
 				if (poNo == null) {
 					poNo = purchaseOrderDetail.getPurchaseOrder().getPoNo();
 				}
@@ -227,15 +228,41 @@ public class DeliveryOrderAction extends BaseAction {
 						saveMessage(getText("errors.purchaseOrder.shipQtyExcceed", args));
 						return "poInput";
 					}
-					
+
 					noneZeroPurchaseOrderDetailList.add(purchaseOrderDetail);
 				}
 			}
 
 			if (noneZeroPurchaseOrderDetailList.size() > 0) {
-				deliveryOrder = this.deliveryOrderManager.createDeliverOrder(noneZeroPurchaseOrderDetailList);
+				deliveryOrder = this.deliveryOrderManager.createDeliveryOrder(noneZeroPurchaseOrderDetailList);
 			} else {
 				saveMessage(getText("errors.purchaseOrder.createDo.emptyDetail"));
+				return "poInput";
+			}
+		} else if (deliveryOrder != null) {
+
+			List<DeliveryOrderDetail> noneZeroDeliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
+			for (int i = 1; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
+				DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
+				BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
+
+				if (BigDecimal.ZERO.compareTo(currentQty) < 0) {
+					if (deliveryOrderDetail.getOrderQty().compareTo(currentQty) < 0) {
+						List<String> args = new ArrayList<String>();
+						args.add(deliveryOrderDetail.getItemDescription());
+						saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
+						return "poInput";
+					}
+
+					noneZeroDeliveryOrderDetailList.add(deliveryOrderDetail);
+				}
+			}
+
+			if (noneZeroDeliveryOrderDetailList.size() > 0) {
+				deliveryOrder.setDeliveryOrderDetailList(noneZeroDeliveryOrderDetailList);
+				deliveryOrder = this.deliveryOrderManager.save(deliveryOrder);
+			} else {
+				saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
 				return "poInput";
 			}
 		}
