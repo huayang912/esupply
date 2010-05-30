@@ -283,5 +283,6 @@
 		</constructor-arg>
 		<property name="numberControlManager" ref="numberControlManager"/>
 		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager"/>
+		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
 	</bean>
 </beans>

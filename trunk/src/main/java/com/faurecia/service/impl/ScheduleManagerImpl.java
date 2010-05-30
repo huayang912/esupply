@@ -143,7 +143,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public Schedule SaveSingleFile(InputStream inputStream, InboundLog inboundLog) {
+	public Schedule saveSingleFile(InputStream inputStream, InboundLog inboundLog) {
 		try {
 			DELFOR02 delfor = unmarshalOrder(inputStream);
 			Schedule schedule = DELFOR02ToSchedule(delfor);

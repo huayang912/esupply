@@ -147,11 +147,32 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		return purchaseOrder;
 	}
 
-	public void ReloadFile(InboundLog inboundLog, String userCode) {
+	public void tryClosePurchaseOrder(String poNo) {
+		PurchaseOrder purchaseOrder = this.get(poNo, true);
+		
+		if (purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
+			boolean allClose = true;
+			for (int i = 0; i < purchaseOrder.getPurchaseOrderDetailList().size(); i++) {
+				PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(i);
+				if (purchaseOrderDetail.getShipQty() == null 
+						|| purchaseOrderDetail.getQty().compareTo(purchaseOrderDetail.getShipQty()) > 0) {				
+					allClose = false;
+					break;
+				}
+			}
+			
+			if (allClose) {
+				purchaseOrder.setStatus("Close");				
+				this.genericDao.save(purchaseOrder);
+			}
+		}
+	}
+	
+	public void reloadFile(InboundLog inboundLog, String userCode) {
 
 		try {
 			FileInputStream stream = new FileInputStream(inboundLog.getFullFilePath());
-			SaveSingleFile(stream, inboundLog);
+			saveSingleFile(stream, inboundLog);
 		} catch (FileNotFoundException fileNotFoundException) {
 			inboundLog.setMemo(fileNotFoundException.getMessage());
 		} finally {
@@ -161,7 +182,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		}
 	}
 
-	public PurchaseOrder SaveSingleFile(InputStream inputStream, InboundLog inboundLog) {
+	public PurchaseOrder saveSingleFile(InputStream inputStream, InboundLog inboundLog) {
 
 		try {
 			ORDERS02 order = unmarshalOrder(inputStream);

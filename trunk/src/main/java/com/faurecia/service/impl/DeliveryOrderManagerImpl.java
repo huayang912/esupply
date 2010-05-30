@@ -36,6 +36,7 @@ import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.NumberControlManager;
+import com.faurecia.service.PurchaseOrderManager;
 
 import freemarker.template.utility.StringUtil;
 
@@ -43,6 +44,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	private NumberControlManager numberControlManager;
 	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
+	private PurchaseOrderManager purchaseOrderManager;
 	private Marshaller marshaller;
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
@@ -58,14 +60,19 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
 	}
 
+	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
+		this.purchaseOrderManager = purchaseOrderManager;
+	}
+
 	public DeliveryOrder createDeliverOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException, InvocationTargetException {
 		
 		DeliveryOrder deliveryOrder = null;
-		for (int i = 1; i < purchaseOrderDetailList.size(); i++) {
+		PurchaseOrder purchaseOrder = null;
+		for (int i = 0; i < purchaseOrderDetailList.size(); i++) {
 			PurchaseOrderDetail purchaseOrderDetail = purchaseOrderDetailList.get(i);
 			
 			if (deliveryOrder == null) {
-				PurchaseOrder purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
+				purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
 				deliveryOrder = new DeliveryOrder();
 				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
 				deliveryOrder.setCreateDate(new Date());
@@ -93,6 +100,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			
 			this.purchaseOrderDetailManager.save(purchaseOrderDetail);
 		}
+		
+		this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrder.getPoNo());
+		this.save(deliveryOrder);
 		
 		return deliveryOrder;
 	}
