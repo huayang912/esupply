@@ -205,7 +205,7 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public String edit() throws Exception {
 		if (this.doNo != null) {
-			deliveryOrder = this.deliveryOrderManager.get(doNo);
+			deliveryOrder = this.deliveryOrderManager.get(doNo,true);
 		} else if (purchaseOrderDetailList != null) {
 
 			List<PurchaseOrderDetail> noneZeroPurchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
