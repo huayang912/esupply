@@ -22,8 +22,6 @@
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
 	<s:textfield key="deliveryOrder.soNo" cssClass="text medium" />
-	<li><s:select key="deliveryOrder.status" list="%{status}"
-		theme="xhtml" /></li>
 	<s:textfield key="deliveryOrder.createDateFrom"
 		cssClass="text medium" />
 	<A HREF="#"
@@ -41,7 +39,7 @@
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
 	<display:column property="poNo" sortable="true"
-		url="/editdeliveryOrder.html" paramId="poNo" paramProperty="poNo"
+		url="/editdeliveryOrder.html" paramId="soNo" paramProperty="soNo"
 		titleKey="deliveryOrder.soNo" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
@@ -53,8 +51,6 @@
 		sortProperty="ps.supplierName" titleKey="deliveryOrder.supplierName" />
 	<display:column property="createDate" format="{0,date,MM/dd/yyyy}"
 		sortable="true" titleKey="deliveryOrder.createDate" />
-	<display:column property="status" sortable="true"
-		titleKey="deliveryOrder.status" />
 
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="deliveryOrder.deliveryOrder" />
