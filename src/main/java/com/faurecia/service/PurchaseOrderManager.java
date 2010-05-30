@@ -10,9 +10,11 @@ public interface PurchaseOrderManager extends
 
 	PurchaseOrder get(String poNo, boolean includeDetail);
 	
-	PurchaseOrder SaveSingleFile(InputStream inputStream,
+	void tryClosePurchaseOrder(String poNo);
+	
+	PurchaseOrder saveSingleFile(InputStream inputStream,
 			InboundLog inboundLog);
 	
-	void ReloadFile(InboundLog inboundLog, String userCode);
+	void reloadFile(InboundLog inboundLog, String userCode);
 
 }

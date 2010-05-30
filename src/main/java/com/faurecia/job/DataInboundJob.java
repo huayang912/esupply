@@ -153,9 +153,9 @@ public class DataInboundJob {
 					Schedule schedule = null;
 					try {
 						if (dataType.equals("ORDERS")) {
-							po = this.purchaseOrderManager.SaveSingleFile(inputStream, inboundLog);
+							po = this.purchaseOrderManager.saveSingleFile(inputStream, inboundLog);
 						} else if (dataType.equals("DELINS")) {
-							schedule = this.scheduleManager.SaveSingleFile(inputStream, inboundLog);
+							schedule = this.scheduleManager.saveSingleFile(inputStream, inboundLog);
 						}
 					} catch (Exception ex) {
 						log.error("Error when save file to database.", ex);
