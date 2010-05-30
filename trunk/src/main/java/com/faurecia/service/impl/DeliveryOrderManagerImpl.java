@@ -22,6 +22,7 @@ import org.hibernate.criterion.Restrictions;
 import com.faurecia.dao.GenericDao;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
+import com.faurecia.model.Item;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
@@ -36,6 +37,7 @@ import com.faurecia.model.delvry.DESADVDELVRY03;
 import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.ItemManager;
 import com.faurecia.service.NumberControlManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
@@ -49,6 +51,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private PurchaseOrderManager purchaseOrderManager;
 	private Marshaller marshaller;
 	private PlantSupplierManager plantSupplierManager;
+	private ItemManager itemManager;
 
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
@@ -70,6 +73,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
+	}
+	
+	public void setItemManager(ItemManager itemManager) {
+		this.itemManager = itemManager;
 	}
 	
 	public DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException,
@@ -125,7 +132,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 		for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
 
-			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);		
+			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
+			Item item = this.itemManager.get(deliveryOrderDetail.getItem().getId());
+			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
+			deliveryOrderDetail.setItem(item);
 			deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
 		}
 		this.save(deliveryOrder);

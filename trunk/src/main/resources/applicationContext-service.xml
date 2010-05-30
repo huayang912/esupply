@@ -294,5 +294,6 @@
 		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager"/>
 		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
 	</bean>
 </beans>
