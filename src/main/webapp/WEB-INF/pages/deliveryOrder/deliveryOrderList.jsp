@@ -21,7 +21,7 @@
 	validate="true">
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
-	<s:textfield key="deliveryOrder.soNo" cssClass="text medium" />
+	<s:textfield key="deliveryOrder.doNo" cssClass="text medium" />
 	<s:textfield key="deliveryOrder.createDateFrom"
 		cssClass="text medium" />
 	<A HREF="#"
@@ -38,9 +38,9 @@
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
-	<display:column property="poNo" sortable="true"
-		url="/editdeliveryOrder.html" paramId="soNo" paramProperty="soNo"
-		titleKey="deliveryOrder.soNo" />
+	<display:column property="doNo" sortable="true"
+		url="/editdeliveryOrder.html" paramId="doNo" paramProperty="doNo"
+		titleKey="deliveryOrder.doNo" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
 	<display:column property="plantName" sortable="true"
