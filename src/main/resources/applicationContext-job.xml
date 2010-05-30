@@ -25,10 +25,31 @@
 	  <property name="repeatInterval" value="60000"/>
 	</bean>
 	
+	<bean id="dataOutboundJob" class="com.faurecia.job.DataOutboundJob">
+		<property name="plantManager" ref="plantManager"/>
+		<property name="outboundLogManager" ref="outboundLogManager"/>
+		<property name="deliveryOrderManager" ref="deliveryOrderManager"/>
+	</bean>
+	
+	<bean id="dataOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="dataOutboundJob"/>
+	  <property name="targetMethod" value="run"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	
+	<bean id="dataOutboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	  <property name="jobDetail" ref="dataOutboundJobDetail"/>
+		<!-- 10 seconds delay -->
+	  <property name="startDelay" value="10000"/>
+		<!-- repeat every 1 mins -->
+	  <property name="repeatInterval" value="60000"/>
+	</bean>
+	
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="dataInboundJobTrigger" />
+				<ref bean="dataOutboundJobTrigger" />
 			</list>
 		</property>
 	</bean>

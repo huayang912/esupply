@@ -133,12 +133,26 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	public List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
-
-		criteria.add(Restrictions.eq("plantSupplier.plant", plant));
+		criteria.createAlias("plantSupplier", "ps");
+		
+		criteria.add(Restrictions.eq("ps.plant", plant));
 		criteria.add(Restrictions.eq("isExport", false));
 		criteria.addOrder(Order.asc("createDate"));
 
-		return this.findByCriteria(criteria);
+		List<DeliveryOrder> deliveryOrderList = this.findByCriteria(criteria);
+	
+		if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
+			for (int i = 0; i < deliveryOrderList.size(); i++) {
+				DeliveryOrder deliveryOrder = deliveryOrderList.get(i);
+				
+				if (deliveryOrder.getDeliveryOrderDetailList() != null
+						&& deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
+					
+				}
+			}
+		}
+		
+		return deliveryOrderList;
 	}
 
 	public DeliveryOrder get(String doNo, boolean includeDetail) {
@@ -220,8 +234,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		DELVRY03E1EDT13 E1EDT13 = new DELVRY03E1EDT13();
 		E1EDT13.setSEGMENT("1");
 		E1EDT13.setQUALF("007");
-		E1EDT13.setNTANF(format.format(deliveryOrder.getStartDate()));
-		E1EDT13.setNTEND(format.format(deliveryOrder.getEndDate()));
+		E1EDT13.setNTANF(format.format(new Date()));
+		E1EDT13.setNTEND(format.format(new Date()));
+		//E1EDT13.setNTANF(format.format(deliveryOrder.getStartDate()));
+		//E1EDT13.setNTEND(format.format(deliveryOrder.getEndDate()));
 
 		E1EDT13List.add(E1EDT13);
 	}

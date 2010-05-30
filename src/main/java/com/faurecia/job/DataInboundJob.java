@@ -59,7 +59,7 @@ public class DataInboundJob {
 				if (plant.getNextInboundDate() == null || nowDate.compareTo(plant.getNextInboundDate()) > 0) {
 					log.info("Start inbound data for plant: " + plant.getName() + ".");
 					DownloadFiles(plant.getFtpServer(), plant.getFtpPort(), plant.getFtpUser(), plant.getFtpPassword(), plant.getFtpPath(), plant
-							.getTempFileDirectory(), plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), nowDate, "service");
+							.getTempFileDirectory(), plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), nowDate, "service", plant.getCode());
 
 					// 设置下次运行时间
 					if (plant.getNextInboundDate() == null) {
@@ -80,7 +80,7 @@ public class DataInboundJob {
 	}
 
 	private void DownloadFiles(String ftpServer, int ftpPort, String ftpUser, String ftpPassword, String ftpPath, String tempFileDirectory,
-			String archiveFileDirectory, String errorFileDirectory, Date nowDate, String user) {
+			String archiveFileDirectory, String errorFileDirectory, Date nowDate, String user, String plantCode) {
 		FTPClientUtil ftpClientUtil = new FTPClientUtil();
 
 		try {
@@ -128,7 +128,7 @@ public class DataInboundJob {
 					InputStream inputStream = null;
 					try {
 						// 下载文件至临时目录
-						String tempDirString = tempFileDirectory + File.separator + dataType;
+						String tempDirString = tempFileDirectory + File.separator + plantCode + dataType;
 						File tempDir = new File(tempDirString);
 						FileUtils.forceMkdir(tempDir);
 
@@ -168,10 +168,10 @@ public class DataInboundJob {
 					try {
 						// 备份文件
 						if (inboundLog.getInboundResult() == "success") {
-							localBackupDirectory = archiveFileDirectory + File.separator + dataType;
+							localBackupDirectory = archiveFileDirectory + File.separator + plantCode + dataType;
 							log.info("Processing file: " + fileName + " success, back up file to archive directory: " + localBackupDirectory);
 						} else {
-							localBackupDirectory = errorFileDirectory + File.separator + dataType;
+							localBackupDirectory = errorFileDirectory + File.separator + plantCode + dataType;
 							log.info("Processing file: " + fileName + " fail, back up file to error directory: " + localBackupDirectory);
 						}
 
