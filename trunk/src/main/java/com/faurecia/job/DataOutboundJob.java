@@ -7,13 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.faurecia.model.DeliveryOrder;
+import com.faurecia.model.OutboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
@@ -51,7 +50,7 @@ public class DataOutboundJob {
 
 				if (plant.getNextOutboundDate() == null || nowDate.compareTo(plant.getNextOutboundDate()) > 0) {
 					log.info("Start outbound data for plant: " + plant.getName() + ".");
-					UploadFiles(plant, "service");
+					UploadFiles(plant, "service", new Date());
 
 					// 设置下次运行时间
 					if (plant.getNextOutboundDate() == null) {
@@ -70,7 +69,7 @@ public class DataOutboundJob {
 		log.info("End run data outbound job.");
 	}
 	
-	private void UploadFiles(Plant plant, String user) {
+	private void UploadFiles(Plant plant, String user, Date nowDate) {
 		FTPClientUtil ftpClientUtil = new FTPClientUtil();
 
 		try {
@@ -84,10 +83,22 @@ public class DataOutboundJob {
 		List<DeliveryOrder> deliveryOrderList = this.deliveryOrderManager.getUnexportDeliveryOrderByPlant(plant);
 		if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
 			for(int i = 0; i < deliveryOrderList.size(); i++) {
+				OutboundLog outboundLog = null;
 				try {
 					DeliveryOrder deliveryOrder = deliveryOrderList.get(i);
 					
-					String tempDirString = plant.getTempFileDirectory() + File.separator + "DESADV";
+					// 查找是否已经记录过日志
+					outboundLog = this.outboundLogManager.getOutboundLogByDoNo(deliveryOrder.getDoNo());
+					if (outboundLog == null) {
+						outboundLog = new OutboundLog();
+						outboundLog.setCreateDate(nowDate);
+						outboundLog.setCreateUser(user);
+						outboundLog.setPlantSupplier(deliveryOrder.getPlantSupplier());
+					}
+					outboundLog.setLastModifyDate(nowDate);
+					outboundLog.setLastModifyUser(user);
+					
+					String tempDirString = plant.getTempFileDirectory() + File.separator + plant.getCode() + File.separator + "DESADV";
 					File filePath = new File(tempDirString);
 					FileUtils.forceMkdir(filePath);
 					
@@ -99,16 +110,24 @@ public class DataOutboundJob {
 					ftpClientUtil.changeDirectory(ftpDirectory);
 					ftpClientUtil.uploadFile(file.getAbsolutePath(), fileName + ".xml");
 					
+					String archiveDirString = plant.getArchiveFileDirectory() + File.separator + plant.getCode() + File.separator + "DESADV";
+					File archivFile = new File(archiveDirString + File.separator + fileName + ".xml");
+					FileUtils.copyFile(file, archivFile);
+					
 					deliveryOrder.setIsExport(true);
 					this.deliveryOrderManager.save(deliveryOrder);
 					
+					outboundLog.setFileName(fileName + ".xml");
+					outboundLog.setOutboundResult("success");
+					
 					file.deleteOnExit();
-				} catch (JAXBException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception ex) {
+					outboundLog.setOutboundResult("fail");
+					outboundLog.setMemo(ex.getMessage());
+				} finally {
+					if (outboundLog != null) {
+						this.outboundLogManager.save(outboundLog);
+					}
 				}
 			}
 		}	else {
