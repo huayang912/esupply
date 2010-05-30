@@ -101,6 +101,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			BeanUtils.copyProperties(deliveryOrderDetail, purchaseOrderDetail);
 			
 			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
+			deliveryOrderDetail.setUnitCount(purchaseOrderDetail.getItem().getUnitCount());
 			deliveryOrderDetail.setQty(purchaseOrderDetail.getCurrentShipQty());
 			deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
 			deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
