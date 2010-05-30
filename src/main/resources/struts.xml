@@ -236,7 +236,7 @@
 			method="save">
 			<result name="cancel" type="redirect-action">purchaseOrders</result>
 		</action>
-		
+
 		<action name="cancelPurchaseOrder" class="com.faurecia.webapp.action.PurchaseOrderAction"
 			method="cancel">
 			<result name="cancel" type="redirect-action">purchaseOrders</result>
@@ -270,19 +270,26 @@
 			method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
-		
+
 		<!-- Deliver Order -->
 		<action name="deliveryOrders" class="com.faurecia.webapp.action.DeliveryOrderAction"
 			method="list">
-			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp</result>
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
 		</action>
 
 		<action name="editDeliveryOrder" class="com.faurecia.webapp.action.DeliveryOrderAction"
 			method="edit">
-			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp</result>
-			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp</result>
+			<result name="poInput" type="redirect-action">
+				<param name="actionName">editPurchaseOrder</param>
+				<param name="poNo">${poNo}</param>
+			</result>
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
 		</action>
-		
+
 		<!-- Log -->
 		<action name="inboundLogs" class="com.faurecia.webapp.action.InboundLogAction"
 			method="list">

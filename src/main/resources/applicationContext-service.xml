@@ -147,6 +147,15 @@
 	</bean>
 
 	<!-- Add new Managers here -->
+	<bean id="numberControlManager" class="com.faurecia.service.impl.NumberControlManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.NumberControl" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
 	<bean id="plantManager" class="com.faurecia.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -225,6 +234,7 @@
 		<property name="inboundLogManager" ref="inboundLogManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
@@ -257,6 +267,7 @@
 		<property name="inboundLogManager" ref="inboundLogManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
@@ -270,5 +281,7 @@
 				<constructor-arg value="com.faurecia.model.DeliveryOrder" />
 			</bean>
 		</constructor-arg>
+		<property name="numberControlManager" ref="numberControlManager"/>
+		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager"/>
 	</bean>
 </beans>

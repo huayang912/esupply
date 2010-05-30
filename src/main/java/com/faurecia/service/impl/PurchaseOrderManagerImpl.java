@@ -45,6 +45,7 @@ import com.faurecia.service.GenericManager;
 import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.ItemManager;
 import com.faurecia.service.MailEngine;
+import com.faurecia.service.NumberControlManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
 import com.faurecia.service.RoleManager;
@@ -61,6 +62,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 	private InboundLogManager inboundLogManager;
 	private UserManager userManager;
 	private RoleManager roleManager;
+	private NumberControlManager numberControlManager;
 	private Unmarshaller unmarshaller;
 
 	protected MailEngine mailEngine;
@@ -104,6 +106,10 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 	public void setInboundLogManager(InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
+	}
+
+	public void setNumberControlManager(NumberControlManager numberControlManager) {
+		this.numberControlManager = numberControlManager;
 	}
 
 	public void setMailEngine(MailEngine mailEngine) {
@@ -281,6 +287,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				plantSupplier.setSupplierFax(supplierE1EDKA1.getTELFX());
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
+				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
 
 				plantSupplier = this.plantSupplierManager.save(plantSupplier);
 

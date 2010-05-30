@@ -99,4 +99,12 @@
 			<value description="supplier_notify_email">jackey.ding@kingmall-it.com</value>
 		</row>
 	</table>
+	<table name="number_control">
+		<column>code</column>
+		<column>next_value</column>
+		<row>
+			<value description="code">doNoPrefix</value>
+			<value description="next_value">1001</value>
+		</row>
+	</table>
 </dataset>

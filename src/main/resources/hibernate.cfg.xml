@@ -7,6 +7,7 @@
 
 		<mapping class="com.faurecia.model.User" />
 		<mapping class="com.faurecia.model.Role" />
+		<mapping class="com.faurecia.model.NumberControl" />
 		<mapping class="com.faurecia.model.Plant" />
 		<mapping class="com.faurecia.model.Item" />
 		<mapping class="com.faurecia.model.Supplier" />
