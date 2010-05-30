@@ -35,6 +35,7 @@
 				<s:hidden name="deliveryOrder.supplierFax" key="deliveryOrder.supplierFax" />
 				<s:hidden name="deliveryOrder.createDate" key="deliveryOrder.createDate" />
 				<s:hidden name="deliveryOrder.plantSupplier.id" key="deliveryOrder.plantSupplier.id" />
+				<s:hidden name="deliveryOrder.isExport" key="deliveryOrder.isExport" />
 			</td>
 		</tr>
 		<tr>
@@ -100,6 +101,16 @@
 			<display:column titleKey="deliveryOrderDetail.qty">
 				<input type="text" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].currentQty" value="${deliveryOrderDetail.currentQty}" class="text medium" />
 				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].orderQty" value="<c:out value="${deliveryOrderDetail.orderQty}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].item.code" value="<c:out value="${deliveryOrderDetail.item.code}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].sequence" value="<c:out value="${deliveryOrderDetail.sequence}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].itemDescription" value="<c:out value="${deliveryOrderDetail.itemDescription}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].supplierItemCode" value="<c:out value="${deliveryOrderDetail.supplierItemCode}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].uom" value="<c:out value="${deliveryOrderDetail.uom}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].qty" value="<c:out value="${deliveryOrderDetail.qty}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].unitCount" value="<c:out value="${deliveryOrderDetail.unitCount}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].referenceOrderNo" value="<c:out value="${deliveryOrderDetail.referenceOrderNo}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].referenceSequence" value="<c:out value="${deliveryOrderDetail.referenceSequence}"/>"/>
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].item.id" value="<c:out value="${deliveryOrderDetail.item.id}"/>"/>
 			</display:column>
 		</c:if>
 		
