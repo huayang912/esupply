@@ -128,7 +128,7 @@ public class DataInboundJob {
 					InputStream inputStream = null;
 					try {
 						// 下载文件至临时目录
-						String tempDirString = tempFileDirectory + File.separator + plantCode + dataType;
+						String tempDirString = tempFileDirectory + File.separator + plantCode + File.separator + dataType;
 						File tempDir = new File(tempDirString);
 						FileUtils.forceMkdir(tempDir);
 
@@ -168,10 +168,10 @@ public class DataInboundJob {
 					try {
 						// 备份文件
 						if (inboundLog.getInboundResult() == "success") {
-							localBackupDirectory = archiveFileDirectory + File.separator + plantCode + dataType;
+							localBackupDirectory = archiveFileDirectory + File.separator + plantCode + File.separator + dataType;
 							log.info("Processing file: " + fileName + " success, back up file to archive directory: " + localBackupDirectory);
 						} else {
-							localBackupDirectory = errorFileDirectory + File.separator + plantCode + dataType;
+							localBackupDirectory = errorFileDirectory + File.separator + plantCode + File.separator + dataType;
 							log.info("Processing file: " + fileName + " fail, back up file to error directory: " + localBackupDirectory);
 						}
 
