@@ -75,7 +75,7 @@
 		<display:column property="supplierItemCode"
 			titleKey="purchaseOrderDetail.supplierItemCode" />
 		<display:column property="uom" titleKey="purchaseOrderDetail.uom" />
-		<display:column property="deliveryDate" format="{0,date,yyyy-MM-dd}"
+		<display:column property="deliveryDate" format="{0,date,MM/dd/yyyy}"
 			titleKey="purchaseOrderDetail.deliveryDate" />
 		<display:column property="qty" titleKey="purchaseOrderDetail.qty" />
 		<display:column property="shipQty" titleKey="purchaseOrderDetail.shipQty" />
