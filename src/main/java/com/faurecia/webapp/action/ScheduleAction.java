@@ -1,6 +1,8 @@
 package com.faurecia.webapp.action;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,8 +70,14 @@ public class ScheduleAction extends BaseAction {
 			scheduleView = new ScheduleView();
 
 			if (schedule != null) {
-				
-				Date dateNow = DateUtil.parseDate(DateUtil.formatDate(new Date()));
+		
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(new Date());
+				calendar.set(Calendar.HOUR, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				Date dateNow = calendar.getTime();
 				
 				if (schedule.getScheduleItemList() != null && schedule.getScheduleItemList().size() > 0) {
 					for (int i = 0; i < schedule.getScheduleItemList().size(); i++) {
@@ -117,8 +125,7 @@ public class ScheduleAction extends BaseAction {
 									head.put("dateFrom", scheduleItemDetail.getDateFrom());
 									head.put("dateTo", scheduleItemDetail.getDateTo());															
 									
-									if ((dateNow.compareTo(scheduleItemDetail.getDateFrom()) <= 0
-											|| dateNow.compareTo(scheduleItemDetail.getDateTo()) >= 0)
+									if (dateNow.compareTo(scheduleItemDetail.getDateTo()) <= 0
 											&& scheduleItemDetail.getScheduleType().equals("Firm")) {
 										head.put("createDo", true);
 									} else {
