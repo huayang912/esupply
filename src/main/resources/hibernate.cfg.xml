@@ -22,5 +22,7 @@
 		<mapping class="com.faurecia.model.DeliveryOrder" />
 		<mapping class="com.faurecia.model.DeliveryOrderDetail" />
 		<mapping class="com.faurecia.model.OutboundLog" />
+		<mapping class="com.faurecia.model.Receipt" />
+		<mapping class="com.faurecia.model.ReceiptDetail" />
 	</session-factory>
 </hibernate-configuration>

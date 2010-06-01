@@ -106,7 +106,7 @@ public class DataOutboundJob {
 					String fileName = "DESADV_" + plant.getCode() + format.format(new Date());
 					File file = this.deliveryOrderManager.exportDeliveryOrder(deliveryOrder, filePath, fileName, "xml");
 					
-					String ftpDirectory = plant.getFtpPath() + FTPClientUtil.SEPERATE + "DESADV" + FTPClientUtil.SEPERATE + "INP";
+					String ftpDirectory = plant.getFtpPath() + FTPClientUtil.SEPERATE + "DESADV" + FTPClientUtil.SEPERATE + "OUT";
 					ftpClientUtil.changeDirectory(ftpDirectory);
 					ftpClientUtil.uploadFile(file.getAbsolutePath(), fileName + ".xml");
 					
