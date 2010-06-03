@@ -296,4 +296,24 @@
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="itemManager" ref="itemManager" />
 	</bean>
+	
+	<bean id="receiptManager" class="com.faurecia.service.impl.ReceiptManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Receipt" />
+			</bean>
+		</constructor-arg>
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
+		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+	</bean>
 </beans>

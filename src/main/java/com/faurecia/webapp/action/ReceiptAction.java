@@ -1,8 +1,5 @@
 package com.faurecia.webapp.action;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.displaytag.properties.SortOrderEnum;
@@ -12,35 +9,36 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.Constants;
-import com.faurecia.model.PurchaseOrder;
+import com.faurecia.model.Receipt;
 import com.faurecia.model.User;
-import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.ReceiptManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
-public class PurchaseOrderAction extends BaseAction {
+public class ReceiptAction extends BaseAction {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3847028744873885262L;
-	private PurchaseOrderManager purchaseOrderManager;
+	private static final long serialVersionUID = 3665261977032180267L;
+	private ReceiptManager receiptManager;
 
-	private PaginatedListUtil<PurchaseOrder> paginatedList;
+	private PaginatedListUtil<Receipt> paginatedList;
 	private int pageSize;
 	private int page;
 	private String sort;
 	private String dir;
-	private PurchaseOrder purchaseOrder;
-	private String poNo;	
-
-	public PurchaseOrderManager getPurchaseOrderManager() {
-		return purchaseOrderManager;
+	private Receipt receipt;
+	private String receiptNo;
+	
+	public ReceiptManager getReceiptManager() {
+		return receiptManager;
 	}
 	
-	public PaginatedListUtil<PurchaseOrder> getPaginatedList() {
+	public PaginatedListUtil<Receipt> getPaginatedList() {
 		return paginatedList;
 	}
 
-	public void setPaginatedList(PaginatedListUtil<PurchaseOrder> paginatedList) {
+	public void setPaginatedList(PaginatedListUtil<Receipt> paginatedList) {
 		this.paginatedList = paginatedList;
 	}
 
@@ -75,47 +73,38 @@ public class PurchaseOrderAction extends BaseAction {
 	public void setDir(String dir) {
 		this.dir = dir;
 	}
+
+	public Receipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
+	}
+
+	public String getReceiptNo() {
+		return receiptNo;
+	}
+
+	public void setReceiptNo(String receiptNo) {
+		this.receiptNo = receiptNo;
+	}
 	
-	public Map<String, String> getStatus() {
-		Map<String, String> status = new HashMap<String, String>(); 
-		status.put("", "All");
-		status.put("Open", "Open");
-		status.put("Close", "Close");
-		return status;
-	}
-
-	public PurchaseOrder getPurchaseOrder() {
-		return purchaseOrder;
-	}
-
-	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
-		this.purchaseOrder = purchaseOrder;
-	}
-
-	public String getPoNo() {
-		return poNo;
-	}
-
-	public void setPoNo(String poNo) {
-		this.poNo = poNo;
-	}
-
 	public String list() {
-		if (purchaseOrder == null) {
-			purchaseOrder = new PurchaseOrder();
-			purchaseOrder.setStatus("Open");
+		if (receipt == null) {
+			receipt = new Receipt();
 		}
 			
 		pageSize = pageSize == 0 ? 25 : pageSize;
 		page  = page == 0 ? 1 : page;
 
-		paginatedList = new PaginatedListUtil<PurchaseOrder>();
+		paginatedList = new PaginatedListUtil<Receipt>();
 		paginatedList.setPageNumber(page);
 		paginatedList.setObjectsPerPage(pageSize);
 
-		DetachedCriteria selectCriteria = DetachedCriteria.forClass(PurchaseOrder.class);
-		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(PurchaseOrder.class)
-			.setProjection(Projections.count("poNo"));
+		DetachedCriteria selectCriteria = DetachedCriteria.forClass(Receipt.class);
+		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(Receipt.class)
+			.setProjection(Projections.count("receiptNo"));
 		
 		selectCriteria.createAlias("plantSupplier", "ps");
 		selectCriteria.createAlias("ps.plant", "p");
@@ -139,24 +128,19 @@ public class PurchaseOrderAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
 		
-		if (purchaseOrder.getPoNo() != null && purchaseOrder.getPoNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
-			selectCountCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
+		if (receipt.getReceiptNo() != null && receipt.getReceiptNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("receiptNo", receipt.getReceiptNo().trim()));
+			selectCountCriteria.add(Restrictions.like("receiptNo", receipt.getReceiptNo().trim()));
 		}
 		
-		if (purchaseOrder.getStatus() != null && purchaseOrder.getStatus().trim().length() > 0) {
-			selectCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
-			selectCountCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
+		if (receipt.getPostingDateFrom() != null) {
+			selectCriteria.add(Restrictions.ge("postingDate", receipt.getPostingDateFrom()));
+			selectCountCriteria.add(Restrictions.ge("postingDate", receipt.getPostingDateFrom()));
 		}
 		
-		if (purchaseOrder.getCreateDateFrom() != null) {
-			selectCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
-			selectCountCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
-		}
-		
-		if (purchaseOrder.getCreateDateTo() != null) {
-			selectCriteria.add(Restrictions.le("createDate", purchaseOrder.getCreateDateTo()));
-			selectCountCriteria.add(Restrictions.le("createDate", purchaseOrder.getCreateDateTo()));
+		if (receipt.getPostingDateTo() != null) {
+			selectCriteria.add(Restrictions.le("postingDate", receipt.getPostingDateTo()));
+			selectCountCriteria.add(Restrictions.le("postingDate", receipt.getPostingDateTo()));
 		}
 			
 		if (sort != null && sort.trim().length() > 0) {
@@ -173,10 +157,11 @@ public class PurchaseOrderAction extends BaseAction {
 			}
 		}
 
-		paginatedList.setList(this.purchaseOrderManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
-		this.purchaseOrderManager.findByCriteria(selectCountCriteria);
-		paginatedList.setFullListSize(Integer.parseInt(this.purchaseOrderManager.findByCriteria(selectCountCriteria).get(0).toString()));			
+		paginatedList.setList(this.receiptManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
+		this.receiptManager.findByCriteria(selectCountCriteria);
+		paginatedList.setFullListSize(Integer.parseInt(this.receiptManager.findByCriteria(selectCountCriteria).get(0).toString()));			
 
+		
 		return SUCCESS;
 	}
 
@@ -185,7 +170,8 @@ public class PurchaseOrderAction extends BaseAction {
 	}
 
 	public String edit() throws Exception {
-		purchaseOrder = this.purchaseOrderManager.get(this.poNo, true);
+		receipt = this.receiptManager.get(this.receiptNo, true);
 		return SUCCESS;
 	}
+	
 }
