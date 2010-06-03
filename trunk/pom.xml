@@ -645,6 +645,11 @@
             </exclusions>
         </dependency>
         <dependency>
+    <groupId>poi</groupId>
+    <artifactId>poi</artifactId>
+    <version>${poi.version}</version>
+</dependency>
+        <dependency>
             <groupId>struts-menu</groupId>
             <artifactId>struts-menu</artifactId>
             <version>${struts.menu.version}</version>
@@ -998,5 +1003,6 @@
         <velocity.version>1.4</velocity.version>
         <xfire.version>1.2.6</xfire.version>
         <quartz.version>1.6.1</quartz.version>
+        <poi.version>3.1-FINAL</poi.version>
     </properties>
 </project>
