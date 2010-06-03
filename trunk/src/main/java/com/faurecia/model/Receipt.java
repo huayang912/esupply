@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -29,6 +30,8 @@ public class Receipt extends BaseObject {
 	private String receiptNo;
 	private PlantSupplier plantSupplier;
 	private Date postingDate;
+	private Date postingDateFrom;
+	private Date postingDateTo;
 	private List<ReceiptDetail> receiptDetailList;
 
 	@Id
@@ -77,6 +80,24 @@ public class Receipt extends BaseObject {
 		receiptDetailList.add(receiptDetail);
 	}
 	
+	@Transient
+	public Date getPostingDateFrom() {
+		return postingDateFrom;
+	}
+
+	public void setPostingDateFrom(Date postingDateFrom) {
+		this.postingDateFrom = postingDateFrom;
+	}
+
+	@Transient
+	public Date getPostingDateTo() {
+		return postingDateTo;
+	}
+
+	public void setPostingDateTo(Date postingDateTo) {
+		this.postingDateTo = postingDateTo;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
