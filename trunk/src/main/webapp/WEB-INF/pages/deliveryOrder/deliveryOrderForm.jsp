@@ -11,8 +11,9 @@
 	method="post" validate="true">
 	<c:set var="buttons">
 		<c:if test="${empty deliveryOrder.doNo}">
-			<s:submit key="button.save" />
+			<s:submit key="button.save"  />
 		</c:if>
+		<s:submit key="button.print" action="printDeliveryOrder" />
 		<input type="button" value="<fmt:message key="button.cancel"/>"
 			onclick="window.location.href='cancelDeliveryOrder.html'" />
 	</c:set>

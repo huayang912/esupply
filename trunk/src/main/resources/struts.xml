@@ -298,7 +298,13 @@
 			method="cancel">
 			<result name="cancel" type="redirect-action">deliveryOrders</result>
 		</action>
-		
+
+		<action name="printDeliveryOrder" class="com.faurecia.webapp.action.DeliveryOrderAction"
+			method="print">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+		</action>
+
 		<!-- Log -->
 		<action name="inboundLogs" class="com.faurecia.webapp.action.InboundLogAction"
 			method="list">
