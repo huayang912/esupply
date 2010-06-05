@@ -1,0 +1,194 @@
+package symphony.portal.report.util;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+
+import symphony.integration.domain.md.Material;
+import symphony.integration.domain.mm.RequisitionOrder;
+import symphony.integration.domain.mm.RequisitionOrderItem;
+
+public class RequisitionOrderExcelReportUtil extends ExcelReportUtil {
+	
+	public static final String COMPANY_LOG_URL = "/images/logo4excel.jpg";
+	public static final String EXCEL_TEMPLATE_URL = "template/RequisitionOrderTemplate.xls";
+	
+	public static XlsExport generateReport(String localAbsolutPath, RequisitionOrder order) {
+		XlsExport xls = loadReportTemlate(localAbsolutPath);
+		//setImage(xls, localAbsolutPath);
+		ReportDataSet(xls, order);
+		
+		return xls;
+	}	
+	
+	private static XlsExport loadReportTemlate(String localAbsolutPath) {
+		String templateUrl = localAbsolutPath + EXCEL_TEMPLATE_URL;
+		XlsExport xls = new XlsExport(templateUrl);
+		
+		return xls;
+	}
+	
+	private static void setImage(XlsExport xls, String localAbsolutPath) {
+		String imgUrl = localAbsolutPath + COMPANY_LOG_URL;
+		xls.setImage(imgUrl, 0, 0, 350, 0, (short) 0, 0, (short) 3, 3);
+	}
+	
+	private static void ReportDataSet(XlsExport xls, RequisitionOrder order) {
+//		xls.setRowCell(3, 4, "");
+//		xls.setBorderLeft(3, 4, HSSFCellStyle.BORDER_MEDIUM);
+//		xls.setBorderTop(3, 4, HSSFCellStyle.BORDER_MEDIUM);
+//		xls.setRowCell(4, 4, "");
+//		xls.setBorderLeft(4, 4, HSSFCellStyle.BORDER_MEDIUM);
+//		xls.setBorderBottom(4, 4, HSSFCellStyle.BORDER_MEDIUM);		      
+		if (order.getPriority().equalsIgnoreCase(RequisitionOrder.Priority.Normal.name())) {			
+			xls.setRowCell(4, 5, "");
+	        xls.setBorderRight(4, 5, HSSFCellStyle.BORDER_MEDIUM);
+			xls.setBorderBottom(4, 5, HSSFCellStyle.BORDER_MEDIUM);
+		} else {
+			xls.setRowCell(3, 5, "");
+		    xls.setBorderRight(3, 5, HSSFCellStyle.BORDER_MEDIUM);
+			xls.setBorderTop(3, 5, HSSFCellStyle.BORDER_MEDIUM);
+		}
+//        xls.copyCellStyle(xls.getCell(3, 15), xls.getCell(3, 5));
+//        xls.copyCellStyle(xls.getCell(4, 15), xls.getCell(4, 5));
+        
+        xls.setRowCell(2, 8, "*"+order.getRequisitionOrderNo()+"*");
+        xls.setRowCellStyle(2, 8, HSSFFont.BOLDWEIGHT_NORMAL, HSSFCellStyle.ALIGN_RIGHT,"C39HrP24DhTt",(short)34);
+        xls.setRowCell(3, 9, "*"+order.getRequisitionOrderNo()+"*");
+        xls.setRowCellStyle(3, 9, HSSFCellStyle.ALIGN_RIGHT,"Arial",(short)12);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
+        //xls.setRowCell(4, 9, " "+df.format(order.getEffectiveDate()));
+        xls.setRowCellRightStyle(4, 9, " "+df.format(order.getEffectiveDate()));
+        xls.setRowCell(15, 0,order.getRequisitionOrderNo());
+        xls.setRowCell(6,3, order.getPartyFrom().getCode());
+        xls.setRowCell(6,8, ""+df.format(order.getDemandDeliverDate()));
+        xls.setRowCell(7,3, order.getPartyFrom().getDescription());
+        DateFormat time = new SimpleDateFormat("HH:mm", Locale.US);
+        xls.setRowCell(7,8, ""+time.format(order.getDemandDeliverDate()));    
+        xls.setRowCell(8,3, order.getPartyFrom().getAddress());
+        xls.setRowCell(8,8, order.getDemandDeliverAddr());
+        xls.setRowCell(9,3, order.getPartyFrom().getContact());
+        xls.setRowCell(9,8, order.getPlanner().getName());        
+        xls.setRowCell(10,3, order.getPartyFrom().getTelephone());
+        xls.setRowCell(10,8, " ");
+        xls.setRowCell(11,3, order.getPartyFrom().getFax());
+        xls.setRowCell(11,8, " ");
+        List<RequisitionOrderItem> orderItems = order.getRequisitionOrderItems().getRequisitionOrderItem();
+        for (int i = 0; i < orderItems.size(); i++) {
+			RequisitionOrderItem item = orderItems.get(i);
+			xls.setRowCell(15 + i, 0, ""+item.getSequenceNo());
+			xls.setBorderTop(15 + i, 0, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 0, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 0, HSSFCellStyle.BORDER_THIN);
+			xls.setBorderBottom(15 + i, 0, HSSFCellStyle.BORDER_DOTTED);       
+			xls.setRowCell(15+ i, 1, " " + item.getMaterial().getNo());
+			xls.setBorderTop(15 + i, 1, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 1, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 1, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 1, HSSFCellStyle.BORDER_DOTTED);
+			Material suppItem = item.getMaterial().getSupplierMaterial(order.getPartyTo());
+			xls.setRowCell(15+i,2," " + (suppItem != null && suppItem.getDescription() != null ? suppItem.getDescription() : ""));
+			xls.setBorderTop(15 + i, 2, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 2, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 2, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 2, HSSFCellStyle.BORDER_DOTTED);
+			xls.setRowCell(15+i,3," " +item.getMaterial().getDescription());
+			xls.setBorderTop(15 + i, 3, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 3, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 3, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 3, HSSFCellStyle.BORDER_DOTTED);
+			xls.setRowCell(15 + i, 4," "+item.getMaterial().getQuantityUOM().getAbbreviation());// 单位
+			xls.setBorderTop(15 + i, 4, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 4, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 4, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 4, HSSFCellStyle.BORDER_DOTTED);
+			xls.setRowCell(15 + i, 5, item.getUnitCount());// 单包装
+			xls.setBorderTop(15 + i, 5, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 5, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 5, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 5, HSSFCellStyle.BORDER_DOTTED);
+			xls.setRowCell(15 + i, 6, Math.ceil(item.getRequiredQuantity() / item.getUnitCount()));// 包装(需求)
+			xls.setBorderTop(15 + i, 6, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 6, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 6, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 6, HSSFCellStyle.BORDER_DOTTED);
+			xls.setRowCell(15 + i, 7, item.getRequiredQuantity());// 零件数(需求)
+			xls.setBorderTop(15 + i, 7, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 7, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 7, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 7, HSSFCellStyle.BORDER_DOTTED);
+			/**
+			 * 发货数量显示：
+	         * 当要货单状态为Confirm时，显示RequisitionOrderItem的requiredQuantity
+			 * 当要货单状态为Deliver时，显示RequisitionOrderItem的totalDeliveryQty
+			 * 当要货单状态为Receipt时，显示RequisitionOrderItem的 RequiredQty-ReceivedQty
+			 * 当要货单状态为Close和Cancel时，显示RequisitionOrderItem的ReceivedQty
+			 */			
+			
+			double deliverQty = item.getDeliveredQuantity();
+			double receiveQty = item.getReceivedQuantity();
+			double requireQty = item.getRequiredQuantity();		
+			System.out.println("line " + i + ": status = " + order.getStatus() + ", requireQty = " + requireQty + ", deliverQty = " + deliverQty + ", receiveQty = " + receiveQty);
+			
+			if (RequisitionOrder.Status.Confirm.name().equalsIgnoreCase(order.getStatus())) {
+				if(requireQty>0)
+				{
+				    xls.setRowCell(15 + i, 8, requireQty);
+				}
+			} else if (RequisitionOrder.Status.Deliver.name().equalsIgnoreCase(order.getStatus())) {
+				if(deliverQty>0)
+				{
+				    xls.setRowCell(15 + i, 8, deliverQty);
+				}
+			} else if (RequisitionOrder.Status.Receipt.name().equalsIgnoreCase(order.getStatus())) {
+				if((requireQty - receiveQty)>0)
+				{
+				    xls.setRowCell(15 + i, 8, requireQty - receiveQty); 
+				}		
+			} else {
+				if(receiveQty>0)
+				{
+				    xls.setRowCell(15 + i, 8, receiveQty);
+				}
+			}						
+			xls.setBorderTop(15 + i, 8, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 8, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 8, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 8, HSSFCellStyle.BORDER_DOTTED);
+			
+			if (item.getReceivedQuantity() == 0L) {
+				xls.setRowCell(15 + i, 9, "");// 包装(已收)
+			} else {
+				xls.setRowCell(15 + i, 9, Math.ceil(item.getReceivedQuantity() / item.getUnitCount()));// 包装(已收)
+			}
+			xls.setBorderTop(15 + i, 9, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 9, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 9, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 9, HSSFCellStyle.BORDER_DOTTED);
+			
+			if (item.getReceivedQuantity() == 0L) {
+				xls.setRowCell(15 + i, 10, "");// 包装(已收)
+			} else {
+				xls.setRowCell(15 + i, 10, item.getReceivedQuantity());//(已收)
+			}
+			xls.setBorderTop(15 + i, 10, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 10, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderLeft(15 + i, 10, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 10, HSSFCellStyle.BORDER_DOTTED);
+			String getMemo="";
+			if(item.getMemo()!=null){
+				getMemo = item.getMemo();
+			}
+			xls.setRowCell(15 + i, 11, getMemo );// 批号/备注
+			xls.setBorderTop(15 + i, 11, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderRight(15 + i, 11, HSSFCellStyle.BORDER_THIN);
+			xls.setBorderLeft(15 + i, 11, HSSFCellStyle.BORDER_DOTTED);
+			xls.setBorderBottom(15 + i, 11, HSSFCellStyle.BORDER_DOTTED);
+			xls.setRowHeight(15+i, (short)315);
+        }
+	}
+}

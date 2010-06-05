@@ -29,7 +29,10 @@ import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ScheduleManager;
+import com.faurecia.util.DeliveryOrderExcelReportUtil;
+import com.faurecia.util.XlsExport;
 import com.faurecia.webapp.util.PaginatedListUtil;
+import com.sun.tools.internal.ws.processor.model.Request;
 
 import freemarker.template.utility.StringUtil;
 
@@ -358,5 +361,12 @@ public class DeliveryOrderAction extends BaseAction {
 		}
 
 		return SUCCESS;
+	}
+	
+	public String print() throws Exception {
+		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
+		XlsExport report = DeliveryOrderExcelReportUtil.generateReport(localAbsolutPath, deliveryOrder);
+		report.exportXLS("D:/deliveryOrder.xls");
+	 return SUCCESS;
 	}
 }
