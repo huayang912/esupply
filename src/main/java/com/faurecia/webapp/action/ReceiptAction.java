@@ -30,10 +30,10 @@ public class ReceiptAction extends BaseAction {
 	private Receipt receipt;
 	private String receiptNo;
 	
-	public ReceiptManager getReceiptManager() {
-		return receiptManager;
+	public void setReceiptManager(ReceiptManager receiptManager) {
+		this.receiptManager = receiptManager;
 	}
-	
+
 	public PaginatedListUtil<Receipt> getPaginatedList() {
 		return paginatedList;
 	}
@@ -122,8 +122,8 @@ public class ReceiptAction extends BaseAction {
 			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
-			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
+			selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
+			selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
@@ -158,9 +158,7 @@ public class ReceiptAction extends BaseAction {
 		}
 
 		paginatedList.setList(this.receiptManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
-		this.receiptManager.findByCriteria(selectCountCriteria);
 		paginatedList.setFullListSize(Integer.parseInt(this.receiptManager.findByCriteria(selectCountCriteria).get(0).toString()));			
-
 		
 		return SUCCESS;
 	}

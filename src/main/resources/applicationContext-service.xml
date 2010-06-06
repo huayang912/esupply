@@ -27,6 +27,8 @@
 			pointcut="execution(* *..service.PurchaseOrderManager.*(..))" order="3" />
 		<aop:advisor id="scheudleManagerTx" advice-ref="notSupportTXAdvice"
 			pointcut="execution(* *..service.ScheduleManager.*(..))" order="4" />
+		<aop:advisor id="receiptManagerTx" advice-ref="notSupportTXAdvice"
+			pointcut="execution(* *..service.ReceiptManager.*(..))" order="5" />
 	</aop:config>
 
 	<!-- Enable @Transactional support -->
@@ -155,7 +157,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="plantManager" class="com.faurecia.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -209,7 +211,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="outboundLogManager" class="com.faurecia.service.impl.OutboundLogManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -218,7 +220,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="purchaseOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -282,7 +284,7 @@
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
-	
+
 	<bean id="deliveryOrderManager" class="com.faurecia.service.impl.DeliveryOrderManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -290,13 +292,13 @@
 				<constructor-arg value="com.faurecia.model.DeliveryOrder" />
 			</bean>
 		</constructor-arg>
-		<property name="numberControlManager" ref="numberControlManager"/>
-		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager"/>
-		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
+		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager" />
+		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="itemManager" ref="itemManager" />
 	</bean>
-	
+
 	<bean id="receiptManager" class="com.faurecia.service.impl.ReceiptManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"

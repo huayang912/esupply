@@ -98,6 +98,25 @@ public class Receipt extends BaseObject {
 		this.postingDateTo = postingDateTo;
 	}
 
+	@Transient
+	public String getPlantCode() {
+		return this.plantSupplier.getPlant().getCode();
+	}
+	
+	@Transient
+	public String getPlantName() {
+		return this.plantSupplier.getPlant().getName();
+	}
+	
+	@Transient
+	public String getSupplierCode() {
+		return this.plantSupplier.getSupplier().getCode();
+	}
+	
+	@Transient
+	public String getSupplierName() {
+		return this.plantSupplier.getSupplierName();
+	}
 	/**
 	 * @see java.lang.Object#toString()
 	 */

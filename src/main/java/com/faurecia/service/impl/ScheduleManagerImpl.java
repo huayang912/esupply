@@ -264,6 +264,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		try {
 			Plant plant = null;
 			Supplier supplier = null;
+			boolean isCreateSupplier = false;
 			DELFOR02E1EDKA1 supplierE1EDKA1 = null;
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 			DELFOR02E1EDK09 E1EDK09 = delfor.getIDOC().getE1EDK09();
@@ -293,8 +294,44 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
+							isCreateSupplier = true;
 						}
 					}
+				}
+			}
+			
+			if (isCreateSupplier) {
+				log.info("Creating supplier user account.");
+				// 生成供应商帐号
+				User supplierUser = new User();
+				supplierUser.setUsername(supplier.getCode()); // 使用供应商编码作为用户名称
+				supplierUser.setEnabled(true);
+				supplierUser.setAccountExpired(false);
+				supplierUser.setAccountLocked(false);
+				supplierUser.setEmail(plant.getSupplierNotifyEmail());
+				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
+				supplierUser.setConfirmPassword(supplierUser.getPassword());
+				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setUserSupplier(supplier);
+				// supplierUser.setUserPlant(plant);
+				Set<Role> roles = new HashSet<Role>();
+				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
+				supplierUser.setRoles(roles);
+				this.userManager.saveUser(supplierUser);
+
+				try {
+					// Email通知
+					log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
+					mailMessage.setTo(plant.getSupplierNotifyEmail());
+					Map<String, Object> model = new HashMap<String, Object>();
+					model.put("supplier", supplier);
+					model.put("user", supplierUser);
+					mailMessage.setSubject("Supplier " + supplier.getCode() + " Created");
+					mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
+					log.info("Send supplier created email successful.");
+				} catch (MailException mailEx) {
+					log.error("Error when send supplier create mail.", mailEx);
 				}
 			}
 
@@ -315,41 +352,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 				plantSupplier.setSupplier(supplier);
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
 
-				plantSupplier = this.plantSupplierManager.save(plantSupplier);
-
-				// 生成供应商帐号
-				User supplierUser = new User();
-				supplierUser.setUsername(String.valueOf(plantSupplier.getId() + 10000)); // 使用plantSupplier.id
-				// +
-				// 100000作为供应商用户的名称
-				supplierUser.setEnabled(true);
-				supplierUser.setAccountExpired(false);
-				supplierUser.setAccountLocked(false);
-				supplierUser.setEmail(plant.getSupplierNotifyEmail());
-				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
-				supplierUser.setConfirmPassword(supplierUser.getPassword());
-				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				supplierUser.setUserSupplier(supplier);
-				supplierUser.setUserPlant(plant);
-				Set<Role> roles = new HashSet<Role>();
-				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
-				supplierUser.setRoles(roles);
-				this.userManager.saveUser(supplierUser);
-
-				try {
-					// Email通知
-					log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
-					mailMessage.setTo(plant.getSupplierNotifyEmail());
-					Map<String, Object> model = new HashMap<String, Object>();
-					model.put("plantSupplier", plantSupplier);
-					model.put("user", supplierUser);
-					mailMessage.setSubject("Supplier " + plantSupplier.getSupplier().getCode() + " Created");
-					mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
-					log.info("Send supplier created email successful.");
-				} catch (MailException ex) {
-					log.error("Error when send supplier create mail.", ex);
-				}
+				plantSupplier = this.plantSupplierManager.save(plantSupplier);				
 			}
 
 			schedule.setPlantSupplier(plantSupplier);

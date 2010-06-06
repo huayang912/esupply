@@ -134,14 +134,14 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		if (includeDetail && purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
 			List<PurchaseOrderDetail> purchaseOrderDetailList = purchaseOrder.getPurchaseOrderDetailList();
 			purchaseOrder.setPurchaseOrderDetailList(null);
-			
-			//过滤掉需求数量是0的明细
-			for(int i = 0; i < purchaseOrderDetailList.size(); i++) {
+
+			// 过滤掉需求数量是0的明细
+			for (int i = 0; i < purchaseOrderDetailList.size(); i++) {
 				if (purchaseOrderDetailList.get(i).getQty().compareTo(new BigDecimal(0)) != 0) {
 					purchaseOrder.addPurchaseOrderDetail(purchaseOrderDetailList.get(i));
 				}
 			}
-				
+
 		}
 
 		return purchaseOrder;
@@ -149,25 +149,24 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 	public void tryClosePurchaseOrder(String poNo) {
 		PurchaseOrder purchaseOrder = this.get(poNo, true);
-		
+
 		if (purchaseOrder.getPurchaseOrderDetailList() != null && purchaseOrder.getPurchaseOrderDetailList().size() > 0) {
 			boolean allClose = true;
 			for (int i = 0; i < purchaseOrder.getPurchaseOrderDetailList().size(); i++) {
 				PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(i);
-				if (purchaseOrderDetail.getShipQty() == null 
-						|| purchaseOrderDetail.getQty().compareTo(purchaseOrderDetail.getShipQty()) > 0) {				
+				if (purchaseOrderDetail.getShipQty() == null || purchaseOrderDetail.getQty().compareTo(purchaseOrderDetail.getShipQty()) > 0) {
 					allClose = false;
 					break;
 				}
 			}
-			
+
 			if (allClose) {
-				purchaseOrder.setStatus("Close");				
+				purchaseOrder.setStatus("Close");
 				this.genericDao.save(purchaseOrder);
 			}
 		}
 	}
-	
+
 	public void reloadFile(InboundLog inboundLog, String userCode) {
 
 		try {
@@ -198,7 +197,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 			}
 
 			// 保存采购单
-			this.save(purchaseOrder);		
+			this.save(purchaseOrder);
 
 			inboundLog.setInboundResult("success");
 
@@ -213,8 +212,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 			inboundLog.setInboundResult("fail");
 
 			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
-			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null)
-			{
+			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null) {
 				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
 			}
 			inboundLog.setMemo(dataConvertException.getMessage());
@@ -240,6 +238,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		try {
 			Plant plant = null;
 			Supplier supplier = null;
+			boolean isCreateSupplier = false;
 			ORDERS02E1EDKA1 supplierE1EDKA1 = null;
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
@@ -279,19 +278,47 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
+
+							isCreateSupplier = true;
 						}
 					}
 				}
 			}
 
-			/*
-			 * po.setPlant(plant); po.setPlantName(plant.getName());
-			 * po.setPlantAddress1(plant.getAddress1());
-			 * po.setPlantAddress2(plant.getAddress2());
-			 * po.setPlantContactPerson(plant.getContactPerson());
-			 * po.setPlantPhone(plant.getPhone());
-			 * po.setPlantFax(plant.getFax());
-			 */
+			if (isCreateSupplier) {
+				log.info("Creating supplier user account.");
+				// 生成供应商帐号
+				User supplierUser = new User();
+				supplierUser.setUsername(supplier.getCode()); // 使用供应商编码作为用户名称
+				supplierUser.setEnabled(true);
+				supplierUser.setAccountExpired(false);
+				supplierUser.setAccountLocked(false);
+				supplierUser.setEmail(plant.getSupplierNotifyEmail());
+				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
+				supplierUser.setConfirmPassword(supplierUser.getPassword());
+				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setUserSupplier(supplier);
+				// supplierUser.setUserPlant(plant);
+				Set<Role> roles = new HashSet<Role>();
+				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
+				supplierUser.setRoles(roles);
+				this.userManager.saveUser(supplierUser);
+
+				try {
+					// Email通知
+					log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
+					mailMessage.setTo(plant.getSupplierNotifyEmail());
+					Map<String, Object> model = new HashMap<String, Object>();
+					model.put("supplier", supplier);
+					model.put("user", supplierUser);
+					mailMessage.setSubject("Supplier " + supplier.getCode() + " Created");
+					mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
+					log.info("Send supplier created email successful.");
+				} catch (MailException mailEx) {
+					log.error("Error when send supplier create mail.", mailEx);
+				}
+			}
 
 			PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, supplier);
 
@@ -311,40 +338,6 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
 
 				plantSupplier = this.plantSupplierManager.save(plantSupplier);
-
-				// 生成供应商帐号
-				User supplierUser = new User();
-				supplierUser.setUsername(String.valueOf(plantSupplier.getId() + 10000)); // 使用plantSupplier.id
-				// +
-				// 100000作为供应商用户的名称
-				supplierUser.setEnabled(true);
-				supplierUser.setAccountExpired(false);
-				supplierUser.setAccountLocked(false);
-				supplierUser.setEmail(plant.getSupplierNotifyEmail());
-				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
-				supplierUser.setConfirmPassword(supplierUser.getPassword());
-				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				supplierUser.setUserSupplier(supplier);
-				supplierUser.setUserPlant(plant);
-				Set<Role> roles = new HashSet<Role>();
-				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
-				supplierUser.setRoles(roles);
-				this.userManager.saveUser(supplierUser);
-
-				try {
-					// Email通知
-					log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
-					mailMessage.setTo(plant.getSupplierNotifyEmail());
-					Map<String, Object> model = new HashMap<String, Object>();
-					model.put("plantSupplier", plantSupplier);
-					model.put("user", supplierUser);
-					mailMessage.setSubject("Supplier " + plantSupplier.getSupplier().getCode() + " Created");
-					mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
-					log.info("Send supplier created email successful.");
-				} catch (MailException ex) {
-					log.error("Error when send supplier create mail.", ex);
-				}
 			}
 
 			po.setPlantSupplier(plantSupplier);

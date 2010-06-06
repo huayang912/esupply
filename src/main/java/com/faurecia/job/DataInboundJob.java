@@ -15,10 +15,12 @@ import org.apache.commons.logging.LogFactory;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PurchaseOrder;
+import com.faurecia.model.Receipt;
 import com.faurecia.model.Schedule;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.ReceiptManager;
 import com.faurecia.service.ScheduleManager;
 import com.faurecia.util.DateUtil;
 import com.faurecia.util.FTPClientUtil;
@@ -30,7 +32,8 @@ public class DataInboundJob {
 	private InboundLogManager inboundLogManager;
 	private PurchaseOrderManager purchaseOrderManager;
 	private ScheduleManager scheduleManager;
-	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS" };
+	private ReceiptManager receiptManager;
+	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR" };
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -46,6 +49,10 @@ public class DataInboundJob {
 
 	public void setScheduleManager(ScheduleManager scheduleManager) {
 		this.scheduleManager = scheduleManager;
+	}
+
+	public void setReceiptManager(ReceiptManager receiptManager) {
+		this.receiptManager = receiptManager;
 	}
 
 	public void run() {
@@ -151,11 +158,14 @@ public class DataInboundJob {
 					log.info("Processing file: " + fileName);
 					PurchaseOrder po = null;
 					Schedule schedule = null;
+					Receipt receipt = null;
 					try {
 						if (dataType.equals("ORDERS")) {
 							po = this.purchaseOrderManager.saveSingleFile(inputStream, inboundLog);
 						} else if (dataType.equals("DELINS")) {
 							schedule = this.scheduleManager.saveSingleFile(inputStream, inboundLog);
+						} else if (dataType.equals("MBGMCR")) {
+							receipt = this.receiptManager.saveSingleFile(inputStream, inboundLog);
 						}
 					} catch (Exception ex) {
 						log.error("Error when save file to database.", ex);
@@ -211,6 +221,11 @@ public class DataInboundJob {
 						if (schedule != null && schedule.getScheduleNo() != null) {
 							// 手工回滚
 							this.scheduleManager.remove(schedule.getScheduleNo());
+						}
+						
+						if (receipt != null && receipt.getReceiptNo() != null) {
+							// 手工回滚
+							this.receiptManager.remove(receipt.getReceiptNo());
 						}
 
 						if (backupFile != null) {
