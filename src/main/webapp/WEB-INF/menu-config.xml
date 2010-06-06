@@ -11,6 +11,7 @@
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/admins.html?roleType=ROLE_ADMIN">
             <Item name="ViewAdmin" title="menu.admin.admins" page="/admin/admins.html?roleType=ROLE_ADMIN"/>
             <Item name="ViewPlantAdmin" title="menu.admin.plantAdmins" page="/admin/admins.html?roleType=ROLE_PLANT_ADMIN"/>
+            <Item name="ViewVendor" title="menu.admin.vendors" page="/admin/admins.html?roleType=ROLE_VENDOR"/>
             <Item name="PlantMenu" title="menu.plants" page="/admin/plants.html" roles="ROLE_ADMIN"/>
             <Item name="ActiveUsers" title="mainMenu.activeUsers" page="/admin/activeUsers.html"/>            
             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload.html"/>
@@ -19,8 +20,7 @@
         </Menu>
         <Menu name="PlantAdminMenu" title="menu.plantAdmin" description="Plant Admin Menu" roles="ROLE_PLANT_ADMIN" width="120" page="/editPlantProfile.html">
         	<Item name="PlantMenu" title="menu.plant" description="Plant Menu" page="/editPlantProfile.html" roles="ROLE_PLANT_ADMIN"/>
-            <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>
-            <Item name="ViewVendor" title="menu.admin.vendors" page="/admin/users.html?roleType=ROLE_VENDOR"/>
+            <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>            
             <Item name="InboundLogsMenu" title="menu.admin.inboundLogs" page="/inboundLogs.html"/>
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">

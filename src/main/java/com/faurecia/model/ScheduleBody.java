@@ -13,6 +13,7 @@ public class ScheduleBody {
 	private Date createDate;
 	private Integer releaseNo;
 	private List<BigDecimal> qtyList;
+	private List<BigDecimal> deliverQtyList;
 	public ScheduleBody() {
 		this.qtyList = new ArrayList<BigDecimal>();
 	}
@@ -57,5 +58,17 @@ public class ScheduleBody {
 			qtyList = new ArrayList<BigDecimal>();
 		}
 		qtyList.add(qty);
+	}
+	public List<BigDecimal> getDeliverQtyList() {
+		return deliverQtyList;
+	}
+	public void setDeliverQtyList(List<BigDecimal> deliverQtyList) {
+		this.deliverQtyList = deliverQtyList;
+	}
+	public void addDeliverQty(BigDecimal deliverQty) {
+		if (deliverQtyList == null) {
+			deliverQtyList = new ArrayList<BigDecimal>();
+		}
+		deliverQtyList.add(deliverQty);
 	}
 }

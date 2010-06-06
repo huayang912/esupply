@@ -88,9 +88,7 @@ public class UserAction extends BaseAction implements Preparable {
 	}
 
 	public List<Supplier> getSuppliers() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		return this.supplierManager.getSuppliersByPlant(user.getUserPlant());
+		return this.supplierManager.getAll();
 	}
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
@@ -121,10 +119,10 @@ public class UserAction extends BaseAction implements Preparable {
 		saveMessage(getText("user.deleted", args));
 
 		if (Constants.ADMIN_ROLE.equals(roleType)
-				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
-			return "adminSuccess";
-		} else if (Constants.PLANT_USER_ROLE.equals(roleType)
+				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)
 				|| Constants.VENDOR_ROLE.equals(roleType)) {
+			return "adminSuccess";
+		} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 			return "userSuccess";
 		} else {
 			log.warn("Trying to back to user list with role not specified.");
@@ -217,10 +215,10 @@ public class UserAction extends BaseAction implements Preparable {
 		}
 		
 		if (Constants.ADMIN_ROLE.equals(roleType)
-				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
-			return "adminCancel";
-		} else if (Constants.PLANT_USER_ROLE.equals(roleType)
+				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)
 				|| Constants.VENDOR_ROLE.equals(roleType)) {
+			return "adminCancel";
+		} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 			return "userCancel";
 		} else {
 			log.warn("Trying to back to user list with role not specified.");
@@ -297,10 +295,10 @@ public class UserAction extends BaseAction implements Preparable {
 				}
 				
 				if (Constants.ADMIN_ROLE.equals(roleType)
-						|| Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
-					return "adminSuccess";
-				} else if (Constants.PLANT_USER_ROLE.equals(roleType)
+						|| Constants.PLANT_ADMIN_ROLE.equals(roleType)
 						|| Constants.VENDOR_ROLE.equals(roleType)) {
+					return "adminSuccess";
+				} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 					return "userSuccess";
 				} else {
 					log.warn("Trying to back to user list with role not specified.");
@@ -335,10 +333,8 @@ public class UserAction extends BaseAction implements Preparable {
 			Role role = this.roleManager.getRole(Constants.PLANT_USER_ROLE);
 			users = userManager.getPlantUsers(user.getUserPlant(), role);
 		} else if (Constants.VENDOR_ROLE.equals(roleType)) {
-			String userCode = this.getRequest().getRemoteUser();
-			User user = this.userManager.getUserByUsername(userCode);
 			Role role = this.roleManager.getRole(Constants.VENDOR_ROLE);
-			users = userManager.getSuppliers(user.getUserPlant(), role);
+			users = userManager.getUsersByRole(role);
 		} else {
 			
 			log.warn("Trying to list user with role not specified.");

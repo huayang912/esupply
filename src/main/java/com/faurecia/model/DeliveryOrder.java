@@ -49,6 +49,7 @@ public class DeliveryOrder extends BaseObject {
 	private Date endDate;
 	private Boolean isExport;
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
+	private Boolean allowOverQty;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -323,6 +324,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setCreateDateTo(Date createDateTo) {
 		this.createDateTo = createDateTo;
+	}
+	
+	@Transient
+	public Boolean getAllowOverQty() {
+		return allowOverQty;
+	}
+
+	public void setAllowOverQty(Boolean allowOverQty) {
+		this.allowOverQty = allowOverQty;
 	}
 
 	/**

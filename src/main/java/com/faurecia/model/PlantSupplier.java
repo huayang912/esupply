@@ -46,6 +46,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	private String supplierPhone;
 	private String supplierFax;
 	private String doNoPrefix;
+	private PlantScheduleGroup plantScheduleGroup;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -143,6 +144,16 @@ public class PlantSupplier extends BaseObject implements Serializable {
 
 	public void setDoNoPrefix(String doNoPrefix) {
 		this.doNoPrefix = doNoPrefix;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "plant_schedule_group_id", nullable = true)
+	public PlantScheduleGroup getPlantScheduleGroup() {
+		return plantScheduleGroup;
+	}
+
+	public void setPlantScheduleGroup(PlantScheduleGroup plantScheduleGroup) {
+		this.plantScheduleGroup = plantScheduleGroup;
 	}
 
 	/**

@@ -288,10 +288,7 @@
 				<param name="actionName">editPurchaseOrder</param>
 				<param name="poNo">${poNo}</param>
 			</result>
-			<result name="doInput" type="redirect-action">
-				<param name="actionName">editPurchaseOrder</param>
-				<param name="doNo">${doNo}</param>
-			</result>
+			<result name="doInput">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp</result>			
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
 			</result>
 			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp

@@ -16,7 +16,7 @@ public interface DeliveryOrderManager extends GenericManager<DeliveryOrder, Stri
 
 	DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException, InvocationTargetException;
 	
-	DeliveryOrder saveDeliveryOrder(DeliveryOrder deliveryOrder) throws IllegalAccessException, InvocationTargetException ;
+	DeliveryOrder createScheduleDeliveryOrder(DeliveryOrder deliveryOrder);	
 	
 	List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant);
 

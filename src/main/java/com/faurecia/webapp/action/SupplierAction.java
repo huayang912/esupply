@@ -9,9 +9,11 @@ import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.Constants;
 import com.faurecia.model.Plant;
+import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
 
 public class SupplierAction extends BaseAction {
@@ -24,6 +26,7 @@ public class SupplierAction extends BaseAction {
 	 */
 	private GenericManager<Plant, String> plantManager;
 	private PlantSupplierManager plantSupplierManager;
+	private PlantScheduleGroupManager plantScheduleGroupManager;
 	private List<PlantSupplier> plantSuppliers;
 	private PlantSupplier plantSupplier;
 	private int id;
@@ -31,6 +34,10 @@ public class SupplierAction extends BaseAction {
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
+		this.plantScheduleGroupManager = plantScheduleGroupManager;
 	}
 
 	public List<PlantSupplier> getPlantSuppliers() {
@@ -47,6 +54,12 @@ public class SupplierAction extends BaseAction {
 
 	public void setPlantSupplier(PlantSupplier plantSupplier) {
 		this.plantSupplier = plantSupplier;
+	}
+
+	public List<PlantScheduleGroup> getPlantScheduleGroupList() {
+		HttpServletRequest request = this.getRequest();
+		User user = userManager.getUserByUsername(request.getRemoteUser());
+		return plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(user.getUserPlant().getCode());
 	}
 
 	public int getId() {
@@ -98,7 +111,7 @@ public class SupplierAction extends BaseAction {
 		if (!"list".equals(from)) {
 			return "mainMenu";
 		}
-		
+
 		return CANCEL;
 	}
 
@@ -112,12 +125,12 @@ public class SupplierAction extends BaseAction {
 	public String edit() throws Exception {
 		HttpServletRequest request = getRequest();
 		boolean editProfile = (request.getRequestURI().indexOf("editSupplierProfile") > -1);
-		
+
 		if (this.id != 0) {
 			plantSupplier = this.plantSupplierManager.get(id);
 		} else if (editProfile) {
 			User user = userManager.getUserByUsername(request.getRemoteUser());
-			Plant plant = this.plantManager.get((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
+			Plant plant = this.plantManager.get((String) this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
 			this.plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());
 		} else {
 			plantSupplier = new PlantSupplier();

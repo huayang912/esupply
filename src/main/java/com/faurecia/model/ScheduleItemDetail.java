@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -32,6 +33,7 @@ public class ScheduleItemDetail extends BaseObject {
 	private Date dateFrom;
 	private Date dateTo;
 	private BigDecimal releaseQty;
+	private BigDecimal deliverQty;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -96,6 +98,21 @@ public class ScheduleItemDetail extends BaseObject {
 
 	public void setReleaseQty(BigDecimal releaseQty) {
 		this.releaseQty = releaseQty;
+	}
+
+	@Column(name="deliver_qty", nullable = false, precision = 9, scale = 2)
+	public BigDecimal getDeliverQty() {
+		return deliverQty;
+	}
+
+	public void setDeliverQty(BigDecimal deliverQty) {
+		this.deliverQty = deliverQty;
+	}
+	
+	@Transient
+	public BigDecimal getRemainQty() {
+		return releaseQty.subtract(deliverQty).compareTo(BigDecimal.ZERO) > 0 ?
+			releaseQty.subtract(deliverQty) : BigDecimal.ZERO;
 	}
 
 	/**

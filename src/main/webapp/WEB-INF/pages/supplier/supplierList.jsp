@@ -25,7 +25,7 @@
 	requestURI="" defaultsort="1" id="plantSuppliers" pagesize="25"
 	class="table" export="true">
 	<display:column property="supplier.code" sortable="true"
-		url="/editSupplier.html" paramId="id" paramProperty="id"
+		url="/editSupplier.html?from=list" paramId="id" paramProperty="id"
 		titleKey="plantSupplier.supplierCode" />
 	<display:column property="supplierName" sortable="true"
 		titleKey="plantSupplier.supplierName" />

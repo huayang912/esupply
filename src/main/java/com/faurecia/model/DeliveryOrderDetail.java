@@ -38,6 +38,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String referenceOrderNo;
 	private String referenceSequence;
 	private BigDecimal currentQty;
+	private Integer scheduleItemDetailId;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -154,7 +155,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	public void setReferenceSequence(String referenceSequence) {
 		this.referenceSequence = referenceSequence;
 	}
-	
+
 	@Transient
 	public BigDecimal getCurrentQty() {
 		return currentQty;
@@ -164,6 +165,15 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.currentQty = currentQty;
 	}
 	
+	@Transient
+	public Integer getScheduleItemDetailId() {
+		return scheduleItemDetailId;
+	}
+
+	public void setScheduleItemDetailId(Integer scheduleItemDetailId) {
+		this.scheduleItemDetailId = scheduleItemDetailId;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

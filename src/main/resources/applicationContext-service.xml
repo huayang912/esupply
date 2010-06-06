@@ -202,6 +202,15 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="plantScheduleGroupManager" class="com.faurecia.service.impl.PlantScheduleGroupManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PlantScheduleGroup" />
+			</bean>
+		</constructor-arg>
+	</bean>
 
 	<bean id="inboundLogManager" class="com.faurecia.service.impl.InboundLogManagerImpl">
 		<constructor-arg>
@@ -246,6 +255,7 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
@@ -257,6 +267,15 @@
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
 				autowire="byType">
 				<constructor-arg value="com.faurecia.model.ScheduleItem" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="scheduleItemDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.ScheduleItemDetail" />
 			</bean>
 		</constructor-arg>
 	</bean>
@@ -279,6 +298,7 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
@@ -297,6 +317,7 @@
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="itemManager" ref="itemManager" />
+		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager"/>
 	</bean>
 
 	<bean id="receiptManager" class="com.faurecia.service.impl.ReceiptManagerImpl">
@@ -313,6 +334,7 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
