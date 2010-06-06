@@ -181,10 +181,13 @@ public class XlsExport {
 			cell = this.row.createCell((short) CellIndex);
 		cell.setCellType(HSSFCell.CELL_TYPE_STRING);
 		font = workbook.createFont();
-		font.setFontHeightInPoints((short) 8);
+		font.setFontHeightInPoints((short) 14);
 		font.setFontName("ËÎÌו");
 		style = workbook.createCellStyle();
 		style.setFont(font);
+		style.setWrapText(true);
+		style.setAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
 		cell.setCellStyle(style);
 		cell.setEncoding(XLS_ENCODING);
 		cell.setCellValue(value);
@@ -198,8 +201,8 @@ public class XlsExport {
 		if (cell == null)
 			cell = this.row.createCell((short) CellIndex);
 		cell.setCellType(HSSFCell.CELL_TYPE_NUMERIC);
-		font.setFontHeightInPoints((short) 8);
-		font.setFontName("ËÎÌו");
+		font.setFontHeightInPoints((short) 14);
+		font.setFontName("Arial");
 		style.setFont(font);
 		cell.setCellStyle(style);
 		cell.setEncoding(XLS_ENCODING);
