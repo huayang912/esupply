@@ -32,8 +32,8 @@ public class PurchaseOrderAction extends BaseAction {
 	private PurchaseOrder purchaseOrder;
 	private String poNo;	
 
-	public PurchaseOrderManager getPurchaseOrderManager() {
-		return purchaseOrderManager;
+	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
+		this.purchaseOrderManager = purchaseOrderManager;
 	}
 	
 	public PaginatedListUtil<PurchaseOrder> getPaginatedList() {
@@ -133,8 +133,8 @@ public class PurchaseOrderAction extends BaseAction {
 			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
 		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
-			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
+			selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
+			selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
@@ -174,7 +174,6 @@ public class PurchaseOrderAction extends BaseAction {
 		}
 
 		paginatedList.setList(this.purchaseOrderManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
-		this.purchaseOrderManager.findByCriteria(selectCountCriteria);
 		paginatedList.setFullListSize(Integer.parseInt(this.purchaseOrderManager.findByCriteria(selectCountCriteria).get(0).toString()));			
 
 		return SUCCESS;

@@ -22,7 +22,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Entity
 @Table(name = "plant_supplier", uniqueConstraints = { @UniqueConstraint(columnNames = {
 		"supplier_code", "plant_code" }) })
-@NamedQueries( { @NamedQuery(name = "findPlantSupplierByPlantAndSupplier", query = " select ps from PlantSupplier ps where ps.plant = :plant and ps.supplier = :supplier") })
+@NamedQueries( { @NamedQuery(name = "findPlantSupplierByPlantAndSupplier", 
+		query = " select ps from PlantSupplier ps where ps.plant = :plant and ps.supplier = :supplier") ,
+        
+	    @NamedQuery(
+	        name = "findPlantSupplierBySupplierCode",
+	        query = " select ps from PlantSupplier ps inner join ps.supplier s where s.code = :supplierCode"
+	        )})
 public class PlantSupplier extends BaseObject implements Serializable {
 
 	/**

@@ -11,6 +11,12 @@
         <property name="authorizedRoles" value="ROLE_PLANT_ADMIN"/>
     </bean>
     
+    <bean id="mainAction" class="com.faurecia.webapp.action.MainAction" scope="prototype">
+        <property name="plantSupplierManager" ref="plantSupplierManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+    </bean>
+    
     <bean id="signupAction" class="com.faurecia.webapp.action.SignupAction" scope="prototype">
         <property name="userManager" ref="userManager"/>
         <property name="roleManager" ref="roleManager"/>
@@ -33,27 +39,58 @@
         <property name="userManager" ref="userManager"/>
         <property name="mailEngine" ref="mailEngine"/>
         <property name="mailMessage" ref="mailMessage"/>
-    </bean>   
+    </bean>  
     
-    <bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction" scope="prototype">
-        <property name="purchaseOrderManager" ref="purchaseOrderManager"/>
+    <bean id="plantAction" class="com.faurecia.webapp.action.PlantAction" scope="prototype">
+        <property name="plantManager" ref="plantManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
     </bean> 
     
-    <bean id="scheduleAction" class="com.faurecia.webapp.action.ScheduleAction" scope="prototype">
-        <property name="supplierManager" ref="supplierManager"/>
-    </bean> 
-    
-    <bean id="itemAction" class="com.faurecia.webapp.action.ItemAction" scope="prototype">
+     <bean id="itemAction" class="com.faurecia.webapp.action.ItemAction" scope="prototype">
         <property name="itemManager" ref="itemManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
     </bean> 
     
     <bean id="supplierAction" class="com.faurecia.webapp.action.SupplierAction" scope="prototype">
+        <property name="plantManager" ref="plantManager"/>
         <property name="plantSupplierManager" ref="plantSupplierManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+    </bean> 
+    
+    <bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction" scope="prototype">
+        <property name="purchaseOrderManager" ref="purchaseOrderManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+    </bean> 
+    
+     <bean id="scheduleAction" class="com.faurecia.webapp.action.ScheduleAction" scope="prototype">
+        <property name="supplierManager" ref="supplierManager"/>
+        <property name="scheduleManager" ref="scheduleManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
     </bean> 
     
     <bean id="deliveryOrderAction" class="com.faurecia.webapp.action.DeliveryOrderAction" scope="prototype">
         <property name="deliveryOrderManager" ref="deliveryOrderManager"/>
         <property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager"/> 
         <property name="scheduleManager" ref="scheduleManager"/>   
+        <property name="plantSupplierManager" ref="plantSupplierManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
     </bean> 
+    
+    <bean id="receiptAction" class="com.faurecia.webapp.action.ReceiptAction" scope="prototype">
+        <property name="receiptManager" ref="receiptManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+    </bean>
+    
+    <bean id="inboundLogAction" class="com.faurecia.webapp.action.InboundLogAction" scope="prototype">
+        <property name="inboundLogManager" ref="inboundLogManager"/>
+        <property name="userManager" ref="userManager"/>
+        <property name="roleManager" ref="roleManager"/>
+    </bean>
 </beans>

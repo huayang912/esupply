@@ -247,8 +247,7 @@ public class UserAction extends BaseAction implements Preparable {
 			user.addRole(roleManager.getRole(roleType));
 			
 			//工厂管理员维护工厂用户和供应商时，默认填写新增用户的工厂属性
-			if (Constants.PLANT_USER_ROLE.equals(roleType) ||
-					Constants.VENDOR_ROLE.equals(roleType)) {
+			if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 				String userCode = this.getRequest().getRemoteUser();
 				User plantAdmin = this.userManager.getUserByUsername(userCode);
 				user.setUserPlant(plantAdmin.getUserPlant());

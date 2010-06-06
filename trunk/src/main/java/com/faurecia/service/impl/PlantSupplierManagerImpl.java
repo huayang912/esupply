@@ -29,4 +29,10 @@ public class PlantSupplierManagerImpl extends GenericManagerImpl<PlantSupplier, 
 		
 		return null;
 	}
+	
+	public List<PlantSupplier> getPlantSupplierBySupplierCode(String supplierCode) {
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+    	queryParams.put("supplierCode", supplierCode);
+		return this.genericDao.findByNamedQuery("findPlantSupplierBySupplierCode", queryParams);
+	}
 }

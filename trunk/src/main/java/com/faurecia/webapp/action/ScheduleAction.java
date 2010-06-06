@@ -30,9 +30,9 @@ public class ScheduleAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 5754208797077346146L;
 	private ScheduleManager scheduleManager;
+	private SupplierManager supplierManager;
 	private Schedule schedule;
 	private ScheduleView scheduleView;
-	private SupplierManager supplierManager;
 	private boolean isPlantUser;
 
 	public ScheduleManager getScheduleManager() {
@@ -215,13 +215,13 @@ public class ScheduleAction extends BaseAction {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
 				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), new Date());
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), user.getUserSupplier().getCode(), new Date());
+				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), new Date());
 			}
 		} else {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
 				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), schedule.getCreateDate());
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), user.getUserSupplier().getCode(), schedule.getCreateDate());
+				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), schedule.getCreateDate());
 			}
 		}
 

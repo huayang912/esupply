@@ -53,7 +53,7 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 	private RoleManager roleManager;
 	private NumberControlManager numberControlManager;
 	private Unmarshaller unmarshaller;
-	
+
 	protected MailEngine mailEngine;
 	protected SimpleMailMessage mailMessage;
 	protected String errorLogTemplateName;
@@ -64,7 +64,7 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.mbgmcr");
 		unmarshaller = jc.createUnmarshaller();
 	}
-	
+
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
 	}
@@ -80,7 +80,7 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 	public void setItemManager(ItemManager itemManager) {
 		this.itemManager = itemManager;
 	}
-	
+
 	public void setUserManager(UserManager userManager) {
 		this.userManager = userManager;
 	}
@@ -108,12 +108,12 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 	public void setSupplierCreatedTemplateName(String supplierCreatedTemplateName) {
 		this.supplierCreatedTemplateName = supplierCreatedTemplateName;
 	}
-	
+
 	public Receipt get(String receiptNo, boolean includeDetail) {
 		Receipt receipt = this.genericDao.get(receiptNo);
 
 		if (includeDetail && receipt.getReceiptDetailList() != null && receipt.getReceiptDetailList().size() > 0) {
-		
+
 		}
 
 		return receipt;
@@ -141,11 +141,11 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 			return receipt;
 
 		} catch (JAXBException jaxbException) {
-			log.error("Error occur when unmarshal ORDERS.", jaxbException);
+			log.error("Error occur when unmarshal MBGMCR.", jaxbException);
 			inboundLog.setInboundResult("fail");
 			inboundLog.setMemo(jaxbException.getMessage());
 		} catch (DataConvertException dataConvertException) {
-			log.error("Error occur when convert ORDERS to PO.", dataConvertException);
+			log.error("Error occur when convert MBGMCR to PO.", dataConvertException);
 			inboundLog.setInboundResult("fail");
 
 			Receipt receipt = (Receipt) dataConvertException.getObject();
@@ -170,12 +170,12 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 	private Receipt MBGMCR02ToReceipt(final MBGMCR02 mbgmcr) throws DataConvertException {
 		Receipt receipt = new Receipt();
 
-		try {			
+		try {
 			Plant plant = null;
 			Supplier supplier = null;
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
-			receipt.setReceiptNo(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getREFDOCNO()); // ReceiptNo
+			receipt.setReceiptNo(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getREFDOCNOLONG()); // ReceiptNo
 			receipt.setPostingDate(dateFormat.parse(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getPSTNGDATE()));
 
 			List<MBGMCR02E1BP2017GMITEMCREATE> E1BP2017GMITEMCREATEList = mbgmcr.getIDOC().getE1BP2017GMITEMCREATE();
@@ -184,13 +184,13 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 				MBGMCR02E1BP2017GMITEMCREATE E1BP2017GMITEMCREATE = E1BP2017GMITEMCREATEList.get(i);
 				ReceiptDetail receiptDetail = new ReceiptDetail();
 				receiptDetail.setReceipt(receipt);
-				
+
 				if (i == 0) {
 					String plantCode = E1BP2017GMITEMCREATE.getPLANT();
 					plant = this.plantManager.get(plantCode); // plant
-					
-					String supplierCode = E1BP2017GMITEMCREATE.getVENDOR();			
-					
+
+					String supplierCode = E1BP2017GMITEMCREATE.getVENDOR();
+
 					try {
 						supplier = this.supplierManager.get(supplierCode); // supplier
 					} catch (ObjectRetrievalFailureException ex) {
@@ -201,27 +201,11 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 						supplier.setName(supplierCode);
 
 						supplier = this.supplierManager.save(supplier);
-					}
-					
-					PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, supplier);
-					
-					if (plantSupplier == null) {
-						log.info("The relationship between Plant: " + plant.getCode() + " and Supplier: " + supplier.getCode()
-								+ " not found, try to create a new one.");
-
-						plantSupplier = new PlantSupplier();
-						plantSupplier.setSupplierName(supplierCode);
-						plantSupplier.setPlant(plant);
-						plantSupplier.setSupplier(supplier);
-						plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
-
-						plantSupplier = this.plantSupplierManager.save(plantSupplier);
-
+						
+						log.info("Creating supplier user account.");
 						// 生成供应商帐号
 						User supplierUser = new User();
-						supplierUser.setUsername(String.valueOf(plantSupplier.getId() + 10000)); // 使用plantSupplier.id
-						// +
-						// 100000作为供应商用户的名称
+						supplierUser.setUsername(supplierCode); // 使用供应商编码作为用户名称
 						supplierUser.setEnabled(true);
 						supplierUser.setAccountExpired(false);
 						supplierUser.setAccountLocked(false);
@@ -231,7 +215,7 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 						supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
 						supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
 						supplierUser.setUserSupplier(supplier);
-						supplierUser.setUserPlant(plant);
+						//supplierUser.setUserPlant(plant);
 						Set<Role> roles = new HashSet<Role>();
 						roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
 						supplierUser.setRoles(roles);
@@ -242,28 +226,43 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 							log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
 							mailMessage.setTo(plant.getSupplierNotifyEmail());
 							Map<String, Object> model = new HashMap<String, Object>();
-							model.put("plantSupplier", plantSupplier);
+							model.put("supplier", supplier);
 							model.put("user", supplierUser);
-							mailMessage.setSubject("Supplier " + plantSupplier.getSupplier().getCode() + " Created");
+							mailMessage.setSubject("Supplier " + supplier.getCode() + " Created");
 							mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
 							log.info("Send supplier created email successful.");
-						} catch (MailException ex) {
-							log.error("Error when send supplier create mail.", ex);
+						} catch (MailException mailEx) {
+							log.error("Error when send supplier create mail.", mailEx);
 						}
+					}
+
+					PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, supplier);
+
+					if (plantSupplier == null) {
+						log.info("The relationship between Plant: " + plant.getCode() + " and Supplier: " + supplier.getCode()
+								+ " not found, try to create a new one.");
+
+						plantSupplier = new PlantSupplier();
+						plantSupplier.setSupplierName(supplierCode);
+						plantSupplier.setPlant(plant);
+						plantSupplier.setSupplier(supplier);
+						plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
+
+						plantSupplier = this.plantSupplierManager.save(plantSupplier);					
 					}
 
 					receipt.setPlantSupplier(plantSupplier);
 				}
-				
+
 				Item item = null;
-				
+
 				String itemCode = E1BP2017GMITEMCREATE.getMATERIAL();
 				try {
 					// 零件号如果是全数字，则要把前置0去掉
 					itemCode = Long.toString((Long.parseLong(itemCode)));
 				} catch (NumberFormatException ex) {
 				}
-				
+
 				item = this.itemManager.getItemByPlantAndItem(plant, itemCode);
 
 				if (item == null) {
@@ -277,14 +276,14 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 
 					item = this.itemManager.save(item);
 				}
-				
+
 				receiptDetail.setItem(item);
 				receiptDetail.setUom(E1BP2017GMITEMCREATE.getENTRYUOM());
-				receiptDetail.setQty(new BigDecimal(E1BP2017GMITEMCREATE.getENTRYQNT()));
+				receiptDetail.setQty(new BigDecimal(E1BP2017GMITEMCREATE.getENTRYQNT().trim()));
 				receiptDetail.setReferenceOrderNo(E1BP2017GMITEMCREATE.getPONUMBER());
 				receiptDetail.setReferenceSequence(E1BP2017GMITEMCREATE.getPOITEM());
 				receiptDetail.setPlusMinus(E1BP2017GMITEMCREATE.getMVTIND());
-				
+
 				receipt.addReceiptDetail(receiptDetail);
 			}
 		} catch (Exception ex) {

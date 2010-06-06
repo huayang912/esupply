@@ -90,4 +90,6 @@ public class Constants {
     public static final String CSS_THEME = "csstheme";
     
     public static final String DO_NO_PREFIX = "doNoPrefix";
+    
+    public static final String SUPPLIER_PLANT_CODE = "supplierPlantCode";
 }

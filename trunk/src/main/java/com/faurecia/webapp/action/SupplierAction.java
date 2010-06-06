@@ -7,8 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.faurecia.Constants;
+import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.User;
+import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantSupplierManager;
 
 public class SupplierAction extends BaseAction {
@@ -19,11 +22,16 @@ public class SupplierAction extends BaseAction {
 	/**
 	 * 
 	 */
+	private GenericManager<Plant, String> plantManager;
 	private PlantSupplierManager plantSupplierManager;
 	private List<PlantSupplier> plantSuppliers;
 	private PlantSupplier plantSupplier;
 	private int id;
 	private boolean editProfile;
+
+	public void setPlantManager(GenericManager<Plant, String> plantManager) {
+		this.plantManager = plantManager;
+	}
 
 	public List<PlantSupplier> getPlantSuppliers() {
 		return plantSuppliers;
@@ -109,7 +117,8 @@ public class SupplierAction extends BaseAction {
 			plantSupplier = this.plantSupplierManager.get(id);
 		} else if (editProfile) {
 			User user = userManager.getUserByUsername(request.getRemoteUser());
-			this.plantSupplier = this.plantSupplierManager.getPlantSupplier(user.getUserPlant(), user.getUserSupplier());
+			Plant plant = this.plantManager.get((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
+			this.plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());
 		} else {
 			plantSupplier = new PlantSupplier();
 		}
