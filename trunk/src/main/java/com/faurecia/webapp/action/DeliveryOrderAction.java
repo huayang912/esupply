@@ -19,6 +19,7 @@ import org.hibernate.criterion.Restrictions;
 import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
+import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrderDetail;
 import com.faurecia.model.Schedule;
@@ -32,7 +33,6 @@ import com.faurecia.service.ScheduleManager;
 import com.faurecia.util.DeliveryOrderExcelReportUtil;
 import com.faurecia.util.XlsExport;
 import com.faurecia.webapp.util.PaginatedListUtil;
-import com.sun.tools.internal.ws.processor.model.Request;
 
 import freemarker.template.utility.StringUtil;
 
@@ -45,6 +45,7 @@ public class DeliveryOrderAction extends BaseAction {
 	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ScheduleManager scheduleManager;
+	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
 
 	private PaginatedListUtil<DeliveryOrder> paginatedList;
 	private int pageSize;
@@ -59,7 +60,7 @@ public class DeliveryOrderAction extends BaseAction {
 	
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	
-	private int plantSupplierId;
+	private Integer plantSupplierId;
 	private Date dateFrom;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
@@ -76,6 +77,10 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setScheduleManager(ScheduleManager scheduleManager) {
 		this.scheduleManager = scheduleManager;
+	}
+
+	public void setScheduleItemDetailManager(GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager) {
+		this.scheduleItemDetailManager = scheduleItemDetailManager;
 	}
 
 	public PaginatedListUtil<DeliveryOrder> getPaginatedList() {
@@ -150,11 +155,11 @@ public class DeliveryOrderAction extends BaseAction {
 		this.poNo = poNo;
 	}
 
-	public int getPlantSupplierId() {
+	public Integer getPlantSupplierId() {
 		return plantSupplierId;
 	}
 
-	public void setPlantSupplierId(int plantSupplierId) {
+	public void setPlantSupplierId(Integer plantSupplierId) {
 		this.plantSupplierId = plantSupplierId;
 	}
 
@@ -290,9 +295,11 @@ public class DeliveryOrderAction extends BaseAction {
 				saveMessage(getText("errors.purchaseOrder.createDo.emptyDetail"));
 				return "poInput";
 			}
-		} else if (plantSupplierId > 0) {
+		} else if (plantSupplierId != null && plantSupplierId > 0) {
 			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
 			Schedule schedule = this.scheduleManager.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode());
+			PlantScheduleGroup plantScheduleGroup = plantSupplier.getPlantScheduleGroup();
+			Boolean allowOverQty = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverQtyDeliver() : false;
 			
 			int sequence = 1;
 			for (int i = 0; i < schedule.getScheduleItemList().size(); i++) {
@@ -309,6 +316,7 @@ public class DeliveryOrderAction extends BaseAction {
 							
 							deliveryOrder.setCreateDate(new Date());
 							deliveryOrder.setIsExport(false);
+							deliveryOrder.setAllowOverQty(allowOverQty);
 						}
 						
 						DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
@@ -320,7 +328,8 @@ public class DeliveryOrderAction extends BaseAction {
 						deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode());
 						deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
 						deliveryOrderDetail.setUom(scheduleItem.getUom());
-						deliveryOrderDetail.setCurrentQty(scheduleItemDetail.getReleaseQty());
+						deliveryOrderDetail.setScheduleItemDetailId(scheduleItemDetail.getId());
+						deliveryOrderDetail.setCurrentQty(scheduleItemDetail.getRemainQty());
 						deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
 						deliveryOrderDetail.setReferenceOrderNo(schedule.getScheduleNo());
 						deliveryOrderDetail.setReferenceSequence(scheduleItem.getSequence());
@@ -335,12 +344,23 @@ public class DeliveryOrderAction extends BaseAction {
 			{
 				for (int i = 1; i < deliveryOrderDetailList.size(); i++) {
 					DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
+					ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetailId());
 					BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
-
+					BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
+					
 					if (BigDecimal.ZERO.compareTo(currentQty) < 0) {
-						if (deliveryOrderDetail.getOrderQty().compareTo(currentQty) < 0) {
+						
+						BigDecimal totalDeliverQty = currentQty;
+						if (deliverQty != null) {
+							totalDeliverQty = totalDeliverQty.add(deliverQty);
+						}
+						
+						if (deliveryOrderDetail.getOrderQty().compareTo(totalDeliverQty) < 0 && !deliveryOrder.getAllowOverQty()) {
 							List<String> args = new ArrayList<String>();
-							args.add(deliveryOrderDetail.getItemDescription());
+							args.add(deliveryOrderDetail.getItemDescription());	
+							for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
+								deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
+							}
 							saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
 							return "doInput";
 						}
@@ -352,8 +372,11 @@ public class DeliveryOrderAction extends BaseAction {
 
 			if (noneZeroDeliveryOrderDetailList.size() > 0) {
 				deliveryOrder.setDeliveryOrderDetailList(noneZeroDeliveryOrderDetailList);
-				deliveryOrder = this.deliveryOrderManager.saveDeliveryOrder(deliveryOrder);
+				deliveryOrder = this.deliveryOrderManager.createScheduleDeliveryOrder(deliveryOrder);
 			} else {
+				for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
+					deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
+				}
 				saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
 				return "doInput";
 			}

@@ -27,6 +27,7 @@ import com.faurecia.dao.GenericDao;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Item;
 import com.faurecia.model.Plant;
+import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
@@ -46,6 +47,7 @@ import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.ItemManager;
 import com.faurecia.service.MailEngine;
 import com.faurecia.service.NumberControlManager;
+import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
 import com.faurecia.service.RoleManager;
@@ -63,6 +65,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 	private UserManager userManager;
 	private RoleManager roleManager;
 	private NumberControlManager numberControlManager;
+	private PlantScheduleGroupManager plantScheduleGroupManager;
 	private Unmarshaller unmarshaller;
 
 	protected MailEngine mailEngine;
@@ -74,6 +77,10 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		super(genericDao);
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.order");
 		unmarshaller = jc.createUnmarshaller();
+	}
+
+	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
+		this.plantScheduleGroupManager = plantScheduleGroupManager;
 	}
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
@@ -297,7 +304,8 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
 				supplierUser.setConfirmPassword(supplierUser.getPassword());
 				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				//supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				supplierUser.setLastName("");
 				supplierUser.setUserSupplier(supplier);
 				// supplierUser.setUserPlant(plant);
 				Set<Role> roles = new HashSet<Role>();
@@ -336,7 +344,12 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
-
+				
+				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
+				if (defaultPlantScheduleGroup != null) {
+					plantSupplier.setPlantScheduleGroup(defaultPlantScheduleGroup);
+				}
+				
 				plantSupplier = this.plantSupplierManager.save(plantSupplier);
 			}
 

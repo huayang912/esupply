@@ -13,7 +13,9 @@
 		<c:if test="${empty deliveryOrder.doNo}">
 			<s:submit key="button.save"  />
 		</c:if>
-		<s:submit key="button.print" action="printDeliveryOrder" />
+		<c:if test="${not empty deliveryOrder.doNo}">
+			<s:submit key="button.print" action="printDeliveryOrder" />
+		</c:if>
 		<input type="button" value="<fmt:message key="button.cancel"/>"
 			onclick="window.location.href='cancelDeliveryOrder.html'" />
 	</c:set>
@@ -38,6 +40,7 @@
 				<s:hidden name="deliveryOrder.createDate" key="deliveryOrder.createDate" />
 				<s:hidden name="deliveryOrder.plantSupplier.id" key="deliveryOrder.plantSupplier.id" />
 				<s:hidden name="deliveryOrder.isExport" key="deliveryOrder.isExport" />
+				<s:hidden name="deliveryOrder.allowOverQty" key="deliveryOrder.allowOverQty"/>
 			</td>
 		</tr>
 		<tr>
@@ -102,6 +105,7 @@
 		<c:if test="${empty deliveryOrder.doNo}">
 			<display:column titleKey="deliveryOrderDetail.qty">
 				<input type="text" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].currentQty" value="${deliveryOrderDetail.currentQty}" class="text medium" />
+				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].scheduleItemDetailId" value="<c:out value="${deliveryOrderDetail.scheduleItemDetailId}"/>"/>
 				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].orderQty" value="<c:out value="${deliveryOrderDetail.orderQty}"/>"/>
 				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].item.code" value="<c:out value="${deliveryOrderDetail.item.code}"/>"/>
 				<input type="hidden" name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].sequence" value="<c:out value="${deliveryOrderDetail.sequence}"/>"/>

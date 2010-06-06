@@ -10,11 +10,11 @@
 	<c:otherwise>
 		<c:choose>
 			<c:when
-				test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN'}">
+				test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN' or roleType == 'ROLE_VENDOR'}">
 				<meta name="menu" content="AdminMenu" />
 			</c:when>
 			<c:when
-				test="${roleType == 'ROLE_PLANT_USER' or roleType == 'ROLE_VENDOR'}">
+				test="${roleType == 'ROLE_PLANT_USER'}">
 				<meta name="menu" content="PlantAdminMenu" />
 			</c:when>
 		</c:choose>

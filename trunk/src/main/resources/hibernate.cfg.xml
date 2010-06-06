@@ -4,7 +4,6 @@
 <hibernate-configuration>
 	<session-factory>
 		<property name="hibernate.show.sql">true</property>
-
 		<mapping class="com.faurecia.model.User" />
 		<mapping class="com.faurecia.model.Role" />
 		<mapping class="com.faurecia.model.NumberControl" />
@@ -24,5 +23,6 @@
 		<mapping class="com.faurecia.model.OutboundLog" />
 		<mapping class="com.faurecia.model.Receipt" />
 		<mapping class="com.faurecia.model.ReceiptDetail" />
+		<mapping class="com.faurecia.model.PlantScheduleGroup" />
 	</session-factory>
 </hibernate-configuration>

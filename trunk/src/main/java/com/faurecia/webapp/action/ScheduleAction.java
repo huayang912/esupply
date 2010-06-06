@@ -1,7 +1,6 @@
 package com.faurecia.webapp.action;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,9 +10,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.httpclient.util.DateParseException;
-import org.apache.commons.httpclient.util.DateUtil;
 
 import com.faurecia.Constants;
+import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.Schedule;
 import com.faurecia.model.ScheduleBody;
 import com.faurecia.model.ScheduleItem;
@@ -66,6 +65,11 @@ public class ScheduleAction extends BaseAction {
 	}
 
 	public ScheduleView getScheduleView() throws DateParseException {
+		PlantScheduleGroup plantScheduleGroup = schedule.getPlantSupplier().getPlantScheduleGroup();
+		boolean allowOverDateDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverDateDeliver() : false;
+		//boolean allowOverQtyDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverQtyDeliver() : false;
+		boolean allowForecastDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowForecastDeliver() : false;
+		
 		if (scheduleView == null) {
 			scheduleView = new ScheduleView();
 
@@ -125,12 +129,25 @@ public class ScheduleAction extends BaseAction {
 									head.put("dateFrom", scheduleItemDetail.getDateFrom());
 									head.put("dateTo", scheduleItemDetail.getDateTo());															
 									
-									if (dateNow.compareTo(scheduleItemDetail.getDateTo()) <= 0
-											&& scheduleItemDetail.getScheduleType().equals("Firm")) {
-										head.put("createDo", true);
+									if(allowOverDateDeliver) {
+										if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+											head.put("createDo", false);
+										}
+										else {
+											head.put("createDo", true);
+										}
 									} else {
-										head.put("createDo", false);
-									}
+										if (dateNow.compareTo(scheduleItemDetail.getDateTo()) > 0) {
+											head.put("createDo", false);
+										} else {
+											if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+												head.put("createDo", false);
+											}
+											else {
+												head.put("createDo", true);
+											}
+										}
+									}									
 									
 									if (insertPosion != -1) {
 										scheduleView.getScheduleHead().getHeadList().add(insertPosion, head);
@@ -168,6 +185,7 @@ public class ScheduleAction extends BaseAction {
 									if (scheduleType.equals(scheduleItemDetail.getScheduleType())
 											&& dateFrom.compareTo(scheduleItemDetail.getDateFrom()) == 0) {
 										scheduleBody.addQty(scheduleItemDetail.getReleaseQty());
+										scheduleBody.addDeliverQty(scheduleItemDetail.getDeliverQty());
 										findMatch = true;
 									}
 								}
@@ -175,6 +193,7 @@ public class ScheduleAction extends BaseAction {
 
 							if (!findMatch) {
 								scheduleBody.addQty(BigDecimal.ZERO);
+								scheduleBody.addDeliverQty(BigDecimal.ZERO);
 							}
 						}
 

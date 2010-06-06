@@ -27,6 +27,7 @@ import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
+import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.delvry.DELVRY03;
 import com.faurecia.model.delvry.DELVRY03E1ADRM1;
 import com.faurecia.model.delvry.DELVRY03E1EDL20;
@@ -52,6 +53,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private Marshaller marshaller;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
+	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
 
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
@@ -79,6 +81,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		this.itemManager = itemManager;
 	}
 	
+	public void setScheduleItemDetailManager(GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager) {
+		this.scheduleItemDetailManager = scheduleItemDetailManager;
+	}
+
 	public DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException,
 			InvocationTargetException {
 
@@ -123,7 +129,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return deliveryOrder;
 	}
 
-	public DeliveryOrder saveDeliveryOrder(DeliveryOrder deliveryOrder) throws IllegalAccessException, InvocationTargetException {
+	public DeliveryOrder createScheduleDeliveryOrder(DeliveryOrder deliveryOrder) {
 		
 		PlantSupplier plantSupplier = this.plantSupplierManager.get(deliveryOrder.getPlantSupplier().getId());
 		deliveryOrder.setPlantSupplier(plantSupplier);
@@ -138,6 +144,18 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
 			deliveryOrderDetail.setItem(item);
 			deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
+			
+			ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetailId());
+			
+			BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
+			if (deliverQty == null) {
+				deliverQty = deliveryOrderDetail.getCurrentQty();
+			} else {
+				deliverQty = deliverQty.add(deliveryOrderDetail.getCurrentQty());
+			}
+			scheduleItemDetail.setDeliverQty(deliverQty);
+			
+			this.scheduleItemDetailManager.save(scheduleItemDetail);
 		}
 		this.save(deliveryOrder);
 
