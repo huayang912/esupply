@@ -22,6 +22,7 @@
 		<tr>
 			<td><s:label key="deliveryOrder.doNo" cssClass="text medium" /></td>
 			<td>
+				<s:hidden name="deliveryOrder.doNo" key="deliveryOrder.doNo"/>
 				<s:hidden name="deliveryOrder.plantCode" key="deliveryOrder.plantCode"/>
 				<s:hidden name="deliveryOrder.supplierCode" key="deliveryOrder.supplierCode" /> 
 				<s:hidden name="deliveryOrder.plantName" key="deliveryOrder.plantName" />
