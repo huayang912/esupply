@@ -389,8 +389,8 @@ public class DeliveryOrderAction extends BaseAction {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 		XlsExport report = DeliveryOrderExcelReportUtil.generateReport(localAbsolutPath, deliveryOrder);
-		
-		report.exportToResponse(this.getResponse(), "deliveryOrder.xls");
+		report.exportXLS("D:/deliveryOrder.xls");
+		//report.exportToResponse(this.getResponse(), "deliveryOrder.xls");
 	 return SUCCESS;
 	}
 }
