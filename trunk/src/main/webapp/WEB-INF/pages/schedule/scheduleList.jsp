@@ -15,10 +15,10 @@
 	validate="true">
 	<c:choose>
 		<c:when test="${isPlantUser}">
-			<li style="padding: 0px">
+		<li style="padding: 0px">
 			<s:select key="schedule.supplierCode" list="%{suppliers}"
 				listKey="code" listValue="name" theme="xhtml" required="true"></s:select>
-				</li>
+		</li>
 		</c:when>
 	</c:choose>
 
