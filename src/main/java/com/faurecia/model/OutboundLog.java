@@ -36,7 +36,7 @@ public class OutboundLog extends BaseObject {
 	private String outboundResult;
 	private String memo;
 	private Date createDateFrom;
-	private Date createDateTo;
+	private Date createDateTo;	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

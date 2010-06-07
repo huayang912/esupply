@@ -95,6 +95,7 @@ public class DataOutboundJob {
 						outboundLog.setCreateUser(user);
 						outboundLog.setPlantSupplier(deliveryOrder.getPlantSupplier());
 					}
+					outboundLog.setDoNo(deliveryOrder.getDoNo());
 					outboundLog.setLastModifyDate(nowDate);
 					outboundLog.setLastModifyUser(user);
 					

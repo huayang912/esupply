@@ -118,4 +118,12 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
+	
+	<bean id="outboundLogAction" class="com.faurecia.webapp.action.OutboundLogAction"
+		scope="prototype">
+		<property name="outboundLogManager" ref="outboundLogManager" />
+		<property name="deliveryOrderManager" ref="deliveryOrderManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
 </beans>
