@@ -3,9 +3,9 @@
 /* NAV BAR AT THE TOP AND ONE COLUMN OF CONTENT */
 
     div#main {
-        width: 585px;
+        width: 80%;
         text-align: center;
-        margin-left: 150px;
+        margin-left: 200px;
         border-right: 0;
     }
         div#main h1 {
