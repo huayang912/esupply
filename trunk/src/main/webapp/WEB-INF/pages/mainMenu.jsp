@@ -18,9 +18,9 @@
 <c:if test="${selectPlant}">
 <div style="z-index: 17;position:absolute; background-color:#FFFFFF;width:600px;padding:10px">
 	<fieldset>
-		<legend>Base Info</legend>
+		<legend><fmt:message key="mainMenu.selectPlant" /></legend>
 		<s:form name="supplierPlantForm" action="setSupplierPlant" method="post">
-		<li><s:select key="supplierPlant" list="%{plantSupplierList}" listKey="plant.code" listValue="plant.name"
+		<li><s:select name="supplierPlant" key="mainMenu.plantList" list="%{plantSupplierList}" listKey="plant.code" listValue="plant.name"
 		theme="xhtml" /></li>
 		<s:submit key="button.save"/>
 		</s:form>

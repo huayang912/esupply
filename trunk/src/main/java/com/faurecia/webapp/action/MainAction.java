@@ -49,7 +49,13 @@ public class MainAction extends BaseAction {
 		if (this.getRequest().isUserInRole(Constants.VENDOR_ROLE)
 				&& this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
 			plantSupplierList = this.plantSupplierManager.getPlantSupplierBySupplierCode(this.getRequest().getRemoteUser());
-			selectPlant = true;
+			
+			if (plantSupplierList != null && plantSupplierList.size() == 1) {
+				this.getSession().setAttribute(Constants.SUPPLIER_PLANT_CODE, plantSupplierList.get(0).getPlant().getCode());
+				selectPlant = false;
+			} else {
+				selectPlant = true;
+			}
 		}
 		
 		return SUCCESS;
