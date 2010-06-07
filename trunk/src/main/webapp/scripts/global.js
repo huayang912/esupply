@@ -116,6 +116,7 @@ function selectAll(elementId) {
     			element.options[i].selected = true;
     		}
     	}
+    }
 }
 
 /* This function is used to select a checkbox by passing

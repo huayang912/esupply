@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.User;
-import com.faurecia.service.GenericManager;
+import com.faurecia.service.InboundLogManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
 public class InboundLogAction extends BaseAction {
@@ -18,18 +18,15 @@ public class InboundLogAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = -7108954954452920378L;
 
-	private GenericManager<InboundLog, Integer> inboundLogManager;
+	private InboundLogManager inboundLogManager;
 	private PaginatedListUtil<InboundLog> paginatedList;
 	private int pageSize;
 	private int page;
 	private String sort;
 	private String dir;
 	private InboundLog inboundLog;
-	
-	public GenericManager<InboundLog, Integer> getInboundLogManager() {
-		return inboundLogManager;
-	}
-	public void setInboundLogManager(GenericManager<InboundLog, Integer> inboundLogManager) {
+
+	public void setInboundLogManager(InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
 	}
 	public PaginatedListUtil<InboundLog> getPaginatedList() {
@@ -121,7 +118,6 @@ public class InboundLogAction extends BaseAction {
 		}
 
 		paginatedList.setList(this.inboundLogManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
-		this.inboundLogManager.findByCriteria(selectCountCriteria);
 		paginatedList.setFullListSize(Integer.parseInt(this.inboundLogManager.findByCriteria(selectCountCriteria).get(0).toString()));			
 
 		return SUCCESS;

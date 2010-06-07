@@ -358,6 +358,20 @@
 			<result name="input">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
 			<result name="success">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
 		</action>
+		
+		<action name="outboundLogs" class="outboundLogAction"
+			method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/outboundLog/outboundLog.jsp</result>
+			<result name="success">/WEB-INF/pages/outboundLog/outboundLog.jsp</result>
+		</action>
+		
+		<action name="exportOutboundLog" class="outboundLogAction"
+			method="export">
+			<result name="success" type="redirect-action">outboundLogs</result>
+		</action>
 	</package>
 
 	<!-- Actions in this package will be prefixed with /admin/ -->

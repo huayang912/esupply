@@ -5,9 +5,7 @@
     </Displayers>
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>
-        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>
-        <Menu name="SupplierProfileMenu" title="menu.supplierProfile" description="Supplier Profile Menu" page="/editSupplierProfile.html" roles="ROLE_VENDOR"/>
-        
+        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>              
         <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" width="120" page="/admin/admins.html?roleType=ROLE_ADMIN">
             <Item name="ViewAdmin" title="menu.admin.admins" page="/admin/admins.html?roleType=ROLE_ADMIN"/>
             <Item name="ViewPlantAdmin" title="menu.admin.plantAdmins" page="/admin/admins.html?roleType=ROLE_PLANT_ADMIN"/>
@@ -22,6 +20,7 @@
         	<Item name="PlantMenu" title="menu.plant" description="Plant Menu" page="/editPlantProfile.html" roles="ROLE_PLANT_ADMIN"/>
             <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>            
             <Item name="InboundLogsMenu" title="menu.admin.inboundLogs" page="/inboundLogs.html"/>
+            <Item name="OutboundLogsMenu" title="menu.admin.outboundLogs" page="/outboundLogs.html"/>
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
         	<!-- 
@@ -30,12 +29,22 @@
         	<Item name="SupplierMenu" title="menu.supplier" description="Supplier Menu" page="/suppliers.html" roles="ROLE_PLANT_USER"/>
         	<Item name="PlantScheudleGroupMenu" title="menu.plantScheduleGroup" description="Schedule Group Menu" page="/plantScheduleGroups.html" roles="ROLE_PLANT_USER"/>
         </Menu>
-        <Menu name="OrderMenu" title="menu.order" description="Order Menu" roles="ROLE_PLANT_USER,ROLE_VENDOR" width="120" page="/purchaseOrders.html">
-        	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
+        <Menu name="PlantOrderMenu" title="menu.order" description="Plant Order Menu" roles="ROLE_PLANT_USER" width="120" page="/purchaseOrders.html">
+        	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER"/>
+        	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_PLANT_USER"/>
+			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_PLANT_USER"/>       
+			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_PLANT_USER"/>
+		</Menu>
+		<Menu name="SupplierMenu" title="menu.supplier" description="Supplier Menu" roles="ROLE_VENDOR" width="120" page="/editSupplierProfile.html">
+			<Item name="SupplierProfileMenu" title="menu.supplierProfile" description="Supplier Profile Menu" page="/editSupplierProfile.html" roles="ROLE_VENDOR"/>
+			<Item name="SupplierItemMenu" title="menu.supplierItem" description="Supplier Item Menu" page="/supplierItems.html" roles="ROLE_VENDOR"/>
+		</Menu>
+		<Menu name="SupplierOrderMenu" title="menu.order" description="Supplier Order Menu" roles="ROLE_VENDOR" width="120" page="/purchaseOrders.html">
+        	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_VENDOR"/>
         	<Item name="ScheduleMenu" title="menu.schedule" description="Schedule Menu" page="/editScheduleProfile.html" roles="ROLE_VENDOR"/>
-        	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
-			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>       
-			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>
+        	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_VENDOR"/>
+			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_VENDOR"/>       
+			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_VENDOR"/>
 		</Menu>
         <Menu name="Logout" title="user.logout" page="/logout.jsp" roles="ROLE_ADMIN,ROLE_PLANT_ADMIN,ROLE_PLANT_USER,ROLE_VENDOR"/>        
     </Menus>
