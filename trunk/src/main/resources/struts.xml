@@ -209,6 +209,25 @@
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
+		
+		<!-- Supplier Item -->
+		<action name="supplierItems" class="supplierItemAction"
+			method="list">
+			<result>/WEB-INF/pages/supplierItem/supplierItemList.jsp</result>
+		</action>
+
+		<action name="editSupplierItem" class="supplierItemAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/supplierItem/supplierItemForm.jsp</result>
+			<result name="error">/WEB-INF/pages/supplierItem/supplierItemList.jsp</result>
+		</action>
+
+		<action name="saveSupplierItem" class="supplierItemAction"
+			method="save">
+			<result name="input">/WEB-INF/pages/supplierItem/supplierItemForm.jsp</result>
+			<result name="cancel" type="redirect-action">supplierItems</result>
+			<result name="success" type="redirect-action">supplierItems</result>
+		</action>
 
 		<!-- Supplier -->
 		<action name="suppliers" class="supplierAction"

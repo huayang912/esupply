@@ -28,6 +28,7 @@
 		paramId="id" paramProperty="id" titleKey="item.code" />
 	<display:column property="description" sortable="true"
 		titleKey="item.description" />
+	<display:column property="unitCount" sortable="true" titleKey="item.unitCount" />
 	<display:column property="uom" sortable="true" titleKey="item.uom" />
 
 	<display:setProperty name="paging.banner.item_name">

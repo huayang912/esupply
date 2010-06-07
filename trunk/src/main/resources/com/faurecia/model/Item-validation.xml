@@ -11,6 +11,14 @@
             <message key="errors.required"/>
         </field-validator>
     </field>
+    <field name="item.unitCount">
+        <field-validator type="required">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="int">
+            <message key="errors.int"/>
+        </field-validator>
+    </field>   
     <field name="item.uom">
         <field-validator type="requiredstring">
             <message key="errors.required"/>

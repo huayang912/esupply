@@ -140,7 +140,7 @@ public class InboundLog extends BaseObject {
 		this.inboundResult = inboundResult;
 	}
 
-	@Column(name="memo",nullable=true,length=255)
+	@Column(name="memo",nullable=true,length=2000)
 	public String getMemo() {
 		return memo;
 	}

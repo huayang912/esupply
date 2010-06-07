@@ -402,27 +402,30 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 									item.setPlant(plant);
 									item.setUom(E1EDP01.getMENEE());
 
-									item = this.itemManager.save(item);
-
+									item = this.itemManager.save(item);																		
 								}
 							} else if ("002".equals(E1EDP19.getQUALF())) {
 								supplierItemCode = E1EDP19.getIDTNR();
-
-								supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
-
-								if (supplierItem == null) {
-									log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
-											+ " not found, try to create a new one.");
-
-									supplierItem = new SupplierItem();
-									supplierItem.setItem(item);
-									supplierItem.setSupplier(supplier);
-									supplierItem.setSupplierItemCode(supplierItemCode);
-
-									supplierItem = this.supplierItemManager.save(supplierItem);
-								}
 							}
 						}
+					}
+					
+					supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
+					if (supplierItem == null) {
+						log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
+								+ " not found, try to create a new one.");
+
+						supplierItem = new SupplierItem();
+						supplierItem.setItem(item);
+						supplierItem.setSupplier(supplier);
+						supplierItem.setSupplierItemCode(supplierItemCode);
+
+						supplierItem = this.supplierItemManager.save(supplierItem);
+					} else if (supplierItemCode != null && (supplierItem.getSupplierItemCode() == null 
+									|| supplierItem.getSupplierItemCode().trim().length() == 0)) {
+						
+						supplierItem.setSupplierItemCode(supplierItemCode);
+						supplierItem = this.supplierItemManager.save(supplierItem);
 					}
 
 					List<ORDERS02E1EDP20> ORDERS02E1EDP20List = E1EDP01.getE1EDP20();
