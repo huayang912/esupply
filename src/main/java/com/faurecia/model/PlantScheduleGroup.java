@@ -1,5 +1,7 @@
 package com.faurecia.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,11 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "plant_schedule_group")
@@ -30,6 +33,7 @@ public class PlantScheduleGroup extends BaseObject {
 	private Boolean allowOverQtyDeliver;
 	private Boolean allowForecastDeliver;
 	private Boolean isDefault;
+	private List<LabelValue> supplierList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,6 +98,15 @@ public class PlantScheduleGroup extends BaseObject {
 
 	public void setIsDefault(Boolean isDefault) {
 		this.isDefault = isDefault;
+	}
+
+	@Transient
+	public List<LabelValue> getSupplierList() {
+		return supplierList;
+	}
+
+	public void setSupplierList(List<LabelValue> supplierList) {
+		this.supplierList = supplierList;
 	}
 
 	/**

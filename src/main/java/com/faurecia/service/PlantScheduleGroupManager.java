@@ -9,4 +9,6 @@ public interface PlantScheduleGroupManager extends GenericManager<PlantScheduleG
 	List<PlantScheduleGroup> getPlantScheduleGroupByPlantCode(String plantCode);
 	
 	PlantScheduleGroup getDefaultPlantScheduleGroupByPlantCode(String plantCode);
+	
+	void cleanPlantScheduleGroupOfRelatedPlantSupplier(PlantScheduleGroup plantScheduleGroup);
 }

@@ -20,15 +20,12 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-@Table(name = "plant_supplier", uniqueConstraints = { @UniqueConstraint(columnNames = {
-		"supplier_code", "plant_code" }) })
-@NamedQueries( { @NamedQuery(name = "findPlantSupplierByPlantAndSupplier", 
-		query = " select ps from PlantSupplier ps where ps.plant = :plant and ps.supplier = :supplier") ,
-        
-	    @NamedQuery(
-	        name = "findPlantSupplierBySupplierCode",
-	        query = " select ps from PlantSupplier ps inner join ps.supplier s where s.code = :supplierCode"
-	        )})
+@Table(name = "plant_supplier", uniqueConstraints = { @UniqueConstraint(columnNames = { "supplier_code", "plant_code" }) })
+@NamedQueries( {
+		@NamedQuery(name = "findPlantSupplierByPlantAndSupplier", query = " select ps from PlantSupplier ps where ps.plant = :plant and ps.supplier = :supplier"),
+		@NamedQuery(name = "findPlantSupplierBySupplierCode", query = " select ps from PlantSupplier ps inner join ps.supplier s where s.code = :supplierCode"),
+		@NamedQuery(name = "findPlantSupplierByPlantCode", query = " select ps from PlantSupplier ps inner join ps.plant p where p.code = :plantCode"),
+		@NamedQuery(name = "findPlantSupplierByPlantScheduleGroupId", query = " select ps from PlantSupplier ps inner join ps.plantScheduleGroup s where s.id = :plantScheduleGroupId") })
 public class PlantSupplier extends BaseObject implements Serializable {
 
 	/**
@@ -161,8 +158,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	 */
 	public int compareTo(Object object) {
 		PlantSupplier myClass = (PlantSupplier) object;
-		return new CompareToBuilder().append(this.id, myClass.id)
-				.toComparison();
+		return new CompareToBuilder().append(this.id, myClass.id).toComparison();
 	}
 
 	/**
@@ -180,8 +176,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	public int hashCode() {
-		return new HashCodeBuilder(-1510998443, -783399761).append(this.id)
-				.toHashCode();
+		return new HashCodeBuilder(-1510998443, -783399761).append(this.id).toHashCode();
 	}
 
 	/**

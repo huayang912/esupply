@@ -169,6 +169,26 @@
 			<result name="delete" type="redirect-action">admin/plants</result>
 			<result name="success" type="redirect-action">admin/plants</result>
 		</action>
+		
+		<!-- Plant Schedule Group -->
+		<action name="plantScheduleGroups" class="plantScheduleGroupAction"
+			method="list">
+			<result>/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp</result>
+		</action>
+		
+		<action name="editPlantScheduleGroup" class="plantScheduleGroupAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp</result>
+			<result name="error">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp</result>
+		</action>
+
+		<action name="savePlantScheduleGroup" class="plantScheduleGroupAction"
+			method="save">
+			<result name="input">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp</result>
+			<result name="cancel" type="redirect-action">plantScheduleGroups</result>
+			<result name="delete" type="redirect-action">plantScheduleGroups</result>
+			<result name="success" type="redirect-action">plantScheduleGroups</result>
+		</action>
 
 		<!-- Item -->
 		<action name="items" class="itemAction"
