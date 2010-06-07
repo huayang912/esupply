@@ -31,8 +31,8 @@ public class DeliveryOrderExcelReportUtil {
 
 		xls.setRowCell(1, 17, order.getDoNo());
 		xls.setRowCellStyle(1, 17, HSSFCellStyle.ALIGN_CENTER, "Arial", (short) 30);
-		xls.setBorderTop(1, 17, HSSFCellStyle.BORDER_THIN);
-		xls.setBorderBottom(1, 17, HSSFCellStyle.BORDER_THIN);
+		xls.setBorderTop(1, 17, HSSFCellStyle.BORDER_THICK);
+		xls.setBorderLeft(1, 17, HSSFCellStyle.BORDER_THICK);
 		 
 		xls.setRowCell(5, 7, order.getSupplierName());
 		xls.setRowCellStyle(5, 7, HSSFCellStyle.ALIGN_CENTER, "ËÎÌו", (short) 20);
@@ -87,8 +87,9 @@ public class DeliveryOrderExcelReportUtil {
 				xls.setRowCellStyle(20 + i, 3, HSSFCellStyle.ALIGN_CENTER, "Arial", (short)14);
 
 				xls.setRowCell(20 + i, 7, orderDetail.getItemDescription());
-				xls.setRowCellStyle(20 + i, 7, HSSFCellStyle.ALIGN_CENTER, "ËÎÌו", (short)14);
-
+				//xls.setRowCellStyle(20 + i, 7, HSSFCellStyle.ALIGN_CENTER, "ËÎÌו", (short)14);
+				
+				
 				if (orderDetail.getUnitCount() == null) {
 					orderDetail.setUnitCount(new BigDecimal(1));
 				}
