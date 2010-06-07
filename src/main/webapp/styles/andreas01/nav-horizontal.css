@@ -52,7 +52,8 @@
     }
 	.menubar ul
 	{
-		z-index:33;
+		z-index:1;
+
 	}
 /* END NAV */
 
@@ -108,11 +109,11 @@
                 ul#primary-nav li.menubar 
 				{ 
 				background: transparent url(../../images/arrow.gif) right center no-repeat; 
-			/*	z-index:10;*/
 				}
+				 
 
                 ul#primary-nav li:hover,
-                ul#primary-nav li.over { background-color: #f9f9f9; }
+                ul#primary-nav li.over { background-color: #f9f9f9; z-index:2; }
 
                 ul#primary-nav li a:hover { color: #E2144A; }
 
