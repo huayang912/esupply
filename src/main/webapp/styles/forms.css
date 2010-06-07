@@ -431,9 +431,17 @@ table.pickList td button {
 }
 
 table.pickList td select {
-	width: 130px;
+	width: 330px;
+	height:300px
 }
-
+.moveOptions
+	{
+	width: 80px;
+	}
+.moveOptions button
+	{
+	width: 80px;
+	}
 /* END FORM ELEMENTS */ /* Specific forms */
 #loginForm fieldset {
 	width: 300px;

@@ -18,8 +18,8 @@
 		type="hidden" name="plantScheduleGroup.plant.code"
 		value="${plantScheduleGroup.plant.code}" /></li>
 	<c:set var="buttons">
-		<s:submit cssClass="button" method="save" key="button.save" onclick="onFormSubmit()"
-			theme="simple" />
+		<s:submit cssClass="button" method="save" key="button.save"
+			onclick="onFormSubmit()" theme="simple" />
 		<c:if test="${not empty plantScheduleGroup.id}">
 			<s:submit cssClass="button" method="delete" key="button.delete"
 				onclick="return confirmDelete('plantScheduleGroup')" theme="simple" />
@@ -28,34 +28,30 @@
 			theme="simple" />
 	</c:set>
 
-
-	<li>
-	<div>
-	<div class="left"><s:textfield key="plantScheduleGroup.name"
-		theme="xhtml" required="true" cssClass="text medium" /></div>
-	<div></div>
-	</div>
+	<li style="padding: 0px">
+	<table style="margin: 0px; width: 100%;">
+		<tr>
+			<td colspan="2"><s:textfield key="plantScheduleGroup.name"
+				theme="xhtml" required="true" cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:checkbox key="plantScheduleGroup.isDefault" /></td>
+			<td><s:checkbox key="plantScheduleGroup.allowOverDateDeliver" />
+			</td>
+		</tr>
+		<tr>
+			<td><s:checkbox key="plantScheduleGroup.allowOverQtyDeliver" /></td>
+			<td><s:checkbox key="plantScheduleGroup.allowForecastDeliver" />
+			</td>
+		</tr>
+	</table>
 	</li>
 
-	<li>
-	<div>
-	<div class="left"><s:checkbox key="plantScheduleGroup.isDefault" /></div>
-	<div><s:checkbox key="plantScheduleGroup.allowOverDateDeliver" /></div>
-	</div>
-	</li>
-
-	<li>
-	<div>
-	<div class="left"><s:checkbox
-		key="plantScheduleGroup.allowOverQtyDeliver" /></div>
-	<div><s:checkbox key="plantScheduleGroup.allowForecastDeliver" /></div>
-	</div>
-	</li>
 
 	<li>
 	<fieldset><legend><fmt:message
 		key="plantScheduleGroup.assignSuppliers" /></legend>
-	<table class="pickList">
+	<table class="pickList" style="width:100%">
 		<tr>
 			<th class="pickLabel"><label class="required"><fmt:message
 				key="plantScheduleGroup.availableSuppliers" /></label></th>
@@ -64,7 +60,8 @@
 				key="plantScheduleGroup.suppliers" /></label></th>
 		</tr>
 		<c:set var="leftList" value="${availableSuppliers}" scope="request" />
-		<s:set name="rightList" value="plantScheduleGroup.supplierList" scope="request" />
+		<s:set name="rightList" value="plantScheduleGroup.supplierList"
+			scope="request" />
 		<c:import url="/WEB-INF/pages/pickList.jsp">
 			<c:param name="listCount" value="1" />
 			<c:param name="leftId" value="availableSuppliers" />
