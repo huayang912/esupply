@@ -10,13 +10,13 @@ Version: 1.0
         margin: 0 auto;
         padding: 0;
         font: 76% Verdana, Tahoma, Arial, sans-serif;
-        background: #f4f4f4 url(images/bg.gif) top center repeat-y;
+        background: #ffffff  url(images/background.gif) top center repeat-x;
     }
     div#page {
         background: #ffffff;
         color: #303030;
         margin: 0 auto;
-        width: 760px;
+        width: 98%;
     }
 
     div#content {
@@ -28,29 +28,30 @@ Version: 1.0
     }
     /* HEADER */
         div#header {
-            color: black;
+           /* color: black;
             clear: both;
             margin: 10px 0 10px 0;
             padding: 0;
-            height: 225px;
+            height: 225px;*/
             width: 100%;
-            background: #fff url(images/front.jpg) bottom center no-repeat;
+            /*background: #fff url(images/front.jpg) bottom center no-repeat;*/
         }
             div#switchLocale {
                 position: absolute;
                 right: 10px;
+				padding: 15px;
             }
             div#header h1 {
                margin-left: -10px;
             }
             div#header p {
-                float: right;
+                /*float: right;
                 margin: -40px 10px 0 0;
                 color: #a0a0a0;
                 text-align: right;
                 font-size: 0.8em;
                 line-height: 1.2em;
-                font-weight: bold;
+                font-weight: bold;*/
             }
             div>div#header p {
                 margin-right: 30px;
@@ -59,9 +60,21 @@ Version: 1.0
             float: left;
             width: 100%;
             margin: 0;
-            padding: 10px 0 10px 20px;
+			padding-top:5px;
+			border-bottom: 4px solid #f0f0f0;
+            /*padding: 10px 0 10px 20px;*/
             text-align: left;
+			background: url(images/background.gif) top center repeat-x;
         }
+        div#branding ul {
+			list-style: none outside none;
+		}
+
+		div#branding ul li {
+			float: left;
+			padding: 10px 10px 0;
+			list-style: none outside none;
+		}
     /* END HEADER */
     
     
@@ -80,8 +93,7 @@ Version: 1.0
             }
         /* MAIN */
             div#main {
-                border-left: 1px solid #f0f0f0;
-                border-right: 1px solid #f0f0f0;
+
                 padding: 0px 10px;
             }
                 div#main h1 {
@@ -116,7 +128,7 @@ Version: 1.0
             margin: 0 auto;
             padding: 10px 0 20px 0;
             border-top: 4px solid #f0f0f0;
-            width: 760px;
+            width: 100%;
             text-align: center;
             background-color: white;
             color: #808080;

@@ -78,6 +78,13 @@
         padding: 0;
         color: black;
     }
+	div#branding h1 {
+	font-size: 2.0em;
+	letter-spacing: -1px;
+	margin: -8px -10px 0 0;
+	line-height: 1.5em;
+	color: #3e9ade;
+    }
 /* END HEADINGS */
 
 /* TEXT */
@@ -121,7 +128,8 @@
         }
     ul li {
         margin: 0 0 0.25em 30px;
-        padding: 0;
+        padding: 0;		
+		margin:0px;
     }
     ol {
         font-size: 1.0em;
