@@ -186,8 +186,8 @@ public class XlsExport {
 		style = workbook.createCellStyle();
 		style.setFont(font);
 		style.setWrapText(true);
-		style.setAlignment(HSSFCellStyle.VERTICAL_CENTER);
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER); 
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平 
 		cell.setCellStyle(style);
 		cell.setEncoding(XLS_ENCODING);
 		cell.setCellValue(value);
@@ -204,6 +204,8 @@ public class XlsExport {
 		font.setFontHeightInPoints((short) 14);
 		font.setFontName("Arial");
 		style.setFont(font);
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平 
 		cell.setCellStyle(style);
 		cell.setEncoding(XLS_ENCODING);
 		cell.setCellValue(value);
