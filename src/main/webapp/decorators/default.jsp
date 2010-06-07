@@ -54,5 +54,8 @@
             <jsp:include page="/common/footer.jsp"/>
         </div>
     </div>
+    <script>
+    window.onerror = function() { return true; }
+    </script>
 </body>
 </html>
