@@ -35,4 +35,16 @@ public class PlantSupplierManagerImpl extends GenericManagerImpl<PlantSupplier, 
     	queryParams.put("supplierCode", supplierCode);
 		return this.genericDao.findByNamedQuery("findPlantSupplierBySupplierCode", queryParams);
 	}
+	
+	public List<PlantSupplier> getPlantSupplierByPlantCode(String plantCode) {
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+    	queryParams.put("plantCode", plantCode);
+		return this.genericDao.findByNamedQuery("findPlantSupplierByPlantCode", queryParams);
+	}
+	
+	public List<PlantSupplier> getPlantSupplierByPlantScheduleGroupId(Integer plantScheduleGroupId) {
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+    	queryParams.put("plantScheduleGroupId", plantScheduleGroupId);
+		return this.genericDao.findByNamedQuery("findPlantSupplierByPlantScheduleGroupId", queryParams);
+	}
 }

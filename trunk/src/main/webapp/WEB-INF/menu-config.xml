@@ -24,8 +24,11 @@
             <Item name="InboundLogsMenu" title="menu.admin.inboundLogs" page="/inboundLogs.html"/>
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
+        	<!-- 
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>
+        	 -->
         	<Item name="SupplierMenu" title="menu.supplier" description="Supplier Menu" page="/suppliers.html" roles="ROLE_PLANT_USER"/>
+        	<Item name="PlantScheudleGroupMenu" title="menu.plantScheduleGroup" description="Schedule Group Menu" page="/plantScheduleGroups.html" roles="ROLE_PLANT_USER"/>
         </Menu>
         <Menu name="OrderMenu" title="menu.order" description="Order Menu" roles="ROLE_PLANT_USER,ROLE_VENDOR" width="120" page="/purchaseOrders.html">
         	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER,ROLE_VENDOR"/>

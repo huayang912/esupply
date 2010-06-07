@@ -210,6 +210,8 @@
 				<constructor-arg value="com.faurecia.model.PlantScheduleGroup" />
 			</bean>
 		</constructor-arg>
+		
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 
 	<bean id="inboundLogManager" class="com.faurecia.service.impl.InboundLogManagerImpl">
