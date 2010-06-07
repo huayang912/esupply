@@ -24,32 +24,29 @@
 	<s:textfield key="purchaseOrder.poNo" cssClass="text medium" />
 	<li><s:select key="purchaseOrder.status" list="%{status}"
 		theme="xhtml" /></li>
-	<li style="padding:0px">
-	<table style="margin:0px">
-	<tr>
-	<td>
-	<s:textfield key="purchaseOrder.createDateFrom" cssClass="text medium" />
-	</td>
-	<td>
-	<A HREF="#"
-    	onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-    	NAME="anchDateFrom" ID="anchDateFrom"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>
-	</td>
-	</tr>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><s:textfield key="purchaseOrder.createDateFrom"
+				cssClass="text medium" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+				NAME="anchDateFrom" ID="anchDateFrom"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
 	</table>
 	</li>
-	<li style="padding:0px">
-	<table  style="margin:0px">
-	<tr>
-	<td>	
-	<s:textfield key="purchaseOrder.createDateTo" cssClass="text medium" />
-	</td>
-	<td>
-	<A HREF="#"
-    	onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-    	NAME="anchDateTo" ID="anchDateTo"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>
-	</td>
-	</tr>
+
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><s:textfield key="purchaseOrder.createDateTo"
+				cssClass="text medium" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+				NAME="anchDateTo" ID="anchDateTo"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
 	</table>
 	</li>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>

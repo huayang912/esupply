@@ -22,16 +22,30 @@
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
 	<s:textfield key="deliveryOrder.doNo" cssClass="text medium" />
-	<s:textfield key="deliveryOrder.createDateFrom"
-		cssClass="text medium" />
-	<A HREF="#"
-    	onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-    	NAME="anchDateFrom" ID="anchDateFrom"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>  			
-	<s:textfield key="deliveryOrder.createDateTo"
-		cssClass="text medium" />
-	<A HREF="#"
-    	onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-    	NAME="anchDateTo" ID="anchDateTo"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><s:textfield key="deliveryOrder.createDateFrom"
+				cssClass="text medium" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+				NAME="anchDateFrom" ID="anchDateFrom"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
+	</table>
+	</li>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><s:textfield key="deliveryOrder.createDateTo"
+				cssClass="text medium" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+				NAME="anchDateTo" ID="anchDateTo"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
+	</table>
+	</li>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 

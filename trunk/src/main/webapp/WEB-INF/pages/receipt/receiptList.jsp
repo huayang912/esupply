@@ -6,8 +6,7 @@
 
 <head>
 <title><fmt:message key="receiptList.title" /></title>
-<meta name="heading"
-	content="<fmt:message key='receiptList.heading'/>" />
+<meta name="heading" content="<fmt:message key='receiptList.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
@@ -22,22 +21,35 @@
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
 	<s:textfield key="receipt.receiptNo" cssClass="text medium" />
-	<s:textfield key="receipt.postingDateFrom"
-		cssClass="text medium" />
-	<A HREF="#"
-    	onClick="cal.select(document.forms['receiptForm'].receipts_receipt_postingDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-    	NAME="anchDateFrom" ID="anchDateFrom"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>  			
-	<s:textfield key="receipt.postingDateTo"
-		cssClass="text medium" />
-	<A HREF="#"
-    	onClick="cal.select(document.forms['receiptForm'].receipts_receipt_postingDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-    	NAME="anchDateTo" ID="anchDateTo"><img src="<c:url value="/images/calendar.png"/>" border="0"/></A>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><s:textfield key="receipt.postingDateFrom"
+				cssClass="text medium" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['receiptForm'].receipts_receipt_postingDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+				NAME="anchDateFrom" ID="anchDateFrom"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
+	</table>
+	</li>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><s:textfield key="receipt.postingDateTo"
+				cssClass="text medium" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['receiptForm'].receipts_receipt_postingDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+				NAME="anchDateTo" ID="anchDateTo"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
+	</table>
+	</li>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
-	requestURI="" defaultsort="1" id="receipts" class="table"
-	export="true">
+	requestURI="" defaultsort="1" id="receipts" class="table" export="true">
 	<display:column property="receiptNo" sortable="true"
 		url="/editReceipt.html" paramId="receiptNo" paramProperty="receiptNo"
 		titleKey="receipt.receiptNo" />

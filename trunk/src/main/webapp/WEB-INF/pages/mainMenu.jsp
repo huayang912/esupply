@@ -16,7 +16,6 @@
 </ul>
 
 <c:if test="${selectPlant}">
-<div style="display: block; z-index: 16; top: 0pt; left: 0pt; position: fixed; height: 100%; width: 100%; opacity: 0.5; background-color: rgb(0, 0, 0);" id="divHide"></div>
 <div style="z-index: 17;position:absolute; background-color:#FFFFFF;width:600px;padding:10px">
 	<fieldset>
 		<legend>Base Info</legend>
@@ -27,4 +26,5 @@
 		</s:form>
 	</fieldset>
 </div>
+<div id='divHide' style='display: block; z-index: 16; top: 0pt; left: 0pt; position: fixed; height: 100%; width: 100%; opacity: 0.5;filter:alpha(opacity=50); background-color: rgb(0, 0, 0);'/>
 </c:if>
