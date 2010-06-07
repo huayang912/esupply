@@ -10,7 +10,7 @@
 
 <c:choose>
 	<c:when test="${editProfile}">
-		<meta name="menu" content="SupplierProfileMenu" />
+		<meta name="menu" content="SupplierMenu" />
 	</c:when>
 	<c:otherwise>
 		<meta name="menu" content="PlantUserMenu" />

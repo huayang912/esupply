@@ -100,7 +100,7 @@ public class ScheduleItemDetail extends BaseObject {
 		this.releaseQty = releaseQty;
 	}
 
-	@Column(name="deliver_qty", nullable = false, precision = 9, scale = 2)
+	@Column(name="deliver_qty", nullable = true, precision = 9, scale = 2)
 	public BigDecimal getDeliverQty() {
 		return deliverQty;
 	}
@@ -111,8 +111,13 @@ public class ScheduleItemDetail extends BaseObject {
 	
 	@Transient
 	public BigDecimal getRemainQty() {
-		return releaseQty.subtract(deliverQty).compareTo(BigDecimal.ZERO) > 0 ?
-			releaseQty.subtract(deliverQty) : BigDecimal.ZERO;
+		if (deliverQty != null) {
+			return releaseQty.subtract(deliverQty).compareTo(BigDecimal.ZERO) > 0 ?
+				releaseQty.subtract(deliverQty) : BigDecimal.ZERO;
+		}
+		else {
+			return releaseQty;
+		}
 	}
 
 	/**

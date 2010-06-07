@@ -73,7 +73,7 @@ public class SupplierItem extends BaseObject {
 		this.supplier = supplier;
 	}
 
-	@Column(name= "supplier_item_code", nullable = false, length = 20)
+	@Column(name= "supplier_item_code", nullable = true, length = 20)
 	public String getSupplierItemCode() {
 		return supplierItemCode;
 	}

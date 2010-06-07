@@ -121,7 +121,7 @@ public class OutboundLog extends BaseObject {
 		this.outboundResult = outboundResult;
 	}
 
-	@Column(name="memo",nullable=true,length=255)
+	@Column(name="memo",nullable=true,length=2000)
 	public String getMemo() {
 		return memo;
 	}

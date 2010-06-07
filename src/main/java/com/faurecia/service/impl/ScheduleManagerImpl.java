@@ -407,19 +407,26 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					supplierItemCode = E1EDP10.getIDNLF();
 
 					if (supplierItemCode != null && supplierItemCode.trim().length() > 0) {
-						supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
+						supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);						
+					}
+					
+					supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
+					
+					if (supplierItem == null) {
+						log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
+								+ " not found, try to create a new one.");
 
-						if (supplierItem == null) {
-							log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
-									+ " not found, try to create a new one.");
+						supplierItem = new SupplierItem();
+						supplierItem.setItem(item);
+						supplierItem.setSupplier(supplier);
+						supplierItem.setSupplierItemCode(supplierItemCode);
 
-							supplierItem = new SupplierItem();
-							supplierItem.setItem(item);
-							supplierItem.setSupplier(supplier);
-							supplierItem.setSupplierItemCode(supplierItemCode);
-
-							supplierItem = this.supplierItemManager.save(supplierItem);
-						}
+						supplierItem = this.supplierItemManager.save(supplierItem);
+					} else if (supplierItemCode != null && (supplierItem.getSupplierItemCode() == null 
+									|| supplierItem.getSupplierItemCode().trim().length() == 0)) {
+						
+						supplierItem.setSupplierItemCode(supplierItemCode);
+						supplierItem = this.supplierItemManager.save(supplierItem);
 					}
 
 					scheduleItem.setSchedule(schedule);

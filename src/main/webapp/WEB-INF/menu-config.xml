@@ -23,9 +23,7 @@
             <Item name="OutboundLogsMenu" title="menu.admin.outboundLogs" page="/outboundLogs.html"/>
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
-        	<!-- 
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>
-        	 -->
         	<Item name="SupplierMenu" title="menu.supplier" description="Supplier Menu" page="/suppliers.html" roles="ROLE_PLANT_USER"/>
         	<Item name="PlantScheudleGroupMenu" title="menu.plantScheduleGroup" description="Schedule Group Menu" page="/plantScheduleGroups.html" roles="ROLE_PLANT_USER"/>
         </Menu>
@@ -35,7 +33,7 @@
 			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_PLANT_USER"/>       
 			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_PLANT_USER"/>
 		</Menu>
-		<Menu name="SupplierMenu" title="menu.supplier" description="Supplier Menu" roles="ROLE_VENDOR" width="120" page="/editSupplierProfile.html">
+		<Menu name="SupplierMenu" title="menu.supplierProfile" description="Supplier Menu" roles="ROLE_VENDOR" width="120" page="/editSupplierProfile.html">
 			<Item name="SupplierProfileMenu" title="menu.supplierProfile" description="Supplier Profile Menu" page="/editSupplierProfile.html" roles="ROLE_VENDOR"/>
 			<Item name="SupplierItemMenu" title="menu.supplierItem" description="Supplier Item Menu" page="/supplierItems.html" roles="ROLE_VENDOR"/>
 		</Menu>

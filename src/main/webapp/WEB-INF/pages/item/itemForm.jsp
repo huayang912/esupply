@@ -23,6 +23,9 @@
 	<li><s:textfield key="item.description" cssClass="text large"
 		required="true" /></li>
 
+	<li><s:textfield key="item.unitCount" cssClass="text medium"
+		required="true" /></li>
+
 	<li><s:textfield key="item.uom" required="true"
 		cssClass="text medium" /></li>
 	<li class="buttonBar bottom"><c:out value="${buttons}"

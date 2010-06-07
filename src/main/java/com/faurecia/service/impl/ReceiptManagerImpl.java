@@ -30,6 +30,7 @@ import com.faurecia.model.Receipt;
 import com.faurecia.model.ReceiptDetail;
 import com.faurecia.model.Role;
 import com.faurecia.model.Supplier;
+import com.faurecia.model.SupplierItem;
 import com.faurecia.model.User;
 import com.faurecia.model.mbgmcr.MBGMCR02;
 import com.faurecia.model.mbgmcr.MBGMCR02E1BP2017GMITEMCREATE;
@@ -42,6 +43,7 @@ import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ReceiptManager;
 import com.faurecia.service.RoleManager;
+import com.faurecia.service.SupplierItemManager;
 import com.faurecia.service.SupplierManager;
 import com.faurecia.service.UserManager;
 
@@ -51,6 +53,7 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
+	private SupplierItemManager supplierItemManager;
 	private UserManager userManager;
 	private RoleManager roleManager;
 	private NumberControlManager numberControlManager;
@@ -86,6 +89,10 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 
 	public void setItemManager(ItemManager itemManager) {
 		this.itemManager = itemManager;
+	}
+
+	public void setSupplierItemManager(SupplierItemManager supplierItemManager) {
+		this.supplierItemManager = supplierItemManager;
 	}
 
 	public void setUserManager(UserManager userManager) {
@@ -268,6 +275,7 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 				}
 
 				Item item = null;
+				SupplierItem supplierItem = null;
 
 				String itemCode = E1BP2017GMITEMCREATE.getMATERIAL();
 				try {
@@ -289,6 +297,18 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 
 					item = this.itemManager.save(item);
 				}
+				
+				supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
+				if (supplierItem == null) {
+					log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
+							+ " not found, try to create a new one.");
+
+					supplierItem = new SupplierItem();
+					supplierItem.setItem(item);
+					supplierItem.setSupplier(supplier);
+
+					supplierItem = this.supplierItemManager.save(supplierItem);
+				} 
 
 				receiptDetail.setItem(item);
 				receiptDetail.setUom(E1BP2017GMITEMCREATE.getENTRYUOM());

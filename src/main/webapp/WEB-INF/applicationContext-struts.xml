@@ -69,6 +69,13 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
+	
+	<bean id="supplierItemAction" class="com.faurecia.webapp.action.SupplierItemAction"
+		scope="prototype">
+		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
 
 	<bean id="supplierAction" class="com.faurecia.webapp.action.SupplierAction"
 		scope="prototype">
