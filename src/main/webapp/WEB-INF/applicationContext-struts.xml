@@ -136,4 +136,11 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
+	
+	<bean id="noticeAction" class="com.faurecia.webapp.action.NoticeAction"
+		scope="prototype">
+		<property name="noticeManager" ref="noticeManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
 </beans>
