@@ -46,5 +46,5 @@ public class PlantSupplierManagerImpl extends GenericManagerImpl<PlantSupplier, 
 		Map<String, Object> queryParams = new HashMap<String, Object>();
     	queryParams.put("plantScheduleGroupId", plantScheduleGroupId);
 		return this.genericDao.findByNamedQuery("findPlantSupplierByPlantScheduleGroupId", queryParams);
-	}
+	}	
 }

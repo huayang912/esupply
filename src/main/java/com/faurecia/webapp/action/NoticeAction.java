@@ -2,14 +2,19 @@ package com.faurecia.webapp.action;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 
+import com.faurecia.model.LabelValue;
 import com.faurecia.model.Notice;
+import com.faurecia.model.NoticeReader;
+import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.User;
 import com.faurecia.service.NoticeManager;
+import com.faurecia.service.NoticeReaderManager;
+import com.faurecia.service.PlantSupplierManager;
 
 public class NoticeAction extends BaseAction {
 
@@ -18,14 +23,18 @@ public class NoticeAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = -7684641539522685901L;
 	private NoticeManager noticeManager;
+	private PlantSupplierManager plantSupplierManager;
+	private NoticeReaderManager noticeReaderManager;
 	private List<Notice> notices;
 	private Notice notice;
-	private String code;
+	private Integer id;
 	private File file;
 	private String fileContentType;
 	private String fileFileName;
 	private String title;
 	private String content;
+	
+	private List<LabelValue> availableSuppliers;
 
 	public List<Notice> getNotices() {
 		return notices;
@@ -43,16 +52,24 @@ public class NoticeAction extends BaseAction {
 		this.notice = notice;
 	}
 
-	public String getCode() {
-		return code;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setNoticeManager(NoticeManager noticeManager) {
 		this.noticeManager = noticeManager;
+	}
+
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
+		this.plantSupplierManager = plantSupplierManager;
+	}
+
+	public void setNoticeReaderManager(NoticeReaderManager noticeReaderManager) {
+		this.noticeReaderManager = noticeReaderManager;
 	}
 
 	public File getFile() {
@@ -114,8 +131,12 @@ public class NoticeAction extends BaseAction {
 	}
 
 	public String edit() throws JAXBException, MalformedURLException {
-		HttpServletRequest request = getRequest();
-
+		if (this.id != null && this.id > 0) {
+			notice = this.noticeManager.get(this.id);
+		} else {
+			notice = new Notice();
+		}
+		prepare();
 		return SUCCESS;
 	}
 
@@ -125,5 +146,38 @@ public class NoticeAction extends BaseAction {
 		}
 
 		return SUCCESS;
+	}
+	
+	private void prepare() {
+		String userCode = this.getRequest().getRemoteUser();
+		User user = this.userManager.getUserByUsername(userCode);
+		
+		if (notice != null 
+				&& notice.getId() != null && notice.getId() > 0) {
+			List<NoticeReader> noticeReaderList = this.noticeReaderManager.getNoticeReaderByNoticeId(notice.getId());
+			if (noticeReaderList != null && noticeReaderList.size() > 0) {
+				notice.setSupplierList(new ArrayList<LabelValue>());
+				for (int i = 0; i < noticeReaderList.size(); i++) {
+					notice.getSupplierList().add(new LabelValue(noticeReaderList.get(i).getPlantSupplier().getSupplierName(), noticeReaderList.get(i).getPlantSupplier().getId().toString()));
+				}
+			}
+		}
+		
+		List<PlantSupplier> allPlantSupplierList = this.plantSupplierManager.getPlantSupplierByPlantCode(user.getUserPlant().getCode());
+		if (allPlantSupplierList != null && allPlantSupplierList.size() > 0) {
+			this.availableSuppliers = new ArrayList<LabelValue>();
+			for (int i = 0; i < allPlantSupplierList.size(); i++) {
+				boolean notInSupplierList = true;
+				for (int j = 0; j < notice.getSupplierList().size(); j++) {
+					if (allPlantSupplierList.get(i).getId().toString().equals(notice.getSupplierList().get(j).getValue())) {
+						notInSupplierList = false;
+					}					
+				}
+				
+				if (notInSupplierList) {
+					this.availableSuppliers.add(new LabelValue(allPlantSupplierList.get(i).getSupplierName(), allPlantSupplierList.get(i).getId().toString()));
+				}
+			}
+		}
 	}
 }

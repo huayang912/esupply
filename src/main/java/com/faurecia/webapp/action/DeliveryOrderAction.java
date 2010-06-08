@@ -308,8 +308,7 @@ public class DeliveryOrderAction extends BaseAction {
 				for (int j = 0; j < scheduleItem.getScheduleItemDetailList().size(); j++) {
 					ScheduleItemDetail scheduleItemDetail = scheduleItem.getScheduleItemDetailList().get(j);
 					
-					if (scheduleItemDetail.getDateFrom().compareTo(dateFrom) == 0
-							&& scheduleItemDetail.getScheduleType().equals("Firm")) {
+					if (scheduleItemDetail.getDateFrom().compareTo(dateFrom) == 0) {
 						if (deliveryOrder == null) {
 							deliveryOrder = new DeliveryOrder();
 							BeanUtils.copyProperties(deliveryOrder, schedule);
@@ -325,7 +324,7 @@ public class DeliveryOrderAction extends BaseAction {
 						deliveryOrderDetail.setSequence(StringUtil.leftPad(String.valueOf(sequence++ * 10), 4, '0'));
 						deliveryOrderDetail.setItem(scheduleItem.getItem());
 						deliveryOrderDetail.setItemDescription(scheduleItem.getItemDescription());
-						deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode());
+						deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode() != null ? scheduleItem.getSupplierItemCode() : "");
 						deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
 						deliveryOrderDetail.setUom(scheduleItem.getUom());
 						deliveryOrderDetail.setScheduleItemDetailId(scheduleItemDetail.getId());
@@ -391,6 +390,6 @@ public class DeliveryOrderAction extends BaseAction {
 		XlsExport report = DeliveryOrderExcelReportUtil.generateReport(localAbsolutPath, deliveryOrder);
 		//report.exportXLS("D:/deliveryOrder.xls");
 		report.exportToResponse(this.getResponse(), "deliveryOrder.xls");
-	 return SUCCESS;
+	 return null;
 	}
 }

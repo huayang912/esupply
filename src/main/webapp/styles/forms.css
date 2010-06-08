@@ -77,7 +77,7 @@ form li div.group p,form div.group p label {
 
 form li div.group input.large,form li div.group textarea.large,form li fieldset
 	{
-	width: 339px;
+	width: 800px;
 }
 
 form[id] li div {

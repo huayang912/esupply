@@ -1,6 +1,7 @@
 package com.faurecia.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -35,6 +37,7 @@ public class Notice extends BaseObject {
 	private Plant plant;
 	private Date displayDateFrom;
 	private Date displayDateTo;
+	private List<LabelValue> supplierList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -108,6 +111,15 @@ public class Notice extends BaseObject {
 
 	public void setDisplayDateTo(Date displayDateTo) {
 		this.displayDateTo = displayDateTo;
+	}
+	
+	@Transient
+	public List<LabelValue> getSupplierList() {
+		return supplierList;
+	}
+
+	public void setSupplierList(List<LabelValue> supplierList) {
+		this.supplierList = supplierList;
 	}
 
 	/**

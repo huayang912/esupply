@@ -24,7 +24,7 @@ public class NoticeReader extends BaseObject {
 
 	private Integer id;
 	private Notice notice;
-	private Supplier supplier;
+	private PlantSupplier plantSupplier;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,13 +47,13 @@ public class NoticeReader extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "supplier_code")
-	public Supplier getSupplier() {
-		return supplier;
+	@JoinColumn(name = "plant_supplier_id")
+	public PlantSupplier getPlantSupplier() {
+		return plantSupplier;
 	}
 
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
+	public void setPlantSupplier(PlantSupplier plantSupplier) {
+		this.plantSupplier = plantSupplier;
 	}
 
 	/**
