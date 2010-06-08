@@ -20,7 +20,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "notice")
-@NamedQueries( { @NamedQuery(name = "findNoticeByPlant", query = " select n from Notice ps where n.plant = :plant") })
+@NamedQueries( { @NamedQuery(name = "findNoticeByPlant", query = " select n from Notice n where n.plant = :plant") })
 public class Notice extends BaseObject {
 
 	/**

@@ -97,7 +97,7 @@ public class NoticeAction extends BaseAction {
 
 	public String list() {
 		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUser(userCode);
+		User user = this.userManager.getUserByUsername(userCode);
 		notices = this.noticeManager.getNoticeByPlant(user.getUserPlant());
 		return SUCCESS;
 	}

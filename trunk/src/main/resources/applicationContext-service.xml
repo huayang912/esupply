@@ -343,4 +343,12 @@
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
+	<bean id="noticeManager" class="com.faurecia.service.impl.NoticeManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Notice" />
+			</bean>
+		</constructor-arg>
+	</bean>
 </beans>
