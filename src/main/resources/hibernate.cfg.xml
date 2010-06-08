@@ -24,5 +24,7 @@
 		<mapping class="com.faurecia.model.Receipt" />
 		<mapping class="com.faurecia.model.ReceiptDetail" />
 		<mapping class="com.faurecia.model.PlantScheduleGroup" />
+		<mapping class="com.faurecia.model.Notice" />
+		<mapping class="com.faurecia.model.NoticeReader" />
 	</session-factory>
 </hibernate-configuration>
