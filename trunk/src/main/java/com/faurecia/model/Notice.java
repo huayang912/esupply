@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
@@ -18,6 +20,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "notice")
+@NamedQueries( { @NamedQuery(name = "findNoticeByPlant", query = " select n from Notice ps where n.plant = :plant") })
 public class Notice extends BaseObject {
 
 	/**
@@ -52,7 +55,7 @@ public class Notice extends BaseObject {
 		this.title = title;
 	}
 
-	@Column(name="file_name", nullable = true, length = 255)
+	@Column(name = "file_name", nullable = true, length = 255)
 	public String getFileName() {
 		return fileName;
 	}
@@ -61,7 +64,7 @@ public class Notice extends BaseObject {
 		this.fileName = fileName;
 	}
 
-	@Column(name="file_full_path", nullable = true, length = 255)
+	@Column(name = "file_full_path", nullable = true, length = 255)
 	public String getFileFullPath() {
 		return fileFullPath;
 	}
@@ -89,7 +92,7 @@ public class Notice extends BaseObject {
 		this.plant = plant;
 	}
 
-	@Column(name="display_date_from", nullable = true)
+	@Column(name = "display_date_from", nullable = true)
 	public Date getDisplayDateFrom() {
 		return displayDateFrom;
 	}
@@ -98,7 +101,7 @@ public class Notice extends BaseObject {
 		this.displayDateFrom = displayDateFrom;
 	}
 
-	@Column(name="display_date_to", nullable = true)
+	@Column(name = "display_date_to", nullable = true)
 	public Date getDisplayDateTo() {
 		return displayDateTo;
 	}
@@ -129,8 +132,7 @@ public class Notice extends BaseObject {
 			return false;
 		}
 		Notice rhs = (Notice) object;
-		return new EqualsBuilder().append(
-				this.id, rhs.id).isEquals();
+		return new EqualsBuilder().append(this.id, rhs.id).isEquals();
 	}
 
 	/**
@@ -138,9 +140,7 @@ public class Notice extends BaseObject {
 	 */
 	public int compareTo(Object object) {
 		Notice myClass = (Notice) object;
-		return new CompareToBuilder().append(this.id, myClass.id)
-				.toComparison();
+		return new CompareToBuilder().append(this.id, myClass.id).toComparison();
 	}
-	
 
 }
