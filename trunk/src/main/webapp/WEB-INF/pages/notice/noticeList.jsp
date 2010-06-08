@@ -3,6 +3,7 @@
 <head>
 <title><fmt:message key="noticeList.title" /></title>
 <meta name="heading" content="<fmt:message key='noticeList.heading'/>" />
+<meta name="menu" content="PlantUserMenu" />
 </head>
 
 <c:set var="buttons">
@@ -20,16 +21,10 @@
 	<display:column property="title" sortable="true"
 		url="/editNotice.html?from=list" paramId="id" paramProperty="id"
 		titleKey="notice.title" />
-	<display:column property="content" sortable="true"
-		titleKey="notice.content" />
 	<display:column property="displayDateFrom" sortable="true"
 		titleKey="notice.displayDateFrom" />
 	<display:column property="displayDateTo" sortable="true"
 		titleKey="notice.displayDateTo" />
-	<display:column property="fileName" sortable="true"
-		titleKey="notice.fileName" />
-	<display:column property="fileFullPath" sortable="true"
-		titleKey="notice.fileFullPath" />
 
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="notice.notice" />
