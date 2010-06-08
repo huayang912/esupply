@@ -15,6 +15,6 @@ public interface PurchaseOrderManager extends
 	PurchaseOrder saveSingleFile(InputStream inputStream,
 			InboundLog inboundLog);
 	
-	void reloadFile(InboundLog inboundLog, String userCode);
+	void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder);
 
 }

@@ -38,35 +38,42 @@
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="inboundLogs" class="table"
 	export="true">
-	<display:column property="plantSupplier.plant.name" sortable="true" sortProperty="p.name"
-		titleKey="inboundLog.plantName" />
-		
-	<display:column property="plantSupplier.supplierName" sortable="true" sortProperty="ps.supplierName"
-		titleKey="inboundLog.supplierName" />
+	<display:column property="plantSupplier.plant.name" sortable="true"
+		sortProperty="p.name" titleKey="inboundLog.plantName" />
 
-	<display:column property="dataType" sortable="true" sortProperty="dataType"
-		titleKey="inboundLog.dataType" />
-		
-	<display:column property="fileName" sortable="true" sortProperty="fileName"
-		titleKey="inboundLog.fileName" />
-		
-	<display:column property="inboundResult" sortable="true" sortProperty="inboundResult"
-		titleKey="inboundLog.inboundResult" />
-		
+	<display:column property="plantSupplier.supplierName" sortable="true"
+		sortProperty="ps.supplierName" titleKey="inboundLog.supplierName" />
+
+	<display:column property="dataType" sortable="true"
+		sortProperty="dataType" titleKey="inboundLog.dataType" />
+
+	<display:column property="fileName" sortable="true"
+		sortProperty="fileName" titleKey="inboundLog.fileName" />
+
+	<display:column property="inboundResult" sortable="true"
+		sortProperty="inboundResult" titleKey="inboundLog.inboundResult" />
+
 	<display:column property="memo" sortable="true" sortProperty="memo"
 		titleKey="inboundLog.memo" />
-		
-	<display:column property="createDate" sortable="true" sortProperty="createDate"
-		titleKey="inboundLog.createDate" format="{0,date,MM/dd/yyyy}"/>
-		
-	<display:column property="createUser" sortable="true" sortProperty="createUser"
-		titleKey="inboundLog.createUser" />
-		
-	<display:column property="lastModifyDate" sortable="true" sortProperty="lastModifyDate"
-		titleKey="inboundLog.lastModifyDate" format="{0,date,MM/dd/yyyy}"/>
-		
-	<display:column property="lastModifyUser" sortable="true" sortProperty="lastModifyUser"
-		titleKey="inboundLog.lastModifyUser" />
+
+	<display:column property="createDate" sortable="true"
+		sortProperty="createDate" titleKey="inboundLog.createDate"
+		format="{0,date,MM/dd/yyyy}" />
+
+	<display:column property="createUser" sortable="true"
+		sortProperty="createUser" titleKey="inboundLog.createUser" />
+
+	<display:column property="lastModifyDate" sortable="true"
+		sortProperty="lastModifyDate" titleKey="inboundLog.lastModifyDate"
+		format="{0,date,MM/dd/yyyy}" />
+
+	<display:column property="lastModifyUser" sortable="true"
+		sortProperty="lastModifyUser" titleKey="inboundLog.lastModifyUser" />
+
+	<display:column sortable="false" titleKey="inboundLog.import"
+		url="/importInboundLog.html" paramId="id" paramProperty="id">
+			<fmt:message key="inboundLog.import" />
+	</display:column>
 
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="inboundLog.inboundLog" />

@@ -67,7 +67,7 @@
 	<display:column property="lastModifyUser" sortable="true"
 		sortProperty="lastModifyUser" titleKey="outboundLog.lastModifyUser" />
 
-	<display:column sortable="false" titleKey="user.username"
+	<display:column sortable="false" titleKey="outboundLog.export"
 		url="/exportOutboundLog.html" paramId="doNo"
 		paramProperty="doNo">
 		<fmt:message key="outboundLog.export" />

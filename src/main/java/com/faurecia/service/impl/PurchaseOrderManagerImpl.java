@@ -1,5 +1,6 @@
 package com.faurecia.service.impl;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -17,6 +18,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -174,13 +176,23 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		}
 	}
 
-	public void reloadFile(InboundLog inboundLog, String userCode) {
-
+	public void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder) {
 		try {
-			FileInputStream stream = new FileInputStream(inboundLog.getFullFilePath());
+			File file = new File(inboundLog.getFullFilePath());
+			FileInputStream stream = new FileInputStream(file);
+			
 			saveSingleFile(stream, inboundLog);
-		} catch (FileNotFoundException fileNotFoundException) {
-			inboundLog.setMemo(fileNotFoundException.getMessage());
+			
+			FileUtils.forceMkdir(new File(archiveFolder));
+			File backupFile = new File(archiveFolder + File.separator + file.getName());
+			
+			FileUtils.copyFile(file, backupFile);
+			inboundLog.setFullFilePath(backupFile.getAbsolutePath());
+			inboundLog.setInboundResult("success");
+			
+			FileUtils.forceDelete(file);
+		} catch (Exception ex) {
+			inboundLog.setMemo(ex.getMessage());
 		} finally {
 			inboundLog.setLastModifyDate(new Date());
 			inboundLog.setLastModifyUser(userCode);

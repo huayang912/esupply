@@ -378,6 +378,11 @@
 			<result name="success">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
 		</action>
 		
+		<action name="importInboundLog" class="inboundLogAction"
+			method="reimport">
+			<result name="success" type="redirect-action">inboundLogs</result>
+		</action>
+		
 		<action name="outboundLogs" class="outboundLogAction"
 			method="list">
 			<interceptor-ref name="defaultStack">
