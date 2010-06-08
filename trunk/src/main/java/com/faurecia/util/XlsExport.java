@@ -121,17 +121,16 @@ public class XlsExport {
 	public void exportToResponse(HttpServletResponse response, String downloadFileName) throws IOException {
 		
 		response.reset();
-		response.setContentType("application/octet-stream");
+		response.setContentType("application/x-download");//设置为下载application/x-download
 		
-		response.setHeader("Content-Disposition", "attachment;filename=\"" + downloadFileName + "\"");
+		response.addHeader("Content-Disposition", "attachment;filename=\"" + downloadFileName + "\"");
 		// 写入Excel工作表
 		workbook.write(response.getOutputStream());
 		response.getOutputStream().flush();
 		// 关闭Excel工作薄对象
 		response.getOutputStream().close();
 		response.setStatus(HttpServletResponse.SC_OK);
-		response.flushBuffer();
-
+		response.flushBuffer();		
 	}
 
 	/** */

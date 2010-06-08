@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 		@NamedQuery(name = "findPlantSupplierByPlantAndSupplier", query = " select ps from PlantSupplier ps where ps.plant = :plant and ps.supplier = :supplier"),
 		@NamedQuery(name = "findPlantSupplierBySupplierCode", query = " select ps from PlantSupplier ps inner join ps.supplier s where s.code = :supplierCode"),
 		@NamedQuery(name = "findPlantSupplierByPlantCode", query = " select ps from PlantSupplier ps inner join ps.plant p where p.code = :plantCode"),
-		@NamedQuery(name = "findPlantSupplierByPlantScheduleGroupId", query = " select ps from PlantSupplier ps inner join ps.plantScheduleGroup s where s.id = :plantScheduleGroupId") })
+		@NamedQuery(name = "findPlantSupplierByPlantScheduleGroupId", query = " select ps from PlantSupplier ps inner join ps.plantScheduleGroup s where s.id = :plantScheduleGroupId")})
 public class PlantSupplier extends BaseObject implements Serializable {
 
 	/**

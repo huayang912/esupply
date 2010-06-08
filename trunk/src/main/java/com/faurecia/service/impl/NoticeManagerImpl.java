@@ -7,7 +7,6 @@ import java.util.Map;
 import com.faurecia.dao.GenericDao;
 import com.faurecia.model.Notice;
 import com.faurecia.model.Plant;
-import com.faurecia.model.PlantSupplier;
 import com.faurecia.service.NoticeManager;
 
 public class NoticeManagerImpl extends GenericManagerImpl<Notice, Integer> implements NoticeManager {
@@ -22,7 +21,4 @@ public class NoticeManagerImpl extends GenericManagerImpl<Notice, Integer> imple
     	queryParams.put("plant", plant);
 		return this.genericDao.findByNamedQuery("findNoticeByPlant", queryParams);
 	}
-
-	
-
 }
