@@ -7,10 +7,19 @@
 <head>
 <title><fmt:message key="receiptList.title" /></title>
 <meta name="heading" content="<fmt:message key='receiptList.heading'/>" />
+<c:choose>
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+		<meta name="menu" content="PlantOrderMenu" />
+	</c:when>
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+		<meta name="menu" content="SupplierOrderMenu" />
+	</c:when>
+</c:choose>
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
-<meta name="menu" content="OrderMenu" />
 <c:set var="buttons">
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"

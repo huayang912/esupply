@@ -5,8 +5,6 @@
 <meta name="heading"
 	content="<fmt:message key='plantScheduleGroupDetail.heading'/>" />
 <meta name="menu" content="PlantUserMenu" />
-</head>
-
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
 </head>

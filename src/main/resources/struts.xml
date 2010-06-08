@@ -398,7 +398,7 @@
 		</action>
 		
 		<!-- Supplier Notice -->
-		<action name="plantNotices" class="noticeAction"
+		<action name="notices" class="noticeAction"
 			method="list">
 			<result name="success">/WEB-INF/pages/notice/noticeList.jsp</result>
 		</action>
@@ -412,9 +412,9 @@
 		<action name="saveNotice" class="noticeAction"
 			method="save">
 			<result name="input">/WEB-INF/pages/notice/noticeForm.jsp</result>
-			<result name="cancel" type="redirect-action">plantNotices</result>
-			<result name="delete" type="redirect-action">plantNotices</result>
-			<result name="success" type="redirect-action">plantNotices</result>
+			<result name="cancel" type="redirect-action">notices</result>
+			<result name="delete" type="redirect-action">notices</result>
+			<result name="success" type="redirect-action">notices</result>
 		</action>
 		
 	</package>

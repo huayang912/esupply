@@ -112,6 +112,14 @@ public class NoticeAction extends BaseAction {
 		this.content = content;
 	}
 
+	public List<LabelValue> getAvailableSuppliers() {
+		return availableSuppliers;
+	}
+
+	public void setAvailableSuppliers(List<LabelValue> availableSuppliers) {
+		this.availableSuppliers = availableSuppliers;
+	}
+
 	public String list() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
@@ -168,10 +176,12 @@ public class NoticeAction extends BaseAction {
 			this.availableSuppliers = new ArrayList<LabelValue>();
 			for (int i = 0; i < allPlantSupplierList.size(); i++) {
 				boolean notInSupplierList = true;
-				for (int j = 0; j < notice.getSupplierList().size(); j++) {
-					if (allPlantSupplierList.get(i).getId().toString().equals(notice.getSupplierList().get(j).getValue())) {
-						notInSupplierList = false;
-					}					
+				if (notice.getSupplierList() != null && notice.getSupplierList().size() > 0) {
+					for (int j = 0; j < notice.getSupplierList().size(); j++) {
+						if (allPlantSupplierList.get(i).getId().toString().equals(notice.getSupplierList().get(j).getValue())) {
+							notInSupplierList = false;
+						}					
+					}
 				}
 				
 				if (notInSupplierList) {

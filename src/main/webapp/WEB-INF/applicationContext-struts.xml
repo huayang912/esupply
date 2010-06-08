@@ -140,6 +140,8 @@
 	<bean id="noticeAction" class="com.faurecia.webapp.action.NoticeAction"
 		scope="prototype">
 		<property name="noticeManager" ref="noticeManager" />
+		<property name="noticeReaderManager" ref="noticeReaderManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
