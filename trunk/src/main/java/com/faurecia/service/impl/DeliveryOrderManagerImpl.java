@@ -145,7 +145,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrderDetail.setItem(item);
 			deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
 			
-			ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetailId());
+			ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();
 			
 			BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
 			if (deliverQty == null) {

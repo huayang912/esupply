@@ -50,6 +50,7 @@ public class DeliveryOrder extends BaseObject {
 	private Boolean isExport;
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	private Boolean allowOverQty;
+	private String status;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -62,7 +63,7 @@ public class DeliveryOrder extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "plant_supplier_id")
+	@JoinColumn(name = "plant_supplier_id", nullable=false)
 	public PlantSupplier getPlantSupplier() {
 		return plantSupplier;
 	}
@@ -308,6 +309,15 @@ public class DeliveryOrder extends BaseObject {
 		deliveryOrderDetailList.add(deliveryOrderDetail);
 	}
 	
+	@Column(name = "status", nullable = false, length=10)
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Transient
 	public Date getCreateDateFrom() {
 		return createDateFrom;
