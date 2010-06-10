@@ -1,5 +1,6 @@
 package com.faurecia.webapp.action;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,11 +58,14 @@ public class DeliveryOrderAction extends BaseAction {
 
 	private String poNo;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
-	
+
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
-	
+
 	private Integer plantSupplierId;
 	private Date dateFrom;
+	private String scheduleType;
+	private InputStream inputStream;
+	private String fileName;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
 		this.deliveryOrderManager = deliveryOrderManager;
@@ -171,6 +175,14 @@ public class DeliveryOrderAction extends BaseAction {
 		this.dateFrom = dateFrom;
 	}
 
+	public String getScheduleType() {
+		return scheduleType;
+	}
+
+	public void setScheduleType(String scheduleType) {
+		this.scheduleType = scheduleType;
+	}
+
 	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
 		return purchaseOrderDetailList;
 	}
@@ -178,7 +190,7 @@ public class DeliveryOrderAction extends BaseAction {
 	public void setPurchaseOrderDetailList(List<PurchaseOrderDetail> purchaseOrderDetailList) {
 		this.purchaseOrderDetailList = purchaseOrderDetailList;
 	}
-	
+
 	public List<DeliveryOrderDetail> getDeliveryOrderDetailList() {
 		return deliveryOrderDetailList;
 	}
@@ -297,30 +309,33 @@ public class DeliveryOrderAction extends BaseAction {
 			}
 		} else if (plantSupplierId != null && plantSupplierId > 0) {
 			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
-			Schedule schedule = this.scheduleManager.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode());
+			Schedule schedule = this.scheduleManager
+					.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode());
 			PlantScheduleGroup plantScheduleGroup = plantSupplier.getPlantScheduleGroup();
 			Boolean allowOverQty = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverQtyDeliver() : false;
-			
+
 			int sequence = 1;
 			for (int i = 0; i < schedule.getScheduleItemList().size(); i++) {
 				ScheduleItem scheduleItem = schedule.getScheduleItemList().get(i);
-				
+
 				for (int j = 0; j < scheduleItem.getScheduleItemDetailList().size(); j++) {
 					ScheduleItemDetail scheduleItemDetail = scheduleItem.getScheduleItemDetailList().get(j);
-					
-					if (scheduleItemDetail.getDateFrom().compareTo(dateFrom) == 0) {
+
+					if (scheduleItemDetail.getDateFrom().compareTo(dateFrom) == 0
+							&& (scheduleItemDetail.getScheduleType().equals(scheduleType) || (scheduleType.startsWith("Backlog") && scheduleItemDetail
+									.getScheduleType().startsWith("Backlog")))) {
 						if (deliveryOrder == null) {
 							deliveryOrder = new DeliveryOrder();
 							BeanUtils.copyProperties(deliveryOrder, schedule);
-							
+
 							deliveryOrder.setCreateDate(new Date());
 							deliveryOrder.setIsExport(false);
 							deliveryOrder.setAllowOverQty(allowOverQty);
 						}
-						
+
 						DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
 						deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
-						
+
 						deliveryOrderDetail.setSequence(StringUtil.leftPad(String.valueOf(sequence++ * 10), 4, '0'));
 						deliveryOrderDetail.setItem(scheduleItem.getItem());
 						deliveryOrderDetail.setItemDescription(scheduleItem.getItemDescription());
@@ -330,7 +345,7 @@ public class DeliveryOrderAction extends BaseAction {
 						deliveryOrderDetail.setScheduleItemDetailId(scheduleItemDetail.getId());
 						deliveryOrderDetail.setCurrentQty(scheduleItemDetail.getRemainQty());
 						deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
-						deliveryOrderDetail.setReferenceOrderNo(schedule.getScheduleNo());
+						deliveryOrderDetail.setReferenceOrderNo(scheduleItem.getSchedule().getScheduleNo());
 						deliveryOrderDetail.setReferenceSequence(scheduleItem.getSequence());
 						deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
 					}
@@ -339,31 +354,30 @@ public class DeliveryOrderAction extends BaseAction {
 		} else if (deliveryOrder != null) {
 
 			List<DeliveryOrderDetail> noneZeroDeliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
-			if(deliveryOrderDetailList != null)
-			{
+			if (deliveryOrderDetailList != null) {
 				for (int i = 1; i < deliveryOrderDetailList.size(); i++) {
 					DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
 					ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetailId());
 					BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
 					BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
-					
+
 					if (BigDecimal.ZERO.compareTo(currentQty) < 0) {
-						
+
 						BigDecimal totalDeliverQty = currentQty;
 						if (deliverQty != null) {
 							totalDeliverQty = totalDeliverQty.add(deliverQty);
 						}
-						
+
 						if (deliveryOrderDetail.getOrderQty().compareTo(totalDeliverQty) < 0 && !deliveryOrder.getAllowOverQty()) {
 							List<String> args = new ArrayList<String>();
-							args.add(deliveryOrderDetail.getItemDescription());	
+							args.add(deliveryOrderDetail.getItemDescription());
 							for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
 								deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
 							}
 							saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
 							return "doInput";
 						}
-						
+
 						noneZeroDeliveryOrderDetailList.add(deliveryOrderDetail);
 					}
 				}
@@ -383,13 +397,22 @@ public class DeliveryOrderAction extends BaseAction {
 
 		return SUCCESS;
 	}
-	
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
 	public String print() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 		XlsExport report = DeliveryOrderExcelReportUtil.generateReport(localAbsolutPath, deliveryOrder);
-		//report.exportXLS("D:/deliveryOrder.xls");
-		report.exportToResponse(this.getResponse(), "deliveryOrder.xls");
-	 return null;
+
+		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".xls";
+		inputStream = report.exportToInputStream(fileName);
+		return SUCCESS;
 	}
 }
