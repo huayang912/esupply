@@ -65,7 +65,7 @@ public class DeliveryOrderAction extends BaseAction {
 	private Date dateFrom;
 	private String scheduleType;
 	private InputStream inputStream;
-	private String fileName;
+	private String fileName;	
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
 		this.deliveryOrderManager = deliveryOrderManager;
@@ -130,8 +130,8 @@ public class DeliveryOrderAction extends BaseAction {
 	public Map<String, String> getStatus() {
 		Map<String, String> status = new HashMap<String, String>();
 		status.put("", "All");
-		status.put("Open", "Open");
-		status.put("Close", "Close");
+		status.put("Create", "Create");
+		status.put("Confirm", "Confirm");
 		return status;
 	}
 
@@ -250,6 +250,16 @@ public class DeliveryOrderAction extends BaseAction {
 			selectCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
 			selectCountCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
 		}
+		
+		if (deliveryOrder.getCreateDateTo() != null) {
+			selectCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
+			selectCountCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
+		}
+		
+		if (deliveryOrder.getStatus() != null && deliveryOrder.getStatus().trim().length() != 0) {
+			selectCriteria.add(Restrictions.eq("status", deliveryOrder.getStatus()));
+			selectCountCriteria.add(Restrictions.eq("status", deliveryOrder.getStatus()));
+		}
 
 		if (sort != null && sort.trim().length() > 0) {
 			paginatedList.setSortCriterion(sort);
@@ -277,6 +287,7 @@ public class DeliveryOrderAction extends BaseAction {
 			deliveryOrder = this.deliveryOrderManager.get(doNo, true);
 		} else if (purchaseOrderDetailList != null) {
 
+			//po 创建 do
 			List<PurchaseOrderDetail> noneZeroPurchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
 			for (int i = 1; i < purchaseOrderDetailList.size(); i++) {
 				PurchaseOrderDetail purchaseOrderDetail = this.purchaseOrderDetailManager.get(purchaseOrderDetailList.get(i).getId());
@@ -287,16 +298,17 @@ public class DeliveryOrderAction extends BaseAction {
 					poNo = purchaseOrderDetail.getPurchaseOrder().getPoNo();
 				}
 
-				if (currentShipQty != null && BigDecimal.ZERO.compareTo(currentShipQty) < 0) {
-					if ((purchaseOrderDetail.getShipQty() != null && currentShipQty.add(purchaseOrderDetail.getShipQty()).compareTo(
-							purchaseOrderDetail.getQty()) > 0)
-							|| (purchaseOrderDetail.getShipQty() == null && currentShipQty.compareTo(purchaseOrderDetail.getQty()) > 0)) {
-						List<String> args = new ArrayList<String>();
-						args.add(purchaseOrderDetail.getItemDescription());
-						saveMessage(getText("errors.purchaseOrder.shipQtyExcceed", args));
-						return "poInput";
-					}
-
+				if ((purchaseOrderDetail.getShipQty() != null && currentShipQty.add(purchaseOrderDetail.getShipQty()).compareTo(
+						purchaseOrderDetail.getQty()) > 0)
+						|| (purchaseOrderDetail.getShipQty() == null && currentShipQty.compareTo(purchaseOrderDetail.getQty()) > 0)) {
+					List<String> args = new ArrayList<String>();
+					args.add(purchaseOrderDetail.getItemDescription());
+					saveMessage(getText("errors.purchaseOrder.shipQtyExcceed", args));
+					return "poInput";
+				}
+				
+				if (purchaseOrderDetail.getShipQty() == null || 
+						purchaseOrderDetail.getQty().compareTo(purchaseOrderDetail.getShipQty()) > 0) {
 					noneZeroPurchaseOrderDetailList.add(purchaseOrderDetail);
 				}
 			}
@@ -308,6 +320,8 @@ public class DeliveryOrderAction extends BaseAction {
 				return "poInput";
 			}
 		} else if (plantSupplierId != null && plantSupplierId > 0) {
+			
+			//sa 创建 do
 			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
 			Schedule schedule = this.scheduleManager
 					.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode());
@@ -333,70 +347,115 @@ public class DeliveryOrderAction extends BaseAction {
 							deliveryOrder.setAllowOverQty(allowOverQty);
 						}
 
-						DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
-						deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
-
-						deliveryOrderDetail.setSequence(StringUtil.leftPad(String.valueOf(sequence++ * 10), 4, '0'));
-						deliveryOrderDetail.setItem(scheduleItem.getItem());
-						deliveryOrderDetail.setItemDescription(scheduleItem.getItemDescription());
-						deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode() != null ? scheduleItem.getSupplierItemCode() : "");
-						deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
-						deliveryOrderDetail.setUom(scheduleItem.getUom());
-						deliveryOrderDetail.setScheduleItemDetail(scheduleItemDetail);
-						deliveryOrderDetail.setCurrentQty(scheduleItemDetail.getRemainQty());
-						deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
-						deliveryOrderDetail.setReferenceOrderNo(scheduleItem.getSchedule().getScheduleNo());
-						deliveryOrderDetail.setReferenceSequence(scheduleItem.getSequence());
-						deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
+						if ((scheduleItemDetail.getRemainQty() != null && scheduleItemDetail.getRemainQty().compareTo(BigDecimal.ZERO) > 0)
+								|| (plantSupplier.getPlantScheduleGroup() != null && plantSupplier.getPlantScheduleGroup().getAllowOverQtyDeliver())) {
+							DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
+							deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
+	
+							deliveryOrderDetail.setSequence(StringUtil.leftPad(String.valueOf(sequence++ * 10), 4, '0'));
+							deliveryOrderDetail.setItem(scheduleItem.getItem());
+							deliveryOrderDetail.setItemDescription(scheduleItem.getItemDescription());
+							deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode() != null ? scheduleItem.getSupplierItemCode() : "");
+							deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
+							deliveryOrderDetail.setUom(scheduleItem.getUom());
+							deliveryOrderDetail.setScheduleItemDetail(scheduleItemDetail);
+							deliveryOrderDetail.setQty(scheduleItemDetail.getRemainQty());
+							//deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
+							deliveryOrderDetail.setReferenceOrderNo(scheduleItem.getSchedule().getScheduleNo());
+							deliveryOrderDetail.setReferenceSequence(scheduleItem.getSequence());
+							deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
+						}
 					}
 				}
 			}
-		} else if (deliveryOrder != null) {
+		} else if (deliveryOrder != null){
 
-			List<DeliveryOrderDetail> noneZeroDeliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
+			List<DeliveryOrderDetail> deliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
 			if (deliveryOrderDetailList != null) {
 				for (int i = 1; i < deliveryOrderDetailList.size(); i++) {
 					DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
-					ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetail().getId());
-					deliveryOrderDetail.setScheduleItemDetail(scheduleItemDetail);
-					BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
-					BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
+					deliveryOrderDetail.setScheduleItemDetail(this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetail().getId()));
+					BigDecimal currentQty = deliveryOrderDetail.getQty();
+					BigDecimal deliverQty = deliveryOrderDetail.getDeliverQty();
 
-					if (BigDecimal.ZERO.compareTo(currentQty) < 0) {
-
-						BigDecimal totalDeliverQty = currentQty;
-						if (deliverQty != null) {
-							totalDeliverQty = totalDeliverQty.add(deliverQty);
-						}
-
-						if (deliveryOrderDetail.getOrderQty().compareTo(totalDeliverQty) < 0 && !deliveryOrder.getAllowOverQty()) {
-							List<String> args = new ArrayList<String>();
-							args.add(deliveryOrderDetail.getItemDescription());
-							for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
-								deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
-							}
-							saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
-							return "doInput";
-						}
-
-						noneZeroDeliveryOrderDetailList.add(deliveryOrderDetail);
+					BigDecimal totalDeliverQty = currentQty;
+					if (deliverQty != null) {
+						totalDeliverQty = totalDeliverQty.add(deliverQty);
 					}
+
+					if (deliveryOrderDetail.getOrderQty().compareTo(totalDeliverQty) < 0 && !deliveryOrder.getAllowOverQty()) {
+						List<String> args = new ArrayList<String>();
+						args.add(deliveryOrderDetail.getItemDescription());
+						for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
+							deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
+						}
+						saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
+						return "doInput";
+					}
+
+					deliveryOrderDetailList.add(deliveryOrderDetail);
 				}
 			}
 
-			if (noneZeroDeliveryOrderDetailList.size() > 0) {
-				deliveryOrder.setDeliveryOrderDetailList(noneZeroDeliveryOrderDetailList);
-				deliveryOrder = this.deliveryOrderManager.createScheduleDeliveryOrder(deliveryOrder);
-			} else {
-				for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
-					deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
-				}
-				saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
-				return "doInput";
-			}
+			deliveryOrder.setDeliveryOrderDetailList(deliveryOrderDetailList);
+			deliveryOrder = this.deliveryOrderManager.createScheduleDeliveryOrder(deliveryOrder);			
 		}
 
 		return SUCCESS;
+	}
+	
+	public String save() {
+		deliveryOrder = this.deliveryOrderManager.get(doNo.trim());
+
+		boolean allowOverQtyDeliver = false;
+		if (deliveryOrder.getPlantSupplier().getPlantScheduleGroup() != null){
+			allowOverQtyDeliver = deliveryOrder.getPlantSupplier().getPlantScheduleGroup().getAllowOverQtyDeliver();
+		}
+		
+		if (deliveryOrderDetailList != null) {
+			boolean hasError = false;
+			for (int i = 1; i < deliveryOrderDetailList.size(); i++) {
+				
+				for (int j = 0; j < deliveryOrder.getDeliveryOrderDetailList().size(); j++) {
+					DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(j);
+					if (deliveryOrderDetail.getId().equals(deliveryOrderDetailList.get(i).getId()))
+					{
+						deliveryOrderDetail.setQty(deliveryOrderDetailList.get(i).getQty());
+						
+						if (!allowOverQtyDeliver) {
+							BigDecimal deliverQty = deliveryOrderDetail.getDeliverQty();
+							if (deliverQty == null) {
+								deliverQty = BigDecimal.ZERO;
+							}
+							
+							if (deliverQty.add(deliveryOrderDetail.getQty()).compareTo(deliveryOrderDetail.getOrderQty()) > 0) {
+								List<String> args = new ArrayList<String>();
+								args.add(deliveryOrderDetail.getItemDescription());
+								saveMessage(getText("errors.deliveryOrder.shipQtyExcceed", args));
+								hasError = true;
+							}
+						}
+						break;
+					}
+				}
+			}
+			
+			if (hasError) {
+				return "input";
+			}
+		}
+		
+		return SUCCESS;
+	}
+	
+	public String confirm() {
+		} else {
+			for (int j = 1; j < deliveryOrderDetailList.size(); j++) {
+				deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetailList.get(j));
+			}
+			saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
+			return "doInput";
+		}
 	}
 
 	public InputStream getInputStream() {
