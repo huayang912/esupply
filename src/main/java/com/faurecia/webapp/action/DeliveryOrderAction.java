@@ -342,7 +342,7 @@ public class DeliveryOrderAction extends BaseAction {
 						deliveryOrderDetail.setSupplierItemCode(scheduleItem.getSupplierItemCode() != null ? scheduleItem.getSupplierItemCode() : "");
 						deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
 						deliveryOrderDetail.setUom(scheduleItem.getUom());
-						deliveryOrderDetail.setScheduleItemDetailId(scheduleItemDetail.getId());
+						deliveryOrderDetail.setScheduleItemDetail(scheduleItemDetail);
 						deliveryOrderDetail.setCurrentQty(scheduleItemDetail.getRemainQty());
 						deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
 						deliveryOrderDetail.setReferenceOrderNo(scheduleItem.getSchedule().getScheduleNo());
@@ -357,7 +357,8 @@ public class DeliveryOrderAction extends BaseAction {
 			if (deliveryOrderDetailList != null) {
 				for (int i = 1; i < deliveryOrderDetailList.size(); i++) {
 					DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
-					ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetailId());
+					ScheduleItemDetail scheduleItemDetail = this.scheduleItemDetailManager.get(deliveryOrderDetail.getScheduleItemDetail().getId());
+					deliveryOrderDetail.setScheduleItemDetail(scheduleItemDetail);
 					BigDecimal currentQty = deliveryOrderDetail.getCurrentQty();
 					BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
 

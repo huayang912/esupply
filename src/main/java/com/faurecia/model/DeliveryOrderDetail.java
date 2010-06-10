@@ -38,7 +38,8 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String referenceOrderNo;
 	private String referenceSequence;
 	private BigDecimal currentQty;
-	private Integer scheduleItemDetailId;
+	private ScheduleItemDetail scheduleItemDetail;
+	private PurchaseOrderDetail purchaseOrderDetail;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -70,7 +71,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "item_code")
+	@JoinColumn(name = "item_code", nullable=false)
 	public Item getItem() {
 		return item;
 	}
@@ -165,13 +166,24 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.currentQty = currentQty;
 	}
 	
-	@Transient
-	public Integer getScheduleItemDetailId() {
-		return scheduleItemDetailId;
+	@ManyToOne
+	@JoinColumn(name = "schedule_item_detail_id", nullable=true)
+	public ScheduleItemDetail getScheduleItemDetail() {
+		return scheduleItemDetail;
 	}
 
-	public void setScheduleItemDetailId(Integer scheduleItemDetailId) {
-		this.scheduleItemDetailId = scheduleItemDetailId;
+	public void setScheduleItemDetail(ScheduleItemDetail scheduleItemDetail) {
+		this.scheduleItemDetail = scheduleItemDetail;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "po_detail_id", nullable=true)
+	public PurchaseOrderDetail getPurchaseOrderDetail() {
+		return purchaseOrderDetail;
+	}
+
+	public void setPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
+		this.purchaseOrderDetail = purchaseOrderDetail;
 	}
 
 	/**
