@@ -79,7 +79,7 @@
 							<c:choose>
 								<c:when test="${head.createDo}">
 									<th><a
-										href="editDeliveryOrder.html?plantSupplierId=${schedule.plantSupplier.id}&dateFrom=<fmt:formatDate value="${head.dateFrom}" pattern="MM/dd/yyyy" />">${head.scheduleType}</a>
+										href="editDeliveryOrder.html?plantSupplierId=${schedule.plantSupplier.id}&dateFrom=<fmt:formatDate value="${head.dateFrom}" pattern="MM/dd/yyyy" />&scheduleType=${head.scheduleType}">${head.scheduleType}</a>
 									</th>
 								</c:when>
 								<c:otherwise>
