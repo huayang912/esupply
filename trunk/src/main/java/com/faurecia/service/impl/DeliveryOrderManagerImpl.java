@@ -101,6 +101,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
 				deliveryOrder.setCreateDate(new Date());
 				deliveryOrder.setIsExport(false);
+				deliveryOrder.setStatus("Create");
 			}
 
 			DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
@@ -109,16 +110,17 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
 			deliveryOrderDetail.setUnitCount(purchaseOrderDetail.getItem().getUnitCount());
 			deliveryOrderDetail.setQty(purchaseOrderDetail.getCurrentShipQty());
-			deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
+			//deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
 			deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
 			deliveryOrderDetail.setReferenceSequence(purchaseOrderDetail.getSequence());
+			deliveryOrderDetail.setPurchaseOrderDetail(purchaseOrderDetail);
 			deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
 
-			if (purchaseOrderDetail.getShipQty() == null) {
-				purchaseOrderDetail.setShipQty(BigDecimal.ZERO);
-			}
-
-			purchaseOrderDetail.setShipQty(purchaseOrderDetail.getShipQty().add(purchaseOrderDetail.getCurrentShipQty()));
+//			if (purchaseOrderDetail.getShipQty() == null) {
+//				purchaseOrderDetail.setShipQty(BigDecimal.ZERO);
+//			}
+//
+//			purchaseOrderDetail.setShipQty(purchaseOrderDetail.getShipQty().add(purchaseOrderDetail.getCurrentShipQty()));
 
 			this.purchaseOrderDetailManager.save(purchaseOrderDetail);
 		}
@@ -157,6 +159,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			
 			this.scheduleItemDetailManager.save(scheduleItemDetail);
 		}
+		deliveryOrder.setStatus("Create");
 		this.save(deliveryOrder);
 
 		return deliveryOrder;

@@ -34,7 +34,6 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String uom;
 	private BigDecimal unitCount;
 	private BigDecimal qty;
-	private BigDecimal orderQty;
 	private String referenceOrderNo;
 	private String referenceSequence;
 	private BigDecimal currentQty;
@@ -130,13 +129,26 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.qty = qty;
 	}
 	
-	@Column(name="order_qty", nullable = false, precision = 9, scale = 2)
+	@Transient
 	public BigDecimal getOrderQty() {
-		return orderQty;
+		if (scheduleItemDetail != null) {
+			return scheduleItemDetail.getReleaseQty();
+		} else if (purchaseOrderDetail != null) {
+			return purchaseOrderDetail.getQty();
+		}
+		
+		return BigDecimal.ZERO;
 	}
-
-	public void setOrderQty(BigDecimal orderQty) {
-		this.orderQty = orderQty;
+	
+	@Transient
+	public BigDecimal getDeliverQty() {
+		if (scheduleItemDetail != null) {
+			return scheduleItemDetail.getDeliverQty();
+		} else if (purchaseOrderDetail != null) {
+			return purchaseOrderDetail.getShipQty();
+		}
+		
+		return BigDecimal.ZERO;
 	}
 
 	@Column(name = "reference_order_no", nullable=false, length = 20)
@@ -155,15 +167,6 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setReferenceSequence(String referenceSequence) {
 		this.referenceSequence = referenceSequence;
-	}
-
-	@Transient
-	public BigDecimal getCurrentQty() {
-		return currentQty;
-	}
-
-	public void setCurrentQty(BigDecimal currentQty) {
-		this.currentQty = currentQty;
 	}
 	
 	@ManyToOne
