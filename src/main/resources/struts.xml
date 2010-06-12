@@ -76,7 +76,7 @@
 		<action name="mainMenu" class="mainAction" method="main">
 			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
-		
+
 		<action name="setSupplierPlant" class="mainAction" method="setSupplierPlant">
 			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
@@ -149,89 +149,88 @@
 
 		<!-- Add additional actions here -->
 		<!-- Plant -->
-		<action name="editPlant" class="plantAction"
-			method="edit">
+		<action name="editPlant" class="plantAction" method="edit">
 			<interceptor-ref name="adminCheck" />
 			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
 
-		<action name="editPlantProfile" class="plantAction"
-			method="edit">
+		<action name="editPlantProfile" class="plantAction" method="edit">
 			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
-		<action name="savePlant" class="plantAction"
-			method="save">
+		<action name="savePlant" class="plantAction" method="save">
 			<result name="input">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="cancel" type="redirect-action">admin/plants</result>
 			<result name="delete" type="redirect-action">admin/plants</result>
 			<result name="success" type="redirect-action">admin/plants</result>
 		</action>
-		
+
 		<!-- Plant Schedule Group -->
 		<action name="plantScheduleGroups" class="plantScheduleGroupAction"
 			method="list">
-			<result>/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp</result>
+			<result>/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp
+			</result>
 		</action>
-		
+
 		<action name="editPlantScheduleGroup" class="plantScheduleGroupAction"
 			method="edit">
-			<result name="success">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp</result>
-			<result name="error">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp</result>
+			<result name="success">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp
+			</result>
 		</action>
 
 		<action name="savePlantScheduleGroup" class="plantScheduleGroupAction"
 			method="save">
-			<result name="input">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp</result>
+			<result name="input">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp
+			</result>
 			<result name="cancel" type="redirect-action">plantScheduleGroups</result>
 			<result name="delete" type="redirect-action">plantScheduleGroups</result>
 			<result name="success" type="redirect-action">plantScheduleGroups</result>
 		</action>
 
 		<!-- Item -->
-		<action name="items" class="itemAction"
-			method="list">
+		<action name="items" class="itemAction" method="list">
 			<result>/WEB-INF/pages/item/itemList.jsp</result>
 		</action>
 
-		<action name="editItem" class="itemAction"
-			method="edit">
+		<action name="editItem" class="itemAction" method="edit">
 			<result name="success">/WEB-INF/pages/item/itemForm.jsp</result>
 			<result name="error">/WEB-INF/pages/item/itemList.jsp</result>
 		</action>
 
-		<action name="saveItem" class="itemAction"
-			method="save">
+		<action name="saveItem" class="itemAction" method="save">
 			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
 			<result name="cancel" type="redirect-action">items</result>
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
-		
+
 		<!-- Supplier Item -->
-		<action name="supplierItems" class="supplierItemAction"
-			method="list">
+		<action name="supplierItems" class="supplierItemAction" method="list">
 			<result>/WEB-INF/pages/supplierItem/supplierItemList.jsp</result>
 		</action>
 
 		<action name="editSupplierItem" class="supplierItemAction"
 			method="edit">
-			<result name="success">/WEB-INF/pages/supplierItem/supplierItemForm.jsp</result>
-			<result name="error">/WEB-INF/pages/supplierItem/supplierItemList.jsp</result>
+			<result name="success">/WEB-INF/pages/supplierItem/supplierItemForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/supplierItem/supplierItemList.jsp
+			</result>
 		</action>
 
 		<action name="saveSupplierItem" class="supplierItemAction"
 			method="save">
-			<result name="input">/WEB-INF/pages/supplierItem/supplierItemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/supplierItem/supplierItemForm.jsp
+			</result>
 			<result name="cancel" type="redirect-action">supplierItems</result>
 			<result name="success" type="redirect-action">supplierItems</result>
 		</action>
 
 		<!-- Supplier -->
-		<action name="suppliers" class="supplierAction"
-			method="list">
+		<action name="suppliers" class="supplierAction" method="list">
 			<result>/WEB-INF/pages/supplier/supplierList.jsp</result>
 		</action>
 
@@ -241,14 +240,12 @@
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
-		<action name="editSupplier" class="supplierAction"
-			method="edit">
+		<action name="editSupplier" class="supplierAction" method="edit">
 			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
 			<result name="error">/WEB-INF/pages/supplier/supplierList.jsp</result>
 		</action>
 
-		<action name="saveSupplier" class="supplierAction"
-			method="save">
+		<action name="saveSupplier" class="supplierAction" method="save">
 			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
 			<result name="cancel" type="redirect-action">suppliers</result>
 			<result name="delete" type="redirect-action">suppliers</result>
@@ -286,13 +283,11 @@
 		</action>
 
 		<!-- Schedule -->
-		<action name="schedules" class="scheduleAction"
-			method="list">
+		<action name="schedules" class="scheduleAction" method="list">
 			<result name="success">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 		</action>
 
-		<action name="editSchedule" class="scheduleAction"
-			method="edit">
+		<action name="editSchedule" class="scheduleAction" method="edit">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.includeMethods">edit</param>
 			</interceptor-ref>
@@ -309,8 +304,7 @@
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
-		<action name="saveSchedule" class="scheduleAction"
-			method="save">
+		<action name="saveSchedule" class="scheduleAction" method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
 
@@ -327,10 +321,23 @@
 				<param name="actionName">editPurchaseOrder</param>
 				<param name="poNo">${poNo}</param>
 			</result>
-			<result name="doInput">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp</result>			
+			<result name="doInput">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
 			</result>
 			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
+		</action>
+
+		<action name="saveDeliveryOrder" class="deliveryOrderAction"
+			method="save">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+		</action>
+		
+		<action name="confirmDeliveryOrder" class="deliveryOrderAction"
+			method="confirm">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
 			</result>
 		</action>
 
@@ -339,18 +346,23 @@
 			<result name="cancel" type="redirect-action">deliveryOrders</result>
 		</action>
 
-		<action name="printDeliveryOrder" class="deliveryOrderAction" method="print">
-            <result name="success" type="stream">
-                <param name="contentType">printDeliveryOrder</param>
-                <param name="inputName">inputStream</param>
-                <param name="contentDisposition">attachment;filename="${fileName}"</param>
-                <param name="bufferSize">4096</param>
-            </result>
-        </action>
+		<action name="deleteDeliveryOrder" class="deliveryOrderAction"
+			method="delete">
+			<result type="redirect-action">deliveryOrders</result>
+		</action>
+
+		<action name="printDeliveryOrder" class="deliveryOrderAction"
+			method="print">
+			<result name="success" type="stream">
+				<param name="contentType">printDeliveryOrder</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
 
 		<!-- Receipt -->
-		<action name="receipts" class="receiptAction"
-			method="list">
+		<action name="receipts" class="receiptAction" method="list">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.includeMethods">list</param>
 			</interceptor-ref>
@@ -360,66 +372,61 @@
 			</result>
 		</action>
 
-		<action name="editReceipt" class="receiptAction"
-			method="edit">
+		<action name="editReceipt" class="receiptAction" method="edit">
 			<result name="success">/WEB-INF/pages/receipt/receiptForm.jsp
 			</result>
 		</action>
 
-		<action name="saveReceipt" class="receiptAction"
-			method="save">
+		<action name="saveReceipt" class="receiptAction" method="save">
 			<result name="cancel" type="redirect-action">receipts</result>
 		</action>
 
 		<!-- Log -->
-		<action name="inboundLogs" class="inboundLogAction"
-			method="list">
+		<action name="inboundLogs" class="inboundLogAction" method="list">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.includeMethods">list</param>
 			</interceptor-ref>
 			<result name="input">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
 			<result name="success">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
 		</action>
-		
+
 		<action name="importInboundLog" class="inboundLogAction"
 			method="reimport">
 			<result name="success" type="redirect-action">inboundLogs</result>
 		</action>
-		
-		<action name="outboundLogs" class="outboundLogAction"
-			method="list">
+
+		<action name="outboundLogs" class="outboundLogAction" method="list">
 			<interceptor-ref name="defaultStack">
 				<param name="validation.includeMethods">list</param>
 			</interceptor-ref>
-			<result name="input">/WEB-INF/pages/outboundLog/outboundLog.jsp</result>
-			<result name="success">/WEB-INF/pages/outboundLog/outboundLog.jsp</result>
+			<result name="input">/WEB-INF/pages/outboundLog/outboundLog.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/outboundLog/outboundLog.jsp
+			</result>
 		</action>
-		
+
 		<action name="exportOutboundLog" class="outboundLogAction"
 			method="export">
 			<result name="success" type="redirect-action">outboundLogs</result>
 		</action>
-		
+
 		<!-- Supplier Notice -->
-		<action name="notices" class="noticeAction"
-			method="list">
+		<action name="notices" class="noticeAction" method="list">
 			<result name="success">/WEB-INF/pages/notice/noticeList.jsp</result>
 		</action>
-		
-		<action name="editNotice" class="noticeAction"
-			method="edit">
+
+		<action name="editNotice" class="noticeAction" method="edit">
 			<result name="success">/WEB-INF/pages/notice/noticeForm.jsp
 			</result>
 		</action>
-		
-		<action name="saveNotice" class="noticeAction"
-			method="save">
+
+		<action name="saveNotice" class="noticeAction" method="save">
 			<result name="input">/WEB-INF/pages/notice/noticeForm.jsp</result>
 			<result name="cancel" type="redirect-action">notices</result>
 			<result name="delete" type="redirect-action">notices</result>
 			<result name="success" type="redirect-action">notices</result>
 		</action>
-		
+
 	</package>
 
 	<!-- Actions in this package will be prefixed with /admin/ -->
@@ -449,8 +456,7 @@
 			<result name="success">/WEB-INF/pages/admin/userList.jsp</result>
 		</action>
 
-		<action name="plants" class="plantAction"
-			method="list">
+		<action name="plants" class="plantAction" method="list">
 			<interceptor-ref name="adminCheck" />
 			<result>/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>

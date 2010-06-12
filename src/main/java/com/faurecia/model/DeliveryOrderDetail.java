@@ -36,7 +36,6 @@ public class DeliveryOrderDetail extends BaseObject {
 	private BigDecimal qty;
 	private String referenceOrderNo;
 	private String referenceSequence;
-	private BigDecimal currentQty;
 	private ScheduleItemDetail scheduleItemDetail;
 	private PurchaseOrderDetail purchaseOrderDetail;
 	

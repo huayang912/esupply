@@ -204,6 +204,11 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 					plant = this.plantManager.get(plantCode); // plant
 
 					String supplierCode = E1BP2017GMITEMCREATE.getVENDOR();
+					try {
+						// 供应商号如果是全数字，则要把前置0去掉
+						supplierCode = Long.toString((Long.parseLong(supplierCode)));
+					} catch (NumberFormatException ex) {
+					}
 
 					try {
 						supplier = this.supplierManager.get(supplierCode); // supplier

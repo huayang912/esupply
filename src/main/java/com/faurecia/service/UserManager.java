@@ -80,4 +80,6 @@ public interface UserManager extends UniversalManager {
 	List<User> getPlantUsers(Plant plant, Role role);
 
 	List<User> getSuppliers(Plant plant, Role role);
+	
+	void keepSession();
 }

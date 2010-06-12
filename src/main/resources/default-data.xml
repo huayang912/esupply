@@ -82,11 +82,11 @@
 			<value description="code">1033</value>
 			<value description="name">FGW-Faurecia Wuhan</value>
 			<value description="address1">武汉经济技术开发区创业3路17号</value>
-			<value description="ftp_server">10.20.96.130</value>
+			<value description="ftp_server">localhost</value>
 			<value description="ftp_port">21</value>
-			<value description="ftp_path">/storage/team/dingxin</value>
-			<value description="ftp_user">commonuser</value>
-			<value description="ftp_password">test123</value>
+			<value description="ftp_path">\</value>
+			<value description="ftp_user">dingxin</value>
+			<value description="ftp_password">dingxin</value>
 			<value description="temp_file_directory">D:\sconitInboundTest\temp</value>
 			<value description="archive_file_directory">D:\sconitInboundTest\achive</value>
 			<value description="error_file_directory">D:\sconitInboundTest\error</value>

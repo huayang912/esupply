@@ -13,9 +13,18 @@
         <script type="text/javascript" src="<c:url value='/scripts/prototype.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/scriptaculous.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/global.js'/>"></script>   
+        <script type='text/javascript' src="<c:url value='/dwr/interface/UserManager.js'/>"></script>
+  		<script type='text/javascript' src="<c:url value='/dwr/engine.js'/>"></script>
+        <script type='text/javascript' src="<c:url value='/dwr/util.js'/>"></script>
+        
         <script type="text/javascript">
+	        function keepSession() {
+	    		UserManager.keepSession();
+	    		setTimeout("keepSession();", 600000); //keep session alive for 10 mins
+	    	} 
         	window.onerror = function() { return true; }
-        </script>     
+        	keepSession();        	     		      
+        </script> 
         <decorator:head/>
     </head>
 <body<decorator:getProperty property="body.id" writeEntireProperty="true"/><decorator:getProperty property="body.class" writeEntireProperty="true"/>>

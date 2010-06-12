@@ -290,6 +290,11 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					} else if ("LF".equals(E1EDKA1.getPARVW())) {
 						supplierE1EDKA1 = E1EDKA1;
 						String supplierCode = E1EDKA1.getPARTN();
+						try {
+							// 供应商号如果是全数字，则要把前置0去掉
+							supplierCode = Long.toString((Long.parseLong(supplierCode)));
+						} catch (NumberFormatException ex) {
+						}
 
 						try {
 							supplier = this.supplierManager.get(supplierCode); // supplier
@@ -476,6 +481,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
+							scheduleItemDetail.setIsConfirm(false);
 
 							scheduleItem.addScheduleItemDetail(scheduleItemDetail);
 						}

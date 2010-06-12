@@ -7,6 +7,7 @@
             <param name="class" value="com.faurecia.service.UserManager"/>
             <param name="beanName" value="userManager"/>
             <include method="getUsers"/>
+            <include method="keepSession"/>
         </create>
         <convert converter="bean" match="com.faurecia.model.User"/>
     </allow>

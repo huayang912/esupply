@@ -5,10 +5,12 @@
 <meta name="heading"
 	content="<fmt:message key='deliveryOrderDetail.heading'/>" />
 <c:choose>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 		<meta name="menu" content="PlantOrderMenu" />
 	</c:when>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 		<meta name="menu" content="SupplierOrderMenu" />
 	</c:when>
 </c:choose>
@@ -19,11 +21,23 @@
 	<c:set var="buttons">
 		<table>
 			<tr>
-				<td><c:if test="${empty deliveryOrder.doNo}">
-					<s:submit key="button.save" />
-				</c:if> <c:if test="${not empty deliveryOrder.doNo}">
-					<s:submit key="button.print" action="printDeliveryOrder" />
-				</c:if></td>
+				<c:if
+					test="${empty deliveryOrder.doNo}">
+					<td><s:submit key="button.save" /></td>
+				</c:if>
+				<c:if
+					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Create'}">
+					<td><s:submit key="button.save" action="saveDeliveryOrder"/></td>
+					<td><s:submit key="button.confirm"
+						action="confirmDeliveryOrder" /></td>
+					<td><s:submit key="button.delete" action="deleteDeliveryOrder"/></td>
+				</c:if>
+				<c:if
+					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
+					<td><s:submit key="button.print" action="printDeliveryOrder" />
+					</td>
+				</c:if>
+
 				<td><input type="button"
 					value="<fmt:message key="button.cancel"/>"
 					onclick="window.location.href='cancelDeliveryOrder.html'" /></td>
@@ -98,6 +112,11 @@
 				cssClass="text medium" /></td>
 		</tr>
 		<tr>
+			<td><s:label key="deliveryOrder.status" cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.isExport"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
 			<td><s:label key="deliveryOrder.createDate"
 				cssClass="text medium" /></td>
 			<td></td>
@@ -118,17 +137,27 @@
 		<display:column property="uom" titleKey="deliveryOrderDetail.uom" />
 		<display:column property="orderQty"
 			titleKey="deliveryOrderDetail.orderQty" />
-		<c:if test="${not empty deliveryOrder.doNo}">
+		<display:column property="deliverQty"
+			titleKey="deliveryOrderDetail.deliverQty" />
+		<c:if
+			test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
 			<display:column property="qty" titleKey="deliveryOrderDetail.qty" />
 		</c:if>
-		<c:if test="${empty deliveryOrder.doNo}">
+		<c:if
+			test="${empty deliveryOrder.doNo or deliveryOrder.status == 'Create'}">
 			<display:column titleKey="deliveryOrderDetail.qty">
 				<input type="text"
-					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].currentQty"
-					value="${deliveryOrderDetail.currentQty}" class="text medium" />
+					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].qty"
+					value="${deliveryOrderDetail.qty}" class="text medium" />
 				<input type="hidden"
-					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].scheduleItemDetailId"
-					value="<c:out value="${deliveryOrderDetail.scheduleItemDetailId}"/>" />
+					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].id"
+					value="<c:out value="${deliveryOrderDetail.id}"/>" />
+				<input type="hidden"
+					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].scheduleItemDetail.id"
+					value="<c:out value="${deliveryOrderDetail.scheduleItemDetail.id}"/>" />
+				<input type="hidden"
+					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].purchaseOrderDetail.id"
+					value="<c:out value="${deliveryOrderDetail.purchaseOrderDetail.id}"/>" />
 				<input type="hidden"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].orderQty"
 					value="<c:out value="${deliveryOrderDetail.orderQty}"/>" />
@@ -147,9 +176,6 @@
 				<input type="hidden"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].uom"
 					value="<c:out value="${deliveryOrderDetail.uom}"/>" />
-				<input type="hidden"
-					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].qty"
-					value="<c:out value="${deliveryOrderDetail.qty}"/>" />
 				<input type="hidden"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].unitCount"
 					value="<c:out value="${deliveryOrderDetail.unitCount}"/>" />

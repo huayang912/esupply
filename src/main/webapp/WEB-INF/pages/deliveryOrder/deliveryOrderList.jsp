@@ -72,7 +72,14 @@
 	<display:column property="supplierName" sortable="true"
 		sortProperty="ps.supplierName" titleKey="deliveryOrder.supplierName" />
 	<display:column property="createDate" format="{0,date,MM/dd/yyyy}"
-		sortable="true" titleKey="deliveryOrder.createDate" />
+		sortable="true" titleKey="deliveryOrder.status" />
+	<display:column property="status"
+		sortable="true" titleKey="deliveryOrder.status" />
+	<display:column
+		sortable="true" titleKey="deliveryOrder.isExport" >
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${deliveryOrder.isExport}">checked="checked"</c:if> />
+		</display:column>
 
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="deliveryOrder.deliveryOrder" />
