@@ -18,8 +18,14 @@
 <s:form name="purchaseOrderForm" action="editDeliveryOrder"
 	method="post" validate="true">
 	<c:set var="buttons">
-		<s:submit key="button.save" />
-		<input type="button" value="<fmt:message key="button.cancel"/>" onclick="window.location.href='cancelPurchaseOrder.html'"/> 		
+		<table>
+			<tr>
+				<td>
+				<s:submit key="button.save" method="edit" />
+				</td>
+				<td><input type="button" value="<fmt:message key="button.cancel"/>" onclick="window.location.href='cancelPurchaseOrder.html'"/> </td>
+			</tr>
+		</table>	
 	</c:set>
 
 	<table width="100%">

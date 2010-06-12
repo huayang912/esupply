@@ -153,4 +153,8 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
     	
     	return dao.findByNamedQuery("findSuppliers", queryParam);
 	}
+	
+	public void keepSession() {
+		String helloWord = "";
+	}
 }

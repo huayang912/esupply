@@ -2,7 +2,6 @@ package com.faurecia.service.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -253,6 +252,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 		PurchaseOrder po = new PurchaseOrder();
 		po.setStatus("Open");
+		po.setIsConfirm(false);
 
 		try {
 			Plant plant = null;
@@ -280,12 +280,17 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				for (int i = 0; i < ORDERS02E1EDKA1List.size(); i++) {
 					ORDERS02E1EDKA1 E1EDKA1 = ORDERS02E1EDKA1List.get(i);
 					if ("WE".equals(E1EDKA1.getPARVW())) {
-						String plantCode = E1EDKA1.getLIFNR();
+						String plantCode = E1EDKA1.getLIFNR();						
 
 						plant = this.plantManager.get(plantCode); // plant
 					} else if ("LF".equals(E1EDKA1.getPARVW())) {
 						supplierE1EDKA1 = E1EDKA1;
 						String supplierCode = E1EDKA1.getPARTN();
+						try {
+							// 供应商号如果是全数字，则要把前置0去掉
+							supplierCode = Long.toString((Long.parseLong(supplierCode)));
+						} catch (NumberFormatException ex) {
+						}
 
 						try {
 							supplier = this.supplierManager.get(supplierCode); // supplier

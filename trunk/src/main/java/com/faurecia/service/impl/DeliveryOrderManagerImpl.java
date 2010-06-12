@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -145,23 +146,68 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			Item item = this.itemManager.get(deliveryOrderDetail.getItem().getId());
 			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
 			deliveryOrderDetail.setItem(item);
-			deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
+			deliveryOrderDetail.setPurchaseOrderDetail(null);
+			//deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
 			
-			ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();
+//			ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();
 			
-			BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
-			if (deliverQty == null) {
-				deliverQty = deliveryOrderDetail.getCurrentQty();
-			} else {
-				deliverQty = deliverQty.add(deliveryOrderDetail.getCurrentQty());
-			}
-			scheduleItemDetail.setDeliverQty(deliverQty);
+//			BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
+//			if (deliverQty == null) {
+//				deliverQty = deliveryOrderDetail.getCurrentQty();
+//			} else {
+//				deliverQty = deliverQty.add(deliveryOrderDetail.getCurrentQty());
+//			}
+//			scheduleItemDetail.setDeliverQty(deliverQty);
 			
-			this.scheduleItemDetailManager.save(scheduleItemDetail);
+//			this.scheduleItemDetailManager.save(scheduleItemDetail);
 		}
 		deliveryOrder.setStatus("Create");
 		this.save(deliveryOrder);
 
+		return deliveryOrder;
+	}
+	
+	public DeliveryOrder confirm(DeliveryOrder deliveryOrder) {
+		deliveryOrder.setStatus("Confirm");
+		
+		List<DeliveryOrderDetail> deliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
+		for(int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
+			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
+			if (deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
+				deliveryOrderDetailList.add(deliveryOrderDetail);
+				
+				if (deliveryOrderDetail.getPurchaseOrderDetail() != null) {
+					PurchaseOrderDetail purchaseOrderDetail = deliveryOrderDetail.getPurchaseOrderDetail();
+					if (purchaseOrderDetail.getShipQty() == null)
+					{
+						purchaseOrderDetail.setShipQty(deliveryOrderDetail.getQty());
+					}
+					else 
+					{
+						purchaseOrderDetail.getShipQty().add(deliveryOrderDetail.getQty());
+					}
+					
+					this.purchaseOrderDetailManager.save(purchaseOrderDetail);
+					
+				} else if (deliveryOrderDetail.getScheduleItemDetail() != null) {
+					ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();
+					if (scheduleItemDetail.getDeliverQty() == null)
+					{
+						scheduleItemDetail.setDeliverQty(deliveryOrderDetail.getQty());
+					}
+					else 
+					{
+						scheduleItemDetail.getDeliverQty().add(deliveryOrderDetail.getQty());
+					}
+					
+					this.scheduleItemDetailManager.save(scheduleItemDetail);
+				}
+			}
+		}
+		
+		deliveryOrder.setDeliveryOrderDetailList(deliveryOrderDetailList);
+		this.genericDao.save(deliveryOrder);
+		
 		return deliveryOrder;
 	}
 
@@ -171,6 +217,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		
 		criteria.add(Restrictions.eq("ps.plant", plant));
 		criteria.add(Restrictions.eq("isExport", false));
+		criteria.add(Restrictions.eq("status", "Confirm"));
 		criteria.addOrder(Order.asc("createDate"));
 
 		List<DeliveryOrder> deliveryOrderList = this.findByCriteria(criteria);

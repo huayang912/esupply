@@ -1,12 +1,12 @@
 ## Do NOT delete! Keep this line to avoid the native2ascii UTF-8 BOM bug. See #APF-639
 
 
-
-
-
-
-
-
+webapp.name=E-Supply
+webapp.tagline=Supplier Portal
+webapp.version=Version ${pom.version}
+company.name=Faurecia
+company.url=http://www.faurecia.com/
+copyright.year=${copyright.year}
 
 user.status=当前用户: 
 user.logout=退出
@@ -127,6 +127,7 @@ button.view=查看
 button.reset=复位
 button.login=登录
 button.print=打印
+button.confirm=确认
 
 # -- general values --
 icon.information=信息
@@ -450,7 +451,14 @@ deliveryOrderDetail.qty=发货数
 deliveryOrderDetail.orderQty=需求数
 deliveryOrderDetail.currentQty=发货数
 errors.deliveryOrder.shipQtyExcceed={0}发货数大于需求数。
-errors.deliveryOrder.createDo.emptyDetail=发货项不能为空。 
+errors.deliveryOrder.createDo.emptyDetail=发货数不能全部为零。 
+deliveryOrderDetail.deliverQty=已发数
+deliveryOrder.updated=要货令更新成功。
+deliveryOrder.added=要货令添加成功。
+deliveryOrder.deleted=要货令删除成功。
+deliveryOrder.confirmed=要货令确认成功。
+deliveryOrder.status=状态
+deliveryOrder.isExport=是否导出
 
 # -- receipt page --
 receiptList.title=收货单列表

@@ -31,8 +31,6 @@ public class NoticeAction extends BaseAction {
 	private File file;
 	private String fileContentType;
 	private String fileFileName;
-	private String title;
-	private String content;
 	
 	private List<LabelValue> availableSuppliers;
 
@@ -96,22 +94,6 @@ public class NoticeAction extends BaseAction {
 		this.fileFileName = fileFileName;
 	}
 
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public List<LabelValue> getAvailableSuppliers() {
 		return availableSuppliers;
 	}
@@ -151,6 +133,10 @@ public class NoticeAction extends BaseAction {
 	public String save() throws Exception {
 		if (delete != null) {
 			return delete();
+		}
+		
+		if (fileFileName != null) {
+			
 		}
 
 		return SUCCESS;

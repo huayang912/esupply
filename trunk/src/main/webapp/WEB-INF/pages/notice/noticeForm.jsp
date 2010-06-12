@@ -12,7 +12,7 @@
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
 </head>
 
-<s:form id="noticeForm" action="saveNotice" method="post"
+<s:form id="noticeForm" action="saveNotice" enctype="multipart/form-data" method="post"
 	validate="true">
 	<li style="display: none"><input type="hidden" name="from"
 		value="${param.from}" /></li>
@@ -29,26 +29,19 @@
 	<li>
 	<div>
 	<div><s:textfield key="notice.title" theme="xhtml"
-		required="true" cssClass="text medium" /></div>
+		required="true" cssClass="text long" /></div>
 	</div>
 	</li>
 	<li>
 	<div>
-	<div><s:textfield key="notice.content" theme="xhtml"
-		required="true" cssClass="text medium" /></div>
+	<div><s:textarea key="notice.content" theme="xhtml"
+		 cols="100" rows="8" /></div>
 	</div>
 	</li>
+	
 	<li>
 	<div>
-	<div><s:textfield key="notice.fileFullPath" theme="xhtml"
-		cssClass="text large" /></div>
-	</div>
-	</li>
-
-	<li>
-	<div>
-	<div><s:textfield key="notice.fileName" theme="xhtml"
-		cssClass="text medium" /></div>
+	<div><s:file name="file" label="%{getText('notice.file')}" cssClass="text file" required="true"/></div>
 	</div>
 	</li>
 
