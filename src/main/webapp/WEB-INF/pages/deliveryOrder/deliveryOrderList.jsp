@@ -78,7 +78,7 @@
 	<display:column
 		sortable="true" titleKey="deliveryOrder.isExport" >
 		<input type="checkbox" disabled="disabled"
-			<c:if test="${deliveryOrder.isExport}">checked="checked"</c:if> />
+			<c:if test="${deliveryOrders.isExport}">checked="checked"</c:if> />
 		</display:column>
 
 	<display:setProperty name="paging.banner.item_name">
