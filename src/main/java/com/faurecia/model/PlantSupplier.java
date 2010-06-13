@@ -134,7 +134,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 		this.supplierFax = supplierFax;
 	}
 
-	@Column(name = "do_no_prefix", length = 4)
+	@Column(name = "do_no_prefix", length = 4, nullable = false)
 	public String getDoNoPrefix() {
 		return doNoPrefix;
 	}

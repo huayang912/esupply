@@ -20,9 +20,12 @@
 
 <s:form name="plantSupplierForm" action="saveSupplier" method="post"
 	validate="true">
-	<li style="display: none"><s:hidden key="plantSupplier.id" /> <s:hidden
-		key="plantSupplier.plant.code" /><input type="hidden" name="from"
-		value="${param.from}" /></li>
+	<li style="display: none">
+		<s:hidden key="plantSupplier.id" /> 
+		<s:hidden key="plantSupplier.plant.code" />
+		<s:hidden key="plantSupplier.doNoPrefix" />
+		<input type="hidden" name="from" value="${param.from}" />
+	</li>
 	<c:set var="buttons">
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
