@@ -22,7 +22,7 @@
 		<s:form name="supplierPlantForm" action="setSupplierPlant" method="post">
 		<li><s:select name="supplierPlant" key="mainMenu.plantList" list="%{plantSupplierList}" listKey="plant.code" listValue="plant.name"
 		theme="xhtml" /></li>
-		<s:submit key="button.save"/>
+		<s:submit key="button.confirm"/>
 		</s:form>
 	</fieldset>
 </div>
