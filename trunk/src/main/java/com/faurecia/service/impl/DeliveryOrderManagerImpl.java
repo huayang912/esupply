@@ -55,6 +55,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
 	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
+	private GenericManager<DeliveryOrderDetail, Integer> deliveryOrderDetailManager;
 
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
@@ -84,6 +85,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	
 	public void setScheduleItemDetailManager(GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager) {
 		this.scheduleItemDetailManager = scheduleItemDetailManager;
+	}
+
+	public void setDeliveryOrderDetailManager(GenericManager<DeliveryOrderDetail, Integer> deliveryOrderDetailManager) {
+		this.deliveryOrderDetailManager = deliveryOrderDetailManager;
 	}
 
 	public DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException,
@@ -202,6 +207,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					
 					this.scheduleItemDetailManager.save(scheduleItemDetail);
 				}
+			}
+			else {
+				this.deliveryOrderDetailManager.remove(deliveryOrderDetail.getId());
 			}
 		}
 		
@@ -326,7 +334,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private void addE1EDL24List(List<DELVRY03E1EDL24> E1EDL24List, List<DeliveryOrderDetail> deliveryOrderDetailList) {
 		for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
 			DeliveryOrderDetail deliveryOrderDetail = deliveryOrderDetailList.get(i);
-			E1EDL24List.add(prepareE1EDL24(i, deliveryOrderDetail));
+			E1EDL24List.add(prepareE1EDL24(i + 1, deliveryOrderDetail));
 		}
 	}
 

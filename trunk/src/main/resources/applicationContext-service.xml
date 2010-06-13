@@ -202,7 +202,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="plantScheduleGroupManager" class="com.faurecia.service.impl.PlantScheduleGroupManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -210,7 +210,7 @@
 				<constructor-arg value="com.faurecia.model.PlantScheduleGroup" />
 			</bean>
 		</constructor-arg>
-		
+
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 
@@ -272,7 +272,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="scheduleItemDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -319,7 +319,17 @@
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="itemManager" ref="itemManager" />
-		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager"/>
+		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager" />
+		<property name="deliveryOrderDetailManager" ref="deliveryOrderDetailManager" />
+	</bean>
+
+	<bean id="deliveryOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.DeliveryOrderDetail" />
+			</bean>
+		</constructor-arg>
 	</bean>
 
 	<bean id="receiptManager" class="com.faurecia.service.impl.ReceiptManagerImpl">
@@ -343,7 +353,7 @@
 		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
-	
+
 	<bean id="noticeManager" class="com.faurecia.service.impl.NoticeManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
@@ -352,7 +362,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="noticeReaderManager" class="com.faurecia.service.impl.NoticeReaderManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
