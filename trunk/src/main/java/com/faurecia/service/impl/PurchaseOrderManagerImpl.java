@@ -221,6 +221,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 						PurchaseOrderDetail oldPurchaseOrderDetail = oldPurchaseOrder.getPurchaseOrderDetailList().get(k);
 						if (purchaseOrderDetail.getSequence().equals(oldPurchaseOrderDetail.getSequence())) {
 							oldPurchaseOrderDetail.setQty(purchaseOrderDetail.getQty());
+							oldPurchaseOrderDetail.setDeliveryDate(purchaseOrderDetail.getDeliveryDate());
 							findMatch = true;
 							break;
 						}
