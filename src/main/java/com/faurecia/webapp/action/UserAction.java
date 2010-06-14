@@ -48,8 +48,7 @@ public class UserAction extends BaseAction implements Preparable {
 		if (getRequest().getMethod().equalsIgnoreCase("post")) {
 			// prevent failures on new
 			if (!"".equals(getRequest().getParameter("user.id"))) {
-				user = userManager
-						.getUser(getRequest().getParameter("user.id"));
+				user = userManager.getUser(getRequest().getParameter("user.id"));
 			}
 		}
 	}
@@ -113,20 +112,25 @@ public class UserAction extends BaseAction implements Preparable {
 	 * @return success
 	 */
 	public String delete() {
-		userManager.removeUser(user.getId().toString());
-		List<String> args = new ArrayList<String>();
-		args.add(user.getFullName());
-		saveMessage(getText("user.deleted", args));
+		try {
+			userManager.removeUser(user.getId().toString());
+			
+			List<String> args = new ArrayList<String>();
+			args.add(user.getFullName());
+			saveMessage(getText("user.deleted", args));
+		} catch (Exception ex) {
+			List<String> args = new ArrayList<String>();
+			args.add(user.getFullName());
+			saveMessage(getText("user.deletefail", args));
+		}
 
-		if (Constants.ADMIN_ROLE.equals(roleType)
-				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)
-				|| Constants.VENDOR_ROLE.equals(roleType)) {
+		if (Constants.ADMIN_ROLE.equals(roleType) || Constants.PLANT_ADMIN_ROLE.equals(roleType) || Constants.VENDOR_ROLE.equals(roleType)) {
 			return "adminSuccess";
 		} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 			return "userSuccess";
 		} else {
 			log.warn("Trying to back to user list with role not specified.");
-			
+
 			return "mainMenu";
 		}
 	}
@@ -148,13 +152,9 @@ public class UserAction extends BaseAction implements Preparable {
 			// reject if id passed in or "list" parameter passed in
 			// someone that is trying this probably knows the AppFuse code
 			// but it's a legitimate bug, so I'll fix it. ;-)
-			if ((request.getParameter("id") != null)
-					|| (request.getParameter("from") != null)) {
-				ServletActionContext.getResponse().sendError(
-						HttpServletResponse.SC_FORBIDDEN);
-				log.warn("User '" + request.getRemoteUser()
-						+ "' is trying to edit user '"
-						+ request.getParameter("id") + "'");
+			if ((request.getParameter("id") != null) || (request.getParameter("from") != null)) {
+				ServletActionContext.getResponse().sendError(HttpServletResponse.SC_FORBIDDEN);
+				log.warn("User '" + request.getRemoteUser() + "' is trying to edit user '" + request.getParameter("id") + "'");
 
 				return null;
 			}
@@ -167,7 +167,7 @@ public class UserAction extends BaseAction implements Preparable {
 		} else if (editProfile) {
 			user = userManager.getUserByUsername(request.getRemoteUser());
 		} else {
-			user = new User();			
+			user = new User();
 			// user.addRole(new Role(Constants.PLANT_ADMIN_ROLE));
 		}
 
@@ -190,7 +190,7 @@ public class UserAction extends BaseAction implements Preparable {
 				}
 			}
 		}
-			
+
 		return SUCCESS;
 	}
 
@@ -213,16 +213,14 @@ public class UserAction extends BaseAction implements Preparable {
 		if (!"list".equals(from)) {
 			return "mainMenu";
 		}
-		
-		if (Constants.ADMIN_ROLE.equals(roleType)
-				|| Constants.PLANT_ADMIN_ROLE.equals(roleType)
-				|| Constants.VENDOR_ROLE.equals(roleType)) {
+
+		if (Constants.ADMIN_ROLE.equals(roleType) || Constants.PLANT_ADMIN_ROLE.equals(roleType) || Constants.VENDOR_ROLE.equals(roleType)) {
 			return "adminCancel";
 		} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 			return "userCancel";
 		} else {
 			log.warn("Trying to back to user list with role not specified.");
-			
+
 			return "mainMenu";
 		}
 	}
@@ -240,11 +238,11 @@ public class UserAction extends BaseAction implements Preparable {
 
 		boolean isNew = ("".equals(getRequest().getParameter("user.version")));
 
-		//为新增用户添加角色
+		// 为新增用户添加角色
 		if (isNew) {
 			user.addRole(roleManager.getRole(roleType));
-			
-			//工厂管理员维护工厂用户和供应商时，默认填写新增用户的工厂属性
+
+			// 工厂管理员维护工厂用户和供应商时，默认填写新增用户的工厂属性
 			if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 				String userCode = this.getRequest().getRemoteUser();
 				User plantAdmin = this.userManager.getUserByUsername(userCode);
@@ -270,7 +268,7 @@ public class UserAction extends BaseAction implements Preparable {
 			user.setVersion(originalVersion);
 			// redisplay the unencrypted passwords
 			user.setPassword(user.getConfirmPassword());
-			
+
 			return INPUT;
 		}
 
@@ -287,22 +285,18 @@ public class UserAction extends BaseAction implements Preparable {
 				// Send an account information e-mail
 				mailMessage.setSubject(getText("signup.email.subject"));
 				try {
-					sendUserMessage(user,
-							getText("newuser.email.message", args), RequestUtil
-									.getAppURL(getRequest()));
+					sendUserMessage(user, getText("newuser.email.message", args), RequestUtil.getAppURL(getRequest()));
 				} catch (MailException me) {
 					addActionError(me.getCause().getLocalizedMessage());
 				}
-				
-				if (Constants.ADMIN_ROLE.equals(roleType)
-						|| Constants.PLANT_ADMIN_ROLE.equals(roleType)
-						|| Constants.VENDOR_ROLE.equals(roleType)) {
+
+				if (Constants.ADMIN_ROLE.equals(roleType) || Constants.PLANT_ADMIN_ROLE.equals(roleType) || Constants.VENDOR_ROLE.equals(roleType)) {
 					return "adminSuccess";
 				} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
 					return "userSuccess";
 				} else {
 					log.warn("Trying to back to user list with role not specified.");
-					
+
 					return "mainMenu";
 				}
 			} else {
@@ -336,12 +330,11 @@ public class UserAction extends BaseAction implements Preparable {
 			Role role = this.roleManager.getRole(Constants.VENDOR_ROLE);
 			users = userManager.getUsersByRole(role);
 		} else {
-			
+
 			log.warn("Trying to list user with role not specified.");
-			
-			ServletActionContext.getResponse().sendError(
-					HttpServletResponse.SC_NOT_FOUND);
-			
+
+			ServletActionContext.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND);
+
 		}
 
 		return SUCCESS;
