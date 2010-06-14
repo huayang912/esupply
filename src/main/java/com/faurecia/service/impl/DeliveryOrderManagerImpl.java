@@ -168,8 +168,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		}
 		deliveryOrder.setStatus("Create");
 		this.save(deliveryOrder);
-
-		return deliveryOrder;
+		
+		return this.get(deliveryOrder.getDoNo(), true);
 	}
 	
 	public DeliveryOrder confirm(DeliveryOrder deliveryOrder) {

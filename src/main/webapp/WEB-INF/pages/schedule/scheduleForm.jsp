@@ -69,11 +69,11 @@
 				cellspacing="0">
 				<thead>
 					<tr>
-						<th><fmt:message key="scheduleDetail.createDate" /></th>
-						<th><fmt:message key="scheduleDetail.releaseNo" /></th>
-						<th><fmt:message key="scheduleDetail.itemCode" /></th>
-						<th><fmt:message key="scheduleDetail.itemDescription" /></th>
-						<th><fmt:message key="scheduleDetail.supplierItemCode" /></th>
+						<th nowrap="nowrap"><fmt:message key="scheduleDetail.createDate" /></th>
+						<th nowrap="nowrap"><fmt:message key="scheduleDetail.releaseNo" /></th>
+						<th nowrap="nowrap"><fmt:message key="scheduleDetail.itemCode" /></th>
+						<th nowrap="nowrap"><fmt:message key="scheduleDetail.itemDescription" /></th>
+						<th nowrap="nowrap"><fmt:message key="scheduleDetail.supplierItemCode" /></th>
 						<s:iterator id="head"
 							value="%{scheduleView.scheduleHead.headList}">
 							<c:choose>
@@ -124,9 +124,9 @@
 						<td><fmt:formatDate value="${scheduleBody.createDate}"
 							pattern="MM/dd/yyyy" /></td>
 						<td>${scheduleBody.releaseNo}</td>
-						<td>${scheduleBody.itemCode}</td>
-						<td>${scheduleBody.itemDescription}</td>
-						<td>${scheduleBody.supplierItemCode}</td>
+						<td nowrap="nowrap">${scheduleBody.itemCode}</td>
+						<td nowrap="nowrap">${scheduleBody.itemDescription}</td>
+						<td nowrap="nowrap">${scheduleBody.supplierItemCode}</td>
 						<s:iterator id="qty" value="#scheduleBody.qtyList">
 							<td><fmt:formatNumber value="${qty}" pattern="#,###.##" /></td>
 						</s:iterator>

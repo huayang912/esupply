@@ -179,16 +179,16 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 		try {
 			File file = new File(inboundLog.getFullFilePath());
 			FileInputStream stream = new FileInputStream(file);
-			
+
 			saveSingleFile(stream, inboundLog);
-			
+
 			FileUtils.forceMkdir(new File(archiveFolder));
 			File backupFile = new File(archiveFolder + File.separator + file.getName());
-			
+
 			FileUtils.copyFile(file, backupFile);
 			inboundLog.setFullFilePath(backupFile.getAbsolutePath());
 			inboundLog.setInboundResult("success");
-			
+
 			FileUtils.forceDelete(file);
 		} catch (Exception ex) {
 			inboundLog.setMemo(ex.getMessage());
@@ -211,11 +211,31 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 			// 如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
 			if (this.exists(purchaseOrder.getPoNo())) {
-				this.remove(purchaseOrder.getPoNo());
-			}
+				PurchaseOrder oldPurchaseOrder = this.get(purchaseOrder.getPoNo(), true);
 
-			// 保存采购单
-			this.save(purchaseOrder);
+				for (int i = 0; i < purchaseOrder.getPurchaseOrderDetailList().size(); i++) {
+					PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(i);
+					boolean findMatch = false;
+					
+					for (int k = 0; k < oldPurchaseOrder.getPurchaseOrderDetailList().size(); k++) {
+						PurchaseOrderDetail oldPurchaseOrderDetail = oldPurchaseOrder.getPurchaseOrderDetailList().get(k);
+						if (purchaseOrderDetail.getSequence().equals(oldPurchaseOrderDetail.getSequence())) {
+							oldPurchaseOrderDetail.setQty(purchaseOrderDetail.getQty());
+							findMatch = true;
+							break;
+						}
+					}
+					
+					if (!findMatch) {
+						oldPurchaseOrder.addPurchaseOrderDetail(purchaseOrderDetail);
+					}
+				}
+
+				this.save(oldPurchaseOrder);
+			} else {
+				// 保存采购单
+				this.save(purchaseOrder);
+			}
 
 			inboundLog.setInboundResult("success");
 
@@ -280,7 +300,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				for (int i = 0; i < ORDERS02E1EDKA1List.size(); i++) {
 					ORDERS02E1EDKA1 E1EDKA1 = ORDERS02E1EDKA1List.get(i);
 					if ("WE".equals(E1EDKA1.getPARVW())) {
-						String plantCode = E1EDKA1.getLIFNR();						
+						String plantCode = E1EDKA1.getLIFNR();
 
 						plant = this.plantManager.get(plantCode); // plant
 					} else if ("LF".equals(E1EDKA1.getPARVW())) {
@@ -321,7 +341,8 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
 				supplierUser.setConfirmPassword(supplierUser.getPassword());
 				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				//supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				// supplierUser.setLastName(supplier.getName() != null ?
+				// supplier.getName() : supplier.getCode());
 				supplierUser.setLastName("");
 				supplierUser.setUserSupplier(supplier);
 				// supplierUser.setUserPlant(plant);
@@ -361,12 +382,13 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
-				
-				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
+
+				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager
+						.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
 				if (defaultPlantScheduleGroup != null) {
 					plantSupplier.setPlantScheduleGroup(defaultPlantScheduleGroup);
 				}
-				
+
 				plantSupplier = this.plantSupplierManager.save(plantSupplier);
 			}
 
@@ -419,14 +441,14 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 									item.setPlant(plant);
 									item.setUom(E1EDP01.getMENEE());
 
-									item = this.itemManager.save(item);																		
+									item = this.itemManager.save(item);
 								}
 							} else if ("002".equals(E1EDP19.getQUALF())) {
 								supplierItemCode = E1EDP19.getIDTNR();
 							}
 						}
 					}
-					
+
 					supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
 					if (supplierItem == null) {
 						log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
@@ -438,9 +460,9 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 						supplierItem.setSupplierItemCode(supplierItemCode);
 
 						supplierItem = this.supplierItemManager.save(supplierItem);
-					} else if (supplierItemCode != null && (supplierItem.getSupplierItemCode() == null 
-									|| supplierItem.getSupplierItemCode().trim().length() == 0)) {
-						
+					} else if (supplierItemCode != null
+							&& (supplierItem.getSupplierItemCode() == null || supplierItem.getSupplierItemCode().trim().length() == 0)) {
+
 						supplierItem.setSupplierItemCode(supplierItemCode);
 						supplierItem = this.supplierItemManager.save(supplierItem);
 					}
