@@ -270,7 +270,7 @@ public class Plant extends BaseObject implements Serializable {
 		this.supplierNotifyEmail = supplierNotifyEmail;
 	}
 
-	@Column(name="do_template_name", nullable = false, length = 255)
+	@Column(name="do_template_name", nullable = true, length = 255)
 	public String getDoTemplateName() {
 		return doTemplateName;
 	}

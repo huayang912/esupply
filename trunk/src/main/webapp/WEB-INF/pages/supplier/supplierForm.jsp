@@ -34,7 +34,7 @@
 
 	<li><s:textfield key="plantSupplier.supplier.code"
 		title="plantSupplier.supplierCode" cssClass="text large"
-		required="true" /></li>
+		required="true" readonly="true"/></li>
 
 	<li><s:textfield key="plantSupplier.supplierName"
 		cssClass="text large" required="true" /></li>
@@ -59,11 +59,6 @@
 			<li><s:select key="plantSupplier.plantScheduleGroup.id"
 				list="%{plantScheduleGroupList}" listKey="id" listValue="name" theme="xhtml" /></li>
 		</c:when>
-		<c:otherwise>
-			<li>
-				<s:hidden name="plantSupplier.plantScheduleGroup.id" key="plantSupplier.plantScheduleGroup.id"/>
-			</li>
-		</c:otherwise>
 	</c:choose>
 
 	<li class="buttonBar bottom"><c:out value="${buttons}"

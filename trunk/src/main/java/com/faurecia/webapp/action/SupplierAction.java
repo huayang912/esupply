@@ -145,8 +145,19 @@ public class SupplierAction extends BaseAction {
 		}
 
 		boolean isNew = (plantSupplier.getId() == null);
+		
+		PlantSupplier oldPlantSupplier = this.plantSupplierManager.get(plantSupplier.getId());
+		oldPlantSupplier.setSupplierName(plantSupplier.getSupplierName());
+		oldPlantSupplier.setSupplierAddress1(plantSupplier.getSupplierAddress1());
+		oldPlantSupplier.setSupplierAddress2(plantSupplier.getSupplierAddress2());
+		oldPlantSupplier.setSupplierContactPerson(plantSupplier.getSupplierContactPerson());
+		oldPlantSupplier.setSupplierPhone(plantSupplier.getSupplierPhone());
+		oldPlantSupplier.setSupplierFax(plantSupplier.getSupplierFax());
+		if (!this.getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
+			oldPlantSupplier.setPlantScheduleGroup(plantSupplier.getPlantScheduleGroup());
+		}
 
-		plantSupplier = this.plantSupplierManager.save(plantSupplier);
+		plantSupplier = this.plantSupplierManager.save(oldPlantSupplier);
 
 		String key = (isNew) ? "plantSupplier.added" : "plantSupplier.updated";
 		saveMessage(getText(key));
