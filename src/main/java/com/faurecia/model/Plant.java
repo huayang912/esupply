@@ -42,6 +42,7 @@ public class Plant extends BaseObject implements Serializable {
 	private String errorLogEmail1;
 	private String errorLogEmail2;
 	private String supplierNotifyEmail;
+	private String doTemplateName;
 
 	@Id
 	@Column(length = 20)
@@ -267,6 +268,15 @@ public class Plant extends BaseObject implements Serializable {
 
 	public void setSupplierNotifyEmail(String supplierNotifyEmail) {
 		this.supplierNotifyEmail = supplierNotifyEmail;
+	}
+
+	@Column(name="do_template_name", nullable = false, length = 255)
+	public String getDoTemplateName() {
+		return doTemplateName;
+	}
+
+	public void setDoTemplateName(String doTemplateName) {
+		this.doTemplateName = doTemplateName;
 	}
 
 	/**

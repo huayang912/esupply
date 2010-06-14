@@ -31,6 +31,7 @@ public class NoticeAction extends BaseAction {
 	private File file;
 	private String fileContentType;
 	private String fileFileName;
+	private String uploadFileDirectory;
 	
 	private List<LabelValue> availableSuppliers;
 
@@ -102,6 +103,14 @@ public class NoticeAction extends BaseAction {
 		this.availableSuppliers = availableSuppliers;
 	}
 
+	public String getUploadFileDirectory() {
+		return uploadFileDirectory;
+	}
+
+	public void setUploadFileDirectory(String uploadFileDirectory) {
+		this.uploadFileDirectory = uploadFileDirectory;
+	}
+
 	public String list() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
@@ -135,8 +144,10 @@ public class NoticeAction extends BaseAction {
 			return delete();
 		}
 		
+		boolean isNew = (notice.getId() == null);
+		
 		if (fileFileName != null) {
-			
+			//
 		}
 
 		return SUCCESS;
