@@ -202,7 +202,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					}
 					else 
 					{
-						scheduleItemDetail.getDeliverQty().add(deliveryOrderDetail.getQty());
+						BigDecimal deliverQty = scheduleItemDetail.getDeliverQty().add(deliveryOrderDetail.getQty());
+						scheduleItemDetail.setDeliverQty(deliverQty);
 					}
 					
 					this.scheduleItemDetailManager.save(scheduleItemDetail);
