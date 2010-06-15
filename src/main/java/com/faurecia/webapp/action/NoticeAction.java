@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.io.FileUtils;
+
 import com.faurecia.model.LabelValue;
 import com.faurecia.model.Notice;
 import com.faurecia.model.NoticeReader;
@@ -146,9 +149,51 @@ public class NoticeAction extends BaseAction {
 		
 		boolean isNew = (notice.getId() == null);
 		
-		if (fileFileName != null) {
-			//
+		if (!isNew) {
+			Notice oldNotice = this.noticeManager.get(notice.getId());
+			notice.setFileFullPath(oldNotice.getFileFullPath());
+			notice.setFileName(oldNotice.getFileName());
+			BeanUtils.copyProperties(oldNotice, notice);	
+			notice = oldNotice;
 		}
+		
+		if (fileFileName != null) {
+			FileUtils.forceMkdir(new File(uploadFileDirectory));
+			
+			File destFile = new File(uploadFileDirectory + File.separator + file.getName());
+			FileUtils.copyFile(file, destFile);
+			
+			FileUtils.forceDelete(file);
+			
+			notice.setFileFullPath(destFile.getAbsolutePath());
+			notice.setFileName(fileFileName);
+		}
+		
+		String[] suppliers = getRequest().getParameterValues("suppliers");
+		
+		if (!isNew) {
+			this.noticeReaderManager.deleteNoticeReaderByNoticeId(notice.getId());
+		}
+		
+		for (int i = 0; suppliers != null && i < suppliers.length; i++) {
+			Integer plantSupplierId = Integer.parseInt(suppliers[i]);
+			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
+			
+			NoticeReader noticeReader = new NoticeReader();
+			noticeReader.setNotice(notice);
+			noticeReader.setPlantSupplier(plantSupplier);
+			
+			notice.addNoticeReader(noticeReader);
+		}
+		
+		String userCode = this.getRequest().getRemoteUser();
+		User user = this.userManager.getUserByUsername(userCode);
+		notice.setPlant(user.getUserPlant());
+		
+		this.noticeManager.save(notice);
+		
+		String key = (isNew) ? "notice.added" : "notice.updated";
+		saveMessage(getText(key));
 
 		return SUCCESS;
 	}

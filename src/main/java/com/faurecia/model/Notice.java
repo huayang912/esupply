@@ -1,8 +1,10 @@
 package com.faurecia.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -20,9 +23,14 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+/**
+ * @author ¶¡öÎ
+ *
+ */
 @Entity
 @Table(name = "notice")
-@NamedQueries( { @NamedQuery(name = "findNoticeByPlant", query = " select n from Notice n where n.plant = :plant") })
+@NamedQueries( { @NamedQuery(name = "findNoticeByPlant", query = " select n from Notice n where n.plant = :plant") ,
+	@NamedQuery(name = "findNoticeByPlantSupplier", query = " select nr.notice from NoticeReader nr inner join nr.notice as n where nr.plantSupplier = :plantSupplier and n.displayDateFrom <= :dateNow and n.displayDateTo >= :dateNow") })
 public class Notice extends BaseObject {
 
 	/**
@@ -38,6 +46,7 @@ public class Notice extends BaseObject {
 	private Date displayDateFrom;
 	private Date displayDateTo;
 	private List<LabelValue> supplierList;
+	private List<NoticeReader> noticeReaderList;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -86,7 +95,7 @@ public class Notice extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "plant_code")
+	@JoinColumn(name = "plant_code", nullable=false)
 	public Plant getPlant() {
 		return plant;
 	}
@@ -120,6 +129,23 @@ public class Notice extends BaseObject {
 
 	public void setSupplierList(List<LabelValue> supplierList) {
 		this.supplierList = supplierList;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "notice")
+	public List<NoticeReader> getNoticeReaderList() {
+		return noticeReaderList;
+	}
+
+	public void setNoticeReaderList(List<NoticeReader> noticeReaderList) {
+		this.noticeReaderList = noticeReaderList;
+	}
+	
+	public void addNoticeReader(NoticeReader noticeReader) {
+		if (noticeReaderList == null) {
+			noticeReaderList = new ArrayList<NoticeReader>();
+		}
+
+		noticeReaderList.add(noticeReader);
 	}
 
 	/**
