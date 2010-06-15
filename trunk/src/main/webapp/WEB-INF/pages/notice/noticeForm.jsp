@@ -12,9 +12,11 @@
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
 </head>
 
-<s:form id="noticeForm" action="saveNotice" enctype="multipart/form-data" method="post"
-	validate="true">
-	<li style="display: none"><input type="hidden" name="from"
+<s:form id="noticeForm" action="saveNotice"
+	enctype="multipart/form-data" method="post" validate="true">
+	<li style="display: none"><input type="hidden"
+		name="notice.id" value="${notice.id}" />
+		<input type="hidden" name="from"
 		value="${param.from}" /></li>
 	<c:set var="buttons">
 		<s:submit cssClass="button" method="save" key="button.save"
@@ -26,47 +28,41 @@
 		<s:submit cssClass="button" method="cancel" key="button.cancel"
 			theme="simple" />
 	</c:set>
-	<li>
-	<div>
-	<div><s:textfield key="notice.title" theme="xhtml"
-		required="true" cssClass="text long" /></div>
-	</div>
-	</li>
-	<li>
-	<div>
-	<div><s:textarea key="notice.content" theme="xhtml"
-		 cols="100" rows="8" /></div>
-	</div>
-	</li>
-	
-	<li>
-	<div>
-	<div><s:file name="file" label="%{getText('notice.file')}" cssClass="text file" required="true"/></div>
-	</div>
-	</li>
 
 	<li style="padding: 0px">
-	<table style="margin: 0px">
+	<table style="margin: 0px; width: 100%;">
 		<tr>
-			<td><s:textfield key="notice.displayDateFrom"
-				cssClass="text medium" /></td>
-			<td><A HREF="#"
-				onClick="cal.select(document.forms['noticeForm'].noticeForm_notice_displayDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-				NAME="anchDateFrom" ID="anchDateFrom"><img
-				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+			<td colspan="2"><s:textfield key="notice.title" theme="xhtml"
+				required="true" cssClass="text long" /></td>
 		</tr>
-	</table>
-	</li>
-
-	<li style="padding: 0px">
-	<table style="margin: 0px">
 		<tr>
-			<td><s:textfield key="notice.displayDateTo"
-				cssClass="text medium" /></td>
-			<td><A HREF="#"
-				onClick="cal.select(document.forms['noticeForm'].noticeForm_notice_displayDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-				NAME="anchDateTo" ID="anchDateTo"><img
-				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+			<td colspan="2"><s:textarea key="notice.content" theme="xhtml"
+				cols="100" rows="8" /></td>
+		</tr>
+		<tr>
+			<td colspan="2"><s:file name="file"
+				label="%{getText('notice.file')}" cssClass="text file" /></td>
+		</tr>
+		<tr>
+			<td>
+			<table>
+				<tr>
+					<td><s:textfield key="notice.displayDateFrom"
+						cssClass="text medium" required="true" /></td>
+					<td><A HREF="#"
+						onClick="cal.select(document.forms['noticeForm'].noticeForm_notice_displayDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+						NAME="anchDateFrom" ID="anchDateFrom"><img
+						src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+
+					<td><s:textfield key="notice.displayDateTo"
+						cssClass="text medium" /></td>
+					<td><A HREF="#"
+						onClick="cal.select(document.forms['noticeForm'].noticeForm_notice_displayDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+						NAME="anchDateTo" ID="anchDateTo"><img
+						src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+				</tr>
+			</table>
+			</td>
 		</tr>
 	</table>
 	</li>

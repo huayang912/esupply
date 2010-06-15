@@ -36,6 +36,7 @@
 		</Menu>
 		<Menu name="SupplierMenu" title="menu.supplierProfile" description="Supplier Menu" roles="ROLE_VENDOR" width="120" page="/editSupplierProfile.html">
 			<Item name="SupplierProfileMenu" title="menu.supplierProfile" description="Supplier Profile Menu" page="/editSupplierProfile.html" roles="ROLE_VENDOR"/>
+			<Item name="NoticeReaderMenu" title="menu.noticeReader" description="Notice Reader Menu" page="/noticeReaders.html" roles="ROLE_VENDOR"/>
 			<!-- 
 			<Item name="SupplierItemMenu" title="menu.supplierItem" description="Supplier Item Menu" page="/supplierItems.html" roles="ROLE_VENDOR"/>
 			 -->

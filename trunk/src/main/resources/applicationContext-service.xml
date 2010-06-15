@@ -370,5 +370,6 @@
 				<constructor-arg value="com.faurecia.model.NoticeReader" />
 			</bean>
 		</constructor-arg>
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 </beans>
