@@ -189,7 +189,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					}
 					else 
 					{
-						purchaseOrderDetail.getShipQty().add(deliveryOrderDetail.getQty());
+						BigDecimal deliverQty = purchaseOrderDetail.getShipQty().add(deliveryOrderDetail.getQty());
+						purchaseOrderDetail.setShipQty(deliverQty);
 					}
 					
 					this.purchaseOrderDetailManager.save(purchaseOrderDetail);
