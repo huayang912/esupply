@@ -1,0 +1,13 @@
+# -- validator errors --
+errors.required=${getText(fieldName)} is a required field.
+errors.requiredField={0} is a required field.
+errors.int=${getText(fieldName)} is not a integer.
+errors.date=${getText(fieldName)} is not a date.
+errors.email=${email} is an invalid e-mail address.
+errors.phone=${phoneNumber} is an invalid phone number.
+errors.zip=${postalcode} is an invalid zip code.
+errors.twofields=The "Confirm Password" field has to have the same value as the "Password" field.
+errors.ftpPort=${ftpPort} is an invalid ftp port.
+errors.inboundIntervalAmount=${inboundInterval} is an invalid interval amount.
+errors.outboundIntervalAmount=${outboundInterval} is an invalid interval amount.
+errors.twoDateCompare=Start date must less equal end date.

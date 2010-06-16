@@ -1,0 +1,32 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.show.sql">true</property>
+		<mapping class="com.faurecia.model.User" />
+		<mapping class="com.faurecia.model.Role" />
+		<mapping class="com.faurecia.model.NumberControl" />
+		<mapping class="com.faurecia.model.Plant" />
+		<mapping class="com.faurecia.model.Item" />
+		<mapping class="com.faurecia.model.Supplier" />
+		<mapping class="com.faurecia.model.SupplierItem" />
+		<mapping class="com.faurecia.model.PlantSupplier" />
+		<mapping class="com.faurecia.model.PurchaseOrder" />
+		<mapping class="com.faurecia.model.PurchaseOrderDetail" />
+		<mapping class="com.faurecia.model.PurchaseOrderApproval" />
+		<mapping class="com.faurecia.model.PurchaseOrderApprovalDetail" />
+		<mapping class="com.faurecia.model.InboundLog" />
+		<mapping class="com.faurecia.model.Schedule" />
+		<mapping class="com.faurecia.model.ScheduleItem" />
+		<mapping class="com.faurecia.model.ScheduleItemDetail" />
+		<mapping class="com.faurecia.model.DeliveryOrder" />
+		<mapping class="com.faurecia.model.DeliveryOrderDetail" />
+		<mapping class="com.faurecia.model.OutboundLog" />
+		<mapping class="com.faurecia.model.Receipt" />
+		<mapping class="com.faurecia.model.ReceiptDetail" />
+		<mapping class="com.faurecia.model.PlantScheduleGroup" />
+		<mapping class="com.faurecia.model.Notice" />
+		<mapping class="com.faurecia.model.NoticeReader" />
+	</session-factory>
+</hibernate-configuration>

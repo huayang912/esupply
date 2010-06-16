@@ -1,0 +1,4 @@
+Supplier ${supplier.name} created.
+
+Username: ${user.username}
+Password: ${user.confirmPassword}

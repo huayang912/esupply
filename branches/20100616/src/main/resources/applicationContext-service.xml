@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"
+	default-lazy-init="true">
+
+	<!--
+		===================================================================
+	-->
+	<!--
+		AOP: Configuration and Aspects
+	-->
+	<!--
+		===================================================================
+	-->
+	<aop:config>
+		<aop:advisor id="userManagerTx" advice-ref="userManagerTxAdvice"
+			pointcut="execution(* *..service.UserManager.*(..))" order="0" />
+		<aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice"
+			pointcut="execution(* *..service.UserManager.saveUser(..))" order="1" />
+		<aop:advisor id="managerTx" advice-ref="txAdvice"
+			pointcut="execution(* *..service.*Manager.*(..))" order="2" />
+		<aop:advisor id="purchaseOrderManagerTx" advice-ref="notSupportTXAdvice"
+			pointcut="execution(* *..service.PurchaseOrderApprovalManager.*(..))" order="3" />
+		<aop:advisor id="scheudleManagerTx" advice-ref="notSupportTXAdvice"
+			pointcut="execution(* *..service.ScheduleManager.*(..))" order="4" />
+		<aop:advisor id="receiptManagerTx" advice-ref="notSupportTXAdvice"
+			pointcut="execution(* *..service.ReceiptManager.*(..))" order="5" />
+	</aop:config>
+
+	<!-- Enable @Transactional support -->
+	<tx:annotation-driven />
+
+	<!-- Enable @AspectJ support -->
+	<aop:aspectj-autoproxy />
+
+	<!-- Enable @Configured support -->
+	<aop:spring-configured />
+
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<!-- Read-only commented out to make things easier for end-users -->
+			<!-- http://issues.appfuse.org/browse/APF-556 -->
+			<!--tx:method name="get*" read-only="true"/-->
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="notSupportTXAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="NOT_SUPPORTED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="userManagerTxAdvice">
+		<tx:attributes>
+			<tx:method name="save*" rollback-for="UserExistsException" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean id="userSecurityAdvice" class="com.faurecia.service.UserSecurityAdvice" />
+
+	<!--
+		===================================================================
+	-->
+	<!--
+		Mail: Sender and Velocity configuration
+	-->
+	<!--
+		===================================================================
+	-->
+	<bean id="mailEngine" class="com.faurecia.service.MailEngine">
+		<property name="mailSender" ref="mailSender" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="from" value="${mail.default.from}" />
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="javaMailProperties">
+			<value>mail.smtp.auth=true</value>
+		</property>
+	</bean>
+
+	<!-- Configure Velocity for sending e-mail -->
+	<bean id="velocityEngine"
+		class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+			<props>
+				<prop key="resource.loader">class</prop>
+				<prop key="class.resource.loader.class">
+					org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+				</prop>
+				<prop key="velocimacro.library"></prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"
+		scope="prototype">
+		<property name="from" value="${mail.default.from}" />
+	</bean>
+
+	<!--
+		===================================================================
+	-->
+	<!--
+		Security class from Spring Security - used to configure Password
+	-->
+	<!--
+		Encryption in UserManagerImpl. Can override in security.xml.
+	-->
+	<!--
+		===================================================================
+	-->
+	<bean id="passwordEncoder"
+		class="org.springframework.security.providers.encoding.ShaPasswordEncoder" />
+
+	<!--
+		===================================================================
+	-->
+	<!--
+		Managers: For accessing DAOs
+	-->
+	<!--
+		===================================================================
+	-->
+	<bean id="manager" class="com.faurecia.service.impl.UniversalManagerImpl">
+		<property name="dao" ref="universalDao" />
+	</bean>
+
+	<bean id="lookupManager" class="com.faurecia.service.impl.LookupManagerImpl">
+		<property name="lookupDao" ref="lookupDao" />
+	</bean>
+
+	<bean id="userManager" class="com.faurecia.service.impl.UserManagerImpl">
+		<property name="userDao" ref="userDao" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+	</bean>
+
+	<bean id="roleManager" class="com.faurecia.service.impl.RoleManagerImpl">
+		<property name="roleDao" ref="roleDao" />
+	</bean>
+
+	<!-- Add new Managers here -->
+	<bean id="numberControlManager" class="com.faurecia.service.impl.NumberControlManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.NumberControl" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="plantManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Plant" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="supplierManager" class="com.faurecia.service.impl.SupplierManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Supplier" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="plantSupplierManager" class="com.faurecia.service.impl.PlantSupplierManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PlantSupplier" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="itemManager" class="com.faurecia.service.impl.ItemManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Item" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="supplierItemManager" class="com.faurecia.service.impl.SupplierItemManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.SupplierItem" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="plantScheduleGroupManager" class="com.faurecia.service.impl.PlantScheduleGroupManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PlantScheduleGroup" />
+			</bean>
+		</constructor-arg>
+
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
+	<bean id="inboundLogManager" class="com.faurecia.service.impl.InboundLogManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.InboundLog" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="outboundLogManager" class="com.faurecia.service.impl.OutboundLogManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.OutboundLog" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="purchaseOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PurchaseOrderDetail" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="purchaseOrderManager" class="com.faurecia.service.impl.PurchaseOrderManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PurchaseOrder" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="purchaseOrderApprovalManager" class="com.faurecia.service.impl.PurchaseOrderApprovalManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.PurchaseOrderApproval" />
+			</bean>
+		</constructor-arg>
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
+		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="inboundLogManager" ref="inboundLogManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
+		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+	</bean>
+
+	<bean id="scheduleItemManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.ScheduleItem" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="scheduleItemDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.ScheduleItemDetail" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="scheduleManager" class="com.faurecia.service.impl.ScheduleManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Schedule" />
+			</bean>
+		</constructor-arg>
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="scheduleItemManager" ref="scheduleItemManager" />
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
+		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="inboundLogManager" ref="inboundLogManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
+		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+	</bean>
+
+	<bean id="deliveryOrderManager" class="com.faurecia.service.impl.DeliveryOrderManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.DeliveryOrder" />
+			</bean>
+		</constructor-arg>
+		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager" />
+		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
+		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager" />
+		<property name="deliveryOrderDetailManager" ref="deliveryOrderDetailManager" />
+	</bean>
+
+	<bean id="deliveryOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.DeliveryOrderDetail" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="receiptManager" class="com.faurecia.service.impl.ReceiptManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Receipt" />
+			</bean>
+		</constructor-arg>
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
+		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
+		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+	</bean>
+
+	<bean id="noticeManager" class="com.faurecia.service.impl.NoticeManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Notice" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+	<bean id="noticeReaderManager" class="com.faurecia.service.impl.NoticeReaderManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.NoticeReader" />
+			</bean>
+		</constructor-arg>
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+</beans>

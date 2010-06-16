@@ -1,0 +1,89 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+    <field name="plant.code">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.name">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.ftpServer">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.ftpPort">
+        <field-validator type="int">
+        	<param name="min">1</param>
+            <param name="max">65535</param>
+            <message key="errors.ftpPort"/>
+        </field-validator>
+    </field>
+    <field name="plant.ftpUser">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.confirmFtpPassword">
+    	<field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+        <field-validator type="fieldexpression">
+            <param name="expression">
+                (plant.confirmFtpPassword.equals(plant.FtpPassword))
+            </param> 
+            <message key="errors.twofields"/>
+        </field-validator>
+    </field>
+    <field name="plant.ftpPath">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.tempFileDirectory">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.archiveFileDirectory">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.errorFileDirectory">
+        <field-validator type="requiredstring">
+            <message key="errors.required"/>
+        </field-validator>
+    </field>
+    <field name="plant.inboundInterval">
+        <field-validator type="int">
+        	<param name="min">1</param>
+            <message key="errors.inboundIntervalAmount"/>
+        </field-validator>
+    </field>
+    <field name="plant.outboundInterval">
+        <field-validator type="int">
+        	<param name="min">1</param>
+            <message key="errors.outboundIntervalAmount"/>
+        </field-validator>
+    </field>
+    <field name="plant.errorLogEmail1">
+        <field-validator type="email">
+            <message key="errors.email"/>
+        </field-validator>
+    </field>
+    <field name="plant.errorLogEmail2">
+        <field-validator type="email">
+            <message key="errors.email"/>
+        </field-validator>
+    </field>
+    <field name="plant.supplierNotifyEmail">
+        <field-validator type="email">
+            <message key="errors.email"/>
+        </field-validator>
+    </field>
+</validators>
