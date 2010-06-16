@@ -14,12 +14,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Plant;
-import com.faurecia.model.PurchaseOrder;
+import com.faurecia.model.PurchaseOrderApproval;
 import com.faurecia.model.Receipt;
 import com.faurecia.model.Schedule;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.InboundLogManager;
-import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.PurchaseOrderApprovalManager;
 import com.faurecia.service.ReceiptManager;
 import com.faurecia.service.ScheduleManager;
 import com.faurecia.util.DateUtil;
@@ -30,7 +30,7 @@ public class DataInboundJob {
 	private final Log log = LogFactory.getLog(getClass());
 	private GenericManager<Plant, String> plantManager;
 	private InboundLogManager inboundLogManager;
-	private PurchaseOrderManager purchaseOrderManager;
+	private PurchaseOrderApprovalManager purchaseOrderManager;
 	private ScheduleManager scheduleManager;
 	private ReceiptManager receiptManager;
 	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR" };
@@ -43,7 +43,7 @@ public class DataInboundJob {
 		this.inboundLogManager = inboundLogManager;
 	}
 
-	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
+	public void setPurchaseOrderApprovalManager(PurchaseOrderApprovalManager purchaseOrderManager) {
 		this.purchaseOrderManager = purchaseOrderManager;
 	}
 
@@ -156,7 +156,7 @@ public class DataInboundJob {
 
 					// 记录至数据库
 					log.info("Processing file: " + fileName);
-					PurchaseOrder po = null;
+					PurchaseOrderApproval po = null;
 					Schedule schedule = null;
 					Receipt receipt = null;
 					try {

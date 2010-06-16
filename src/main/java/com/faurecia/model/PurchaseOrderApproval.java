@@ -20,13 +20,14 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
-@Table(name = "po")
-public class PurchaseOrder extends BaseObject {
+@Table(name = "po_approval")
+public class PurchaseOrderApproval extends BaseObject {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1875870080239908794L;
+	private static final long serialVersionUID = 1L;
+
 	private String poNo;
 	private PlantSupplier plantSupplier;
 	private String plantName;
@@ -42,10 +43,7 @@ public class PurchaseOrder extends BaseObject {
 	private String supplierPhone;
 	private String supplierFax;
 	private Date createDate;
-	private Date createDateFrom;
-	private Date createDateTo;
-	private String status;
-	private List<PurchaseOrderDetail> purchaseOrderDetailList;
+	private List<PurchaseOrderApprovalDetail> purchaseOrderApprovalDetailList;
 
 	@Id
 	@Column(name = "po_no", length = 20)
@@ -260,48 +258,21 @@ public class PurchaseOrder extends BaseObject {
 		this.createDate = createDate;
 	}
 
-	@Column(name = "status", nullable = false, length = 20)
-	public String getStatus() {
-		return status;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrderApproval")
+	public List<PurchaseOrderApprovalDetail> getPurchaseOrderApprovalDetailList() {
+		return purchaseOrderApprovalDetailList;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setPurchaseOrderApprovalDetailList(List<PurchaseOrderApprovalDetail> purchaseOrderApprovalDetailList) {
+		this.purchaseOrderApprovalDetailList = purchaseOrderApprovalDetailList;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrder")
-	public List<PurchaseOrderDetail> getPurchaseOrderDetailList() {
-		return purchaseOrderDetailList;
-	}
-
-	public void setPurchaseOrderDetailList(List<PurchaseOrderDetail> purchaseOrderDetailList) {
-		this.purchaseOrderDetailList = purchaseOrderDetailList;
-	}
-
-	public void addPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
-		if (purchaseOrderDetailList == null) {
-			purchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
+	public void addPurchaseOrderApprovalDetail(PurchaseOrderApprovalDetail purchaseOrderApprovalDetail) {
+		if (purchaseOrderApprovalDetailList == null) {
+			purchaseOrderApprovalDetailList = new ArrayList<PurchaseOrderApprovalDetail>();
 		}
 
-		purchaseOrderDetailList.add(purchaseOrderDetail);
-	}
-
-	@Transient
-	public Date getCreateDateFrom() {
-		return this.createDateFrom;
-	}
-
-	public void setCreateDateFrom(Date createDateFrom) {
-		this.createDateFrom = createDateFrom;
-	}
-
-	@Transient
-	public Date getCreateDateTo() {
-		return this.createDateTo;
-	}
-
-	public void setCreateDateTo(Date createDateTo) {
-		this.createDateTo = createDateTo;
+		purchaseOrderApprovalDetailList.add(purchaseOrderApprovalDetail);
 	}
 
 	/**
@@ -322,10 +293,10 @@ public class PurchaseOrder extends BaseObject {
 	 * @see java.lang.Object#equals(Object)
 	 */
 	public boolean equals(Object object) {
-		if (!(object instanceof PurchaseOrder)) {
+		if (!(object instanceof PurchaseOrderApproval)) {
 			return false;
 		}
-		PurchaseOrder rhs = (PurchaseOrder) object;
+		PurchaseOrderApproval rhs = (PurchaseOrderApproval) object;
 		return new EqualsBuilder().append(this.poNo, rhs.poNo).isEquals();
 	}
 
@@ -333,7 +304,8 @@ public class PurchaseOrder extends BaseObject {
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
 	public int compareTo(Object object) {
-		PurchaseOrder myClass = (PurchaseOrder) object;
+		PurchaseOrderApproval myClass = (PurchaseOrderApproval) object;
 		return new CompareToBuilder().append(this.poNo, myClass.poNo).toComparison();
 	}
+	
 }
