@@ -124,7 +124,7 @@
 		<property name="inboundLogManager" ref="inboundLogManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
-		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
+		<property name="purchaseOrderApprovalManager" ref="purchaseOrderApprovalManager" />
 		<property name="scheduleManager" ref="scheduleManager" />
 		<property name="receiptManager" ref="receiptManager" />
 	</bean>

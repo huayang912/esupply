@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.User;
 import com.faurecia.service.InboundLogManager;
-import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.PurchaseOrderApprovalManager;
 import com.faurecia.service.ReceiptManager;
 import com.faurecia.service.ScheduleManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
@@ -27,7 +27,7 @@ public class InboundLogAction extends BaseAction {
 	private static final long serialVersionUID = -7108954954452920378L;
 
 	private InboundLogManager inboundLogManager;
-	private PurchaseOrderManager purchaseOrderManager;
+	private PurchaseOrderApprovalManager purchaseOrderManager;
 	private ScheduleManager scheduleManager;
 	private ReceiptManager receiptManager;
 	private PaginatedListUtil<InboundLog> paginatedList;
@@ -83,7 +83,7 @@ public class InboundLogAction extends BaseAction {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
+	public void setPurchaseOrderApprovalManager(PurchaseOrderApprovalManager purchaseOrderManager) {
 		this.purchaseOrderManager = purchaseOrderManager;
 	}
 	public void setScheduleManager(ScheduleManager scheduleManager) {
