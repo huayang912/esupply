@@ -233,9 +233,9 @@ public class DeliveryOrderAction extends BaseAction {
 		HttpServletRequest request = this.getRequest();
 
 		if (request.isUserInRole(Constants.PLANT_USER_ROLE) || request.isUserInRole(Constants.PLANT_ADMIN_ROLE)) {
-			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
-			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
-		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
+			selectCriteria.add(Restrictions.eq("ps.responsibleUser", user));
+			selectCountCriteria.add(Restrictions.eq("ps.responsibleUser", user));
+		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {		
 			selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
@@ -326,7 +326,7 @@ public class DeliveryOrderAction extends BaseAction {
 			// sa ´´½¨ do
 			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
 			Schedule schedule = this.scheduleManager
-					.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode());
+					.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode(), true);
 			PlantScheduleGroup plantScheduleGroup = plantSupplier.getPlantScheduleGroup();
 			Boolean allowOverQty = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverQtyDeliver() : false;
 
@@ -428,7 +428,7 @@ public class DeliveryOrderAction extends BaseAction {
 			if (allZero) {
 				saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
 			} else {
-				this.deliveryOrderManager.confirm(deliveryOrder);
+				this.deliveryOrderManager.confirm(deliveryOrder);				
 				saveMessage(getText("deliveryOrder.confirmed"));
 			}
 		} 

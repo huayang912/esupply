@@ -11,6 +11,7 @@ import com.faurecia.Constants;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
+import com.faurecia.model.Role;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantScheduleGroupManager;
@@ -60,6 +61,13 @@ public class SupplierAction extends BaseAction {
 		HttpServletRequest request = this.getRequest();
 		User user = userManager.getUserByUsername(request.getRemoteUser());
 		return plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(user.getUserPlant().getCode());
+	}
+	
+	public List<User> getResponsibleUserList() {
+		HttpServletRequest request = this.getRequest();
+		User user = userManager.getUserByUsername(request.getRemoteUser());
+		Role role = this.roleManager.getRole(Constants.PLANT_USER_ROLE);
+		return userManager.getPlantUsers(user.getUserPlant(), role);		
 	}
 
 	public int getId() {
@@ -155,6 +163,10 @@ public class SupplierAction extends BaseAction {
 		oldPlantSupplier.setSupplierFax(plantSupplier.getSupplierFax());
 		if (!this.getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
 			oldPlantSupplier.setPlantScheduleGroup(plantSupplier.getPlantScheduleGroup());
+			if (plantSupplier.getResponsibleUser() != null && plantSupplier.getResponsibleUser().getId() != null) {
+				User user = this.userManager.getUser(plantSupplier.getResponsibleUser().getId().toString());
+				oldPlantSupplier.setResponsibleUser(user);
+			}
 		}
 
 		plantSupplier = this.plantSupplierManager.save(oldPlantSupplier);

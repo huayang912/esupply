@@ -10,7 +10,9 @@ public interface ScheduleManager extends GenericManager<Schedule, String> {
 	Schedule saveSingleFile(InputStream inputStream,
 			InboundLog inboundLog);	
 	
-	Schedule getLastestScheduleItem(String plantCode, String supplierCode);
+	Schedule getLastestScheduleItem(String plantCode, String supplierCode, boolean isConfirm);
 	
-	Schedule getLastestScheduleItem(String plantCode, String supplierCode, Date tillDate);
+	Schedule getLastestScheduleItem(String plantCode, String supplierCode, Date tillDate, boolean isConfirm);
+	
+	void confirmScheduleItem(String[] scheduleItemIds);
 }

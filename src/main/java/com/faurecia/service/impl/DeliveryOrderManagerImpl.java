@@ -131,7 +131,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			this.purchaseOrderDetailManager.save(purchaseOrderDetail);
 		}
 
-		this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrder.getPoNo());
+		//this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrder.getPoNo());
 		this.save(deliveryOrder);
 
 		return deliveryOrder;
@@ -193,7 +193,11 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 						purchaseOrderDetail.setShipQty(deliverQty);
 					}
 					
-					this.purchaseOrderDetailManager.save(purchaseOrderDetail);
+					purchaseOrderDetail = this.purchaseOrderDetailManager.save(purchaseOrderDetail);
+					
+					if (purchaseOrderDetail.getQty().compareTo(purchaseOrderDetail.getShipQty()) == 0) {
+						this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrderDetail.getPurchaseOrder().getPoNo(), purchaseOrderDetail);
+					}
 					
 				} else if (deliveryOrderDetail.getScheduleItemDetail() != null) {
 					ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();

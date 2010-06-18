@@ -52,12 +52,15 @@
 		cssClass="text large" required="true" /></li>
 
 	<li><s:textfield key="plantSupplier.supplierFax"
-		cssClass="text large" required="true" /></li>
+		cssClass="text large" required="true" /></li>		
 
 	<c:choose>
 		<c:when test="<%=!request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 			<li><s:select key="plantSupplier.plantScheduleGroup.id"
 				list="%{plantScheduleGroupList}" listKey="id" listValue="name" theme="xhtml" /></li>
+				
+			<li><s:select key="plantSupplier.responsibleUser.id"
+				list="%{responsibleUserList}" listKey="id" listValue="fullName" theme="xhtml" /></li>
 		</c:when>
 	</c:choose>
 

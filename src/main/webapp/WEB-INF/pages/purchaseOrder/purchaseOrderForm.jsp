@@ -21,7 +21,9 @@
 		<table>
 			<tr>
 				<td>
+				<c:if test="${purchaseOrder.status != 'Close'}">
 				<s:submit key="button.save" method="edit" />
+				</c:if>
 				</td>
 				<td><input type="button" value="<fmt:message key="button.cancel"/>" onclick="window.location.href='cancelPurchaseOrder.html'"/> </td>
 			</tr>
@@ -93,10 +95,12 @@
 			titleKey="purchaseOrderDetail.deliveryDate" />
 		<display:column property="qty" titleKey="purchaseOrderDetail.qty" />
 		<display:column property="shipQty" titleKey="purchaseOrderDetail.shipQty" />
+		<c:if test="${purchaseOrder.status != 'Close'}">
 		<display:column titleKey="purchaseOrderDetail.currentShipQty" >
 			<input type="hidden" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].id" value="<c:out value="${purchaseOrderDetail.id}"/>"/>
 			<input type="text" name="purchaseOrderDetailList[${purchaseOrderDetail_rowNum}].currentShipQty" value="${purchaseOrderDetail.remainQty}" class="text medium"/>
 		</display:column>
+		</c:if>
 	</display:table>
 
 	<div class="buttonBar bottom">

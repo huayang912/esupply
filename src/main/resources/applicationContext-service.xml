@@ -24,7 +24,7 @@
 		<aop:advisor id="managerTx" advice-ref="txAdvice"
 			pointcut="execution(* *..service.*Manager.*(..))" order="2" />
 		<aop:advisor id="purchaseOrderManagerTx" advice-ref="notSupportTXAdvice"
-			pointcut="execution(* *..service.PurchaseOrderApprovalManager.*(..))" order="3" />
+			pointcut="execution(* *..service.PurchaseOrderManager.*(..))" order="3" />
 		<aop:advisor id="scheudleManagerTx" advice-ref="notSupportTXAdvice"
 			pointcut="execution(* *..service.ScheduleManager.*(..))" order="4" />
 		<aop:advisor id="receiptManagerTx" advice-ref="notSupportTXAdvice"
@@ -248,15 +248,6 @@
 				<constructor-arg value="com.faurecia.model.PurchaseOrder" />
 			</bean>
 		</constructor-arg>
-	</bean>
-	
-	<bean id="purchaseOrderApprovalManager" class="com.faurecia.service.impl.PurchaseOrderApprovalManagerImpl">
-		<constructor-arg>
-			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
-				autowire="byType">
-				<constructor-arg value="com.faurecia.model.PurchaseOrderApproval" />
-			</bean>
-		</constructor-arg>
 		<property name="plantManager" ref="plantManager" />
 		<property name="supplierManager" ref="supplierManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
@@ -273,7 +264,7 @@
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 
-	<bean id="scheduleItemManager" class="com.faurecia.service.impl.GenericManagerImpl">
+	<bean id="scheduleItemManager" class="com.faurecia.service.impl.ScheduleItemManagerImpl">
 		<constructor-arg>
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
 				autowire="byType">

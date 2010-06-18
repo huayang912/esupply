@@ -24,7 +24,7 @@
 		<c:when test="${isPlantUser}">
 		<li style="padding: 0px">
 			<s:select key="schedule.supplierCode" list="%{suppliers}"
-				listKey="code" listValue="name" theme="xhtml" required="true"></s:select>
+				listKey="supplier.code" listValue="supplierName" theme="xhtml" required="true"></s:select>
 		</li>
 		</c:when>
 	</c:choose>

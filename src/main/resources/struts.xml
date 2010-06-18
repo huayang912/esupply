@@ -303,6 +303,16 @@
 			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
+		
+		<action name="listScheduleAudit" class="scheduleAction"
+			method="listAudit">
+			<result name="success">/WEB-INF/pages/schedule/listScheduleAudit.jsp</result>
+		</action>
+		
+		<action name="scheduleAudit" class="scheduleAction"
+			method="audit">
+			<result name="success">/WEB-INF/pages/schedule/scheduleAuditForm.jsp</result>
+		</action>		
 
 		<action name="saveSchedule" class="scheduleAction" method="save">
 			<result name="cancel" type="redirect-action">schedules</result>

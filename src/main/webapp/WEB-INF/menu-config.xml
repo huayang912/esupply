@@ -30,6 +30,7 @@
         </Menu>
         <Menu name="PlantOrderMenu" title="menu.order" description="Plant Order Menu" roles="ROLE_PLANT_USER" width="120" page="/purchaseOrders.html">
         	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER"/>
+        	<Item name="ScheduleAuditMenu" title="menu.scheduleAudit" description="Schedule Audit Menu" page="/listScheduleAudit.html" roles="ROLE_PLANT_USER"/>
         	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_PLANT_USER"/>
 			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_PLANT_USER"/>       
 			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_PLANT_USER"/>

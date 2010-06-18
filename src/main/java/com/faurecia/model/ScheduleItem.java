@@ -41,6 +41,7 @@ public class ScheduleItem extends BaseObject {
 	private Integer releaseNo;
 	private Date createDate;
 	private List<ScheduleItemDetail> scheduleItemDetailList;
+	private Boolean isConfirm;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -157,6 +158,15 @@ public class ScheduleItem extends BaseObject {
 		scheduleItemDetailList.add(scheduleItemDetail);
 	}
 
+	@Column(name="is_confirm", nullable = false)
+	public Boolean getIsConfirm() {
+		return isConfirm;
+	}
+
+	public void setIsConfirm(Boolean isConfirm) {
+		this.isConfirm = isConfirm;
+	}
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */

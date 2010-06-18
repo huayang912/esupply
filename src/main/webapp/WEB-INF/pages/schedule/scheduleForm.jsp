@@ -107,10 +107,10 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
+						<td><fmt:message key="scheduleDetail.etd" /></td>
 						<s:iterator id="dateTo"
 							value="%{scheduleView.scheduleHead.headList}">
-							<td><fmt:formatDate value="${dateTo}" pattern="MM/dd/yyyy" /></td>
+							<td><fmt:formatDate value="${dateFrom}" pattern="MM/dd/yyyy" /></td>
 						</s:iterator>
 					</tr>
 					<s:iterator id="scheduleBody"
