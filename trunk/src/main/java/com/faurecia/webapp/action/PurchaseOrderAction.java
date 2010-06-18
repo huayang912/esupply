@@ -130,8 +130,8 @@ public class PurchaseOrderAction extends BaseAction {
 		HttpServletRequest request = this.getRequest();
 
 		if (request.isUserInRole(Constants.PLANT_USER_ROLE) || request.isUserInRole(Constants.PLANT_ADMIN_ROLE)) {
-			selectCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
-			selectCountCriteria.add(Restrictions.eq("ps.plant", user.getUserPlant()));
+			selectCriteria.add(Restrictions.eq("ps.responsibleUser", user));
+			selectCountCriteria.add(Restrictions.eq("ps.responsibleUser", user));
 		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
 			selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));

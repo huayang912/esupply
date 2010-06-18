@@ -8,4 +8,6 @@ import com.faurecia.model.Supplier;
 
 public interface ScheduleItemManager extends GenericManager<ScheduleItem, Integer> {
 	List<ScheduleItem> getLastestScheduleItemByPlantAndSupplier(Plant plant, Supplier supplier);
+	
+	List<ScheduleItem> getUnconfirmScheduleItemByPlantAndSupplier(Plant plant, Supplier supplier);
 }

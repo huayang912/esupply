@@ -54,6 +54,7 @@ import com.faurecia.service.NumberControlManager;
 import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.RoleManager;
+import com.faurecia.service.ScheduleItemManager;
 import com.faurecia.service.ScheduleManager;
 import com.faurecia.service.SupplierItemManager;
 import com.faurecia.service.SupplierManager;
@@ -61,7 +62,7 @@ import com.faurecia.service.UserManager;
 
 public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> implements ScheduleManager {
 
-	private GenericManager<ScheduleItem, Integer> scheduleItemManager;
+	private ScheduleItemManager scheduleItemManager;
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
@@ -90,7 +91,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		this.plantScheduleGroupManager = plantScheduleGroupManager;
 	}
 	
-	public void setScheduleItemManager(GenericManager<ScheduleItem, Integer> scheduleItemManager) {
+	public void setScheduleItemManager(ScheduleItemManager scheduleItemManager) {
 		this.scheduleItemManager = scheduleItemManager;
 	}
 
@@ -206,20 +207,19 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		return null;
 	}
 	
-	public Schedule getLastestScheduleItem(String plantCode, String supplierCode) {
-		return getLastestScheduleItem(plantCode, supplierCode, new Date());
+	public Schedule getLastestScheduleItem(String plantCode, String supplierCode, boolean isConfirm) {
+		return getLastestScheduleItem(plantCode, supplierCode, new Date(), isConfirm);
 	}
 
-	public Schedule getLastestScheduleItem(String plantCode, String supplierCode, Date tillDate) {
+	public Schedule getLastestScheduleItem(String plantCode, String supplierCode, Date tillDate, boolean isConfirm) {
 		String sql = "select schedule_item.id from schedule_item inner join "
 				+ "(select item_code, max(release_no) as release_no from schedule_item "
 				+ "inner join schedule on schedule_item.schedule_no = schedule.schedule_no "
 				+ "inner join plant_supplier on schedule.plant_supplier_id = plant_supplier.id "
-				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? " 
+				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? and schedule_item.is_confirm=?" 
 				+ "group by item_code) as a on schedule_item.item_code = a.item_code and schedule_item.release_no = a.release_no";
 		
-		
-		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, new Object[]{plantCode, supplierCode, tillDate});
+		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, new Object[]{plantCode, supplierCode, tillDate, isConfirm ? 1 : 0});
 		List<Integer> scheduleItemIdIist = new ArrayList<Integer>();
 		
 		while (resultSet.next()) {
@@ -256,6 +256,30 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		}
 		else {
 			return null;
+		}
+	}
+	
+	public void confirmScheduleItem(String[] scheduleItemIds) {
+		if (scheduleItemIds != null && scheduleItemIds.length > 0) {
+			for (int i = 0; i < scheduleItemIds.length; i++) {
+				ScheduleItem scheduleItem = this.scheduleItemManager.get(Integer.parseInt(scheduleItemIds[i]));
+				
+				DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleItem.class);				
+				criteria.createAlias("schedule", "s");
+				criteria.add(Restrictions.eq("s.plantSupplier", scheduleItem.getSchedule().getPlantSupplier()));
+				criteria.add(Restrictions.eq("item", scheduleItem.getItem()));
+				criteria.add(Restrictions.eq("isConfirm", false));
+				criteria.add(Restrictions.le("releaseNo", scheduleItem.getReleaseNo()));
+				
+				List<ScheduleItem> scheduleItemList = this.genericDao.findByCriteria(criteria);
+				
+				for (int j = 0; j < scheduleItemList.size(); j++) {
+					ScheduleItem scheduleItem2 = scheduleItemList.get(j);
+					scheduleItem2.setIsConfirm(true);
+					
+					this.scheduleItemManager.save(scheduleItem2);
+				}
+			}
 		}
 	}
 
@@ -443,6 +467,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					scheduleItem.setReceivedQty(new BigDecimal(E1EDP10.getAKUEM()));
 					scheduleItem.setSequence(E1EDP10.getPOSEX());
 					scheduleItem.setCreateDate(schedule.getCreateDate());
+					scheduleItem.setIsConfirm(false);
 
 					schedule.addScheduleItem(scheduleItem);
 
@@ -460,7 +485,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							String scheduleType = E1EDP16.getETTYP();
 							String dateType = E1EDP16.getPRGRS();
 
-							if ("R".equals(scheduleType)) {
+							if ("R".equals(scheduleType) || "S".equals(scheduleType)) {
 								scheduleItemDetail.setScheduleType("Backlog + Immediate Requirement");
 							} else if ("1".equals(scheduleType)) {
 								scheduleItemDetail.setScheduleType("Firm");
@@ -481,7 +506,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
-							scheduleItemDetail.setIsConfirm(false);
+							//scheduleItemDetail.setIsConfirm(false);
 
 							scheduleItem.addScheduleItemDetail(scheduleItemDetail);
 						}

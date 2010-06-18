@@ -13,14 +13,16 @@ import org.apache.commons.httpclient.util.DateParseException;
 
 import com.faurecia.Constants;
 import com.faurecia.model.PlantScheduleGroup;
+import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Schedule;
 import com.faurecia.model.ScheduleBody;
 import com.faurecia.model.ScheduleItem;
 import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
+import com.faurecia.service.PlantSupplierManager;
+import com.faurecia.service.ScheduleItemManager;
 import com.faurecia.service.ScheduleManager;
-import com.faurecia.service.SupplierManager;
 
 public class ScheduleAction extends BaseAction {
 
@@ -29,10 +31,20 @@ public class ScheduleAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 5754208797077346146L;
 	private ScheduleManager scheduleManager;
-	private SupplierManager supplierManager;
+	private ScheduleItemManager scheduleItemManager;
+	private PlantSupplierManager plantSupplierManager;
 	private Schedule schedule;
 	private ScheduleView scheduleView;
 	private boolean isPlantUser;
+	private Supplier supplier;
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 
 	public ScheduleManager getScheduleManager() {
 		return scheduleManager;
@@ -42,8 +54,12 @@ public class ScheduleAction extends BaseAction {
 		this.scheduleManager = scheduleManager;
 	}
 
-	public void setSupplierManager(SupplierManager supplierManager) {
-		this.supplierManager = supplierManager;
+	public void setScheduleItemManager(ScheduleItemManager scheduleItemManager) {
+		this.scheduleItemManager = scheduleItemManager;
+	}
+
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
+		this.plantSupplierManager = plantSupplierManager;
 	}
 	
 	public Schedule getSchedule() {
@@ -56,12 +72,13 @@ public class ScheduleAction extends BaseAction {
 	
 	public boolean getIsPlantUser() {
 		return isPlantUser;
-	}
+	}	
 
-	public List<Supplier> getSuppliers() {
+	public List<PlantSupplier> getSuppliers() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
-		return this.supplierManager.getSuppliersByPlant(user.getUserPlant());
+		
+		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
 	}
 
 	public ScheduleView getScheduleView() throws DateParseException {
@@ -165,6 +182,7 @@ public class ScheduleAction extends BaseAction {
 
 						ScheduleItem scheduleItem = schedule.getScheduleItemList().get(i);
 						ScheduleBody scheduleBody = new ScheduleBody();
+						scheduleBody.setScheduleItemId(scheduleItem.getId());
 						scheduleBody.setCreateDate(scheduleItem.getCreateDate());
 						scheduleBody.setReleaseNo(scheduleItem.getReleaseNo());
 						scheduleBody.setItemCode(scheduleItem.getItem().getCode());
@@ -232,18 +250,45 @@ public class ScheduleAction extends BaseAction {
 
 		if (editProfile) {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), new Date());
+				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), new Date(), true);
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), new Date());
+				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), new Date(), true);
 			}
 		} else {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), schedule.getCreateDate());
+				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), schedule.getCreateDate(), true);
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), schedule.getCreateDate());
+				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), schedule.getCreateDate(), true);
 			}
 		}
 
+		return SUCCESS;
+	}
+	
+	public String listAudit() {
+		return SUCCESS;
+	}
+	
+	public String audit() throws Exception {
+		HttpServletRequest request = getRequest();
+		User user = this.userManager.getUserByUsername(request.getRemoteUser());
+		if (supplier != null) {
+			schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), supplier.getCode(), new Date(), false);
+		}
+
+		return SUCCESS;
+	}
+	
+	public String confirm() throws Exception {
+		
+		String[] scheduleItemIds = this.getRequest().getParameterValues("scheduleItem");
+		
+		this.scheduleManager.confirmScheduleItem(scheduleItemIds);
+		
+		HttpServletRequest request = getRequest();
+		User user = this.userManager.getUserByUsername(request.getRemoteUser());
+		schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), supplier.getCode(), new Date(), false);
+		
 		return SUCCESS;
 	}
 }

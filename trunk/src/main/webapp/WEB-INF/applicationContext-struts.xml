@@ -95,8 +95,9 @@
 
 	<bean id="scheduleAction" class="com.faurecia.webapp.action.ScheduleAction"
 		scope="prototype">
-		<property name="supplierManager" ref="supplierManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="scheduleManager" ref="scheduleManager" />
+		<property name="scheduleItemManager" ref="scheduleItemManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
@@ -124,7 +125,7 @@
 		<property name="inboundLogManager" ref="inboundLogManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
-		<property name="purchaseOrderApprovalManager" ref="purchaseOrderApprovalManager" />
+		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="scheduleManager" ref="scheduleManager" />
 		<property name="receiptManager" ref="receiptManager" />
 	</bean>

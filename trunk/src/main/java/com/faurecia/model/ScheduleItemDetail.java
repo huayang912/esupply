@@ -33,8 +33,7 @@ public class ScheduleItemDetail extends BaseObject {
 	private Date dateFrom;
 	private Date dateTo;
 	private BigDecimal releaseQty;
-	private BigDecimal deliverQty;
-	private Boolean isConfirm;
+	private BigDecimal deliverQty;	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -108,16 +107,7 @@ public class ScheduleItemDetail extends BaseObject {
 
 	public void setDeliverQty(BigDecimal deliverQty) {
 		this.deliverQty = deliverQty;
-	}
-	
-	@Column(name="is_confirm", nullable = false)
-	public Boolean getIsConfirm() {
-		return isConfirm;
-	}
-
-	public void setIsConfirm(Boolean isConfirm) {
-		this.isConfirm = isConfirm;
-	}
+	}	
 
 	@Transient
 	public BigDecimal getRemainQty() {

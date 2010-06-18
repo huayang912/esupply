@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ScheduleBody {
 
+	private Integer scheduleItemId;
 	private String itemCode;
 	private String supplierItemCode;
 	private String itemDescription;
@@ -17,6 +18,14 @@ public class ScheduleBody {
 	public ScheduleBody() {
 		this.qtyList = new ArrayList<BigDecimal>();
 	}
+	public Integer getScheduleItemId() {
+		return scheduleItemId;
+	}
+
+	public void setScheduleItemId(Integer scheduleItemId) {
+		this.scheduleItemId = scheduleItemId;
+	}
+
 	public String getItemCode() {
 		return itemCode;
 	}

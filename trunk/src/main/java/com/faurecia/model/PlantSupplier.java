@@ -25,7 +25,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 		@NamedQuery(name = "findPlantSupplierByPlantAndSupplier", query = " select ps from PlantSupplier ps where ps.plant = :plant and ps.supplier = :supplier"),
 		@NamedQuery(name = "findPlantSupplierBySupplierCode", query = " select ps from PlantSupplier ps inner join ps.supplier s where s.code = :supplierCode"),
 		@NamedQuery(name = "findPlantSupplierByPlantCode", query = " select ps from PlantSupplier ps inner join ps.plant p where p.code = :plantCode"),
-		@NamedQuery(name = "findPlantSupplierByPlantScheduleGroupId", query = " select ps from PlantSupplier ps inner join ps.plantScheduleGroup s where s.id = :plantScheduleGroupId")})
+		@NamedQuery(name = "findPlantSupplierByPlantScheduleGroupId", query = " select ps from PlantSupplier ps inner join ps.plantScheduleGroup s where s.id = :plantScheduleGroupId"),
+		@NamedQuery(name = "findPlantSupplierByUserId", query = " select ps from PlantSupplier ps inner join ps.responsibleUser ru where ru.id = :userId")})
 public class PlantSupplier extends BaseObject implements Serializable {
 
 	/**
@@ -44,6 +45,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	private String supplierFax;
 	private String doNoPrefix;
 	private PlantScheduleGroup plantScheduleGroup;
+	private User responsibleUser;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -151,6 +153,16 @@ public class PlantSupplier extends BaseObject implements Serializable {
 
 	public void setPlantScheduleGroup(PlantScheduleGroup plantScheduleGroup) {
 		this.plantScheduleGroup = plantScheduleGroup;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "responsible_user", nullable = true)
+	public User getResponsibleUser() {
+		return responsibleUser;
+	}
+
+	public void setResponsibleUser(User responsibleUser) {
+		this.responsibleUser = responsibleUser;
 	}
 
 	/**
