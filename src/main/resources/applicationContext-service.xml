@@ -259,8 +259,7 @@
 		<property name="numberControlManager" ref="numberControlManager" />
 		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
-		<property name="mailMessage" ref="mailMessage" />
-		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
+		<property name="mailMessage" ref="mailMessage" />		
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 
@@ -303,7 +302,6 @@
 		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
-		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 
@@ -350,7 +348,6 @@
 		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
-		<property name="errorLogTemplateName" value="errorInboundOutbound.vm" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 

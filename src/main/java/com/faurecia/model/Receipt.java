@@ -33,6 +33,11 @@ public class Receipt extends BaseObject {
 	private Date postingDateFrom;
 	private Date postingDateTo;
 	private List<ReceiptDetail> receiptDetailList;
+	private String itemCode;
+	private String plusMinus;
+	private String detailOrSummary;
+	private String supplierItemCode;
+	private String referenceOrderNo;
 
 	@Id
 	@Column(name = "receipt_no", length = 20)
@@ -117,6 +122,52 @@ public class Receipt extends BaseObject {
 	public String getSupplierName() {
 		return this.plantSupplier.getSupplierName();
 	}
+	
+	@Transient
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	@Transient
+	public String getPlusMinus() {
+		return plusMinus;
+	}
+
+	public void setPlusMinus(String plusMinus) {
+		this.plusMinus = plusMinus;
+	}
+
+	@Transient
+	public String getDetailOrSummary() {
+		return detailOrSummary;
+	}
+
+	public void setDetailOrSummary(String detailOrSummary) {
+		this.detailOrSummary = detailOrSummary;
+	}
+
+	@Transient
+	public String getSupplierItemCode() {
+		return supplierItemCode;
+	}
+
+	public void setSupplierItemCode(String supplierItemCode) {
+		this.supplierItemCode = supplierItemCode;
+	}
+
+	@Transient
+	public String getReferenceOrderNo() {
+		return referenceOrderNo;
+	}
+
+	public void setReferenceOrderNo(String referenceOrderNo) {
+		this.referenceOrderNo = referenceOrderNo;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

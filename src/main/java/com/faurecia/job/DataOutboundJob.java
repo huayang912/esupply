@@ -5,17 +5,22 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.OutboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.MailEngine;
 import com.faurecia.service.OutboundLogManager;
 import com.faurecia.util.DateUtil;
 import com.faurecia.util.FTPClientUtil;
@@ -26,6 +31,10 @@ public class DataOutboundJob {
 	private GenericManager<Plant, String> plantManager;
 	private DeliveryOrderManager deliveryOrderManager;
 	private OutboundLogManager outboundLogManager;
+	
+	protected MailEngine mailEngine;
+	protected SimpleMailMessage mailMessage;
+	protected String errorOutboundTemplateName;
 	
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -39,6 +48,18 @@ public class DataOutboundJob {
 		this.outboundLogManager = outboundLogManager;
 	}
 	
+	public void setMailEngine(MailEngine mailEngine) {
+		this.mailEngine = mailEngine;
+	}
+
+	public void setMailMessage(SimpleMailMessage mailMessage) {
+		this.mailMessage = mailMessage;
+	}
+
+	public void setErrorOutboundTemplateName(String errorOutboundTemplateName) {
+		this.errorOutboundTemplateName = errorOutboundTemplateName;
+	}
+
 	public void run() {
 		log.info("Start run data outbound job.");
 		
@@ -72,6 +93,7 @@ public class DataOutboundJob {
 	private void UploadFiles(Plant plant, String user, Date nowDate) {
 		FTPClientUtil ftpClientUtil = new FTPClientUtil();
 
+		String errorDo = "";
 		try {
 			log.info("Connect to ftp server: " + plant.getFtpServer() + ".");
 			ftpClientUtil.connectServer(plant.getFtpServer(), plant.getFtpPort(), plant.getFtpUser(), plant.getFtpPassword(), plant.getFtpPath());
@@ -128,6 +150,15 @@ public class DataOutboundJob {
 				} finally {
 					if (outboundLog != null) {
 						this.outboundLogManager.save(outboundLog);
+						
+						if ("fail".equals(outboundLog.getOutboundResult())) {
+							
+							if (errorDo.trim().length() == 0) {
+								errorDo = outboundLog.getDoNo();
+							} else {
+								errorDo += ", " + outboundLog.getDoNo();
+							}
+						}
 					}
 				}
 			}
@@ -141,6 +172,24 @@ public class DataOutboundJob {
 			}
 		} catch (IOException e) {
 			log.error("Error close ftp server.", e);
+		}
+		
+		if (errorDo.trim().length() > 0) {
+			try {
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date dateNow = new Date();
+				// Email֪ͨ
+				log.info("Send error outbound email to " + plant.getErrorLogEmail1() + " and " + plant.getErrorLogEmail2());
+				mailMessage.setTo(new String[] {plant.getErrorLogEmail1(), plant.getErrorLogEmail2()});
+				Map<String, Object> model = new HashMap<String, Object>();
+				model.put("plantName", plant.getName());
+				model.put("errorDo", errorDo);
+				mailMessage.setSubject("Inbound data error " + df.format(dateNow));
+				mailEngine.sendMessage(mailMessage, errorOutboundTemplateName, model);
+				log.info("Send error outbound email successful.");
+			} catch (MailException mailEx) {
+				log.error("Error when send error outbound mail.", mailEx);
+			}
 		}
 	}
 }

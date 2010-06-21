@@ -2,7 +2,10 @@ package com.faurecia.webapp.action;
 
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +34,7 @@ import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ScheduleManager;
-import com.faurecia.util.DeliveryOrderExcelReportUtil;
-import com.faurecia.util.XlsExport;
+import com.faurecia.util.DeliveryOrderExportUtil;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
 import freemarker.template.utility.StringUtil;
@@ -134,6 +136,21 @@ public class DeliveryOrderAction extends BaseAction {
 		status.put("Confirm", "Confirm");
 		return status;
 	}
+	
+	public Map<String, String> getIsExport() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "All");
+		status.put("No", "false");
+		status.put("Yes", "true");
+		return status;
+	}
+	
+	public List<PlantSupplier> getSuppliers() {
+		String userCode = this.getRequest().getRemoteUser();
+		User user = this.userManager.getUserByUsername(userCode);
+		
+		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
+	}
 
 	public DeliveryOrder getDeliveryOrder() {
 		return deliveryOrder;
@@ -198,7 +215,7 @@ public class DeliveryOrderAction extends BaseAction {
 	public void setDeliveryOrderDetailList(List<DeliveryOrderDetail> deliveryOrderDetailList) {
 		this.deliveryOrderDetailList = deliveryOrderDetailList;
 	}
-	
+
 	public String delete() {
 		this.deliveryOrderManager.remove(deliveryOrder.getDoNo());
 		saveMessage(getText("deliveryOrder.deleted"));
@@ -208,6 +225,32 @@ public class DeliveryOrderAction extends BaseAction {
 	public String list() {
 		if (deliveryOrder == null) {
 			deliveryOrder = new DeliveryOrder();
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			Date dateNow = calendar.getTime();
+			calendar.add(Calendar.MONTH, -1);
+			Date lastWeek = calendar.getTime();
+			
+			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+			System.out.println(d.format(lastWeek));
+			System.out.println(d.format(dateNow));
+			
+			deliveryOrder.setCreateDateFrom(lastWeek);
+			deliveryOrder.setCreateDateTo(dateNow);
+			//inboundLog.setInboundResult("fail");
+			
+			List<PlantSupplier> supplierList = getSuppliers();
+			if (supplierList != null && supplierList.size() > 0) {
+				deliveryOrder.setPlantSupplier(supplierList.get(0));
+			}
+			
+			sort = "doNo";
+			dir = SortOrderEnum.DESCENDING.toString();
 		}
 
 		pageSize = pageSize == 0 ? 25 : pageSize;
@@ -235,7 +278,10 @@ public class DeliveryOrderAction extends BaseAction {
 		if (request.isUserInRole(Constants.PLANT_USER_ROLE) || request.isUserInRole(Constants.PLANT_ADMIN_ROLE)) {
 			selectCriteria.add(Restrictions.eq("ps.responsibleUser", user));
 			selectCountCriteria.add(Restrictions.eq("ps.responsibleUser", user));
-		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {		
+		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
+			if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
+				return "mainMenu";
+			}
 			selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
@@ -243,33 +289,46 @@ public class DeliveryOrderAction extends BaseAction {
 		}
 
 		if (deliveryOrder.getDoNo() != null && deliveryOrder.getDoNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("poNo", deliveryOrder.getDoNo().trim()));
-			selectCountCriteria.add(Restrictions.like("poNo", deliveryOrder.getDoNo().trim()));
+			selectCriteria.add(Restrictions.like("doNo", deliveryOrder.getDoNo().trim()));
+			selectCountCriteria.add(Restrictions.like("doNo", deliveryOrder.getDoNo().trim()));
 		}
 
 		if (deliveryOrder.getCreateDateFrom() != null) {
 			selectCriteria.add(Restrictions.ge("createDate", deliveryOrder.getCreateDateFrom()));
 			selectCountCriteria.add(Restrictions.ge("createDate", deliveryOrder.getCreateDateFrom()));
-		}
+		}			
 
 		if (deliveryOrder.getCreateDateTo() != null) {
-			selectCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
-			selectCountCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
-		}
-
-		if (deliveryOrder.getCreateDateTo() != null) {
-			selectCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
-			selectCountCriteria.add(Restrictions.le("createDate", deliveryOrder.getCreateDateTo()));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(deliveryOrder.getCreateDateTo());
+			calendar.add(Calendar.DATE, 1);
+			selectCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
+			selectCountCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
 		}
 
 		if (deliveryOrder.getStatus() != null && deliveryOrder.getStatus().trim().length() != 0) {
 			selectCriteria.add(Restrictions.eq("status", deliveryOrder.getStatus()));
 			selectCountCriteria.add(Restrictions.eq("status", deliveryOrder.getStatus()));
 		}
+		
+		if (deliveryOrder.getExportFlag() != null && deliveryOrder.getExportFlag().trim().length() > 0) {
+			if ("true".equalsIgnoreCase(deliveryOrder.getExportFlag())) {
+				selectCriteria.add(Restrictions.eq("isExport", true));
+				selectCountCriteria.add(Restrictions.eq("isExport", true));
+			} else {
+				selectCriteria.add(Restrictions.eq("isExport", false));
+				selectCountCriteria.add(Restrictions.eq("isExport", false));
+			}
+		}
+		
+		if (deliveryOrder.getPlantSupplier() != null) {
+			selectCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
+			selectCountCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
+		}
 
 		if (sort != null && sort.trim().length() > 0) {
 			paginatedList.setSortCriterion(sort);
-			if (SortOrderEnum.DESCENDING.equals(dir)) {
+			if ("desc".equals(dir)) {
 				selectCriteria.addOrder(Order.desc(sort));
 				paginatedList.setSortDirection(SortOrderEnum.DESCENDING);
 			} else {
@@ -305,10 +364,11 @@ public class DeliveryOrderAction extends BaseAction {
 					poNo = purchaseOrderDetail.getPurchaseOrder().getPoNo();
 				}
 
-				if ((purchaseOrderDetail.getShipQty() != null && currentShipQty.add(purchaseOrderDetail.getShipQty()).compareTo(
-						purchaseOrderDetail.getQty()) > 0)
-						|| (purchaseOrderDetail.getShipQty() == null && currentShipQty.compareTo(purchaseOrderDetail.getQty()) > 0)) {
-					saveMessage(getText("errors.purchaseOrder.shipQtyExcceed"));	
+				if ((purchaseOrderDetail.getShipQty() != null && currentShipQty != null && currentShipQty.add(purchaseOrderDetail.getShipQty())
+						.compareTo(purchaseOrderDetail.getQty()) > 0)
+						|| (purchaseOrderDetail.getShipQty() == null && currentShipQty != null && currentShipQty.compareTo(purchaseOrderDetail
+								.getQty()) > 0)) {
+					saveMessage(getText("errors.purchaseOrder.shipQtyExcceed"));
 					hasError = true;
 				}
 
@@ -318,15 +378,15 @@ public class DeliveryOrderAction extends BaseAction {
 			if (!hasError) {
 				deliveryOrder = this.deliveryOrderManager.createDeliveryOrder(noneZeroPurchaseOrderDetailList);
 				saveMessage(getText("deliveryOrder.added"));
-			} else {				
+			} else {
 				return "poInput";
 			}
 		} else if (plantSupplierId != null && plantSupplierId > 0) {
 
 			// sa ´´½¨ do
 			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
-			Schedule schedule = this.scheduleManager
-					.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode(), true);
+			Schedule schedule = this.scheduleManager.getLastestScheduleItem(plantSupplier.getPlant().getCode(),
+					plantSupplier.getSupplier().getCode(), true);
 			PlantScheduleGroup plantScheduleGroup = plantSupplier.getPlantScheduleGroup();
 			Boolean allowOverQty = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverQtyDeliver() : false;
 
@@ -383,20 +443,23 @@ public class DeliveryOrderAction extends BaseAction {
 					BigDecimal deliverQty = deliveryOrderDetail.getDeliverQty();
 
 					BigDecimal totalDeliverQty = currentQty;
+					if (totalDeliverQty == null) {
+						totalDeliverQty = BigDecimal.ZERO;
+					}
 					if (deliverQty != null) {
 						totalDeliverQty = totalDeliverQty.add(deliverQty);
 					}
 
 					if (deliveryOrderDetail.getOrderQty().compareTo(totalDeliverQty) < 0 && !deliveryOrder.getAllowOverQty()) {
 						saveMessage(getText("errors.deliveryOrder.shipQtyExcceed"));
-						hasError = true;						
+						hasError = true;
 					}
 
 					deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
 				}
 			}
-			
-			if (!hasError){
+
+			if (!hasError) {
 				deliveryOrder = this.deliveryOrderManager.createScheduleDeliveryOrder(deliveryOrder);
 				saveMessage(getText("deliveryOrder.added"));
 			}
@@ -409,30 +472,31 @@ public class DeliveryOrderAction extends BaseAction {
 		if (!collectDevlieryOrder()) {
 			this.deliveryOrderManager.save(deliveryOrder);
 			saveMessage(getText("deliveryOrder.updated"));
-		} 
-		
+		}
+
 		return SUCCESS;
 	}
 
 	public String confirm() {
 		if (!collectDevlieryOrder()) {
-			
+
 			boolean allZero = true;
-			for(int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
+			for (int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
 				DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
-				if (deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
+				if (deliveryOrderDetail.getQty() != null && 
+						deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
 					allZero = false;
 				}
 			}
-			
+
 			if (allZero) {
 				saveMessage(getText("errors.deliveryOrder.createDo.emptyDetail"));
 			} else {
-				this.deliveryOrderManager.confirm(deliveryOrder);				
+				this.deliveryOrderManager.confirm(deliveryOrder);
 				saveMessage(getText("deliveryOrder.confirmed"));
 			}
-		} 
-		
+		}
+
 		return SUCCESS;
 	}
 
@@ -447,13 +511,13 @@ public class DeliveryOrderAction extends BaseAction {
 	public String print() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		XlsExport report = DeliveryOrderExcelReportUtil.generateReport(localAbsolutPath, deliveryOrder);
+		inputStream = DeliveryOrderExportUtil.export(localAbsolutPath,
+				deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(), deliveryOrder);
 
-		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".xls";
-		inputStream = report.exportToInputStream(fileName);
+		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";
 		return SUCCESS;
 	}
-	
+
 	private boolean collectDevlieryOrder() {
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 
@@ -478,7 +542,7 @@ public class DeliveryOrderAction extends BaseAction {
 								deliverQty = BigDecimal.ZERO;
 							}
 
-							if (deliverQty.add(deliveryOrderDetail.getQty()).compareTo(deliveryOrderDetail.getOrderQty()) > 0) {								
+							if (deliverQty.add(deliveryOrderDetail.getQty()).compareTo(deliveryOrderDetail.getOrderQty()) > 0) {
 								saveMessage(getText("errors.deliveryOrder.shipQtyExcceed"));
 								hasError = true;
 							}
@@ -488,7 +552,7 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 		}
-		
+
 		return hasError;
 	}
 }

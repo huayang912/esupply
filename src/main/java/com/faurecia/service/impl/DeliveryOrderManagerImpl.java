@@ -178,7 +178,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		List<DeliveryOrderDetail> deliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
 		for(int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
 			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
-			if (deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
+			if (deliveryOrderDetail.getQty() != null && 
+					deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
 				deliveryOrderDetailList.add(deliveryOrderDetail);
 				
 				if (deliveryOrderDetail.getPurchaseOrderDetail() != null) {

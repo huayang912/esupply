@@ -1,6 +1,7 @@
 package com.faurecia.model;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -33,6 +35,11 @@ public class ReceiptDetail extends BaseObject {
 	private String referenceOrderNo;
 	private String referenceSequence;
 	private String plusMinus;
+	private String itemCode;
+	private String plantCode;
+	private String plantName;
+	private String supplierCode;
+	private String supplierName;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -130,6 +137,51 @@ public class ReceiptDetail extends BaseObject {
 
 	public void setPlusMinus(String plusMinus) {
 		this.plusMinus = plusMinus;
+	}	
+
+	@Transient
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	@Transient
+	public String getPlantCode() {
+		return plantCode;
+	}
+
+	public void setPlantCode(String plantCode) {
+		this.plantCode = plantCode;
+	}
+
+	@Transient
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
+	@Transient
+	public String getSupplierCode() {
+		return supplierCode;
+	}
+
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
+	}
+
+	@Transient
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 
 	/**

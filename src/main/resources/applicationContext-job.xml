@@ -10,6 +10,9 @@
 		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
 		<property name="scheduleManager" ref="scheduleManager"/>
 		<property name="receiptManager" ref="receiptManager"/>
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorInboundTemplateName" value="errorInboundTemplate.vm" />
 	</bean>
 	
 	<bean id="dataInboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -30,6 +33,9 @@
 		<property name="plantManager" ref="plantManager"/>
 		<property name="outboundLogManager" ref="outboundLogManager"/>
 		<property name="deliveryOrderManager" ref="deliveryOrderManager"/>
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorOutboundTemplateName" value="errorOutboundTemplate.vm" />
 	</bean>
 	
 	<bean id="dataOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

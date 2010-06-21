@@ -165,6 +165,19 @@ public class InboundLog extends BaseObject {
 	public void setCreateDateTo(Date createDateTo) {
 		this.createDateTo = createDateTo;
 	}
+	
+	@Transient
+	public String getReImport() {
+		if ("success".equals(this.inboundResult))
+		{
+			return "";
+		}
+		else
+		{
+			return "Import";
+		}
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */

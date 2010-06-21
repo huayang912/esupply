@@ -390,6 +390,22 @@
 		<action name="saveReceipt" class="receiptAction" method="save">
 			<result name="cancel" type="redirect-action">receipts</result>
 		</action>
+		
+		<!-- Receipt Detail -->
+		<action name="receiptDetails" class="receiptDetailAction"
+			method="enter">
+			<result name="success">/WEB-INF/pages/receiptDetail/listReceiptDetail.jsp</result>
+		</action>
+		
+		<action name="searchReceiptDetail" class="receiptDetailAction"
+			method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp</result>
+		</action>	
 
 		<!-- Log -->
 		<action name="inboundLogs" class="inboundLogAction" method="list">

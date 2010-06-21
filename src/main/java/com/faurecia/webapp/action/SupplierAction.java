@@ -137,6 +137,10 @@ public class SupplierAction extends BaseAction {
 		if (this.id != 0) {
 			plantSupplier = this.plantSupplierManager.get(id);
 		} else if (editProfile) {
+			if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
+				return "mainMenu";
+			}
+			
 			User user = userManager.getUserByUsername(request.getRemoteUser());
 			Plant plant = this.plantManager.get((String) this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
 			this.plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());

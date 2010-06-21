@@ -317,7 +317,14 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 
 				receiptDetail.setItem(item);
 				receiptDetail.setUom(E1BP2017GMITEMCREATE.getENTRYUOM());
-				receiptDetail.setQty(new BigDecimal(E1BP2017GMITEMCREATE.getENTRYQNT().trim()));
+				BigDecimal recQty = new BigDecimal(E1BP2017GMITEMCREATE.getENTRYQNT().trim());
+				if ("S".equalsIgnoreCase(E1BP2017GMITEMCREATE.getMVTIND())) {
+					receiptDetail.setQty(recQty);
+				}
+				else
+				{
+					receiptDetail.setQty(recQty.negate());
+				}
 				receiptDetail.setReferenceOrderNo(E1BP2017GMITEMCREATE.getPONUMBER());
 				receiptDetail.setReferenceSequence(E1BP2017GMITEMCREATE.getPOITEM());
 				receiptDetail.setPlusMinus(E1BP2017GMITEMCREATE.getMVTIND());

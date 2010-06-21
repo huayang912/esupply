@@ -1,5 +1,6 @@
 package com.faurecia.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,7 @@ public class NoticeReader extends BaseObject {
 	private Integer id;
 	private Notice notice;
 	private PlantSupplier plantSupplier;
+	private boolean isRead;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,6 +56,15 @@ public class NoticeReader extends BaseObject {
 
 	public void setPlantSupplier(PlantSupplier plantSupplier) {
 		this.plantSupplier = plantSupplier;
+	}
+
+	@Column(name = "is_read", nullable = false)
+	public boolean isRead() {
+		return isRead;
+	}
+
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
 	}
 
 	/**

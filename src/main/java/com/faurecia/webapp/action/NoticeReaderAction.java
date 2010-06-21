@@ -72,6 +72,10 @@ public class NoticeReaderAction extends BaseAction {
 	}
 	
 	public String list() {
+		if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
+			return "mainMenu";
+		}
+		
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
 		Plant plant = this.plantManager.get((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));

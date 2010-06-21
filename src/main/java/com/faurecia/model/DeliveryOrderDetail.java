@@ -119,7 +119,7 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.unitCount = unitCount;
 	}
 
-	@Column(nullable = false, precision = 9, scale = 2)
+	@Column(nullable = true, precision = 9, scale = 2)
 	public BigDecimal getQty() {
 		return qty;
 	}
