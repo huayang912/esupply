@@ -44,6 +44,7 @@ import com.faurecia.model.delfor.DELFOR02;
 import com.faurecia.model.delfor.DELFOR02E1EDK09;
 import com.faurecia.model.delfor.DELFOR02E1EDKA1;
 import com.faurecia.model.delfor.DELFOR02E1EDP10;
+import com.faurecia.model.delfor.DELFOR02E1EDP14;
 import com.faurecia.model.delfor.DELFOR02E1EDP16;
 import com.faurecia.service.DataConvertException;
 import com.faurecia.service.GenericManager;
@@ -429,6 +430,13 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 						item.setDescription(itemDescription);
 						item.setPlant(plant);
 						item.setUom(E1EDP10.getVRKME());
+						
+						List<DELFOR02E1EDP14> E1EDP14List = E1EDP10.getE1EDP14();
+						if (E1EDP14List != null && E1EDP14List.size() > 0) {
+							DELFOR02E1EDP14 E1EDP14 = E1EDP14List.get(0);
+							BigDecimal unitCount = new BigDecimal(E1EDP14.getANZAR());
+							item.setUnitCount(unitCount);							
+						}
 
 						item = this.itemManager.save(item);
 					}
@@ -472,8 +480,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					schedule.addScheduleItem(scheduleItem);
 
 					// ----------------------------schedule item
-					// detail---------------------
-
+					// detail---------------------								
 					List<DELFOR02E1EDP16> E1EDP16List = E1EDP10.getE1EDP16();
 
 					if (E1EDP16List != null && E1EDP16List.size() > 0) {

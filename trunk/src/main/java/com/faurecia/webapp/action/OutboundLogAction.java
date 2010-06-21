@@ -1,7 +1,15 @@
 package com.faurecia.webapp.action;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -78,9 +86,38 @@ public class OutboundLogAction extends BaseAction {
 	public void setDoNo(String doNo) {
 		this.doNo = doNo;
 	}
+	public Map<String, String> getOutboundResult()
+	{
+		Map<String, String> status = new HashMap<String, String>(); 
+		status.put("", "All");
+		status.put("success", "success");
+		status.put("fail", "fail");
+		return status;
+	}
 	public String list() {
 		if (outboundLog == null) {
 			outboundLog = new OutboundLog();
+			
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			Date dateNow = calendar.getTime();
+			calendar.add(Calendar.DATE, -7);
+			Date lastWeek = calendar.getTime();
+			
+			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+			System.out.println(d.format(lastWeek));
+			System.out.println(d.format(dateNow));
+			
+			outboundLog.setCreateDateFrom(lastWeek);
+			outboundLog.setCreateDateTo(dateNow);
+			//inboundLog.setInboundResult("fail");
+			
+			sort = "createDate";
+			dir = SortOrderEnum.DESCENDING.toString();
 		}
 			
 		pageSize = pageSize == 0 ? 25 : pageSize;
@@ -111,13 +148,31 @@ public class OutboundLogAction extends BaseAction {
 		}
 		
 		if (outboundLog.getCreateDateTo() != null) {
-			selectCriteria.add(Restrictions.le("createDate", outboundLog.getCreateDateTo()));
-			selectCountCriteria.add(Restrictions.le("createDate", outboundLog.getCreateDateTo()));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(outboundLog.getCreateDateTo());
+			calendar.add(Calendar.DATE, 1);
+			selectCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
+			selectCountCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
+		}
+		
+		if (outboundLog.getOutboundResult() != null && outboundLog.getOutboundResult().trim().length() > 0) {
+			selectCriteria.add(Restrictions.eq("outboundResult", outboundLog.getOutboundResult()));
+			selectCountCriteria.add(Restrictions.eq("outboundResult", outboundLog.getOutboundResult()));
+		}
+		
+		if (outboundLog.getDoNo() != null && outboundLog.getDoNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("doNo", outboundLog.getDoNo(), MatchMode.ANYWHERE));
+			selectCountCriteria.add(Restrictions.like("doNo", outboundLog.getDoNo(), MatchMode.ANYWHERE));
+		}
+		
+		if (outboundLog.getFileName() != null && outboundLog.getFileName().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("fileName", outboundLog.getFileName(), MatchMode.ANYWHERE));
+			selectCountCriteria.add(Restrictions.like("fileName", outboundLog.getFileName(), MatchMode.ANYWHERE));
 		}
 		
 		if (sort != null && sort.trim().length() > 0) {
 			paginatedList.setSortCriterion(sort);
-			if (SortOrderEnum.DESCENDING.equals(dir))
+			if ("desc".equals(dir))
 			{
 				selectCriteria.addOrder(Order.desc(sort));
 				paginatedList.setSortDirection(SortOrderEnum.DESCENDING);

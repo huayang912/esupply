@@ -21,7 +21,6 @@ import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.PlantSupplierManager;
-import com.faurecia.service.ScheduleItemManager;
 import com.faurecia.service.ScheduleManager;
 
 public class ScheduleAction extends BaseAction {
@@ -31,7 +30,6 @@ public class ScheduleAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 5754208797077346146L;
 	private ScheduleManager scheduleManager;
-	private ScheduleItemManager scheduleItemManager;
 	private PlantSupplierManager plantSupplierManager;
 	private Schedule schedule;
 	private ScheduleView scheduleView;
@@ -52,10 +50,6 @@ public class ScheduleAction extends BaseAction {
 
 	public void setScheduleManager(ScheduleManager scheduleManager) {
 		this.scheduleManager = scheduleManager;
-	}
-
-	public void setScheduleItemManager(ScheduleItemManager scheduleItemManager) {
-		this.scheduleItemManager = scheduleItemManager;
 	}
 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
@@ -94,7 +88,7 @@ public class ScheduleAction extends BaseAction {
 		
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTime(new Date());
-				calendar.set(Calendar.HOUR, 0);
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
 				calendar.set(Calendar.MINUTE, 0);
 				calendar.set(Calendar.SECOND, 0);
 				calendar.set(Calendar.MILLISECOND, 0);
@@ -252,12 +246,20 @@ public class ScheduleAction extends BaseAction {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
 				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), new Date(), true);
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
+				if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
+					return "mainMenu";
+				}
+				
 				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), new Date(), true);
 			}
 		} else {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
 				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), schedule.getCreateDate(), true);
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
+				if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
+					return "mainMenu";
+				}
+				
 				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), schedule.getCreateDate(), true);
 			}
 		}

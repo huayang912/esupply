@@ -25,12 +25,13 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * @author ¶¡öÎ
- *
+ * 
  */
 @Entity
 @Table(name = "notice")
-@NamedQueries( { @NamedQuery(name = "findNoticeByPlant", query = " select n from Notice n where n.plant = :plant") ,
-	@NamedQuery(name = "findNoticeByPlantSupplier", query = " select nr.notice from NoticeReader nr inner join nr.notice as n where nr.plantSupplier = :plantSupplier and n.displayDateFrom <= :dateNow and n.displayDateTo >= :dateNow") })
+@NamedQueries( {
+		@NamedQuery(name = "findNoticeByPlant", query = " select n from Notice n where n.plant = :plant order by n.displayDateFrom desc"),
+		@NamedQuery(name = "findNoticeByPlantSupplier", query = " select nr.notice from NoticeReader nr inner join nr.notice as n where nr.plantSupplier = :plantSupplier and n.displayDateFrom <= :dateNow and n.displayDateTo >= :dateNow order by n.displayDateFrom desc") })
 public class Notice extends BaseObject {
 
 	/**
@@ -95,7 +96,7 @@ public class Notice extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "plant_code", nullable=false)
+	@JoinColumn(name = "plant_code", nullable = false)
 	public Plant getPlant() {
 		return plant;
 	}
@@ -121,7 +122,7 @@ public class Notice extends BaseObject {
 	public void setDisplayDateTo(Date displayDateTo) {
 		this.displayDateTo = displayDateTo;
 	}
-	
+
 	@Transient
 	public List<LabelValue> getSupplierList() {
 		return supplierList;
@@ -139,7 +140,7 @@ public class Notice extends BaseObject {
 	public void setNoticeReaderList(List<NoticeReader> noticeReaderList) {
 		this.noticeReaderList = noticeReaderList;
 	}
-	
+
 	public void addNoticeReader(NoticeReader noticeReader) {
 		if (noticeReaderList == null) {
 			noticeReaderList = new ArrayList<NoticeReader>();

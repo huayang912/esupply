@@ -91,6 +91,10 @@ public class SupplierItemAction extends BaseAction {
 	}
 
 	public String list() {
+		if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
+			return "mainMenu";
+		}
+		
 		if (supplierItem == null) {
 			supplierItem = new SupplierItem();
 		}
@@ -114,8 +118,8 @@ public class SupplierItemAction extends BaseAction {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
 
-		HttpServletRequest request = this.getRequest();
-
+		HttpServletRequest request = this.getRequest();		
+		
 		selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 		selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
 		selectCriteria.add(Restrictions.eq("supplier", user.getUserSupplier()));
@@ -133,7 +137,7 @@ public class SupplierItemAction extends BaseAction {
 			
 		if (sort != null && sort.trim().length() > 0) {
 			paginatedList.setSortCriterion(sort);
-			if (SortOrderEnum.DESCENDING.equals(dir))
+			if ("desc".equals(dir))
 			{
 				selectCriteria.addOrder(Order.desc(sort));
 				paginatedList.setSortDirection(SortOrderEnum.DESCENDING);

@@ -51,6 +51,7 @@ public class DeliveryOrder extends BaseObject {
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	private Boolean allowOverQty;
 	private String status;
+	private String exportFlag;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -343,6 +344,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setAllowOverQty(Boolean allowOverQty) {
 		this.allowOverQty = allowOverQty;
+	}
+
+	@Transient
+	public String getExportFlag() {
+		return exportFlag;
+	}
+
+	public void setExportFlag(String exportFlag) {
+		this.exportFlag = exportFlag;
 	}
 
 	/**

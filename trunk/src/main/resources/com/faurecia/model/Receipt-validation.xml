@@ -1,0 +1,14 @@
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+    "http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+<validators>
+    <field name="receipt.postingDateFrom">
+        <field-validator type="date">
+            <message key="errors.date"/>
+        </field-validator>
+    </field>
+    <field name="receipt.postingDateTo">
+        <field-validator type="date">
+            <message key="errors.date"/>
+        </field-validator>
+    </field>
+</validators>

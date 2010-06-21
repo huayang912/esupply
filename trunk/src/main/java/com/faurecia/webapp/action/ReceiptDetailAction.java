@@ -4,30 +4,35 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 
 import com.faurecia.Constants;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Receipt;
+import com.faurecia.model.ReceiptDetail;
 import com.faurecia.model.User;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ReceiptManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
-public class ReceiptAction extends BaseAction {
+public class ReceiptDetailAction extends BaseAction {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 3665261977032180267L;
+	private static final long serialVersionUID = -9143046808174675490L;
 	private ReceiptManager receiptManager;
 	private PlantSupplierManager plantSupplierManager;
 	private PaginatedListUtil<Receipt> paginatedList;
@@ -36,7 +41,6 @@ public class ReceiptAction extends BaseAction {
 	private String sort;
 	private String dir;
 	private Receipt receipt;
-	private String receiptNo;
 	
 	public void setReceiptManager(ReceiptManager receiptManager) {
 		this.receiptManager = receiptManager;
@@ -93,14 +97,6 @@ public class ReceiptAction extends BaseAction {
 	public void setReceipt(Receipt receipt) {
 		this.receipt = receipt;
 	}
-
-	public String getReceiptNo() {
-		return receiptNo;
-	}
-
-	public void setReceiptNo(String receiptNo) {
-		this.receiptNo = receiptNo;
-	}
 	
 	public List<PlantSupplier> getSuppliers() {
 		String userCode = this.getRequest().getRemoteUser();
@@ -109,7 +105,7 @@ public class ReceiptAction extends BaseAction {
 		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
 	}
 	
-	public String list() {
+	public String enter() {
 		if (receipt == null) {
 			receipt = new Receipt();
 			
@@ -120,7 +116,7 @@ public class ReceiptAction extends BaseAction {
 			calendar.set(Calendar.SECOND, 0);
 			calendar.set(Calendar.MILLISECOND, 0);
 			Date dateNow = calendar.getTime();
-			calendar.add(Calendar.MONTH, -1);
+			calendar.add(Calendar.MONTH, -3);
 			Date lastWeek = calendar.getTime();
 			
 			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
@@ -131,15 +127,27 @@ public class ReceiptAction extends BaseAction {
 			receipt.setPostingDateTo(dateNow);
 			//inboundLog.setInboundResult("fail");
 			
-			 List<PlantSupplier> supplierList = getSuppliers();
-			 if (supplierList != null && supplierList.size() > 0) {
-				 receipt.setPlantSupplier(supplierList.get(0));
-			 }
-			
 			sort = "postingDate";
 			dir = SortOrderEnum.DESCENDING.toString();
-		}
 			
+			receipt.setDetailOrSummary("Detail");
+		}
+		
+		return SUCCESS;
+	}
+	
+	public Map<String, String> getDetailOrSummary() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("Detail", "Detail");
+		status.put("Summary", "Summary");
+		return status;
+	}
+	
+	public String cancel() {
+		return "mainMenu";
+	}
+	
+	public String list() {
 		pageSize = pageSize == 0 ? 25 : pageSize;
 		page  = page == 0 ? 1 : page;
 
@@ -147,16 +155,19 @@ public class ReceiptAction extends BaseAction {
 		paginatedList.setPageNumber(page);
 		paginatedList.setObjectsPerPage(pageSize);
 
-		DetachedCriteria selectCriteria = DetachedCriteria.forClass(Receipt.class);
-		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(Receipt.class)
-			.setProjection(Projections.count("receiptNo"));
+		DetachedCriteria selectCriteria = DetachedCriteria.forClass(ReceiptDetail.class);
+		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(ReceiptDetail.class);
 		
-		selectCriteria.createAlias("plantSupplier", "ps");
+		selectCriteria.createAlias("receipt", "r");
+		selectCriteria.createAlias("r.plantSupplier", "ps");
 		selectCriteria.createAlias("ps.plant", "p");
-		selectCriteria.createAlias("ps.supplier", "s");		
-		selectCountCriteria.createAlias("plantSupplier", "ps");
+		selectCriteria.createAlias("ps.supplier", "s");
+		selectCriteria.createAlias("item", "i");
+		selectCountCriteria.createAlias("receipt", "r");
+		selectCountCriteria.createAlias("r.plantSupplier", "ps");
 		selectCountCriteria.createAlias("ps.plant", "p");
 		selectCountCriteria.createAlias("ps.supplier", "s");
+		selectCountCriteria.createAlias("item", "i");
 
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
@@ -178,26 +189,46 @@ public class ReceiptAction extends BaseAction {
 		}
 		
 		if (receipt.getReceiptNo() != null && receipt.getReceiptNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("receiptNo", receipt.getReceiptNo().trim()));
-			selectCountCriteria.add(Restrictions.like("receiptNo", receipt.getReceiptNo().trim()));
-		}			
+			selectCriteria.add(Restrictions.like("r.receiptNo", receipt.getReceiptNo().trim()));
+			selectCountCriteria.add(Restrictions.like("r.receiptNo", receipt.getReceiptNo().trim()));
+		}
+		
+		if (receipt.getItemCode() != null && receipt.getItemCode().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("i.code", receipt.getItemCode().trim()));
+			selectCountCriteria.add(Restrictions.like("i.code", receipt.getItemCode().trim()));
+		}
+		
+		if (receipt.getPlusMinus() != null && receipt.getPlusMinus().trim().length() > 0) {
+			selectCriteria.add(Restrictions.eq("plusMinus", receipt.getPlusMinus().trim()));
+			selectCountCriteria.add(Restrictions.eq("getPlusMinus", receipt.getPlusMinus().trim()));
+		}
+		
+		if (receipt.getSupplierItemCode() != null && receipt.getSupplierItemCode().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("supplierItemCode", receipt.getSupplierItemCode().trim()));
+			selectCountCriteria.add(Restrictions.like("supplierItemCode", receipt.getSupplierItemCode().trim()));
+		}
+		
+		if (receipt.getReferenceOrderNo() != null && receipt.getReferenceOrderNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("referenceOrderNo", receipt.getReferenceOrderNo().trim()));
+			selectCountCriteria.add(Restrictions.like("referenceOrderNo", receipt.getReferenceOrderNo().trim()));
+		}
 		
 		if (receipt.getPostingDateFrom() != null) {
-			selectCriteria.add(Restrictions.ge("postingDate", receipt.getPostingDateFrom()));
-			selectCountCriteria.add(Restrictions.ge("postingDate", receipt.getPostingDateFrom()));
+			selectCriteria.add(Restrictions.ge("r.postingDate", receipt.getPostingDateFrom()));
+			selectCountCriteria.add(Restrictions.ge("r.postingDate", receipt.getPostingDateFrom()));
 		}
 		
 		if (receipt.getPostingDateTo() != null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(receipt.getPostingDateTo());
 			calendar.add(Calendar.DATE, 1);
-			selectCriteria.add(Restrictions.le("postingDate", calendar.getTime()));
-			selectCountCriteria.add(Restrictions.le("postingDate", calendar.getTime()));
+			selectCriteria.add(Restrictions.le("r.postingDate", calendar.getTime()));
+			selectCountCriteria.add(Restrictions.le("r.postingDate", calendar.getTime()));
 		}
 		
 		if (receipt.getPlantSupplier() != null) {
-			selectCriteria.add(Restrictions.eq("plantSupplier", receipt.getPlantSupplier()));
-			selectCountCriteria.add(Restrictions.eq("plantSupplier", receipt.getPlantSupplier()));
+			selectCriteria.add(Restrictions.eq("r.plantSupplier", receipt.getPlantSupplier()));
+			selectCountCriteria.add(Restrictions.eq("r.plantSupplier", receipt.getPlantSupplier()));
 		}
 			
 		if (sort != null && sort.trim().length() > 0) {
@@ -213,20 +244,42 @@ public class ReceiptAction extends BaseAction {
 				paginatedList.setSortDirection(SortOrderEnum.ASCENDING);
 			}
 		}
+		
+		if ("Detail".equals(receipt.getDetailOrSummary())) {
+			selectCountCriteria.setProjection(Projections.count("id"));
+		} else {
+			ProjectionList projectionList = Projections.projectionList()
+				.add(Projections.sum("qty").as("qty"))
+				.add(Projections.groupProperty("p.code").as("plantCode"))
+				.add(Projections.groupProperty("p.name").as("plantName"))
+				.add(Projections.groupProperty("s.code").as("supplierCode"))
+				.add(Projections.groupProperty("ps.supplierName").as("supplierName"))
+				.add(Projections.groupProperty("i.code").as("itemCode"))
+				.add(Projections.groupProperty("itemDescription").as("itemDescription"))
+				.add(Projections.groupProperty("supplierItemCode").as("supplierItemCode"))
+				.add(Projections.groupProperty("uom").as("uom"));
+			
+			selectCriteria.setProjection(projectionList);
+	        selectCriteria.setResultTransformer(Transformers.aliasToBean(ReceiptDetail.class));
+	        
+	        selectCountCriteria.setProjection(projectionList);
+	        selectCountCriteria.setResultTransformer(Transformers.aliasToBean(ReceiptDetail.class));
+		}
 
 		paginatedList.setList(this.receiptManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
-		paginatedList.setFullListSize(Integer.parseInt(this.receiptManager.findByCriteria(selectCountCriteria).get(0).toString()));			
+		if ("Detail".equals(receipt.getDetailOrSummary())) {
+			paginatedList.setFullListSize(Integer.parseInt(this.receiptManager.findByCriteria(selectCountCriteria).get(0).toString()));
+		}
+		else
+		{
+			List list = this.receiptManager.findByCriteria(selectCountCriteria);
+			if (list != null && list.size() > 0) {
+				paginatedList.setFullListSize(list.size());
+			} else {
+				paginatedList.setFullListSize(0);
+			}
+		}
 		
 		return SUCCESS;
 	}
-
-	public String cancel() {
-		return CANCEL;
-	}
-
-	public String edit() throws Exception {
-		receipt = this.receiptManager.get(this.receiptNo, true);
-		return SUCCESS;
-	}
-	
 }
