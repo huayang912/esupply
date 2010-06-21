@@ -28,19 +28,26 @@
 
 	<li style="padding: 0px">
 	<table style="margin: 0px; width: 100%;">
-		<tr>
-			<td colspan="2"><s:textfield key="plantScheduleGroup.name"
-				theme="xhtml" required="true" cssClass="text medium" /></td>
+		<tr>		
+			<td><s:textfield key="plantScheduleGroup.name"
+				required="xhtml" cssClass="text medium" /></td>
+			<td></td>
 		</tr>
+	</table>
+	<table>
 		<tr>
-			<td><s:checkbox key="plantScheduleGroup.isDefault" /></td>
-			<td><s:checkbox key="plantScheduleGroup.allowOverDateDeliver" />
-			</td>
-		</tr>
-		<tr>
-			<td><s:checkbox key="plantScheduleGroup.allowOverQtyDeliver" /></td>
-			<td><s:checkbox key="plantScheduleGroup.allowForecastDeliver" />
-			</td>
+			<td><label class="desc"><fmt:message
+				key="plantScheduleGroup.isDefault" /></label><s:checkbox key="plantScheduleGroup.isDefault"
+				theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="plantScheduleGroup.allowOverDateDeliver" /></label><s:checkbox key="plantScheduleGroup.allowOverDateDeliver"
+				theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="plantScheduleGroup.allowOverQtyDeliver" /></label><s:checkbox key="plantScheduleGroup.allowOverQtyDeliver"
+				theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="plantScheduleGroup.allowForecastDeliver" /></label><s:checkbox key="plantScheduleGroup.allowForecastDeliver"
+				theme="simple" /></td>
 		</tr>
 	</table>
 	</li>
@@ -49,7 +56,7 @@
 	<li>
 	<fieldset><legend><fmt:message
 		key="plantScheduleGroup.assignSuppliers" /></legend>
-	<table class="pickList" style="width:100%">
+	<table class="pickList" style="width: 100%">
 		<tr>
 			<th class="pickLabel"><label class="required"><fmt:message
 				key="plantScheduleGroup.availableSuppliers" /></label></th>

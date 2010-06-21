@@ -9,10 +9,12 @@
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderList.heading'/>" />
 <c:choose>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 		<meta name="menu" content="PlantOrderMenu" />
 	</c:when>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 		<meta name="menu" content="SupplierOrderMenu" />
 	</c:when>
 </c:choose>
@@ -29,27 +31,42 @@
 	validate="true">
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
-	<s:textfield key="purchaseOrder.poNo" cssClass="text medium" />
-	<li><s:select key="purchaseOrder.status" list="%{status}"
-		theme="xhtml" /></li>
 	<li style="padding: 0px">
 	<table style="margin: 0px">
+		<c:if
+			test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+			<tr>
+				<td><label class="desc"><fmt:message
+					key="purchaseOrder.supplierCode" /></label></td>
+				<td colspan="2"><s:select key="purchaseOrder.plantSupplier.id"
+					list="%{suppliers}" listKey="id"
+					listValue="supplierName" theme="simple" /></td>
+			</tr>
+		</c:if>
 		<tr>
+			<td><label class="desc"><fmt:message
+				key="purchaseOrder.poNo" /></label></td>
+			<td colspan="2"><s:textfield key="purchaseOrder.poNo"
+				cssClass="text medium" theme="simple" /></td>
+
+			<td><label class="desc"><fmt:message
+				key="purchaseOrder.status" /></label></td>
+			<td colspan="2"><s:select key="purchaseOrder.status"
+				list="%{status}" theme="simple" /></td>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="purchaseOrder.createDateFrom" /></label></td>
 			<td><s:textfield key="purchaseOrder.createDateFrom"
-				cssClass="text medium" /></td>
+				cssClass="text short" theme="simple" /></td>
 			<td><A HREF="#"
 				onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
 				NAME="anchDateFrom" ID="anchDateFrom"><img
 				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
-		</tr>
-	</table>
-	</li>
-
-	<li style="padding: 0px">
-	<table style="margin: 0px">
-		<tr>
+			<td><label class="desc"><fmt:message
+				key="purchaseOrder.createDateTo" /></label></td>
 			<td><s:textfield key="purchaseOrder.createDateTo"
-				cssClass="text medium" /></td>
+				cssClass="text short" theme="simple" /></td>
 			<td><A HREF="#"
 				onClick="cal.select(document.forms['purchaseOrderForm'].purchaseOrders_purchaseOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
 				NAME="anchDateTo" ID="anchDateTo"><img

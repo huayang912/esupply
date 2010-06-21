@@ -8,10 +8,12 @@
 <title><fmt:message key="scheduleList.title" /></title>
 <meta name="heading" content="<fmt:message key='scheduleList.heading'/>" />
 <c:choose>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 		<meta name="menu" content="PlantOrderMenu" />
 	</c:when>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 		<meta name="menu" content="SupplierOrderMenu" />
 	</c:when>
 </c:choose>
@@ -20,19 +22,20 @@
 </head>
 <s:form name="scheduleForm" action="editSchedule" method="post"
 	validate="true">
-	<c:choose>
-		<c:when test="${isPlantUser}">
-		<li style="padding: 0px">
-			<s:select key="schedule.supplierCode" list="%{suppliers}"
-				listKey="supplier.code" listValue="supplierName" theme="xhtml" required="true"></s:select>
-		</li>
-		</c:when>
-	</c:choose>
 
-	<s:hidden name="from" value="list"/>
+
+	<s:hidden name="from" value="list" />
 	<li style="padding: 0px">
 	<table style="margin: 0px">
 		<tr>
+			<c:if
+				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+				<td><label class="desc"><fmt:message
+					key="schedule.supplierCode" /></label></td>
+				<td><s:select key="schedule.supplierCode" list="%{suppliers}"
+					listKey="supplier.code" listValue="supplierName" theme="simple"
+					required="true"></s:select></td>
+			</c:if>
 			<td><s:textfield key="schedule.createDate"
 				cssClass="text medium" required="true" /></td>
 			<td><A HREF="#"

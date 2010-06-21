@@ -16,12 +16,24 @@
 
 <s:set name="plantScheduleGroups" value="plantScheduleGroups" scope="request"/>
 <display:table name="plantScheduleGroups" class="table" requestURI="" id="plantScheduleGroupList" export="true" pagesize="25">
-    <display:column property="name" sortable="true" url="/editPlantScheduleGroup.html" 
+    <display:column property="name" url="/editPlantScheduleGroup.html" 
         paramId="id" paramProperty="id" titleKey="plantScheduleGroup.name"/>
-    <display:column property="allowOverDateDeliver" sortable="true" titleKey="plantScheduleGroup.allowOverDateDeliver"/>
-    <display:column property="allowOverQtyDeliver" sortable="true" titleKey="plantScheduleGroup.allowOverQtyDeliver"/>
-    <display:column property="allowForecastDeliver" sortable="true" titleKey="plantScheduleGroup.allowForecastDeliver"/>
-    <display:column property="isDefault" sortable="true" titleKey="plantScheduleGroup.isDefault"/>
+    <display:column titleKey="plantScheduleGroup.allowOverDateDeliver">
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${plantScheduleGroupList.allowOverDateDeliver}">checked="checked"</c:if> />
+	</display:column>
+	 <display:column titleKey="plantScheduleGroup.allowOverQtyDeliver">
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${plantScheduleGroupList.allowOverQtyDeliver}">checked="checked"</c:if> />
+	</display:column>
+	 <display:column titleKey="plantScheduleGroup.allowForecastDeliver">
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${plantScheduleGroupList.allowForecastDeliver}">checked="checked"</c:if> />
+	</display:column>
+	 <display:column titleKey="plantScheduleGroup.isDefault">
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${plantScheduleGroupList.isDefault}">checked="checked"</c:if> />
+	</display:column>
     
     <display:setProperty name="paging.banner.item_name">
 		<fmt:message key="plantScheduleGroup.plantScheduleGroup" />

@@ -17,7 +17,7 @@ function checkedAll (obj) {
 </head>
 
 <c:set var="buttons">
-	<s:submit key="button.confirm" method="confirm" />
+	<s:submit key="button.confirm" method="confirm" theme="simple"/>
 </c:set>
 <s:form name="scheduleForm" action="scheduleAudit" method="post"
 	validate="true">
@@ -106,8 +106,7 @@ function checkedAll (obj) {
 				</tbody>
 			</table>
 			
-			<li class="buttonBar bottom"><c:out value="${buttons}"
-		escapeXml="false" /></li>
+			<c:out value="${buttons}" escapeXml="false" />
 		</c:otherwise>
 	</c:choose>
 	
