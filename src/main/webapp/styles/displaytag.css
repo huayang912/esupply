@@ -53,14 +53,17 @@ span.pagelinks {
 th.sorted a, th.sortable a {
     background-position: right;
     display: block;
+     white-space: nowrap;
 }
 
 .table th.order1 a {
     background-image: url(../images/arrow_down.png) !important;
+     white-space: nowrap;
 }
 
 .table th.order2 a {
     background-image: url(../images/arrow_up.png) !important;
+     white-space: nowrap;
 }
 
 div#main .tableHeaderImage { /* Tapestry */
@@ -77,12 +80,14 @@ div#main .tableHeaderImage { /* Tapestry */
 .table th.sorted {
     background-color: #ffd;
     color: #000000;
+    white-space: nowrap;
 }
 
 .table th.sorted a, .table th.sortable a {
     background-position: right;
     background-repeat: no-repeat;
     display: block;
+    white-space: nowrap;
 }
 
 .table tr.even {
@@ -106,5 +111,10 @@ div#main .tableHeaderImage { /* Tapestry */
 }
 
 .detail th {
-    text-align: right;
+    text-align: right; 
+    white-space: nowrap;   
+}
+
+tr, td {
+		white-space: nowrap;
 }

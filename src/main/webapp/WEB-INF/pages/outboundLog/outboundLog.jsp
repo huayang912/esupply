@@ -22,16 +22,44 @@
 	validate="true">
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
-	<s:textfield key="outboundLog.createDateFrom" cssClass="text medium" />
-	<A HREF="#"
-		onClick="cal.select(document.forms['outboundLogForm'].outboundLogs_outboundLog_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-		NAME="anchDateFrom" ID="anchDateFrom"><img
-		src="<c:url value="/images/calendar.png"/>" border="0" /></A>
-	<s:textfield key="outboundLog.createDateTo" cssClass="text medium" />
-	<A HREF="#"
-		onClick="cal.select(document.forms['outboundLogForm'].outboundLogs_outboundLog_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-		NAME="anchDateTo" ID="anchDateTo"><img
-		src="<c:url value="/images/calendar.png"/>" border="0" /></A>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="outboundLog.fileName" /></label></td>
+			<td colspan="5"><s:textfield key="outboundLog.fileName"
+				cssClass="text large" theme="simple" /></td>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="outboundLog.doNo" /></label></td>
+			<td colspan="2"><s:textfield key="outboundLog.doNo"
+				cssClass="text medium" theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="outboundLog.outboundResult" /></label></td>
+			<td colspan="2"><s:select key="outboundLog.outboundResult"
+				list="%{outboundResult}" theme="simple" /></td>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="outboundLog.createDateFrom" /></label></td>
+			<td><s:textfield key="outboundLog.createDateFrom"
+				cssClass="text short" theme="simple" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['outboundLogForm'].outboundLogs_outboundLog_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+				NAME="anchDateFrom" ID="anchDateFrom"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+			<td><label class="desc"><fmt:message
+				key="outboundLog.createDateTo" /></label></td>
+			<td><s:textfield key="outboundLog.createDateTo"
+				cssClass="text short" theme="simple" /></td>
+			<td><A HREF="#"
+				onClick="cal.select(document.forms['outboundLogForm'].outboundLogs_outboundLog_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+				NAME="anchDateTo" ID="anchDateTo"><img
+				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
+		</tr>
+	</table>
+	</li>
 	<div><s:submit method="list" key="button.search" theme="simple" /></div>
 </s:form>
 
@@ -44,13 +72,16 @@
 	<display:column property="plantSupplier.supplierName" sortable="true"
 		sortProperty="ps.supplierName" titleKey="outboundLog.supplierName" />
 
-	<display:column property="doNo" sortable="true"
-		sortProperty="doNo" titleKey="outboundLog.doNo" />
+	<display:column property="doNo" sortable="true" sortProperty="doNo"
+		titleKey="outboundLog.doNo" />
+		
+	<display:column property="fileName" sortable="true" sortProperty="fileName"
+		titleKey="outboundLog.fileName" />
 
 	<display:column property="outboundResult" sortable="true"
 		sortProperty="outboundResult" titleKey="outboundLog.outboundResult" />
 
-	<display:column property="memo" sortable="true" sortProperty="memo"
+	<display:column property="memo"
 		titleKey="outboundLog.memo" />
 
 	<display:column property="createDate" sortable="true"
@@ -68,8 +99,7 @@
 		sortProperty="lastModifyUser" titleKey="outboundLog.lastModifyUser" />
 
 	<display:column sortable="false" titleKey="outboundLog.export"
-		url="/exportOutboundLog.html" paramId="doNo"
-		paramProperty="doNo">
+		url="/exportOutboundLog.html" paramId="doNo" paramProperty="doNo">
 		<fmt:message key="outboundLog.export" />
 	</display:column>
 

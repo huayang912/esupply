@@ -9,10 +9,12 @@
 <meta name="heading"
 	content="<fmt:message key='deliveryOrderList.heading'/>" />
 <c:choose>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 		<meta name="menu" content="PlantOrderMenu" />
 	</c:when>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+	<c:when
+		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 		<meta name="menu" content="SupplierOrderMenu" />
 	</c:when>
 </c:choose>
@@ -29,24 +31,45 @@
 	validate="true">
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
-	<s:textfield key="deliveryOrder.doNo" cssClass="text medium" />
 	<li style="padding: 0px">
 	<table style="margin: 0px">
 		<tr>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.doNo" /></label></td>
+			<td colspan="2"><s:textfield key="deliveryOrder.doNo"
+				cssClass="text medium" theme="simple" /></td>
+			<c:if
+				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+				<td><label class="desc"><fmt:message
+					key="deliveryOrder.supplierCode" /></label></td>
+				<td colspan="2"><s:select key="deliveryOrder.plantSupplier.id"
+					list="%{suppliers}" listKey="id"
+					listValue="supplierName" theme="simple" /></td>
+			</c:if>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.status" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.status"
+				list="%{status}" theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.isExport" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.exportFlag"
+				list="%{isExport}" theme="simple" /></td>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.createDateFrom" /></label></td>
 			<td><s:textfield key="deliveryOrder.createDateFrom"
-				cssClass="text medium" /></td>
+				cssClass="text short" theme="simple" /></td>
 			<td><A HREF="#"
 				onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
 				NAME="anchDateFrom" ID="anchDateFrom"><img
 				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
-		</tr>
-	</table>
-	</li>
-	<li style="padding: 0px">
-	<table style="margin: 0px">
-		<tr>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.createDateTo" /></label></td>
 			<td><s:textfield key="deliveryOrder.createDateTo"
-				cssClass="text medium" /></td>
+				cssClass="text short" theme="simple" /></td>
 			<td><A HREF="#"
 				onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
 				NAME="anchDateTo" ID="anchDateTo"><img
@@ -72,14 +95,13 @@
 	<display:column property="supplierName" sortable="true"
 		sortProperty="ps.supplierName" titleKey="deliveryOrder.supplierName" />
 	<display:column property="createDate" format="{0,date,MM/dd/yyyy}"
-		sortable="true" titleKey="deliveryOrder.status" />
-	<display:column property="status"
-		sortable="true" titleKey="deliveryOrder.status" />
-	<display:column
-		sortable="true" titleKey="deliveryOrder.isExport" >
+		sortable="true" titleKey="deliveryOrder.createDate" />
+	<display:column property="status" sortable="true"
+		titleKey="deliveryOrder.status" />
+	<display:column sortable="true" titleKey="deliveryOrder.isExport">
 		<input type="checkbox" disabled="disabled"
 			<c:if test="${deliveryOrders.isExport}">checked="checked"</c:if> />
-		</display:column>
+	</display:column>
 
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="deliveryOrder.deliveryOrder" />

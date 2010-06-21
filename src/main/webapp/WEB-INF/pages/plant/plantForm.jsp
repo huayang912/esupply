@@ -126,21 +126,28 @@
 	<li>
 	<div>
 	<div><s:textfield key="plant.errorLogEmail1" theme="xhtml"
-		cssClass="text large" /></div>
+		required="true" cssClass="text large" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div><s:textfield key="plant.errorLogEmail2" theme="xhtml"
-		cssClass="text large" /></div>
+		required="true" cssClass="text large" /></div>
 	</div>
 	</li>
 
 	<li>
 	<div>
 	<div><s:textfield key="plant.supplierNotifyEmail" theme="xhtml"
-		cssClass="text large" /></div>
+		required="true" cssClass="text large" /></div>
+	</div>
+	</li>
+	
+	<li>
+	<div>
+	<div><s:textfield key="plant.doTemplateName" theme="xhtml"
+		required="true" cssClass="text large" /></div>
 	</div>
 	</li>
 

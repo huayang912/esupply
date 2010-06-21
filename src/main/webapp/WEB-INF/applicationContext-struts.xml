@@ -89,6 +89,7 @@
 	<bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction"
 		scope="prototype">
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
@@ -97,7 +98,6 @@
 		scope="prototype">
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="scheduleManager" ref="scheduleManager" />
-		<property name="scheduleItemManager" ref="scheduleItemManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
@@ -116,6 +116,15 @@
 	<bean id="receiptAction" class="com.faurecia.webapp.action.ReceiptAction"
 		scope="prototype">
 		<property name="receiptManager" ref="receiptManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+	
+	<bean id="receiptDetailAction" class="com.faurecia.webapp.action.ReceiptDetailAction"
+		scope="prototype">
+		<property name="receiptManager" ref="receiptManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
