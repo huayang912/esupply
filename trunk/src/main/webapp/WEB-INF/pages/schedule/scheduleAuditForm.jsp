@@ -38,8 +38,6 @@ function checkedAll (obj) {
 				cellspacing="0">
 				<thead>
 					<tr>
-						<th nowrap="nowrap"><input type="checkbox"
-							onclick="checkedAll(this)" checked="checked" /></th>
 						<th nowrap="nowrap"><fmt:message
 							key="scheduleDetail.createDate" /></th>
 						<th nowrap="nowrap"><fmt:message
@@ -62,7 +60,6 @@ function checkedAll (obj) {
 						<td></td>
 						<td></td>
 						<td></td>
-						<td></td>
 						<td><fmt:message key="scheduleDetail.eta" /></td>
 						<s:iterator id="dateFrom"
 							value="%{scheduleView.scheduleHead.headList}">
@@ -71,7 +68,6 @@ function checkedAll (obj) {
 						</s:iterator>
 					</tr>
 					<tr class="even">
-						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -89,10 +85,10 @@ function checkedAll (obj) {
 						</s:if>
 						<s:else>
 							<tr class="even">
-						</s:else>
-						<td><input type="checkbox" name="scheduleItem"
-							value="${scheduleBody.scheduleItemId}" checked="checked" /></td>
-						<td><fmt:formatDate value="${scheduleBody.createDate}"
+						</s:else>						
+						<td><input type="hidden" name="scheduleItem"
+							value="${scheduleBody.scheduleItemId}" />
+							<fmt:formatDate value="${scheduleBody.createDate}"
 							pattern="MM/dd/yyyy" /></td>
 						<td>${scheduleBody.releaseNo}</td>
 						<td nowrap="nowrap">${scheduleBody.itemCode}</td>

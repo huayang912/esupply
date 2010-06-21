@@ -55,6 +55,27 @@ public class DeliveryOrderExportUtil {
 					rowPix = 580;
 					exportHead(underPdfContentByte, cb, deliveryOrder, backGroupImage, dinBf, simBf);
 				}
+				
+				BigDecimal unitCount = deliveryOrderDetail.getUnitCount();
+				if (unitCount == null) {
+					unitCount = new BigDecimal(1);
+				}
+				unitCount = unitCount.setScale(0, BigDecimal.ROUND_CEILING);
+				
+				BigDecimal damandQty = BigDecimal.ZERO;
+				if (deliveryOrderDetail.getScheduleItemDetail() != null) {
+					damandQty = deliveryOrderDetail.getScheduleItemDetail().getReleaseQty();
+				} else {
+					damandQty = deliveryOrderDetail.getPurchaseOrderDetail().getQty();
+				}
+				damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
+				
+				BigDecimal qty = deliveryOrderDetail.getQty();
+				qty = qty.setScale(0, BigDecimal.ROUND_CEILING);
+				
+				BigDecimal boxQty = qty.divide(unitCount, 0, BigDecimal.ROUND_CEILING);
+				
+				totalBoxQty = totalBoxQty.add(boxQty);
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
@@ -69,26 +90,12 @@ public class DeliveryOrderExportUtil {
 				}
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 212, rowPix, 0);
 				cb.endText();
-
-				BigDecimal unitCount = deliveryOrderDetail.getItem().getUnitCount();
-				if (unitCount == null) {
-					unitCount = new BigDecimal(1);
-				}
-				unitCount = unitCount.setScale(0, BigDecimal.ROUND_CEILING);
+				
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, unitCount.toString(), 321, rowPix, 0);
 				cb.endText();
-
-				BigDecimal damandQty = BigDecimal.ZERO;
-				if (deliveryOrderDetail.getScheduleItemDetail() != null) {
-					damandQty = deliveryOrderDetail.getScheduleItemDetail().getReleaseQty();
-				} else {
-					damandQty = deliveryOrderDetail.getPurchaseOrderDetail().getQty();
-				}
-				damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
-				BigDecimal boxQty = damandQty.divide(unitCount, 0, BigDecimal.ROUND_CEILING);
-				totalBoxQty = totalBoxQty.add(boxQty);
+			
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, boxQty.toString(), 359, rowPix, 0);
@@ -99,8 +106,7 @@ public class DeliveryOrderExportUtil {
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, damandQty.toString(), 395, rowPix, 0);
 				cb.endText();
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
-				qty = qty.setScale(0, BigDecimal.ROUND_CEILING);
+				
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, qty.toString(), 434, rowPix, 0);
