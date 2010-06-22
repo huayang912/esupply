@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
@@ -35,6 +37,7 @@ public class DeliveryOrderExportUtil {
 
 		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		NumberFormat numberFormat = new DecimalFormat("#.#"); 
 
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
@@ -60,7 +63,7 @@ public class DeliveryOrderExportUtil {
 				if (unitCount == null) {
 					unitCount = new BigDecimal(1);
 				}
-				unitCount = unitCount.setScale(0, BigDecimal.ROUND_CEILING);
+				//unitCount = unitCount.setScale(0, BigDecimal.ROUND_CEILING);
 				
 				BigDecimal damandQty = BigDecimal.ZERO;
 				if (deliveryOrderDetail.getScheduleItemDetail() != null) {
@@ -68,12 +71,12 @@ public class DeliveryOrderExportUtil {
 				} else {
 					damandQty = deliveryOrderDetail.getPurchaseOrderDetail().getQty();
 				}
-				damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
+				//damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
 				
 				BigDecimal qty = deliveryOrderDetail.getQty();
-				qty = qty.setScale(0, BigDecimal.ROUND_CEILING);
+				//qty = qty.setScale(0, BigDecimal.ROUND_CEILING);
 				
-				BigDecimal boxQty = qty.divide(unitCount, 0, BigDecimal.ROUND_CEILING);
+				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
 				
 				totalBoxQty = totalBoxQty.add(boxQty);
 
@@ -93,23 +96,23 @@ public class DeliveryOrderExportUtil {
 				
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, unitCount.toString(), 321, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(unitCount), 321, rowPix, 0);
 				cb.endText();
 			
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, boxQty.toString(), 359, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(boxQty), 359, rowPix, 0);
 				cb.endText();
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, damandQty.toString(), 395, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(damandQty), 395, rowPix, 0);
 				cb.endText();
 
 				
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 14);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, qty.toString(), 434, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 434, rowPix, 0);
 				cb.endText();
 
 				rowPix -= 18;
@@ -120,7 +123,7 @@ public class DeliveryOrderExportUtil {
 
 			cb.beginText();
 			cb.setFontAndSize(dinBf, 14);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalBoxQty.toString(), 359, 180, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(totalBoxQty), 359, 180, 0);
 			cb.endText();
 		} finally {
 			document.close();
