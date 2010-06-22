@@ -22,6 +22,7 @@
 		url="/editNotice.html?from=list" paramId="id" paramProperty="id"
 		titleKey="notice.title" />
 	<display:column property="fileName" sortable="true"
+		url="/downloadAttachement.html" paramId="id" paramProperty="id"
 		titleKey="notice.fileName" />
 	<display:column property="displayDateFrom" sortable="true"
 		titleKey="notice.displayDateFrom" format="{0,date,MM/dd/yyyy}"/>

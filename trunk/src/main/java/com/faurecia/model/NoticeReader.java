@@ -26,7 +26,7 @@ public class NoticeReader extends BaseObject {
 	private Integer id;
 	private Notice notice;
 	private PlantSupplier plantSupplier;
-	private boolean isRead;
+	private Boolean isRead;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -58,12 +58,12 @@ public class NoticeReader extends BaseObject {
 		this.plantSupplier = plantSupplier;
 	}
 
-	@Column(name = "is_read", nullable = false)
-	public boolean isRead() {
+	@Column(name = "is_read", nullable = true)
+	public Boolean isRead() {
 		return isRead;
 	}
 
-	public void setRead(boolean isRead) {
+	public void setRead(Boolean isRead) {
 		this.isRead = isRead;
 	}
 

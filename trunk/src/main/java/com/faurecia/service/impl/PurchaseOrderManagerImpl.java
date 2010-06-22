@@ -274,7 +274,7 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 		PurchaseOrder po = new PurchaseOrder();
 		po.setStatus("Open");
-		po.setIsConfirm(false);
+		//po.setIsConfirm(false);
 
 		try {
 			Plant plant = null;
