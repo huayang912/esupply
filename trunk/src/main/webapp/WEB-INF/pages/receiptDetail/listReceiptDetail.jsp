@@ -29,7 +29,7 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receiptDetail.referenceOrderNo" /></label></td>
+				key="receipt.receiptNo" /></label></td>
 			<td colspan="2"><s:textfield key="receipt.receiptNo"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
