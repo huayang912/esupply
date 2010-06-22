@@ -46,7 +46,7 @@ public class PurchaseOrder extends BaseObject {
 	private Date createDateTo;
 	private String status;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
-	private Boolean isConfirm;
+	//private Boolean isConfirm;
 
 	@Id
 	@Column(name = "po_no", length = 20)
@@ -287,14 +287,14 @@ public class PurchaseOrder extends BaseObject {
 		purchaseOrderDetailList.add(purchaseOrderDetail);
 	}
 
-	@Column(name = "is_confirm", nullable = false)
-	public Boolean getIsConfirm() {
-		return isConfirm;
-	}
-
-	public void setIsConfirm(Boolean isConfirm) {
-		this.isConfirm = isConfirm;
-	}
+//	@Column(name = "is_confirm", nullable = false)
+//	public Boolean getIsConfirm() {
+//		return isConfirm;
+//	}
+//
+//	public void setIsConfirm(Boolean isConfirm) {
+//		this.isConfirm = isConfirm;
+//	}
 
 	@Transient
 	public Date getCreateDateFrom() {
