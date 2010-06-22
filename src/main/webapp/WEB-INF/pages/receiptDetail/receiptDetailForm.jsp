@@ -29,7 +29,7 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receiptDetail.referenceOrderNo" /></label></td>
+				key="receipt.receiptNo" /></label></td>
 			<td colspan="2"><s:textfield key="receipt.receiptNo"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if
@@ -85,7 +85,7 @@
 	<c:if test="${receipt.detailOrSummary == 'Detail'}">
 		<display:column property="receipt.receiptNo" sortable="true"
 		sortProperty="r.receiptNo"
-			titleKey="receiptDetail.referenceOrderNo" />
+			titleKey="receipt.receiptNo" />
 	</c:if>
 	<c:if test="${receipt.detailOrSummary == 'Detail'}">
 	<display:column property="item.code" sortable="true"
