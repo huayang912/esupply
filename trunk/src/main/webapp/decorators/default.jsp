@@ -23,7 +23,7 @@
 	    		setTimeout("keepSession();", 600000); //keep session alive for 10 mins
 	    	} 
         	window.onerror = function() { return true; }
-        	keepSession();        	     		      
+        	//keepSession();        	     		      
         </script> 
         <decorator:head/>
     </head>
