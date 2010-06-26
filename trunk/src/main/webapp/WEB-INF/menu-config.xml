@@ -26,6 +26,7 @@
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>
         	<Item name="SupplierMenu" title="menu.supplier" description="Supplier Menu" page="/suppliers.html" roles="ROLE_PLANT_USER"/>
         	<Item name="PlantScheudleGroupMenu" title="menu.plantScheduleGroup" description="Schedule Group Menu" page="/plantScheduleGroups.html" roles="ROLE_PLANT_USER"/>
+        	<Item name="ScheudleControlMenu" title="menu.scheduleControl" description="Schedule Control Menu" page="/enterScheduleControl.html" roles="ROLE_PLANT_USER"/>
         	<Item name="NoticeMenu" title="menu.plantNotice" description="Notice Menu" page="/notices.html" roles="ROLE_PLANT_USER"/>
         </Menu>
         <Menu name="PlantOrderMenu" title="menu.order" description="Plant Order Menu" roles="ROLE_PLANT_USER" width="120" page="/purchaseOrders.html">

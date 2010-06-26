@@ -317,6 +317,20 @@
 		<action name="saveSchedule" class="scheduleAction" method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
+		
+		<action name="enterScheduleControl" class="scheduleControlAction"
+			method="enter">
+			<result name="success">/WEB-INF/pages/scheduleControl/enterScheduleControl.jsp</result>
+		</action>
+		
+		<action name="listScheduleControl" class="scheduleControlAction"
+			method="list">
+			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp</result>
+		</action>
+		
+		<action name="saveScheduleControl" class="scheduleAction" method="save">
+			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp</result>
+		</action>
 
 		<!-- Deliver Order -->
 		<action name="deliveryOrders" class="deliveryOrderAction"

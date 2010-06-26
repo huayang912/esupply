@@ -260,7 +260,7 @@
 		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />		
-		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />		
 	</bean>
 
 	<bean id="scheduleItemManager" class="com.faurecia.service.impl.ScheduleItemManagerImpl">
@@ -277,6 +277,15 @@
 			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
 				autowire="byType">
 				<constructor-arg value="com.faurecia.model.ScheduleItemDetail" />
+			</bean>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="scheduleControlManager" class="com.faurecia.service.impl.ScheduleControlManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.ScheduleControl" />
 			</bean>
 		</constructor-arg>
 	</bean>
@@ -303,6 +312,7 @@
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+		<property name="scheduleControlManager" ref="scheduleControlManager" />
 	</bean>
 
 	<bean id="deliveryOrderManager" class="com.faurecia.service.impl.DeliveryOrderManagerImpl">

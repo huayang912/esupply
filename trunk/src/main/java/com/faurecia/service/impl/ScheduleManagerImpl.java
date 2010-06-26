@@ -35,6 +35,7 @@ import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Role;
 import com.faurecia.model.Schedule;
+import com.faurecia.model.ScheduleControl;
 import com.faurecia.model.ScheduleItem;
 import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.Supplier;
@@ -55,6 +56,7 @@ import com.faurecia.service.NumberControlManager;
 import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.RoleManager;
+import com.faurecia.service.ScheduleControlManager;
 import com.faurecia.service.ScheduleItemManager;
 import com.faurecia.service.ScheduleManager;
 import com.faurecia.service.SupplierItemManager;
@@ -76,6 +78,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 	private PlantScheduleGroupManager plantScheduleGroupManager;
 	private Unmarshaller unmarshaller;
 	private JdbcTemplate jdbcTemplate;
+	private ScheduleControlManager scheduleControlManager;
 
 	protected MailEngine mailEngine;
 	protected SimpleMailMessage mailMessage;
@@ -152,6 +155,10 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
+	public void setScheduleControlManager(ScheduleControlManager scheduleControlManager) {
+		this.scheduleControlManager = scheduleControlManager;
+	}
+
 	public Schedule saveSingleFile(InputStream inputStream, InboundLog inboundLog) {
 		try {
 			DELFOR02 delfor = unmarshalOrder(inputStream);
@@ -214,13 +221,15 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 	public Schedule getLastestScheduleItem(String plantCode, String supplierCode, Date tillDate, boolean isConfirm) {
 		String sql = "select schedule_item.id from schedule_item inner join "
-				+ "(select item_code, max(release_no) as release_no from schedule_item "
+				+ "(select schedule.schedule_no, schedule.plant_supplier_id, item_code, max(release_no) as release_no from schedule_item "
 				+ "inner join schedule on schedule_item.schedule_no = schedule.schedule_no "
 				+ "inner join plant_supplier on schedule.plant_supplier_id = plant_supplier.id "
-				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? and schedule_item.is_confirm=?" 
-				+ "group by item_code) as a on schedule_item.item_code = a.item_code and schedule_item.release_no = a.release_no";
+				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? and schedule_item.is_confirm = ? " 
+				+ "group by schedule.schedule_no, schedule.plant_supplier_id, item_code) as a on schedule_item.item_code = a.item_code and schedule_item.release_no = a.release_no "
+				+ "inner join schedule_control on schedule_control.schedule_no = a.schedule_no and schedule_control.plant_supplier_id = a.plant_supplier_id "
+				+ "and schedule_control.item_code = a.item_code and (schedule_control.expire_date > ? or schedule_control.expire_date is null)";
 		
-		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, new Object[]{plantCode, supplierCode, tillDate, isConfirm ? 1 : 0});
+		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, new Object[]{plantCode, supplierCode, tillDate, isConfirm ? 1 : 0, tillDate});
 		List<Integer> scheduleItemIdIist = new ArrayList<Integer>();
 		
 		while (resultSet.next()) {
@@ -478,6 +487,15 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					scheduleItem.setIsConfirm(false);
 
 					schedule.addScheduleItem(scheduleItem);
+					
+					if (this.scheduleControlManager.get(schedule.getScheduleNo(), plantSupplier, item) == null) {
+						ScheduleControl scheduleControl = new ScheduleControl();
+						scheduleControl.setScheduleNo(schedule.getScheduleNo());
+						scheduleControl.setPlantSupplier(plantSupplier);
+						scheduleControl.setItem(item);
+						
+						this.scheduleControlManager.save(scheduleControl);
+					}
 
 					// ----------------------------schedule item
 					// detail---------------------								
