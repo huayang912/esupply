@@ -101,6 +101,14 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 	</bean>
+	
+	<bean id="scheduleControlAction" class="com.faurecia.webapp.action.ScheduleControlAction"
+		scope="prototype">
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="scheduleControlManager" ref="scheduleControlManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
 
 	<bean id="deliveryOrderAction" class="com.faurecia.webapp.action.DeliveryOrderAction"
 		scope="prototype">

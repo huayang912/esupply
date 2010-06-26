@@ -82,7 +82,7 @@ public class DeliveryOrderExportUtil {
 				totalBoxQty = totalBoxQty.add(boxQty);
 
 				cb.beginText();
-				cb.setFontAndSize(dinBf, 12);
+				cb.setFontAndSize(dinBf, 8);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItem().getCode(), 82, rowPix, 0);
 				cb.endText();
 
@@ -107,17 +107,17 @@ public class DeliveryOrderExportUtil {
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 12);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(unitCount), 241, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(damandQty), 241, rowPix, 0);
 				cb.endText();
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 12);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(boxQty), 283, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(unitCount), 283, rowPix, 0);
 				cb.endText();
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 12);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(damandQty), 323, rowPix, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(boxQty), 323, rowPix, 0);
 				cb.endText();
 
 				cb.beginText();
