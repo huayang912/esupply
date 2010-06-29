@@ -53,7 +53,14 @@
 		</c:otherwise>
 	</c:choose></li>
 
-	<s:textfield key="user.username" cssClass="text medium" required="true" />
+	<c:choose>
+		<c:when test="${not empty user.id}">
+			<s:textfield key="user.username" cssClass="text medium" readonly="true" required="true" />
+		</c:when>
+		<c:otherwise>
+			<s:textfield key="user.username" cssClass="text medium" required="true" />
+		</c:otherwise>
+	</c:choose>
 
 	<c:if test="${cookieLogin != 'true'}">
 		<li>
