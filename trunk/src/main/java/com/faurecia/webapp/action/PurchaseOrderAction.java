@@ -133,8 +133,6 @@ public class PurchaseOrderAction extends BaseAction {
 			Date lastWeek = calendar.getTime();
 
 			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-			System.out.println(d.format(lastWeek));
-			System.out.println(d.format(dateNow));
 
 			purchaseOrder.setCreateDateFrom(lastWeek);
 			purchaseOrder.setCreateDateTo(dateNow);
