@@ -64,7 +64,7 @@
 </s:form>
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
-	requestURI="" defaultsort="1" id="outboundLogs" class="table"
+	requestURI="" id="outboundLogs" class="table"
 	export="true">
 	<display:column property="plantSupplier.plant.name" sortable="true"
 		sortProperty="p.name" titleKey="outboundLog.plantName" />

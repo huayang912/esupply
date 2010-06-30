@@ -130,8 +130,6 @@ public class InboundLogAction extends BaseAction {
 			Date lastWeek = calendar.getTime();
 			
 			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-			System.out.println(d.format(lastWeek));
-			System.out.println(d.format(dateNow));
 			
 			inboundLog.setCreateDateFrom(lastWeek);
 			inboundLog.setCreateDateTo(dateNow);
