@@ -225,7 +225,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 				+ "inner join schedule on schedule_item.schedule_no = schedule.schedule_no "
 				+ "inner join plant_supplier on schedule.plant_supplier_id = plant_supplier.id "
 				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? and schedule_item.is_confirm = ? " 
-				+ "group by schedule.schedule_no, schedule.plant_supplier_id, item_code) as a on schedule_item.item_code = a.item_code and schedule_item.release_no = a.release_no "
+				+ "group by schedule.schedule_no, schedule.plant_supplier_id, item_code) as a on schedule_item.item_code = a.item_code and schedule_item.release_no = a.release_no and schedule_item.schedule_no = a.schedule_no "
 				+ "inner join schedule_control on schedule_control.schedule_no = a.schedule_no and schedule_control.plant_supplier_id = a.plant_supplier_id "
 				+ "and schedule_control.item_code = a.item_code and (schedule_control.expire_date > ? or schedule_control.expire_date is null)";
 		
@@ -241,8 +241,9 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 		}
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleItem.class);
+		criteria.createAlias("item", "i");
 		criteria.add(Restrictions.in("id", scheduleItemIdIist));
-		criteria.addOrder(Order.asc("sequence"));
+		criteria.addOrder(Order.asc("i.code"));
 		
 		List<ScheduleItem> scheduleItemList = this.findByCriteria(criteria);
 		

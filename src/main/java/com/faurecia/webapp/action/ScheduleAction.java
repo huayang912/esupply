@@ -140,7 +140,11 @@ public class ScheduleAction extends BaseAction {
 									head.put("dateFrom", scheduleItemDetail.getDateFrom());
 									head.put("dateTo", scheduleItemDetail.getDateTo());															
 									
-									if(allowOverDateDeliver) {
+									if (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE))
+									{
+										head.put("createDo", false);
+									}
+									else if (allowOverDateDeliver) {
 										if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
 											head.put("createDo", false);
 										}
