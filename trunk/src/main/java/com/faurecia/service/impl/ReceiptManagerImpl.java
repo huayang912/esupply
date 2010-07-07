@@ -196,6 +196,8 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 
 			for (int i = 0; i < E1BP2017GMITEMCREATEList.size(); i++) {
 				MBGMCR02E1BP2017GMITEMCREATE E1BP2017GMITEMCREATE = E1BP2017GMITEMCREATEList.get(i);
+				String movetype = E1BP2017GMITEMCREATE.getMOVETYPE();				
+				
 				ReceiptDetail receiptDetail = new ReceiptDetail();
 				receiptDetail.setReceipt(receipt);
 
@@ -277,6 +279,10 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 					}
 
 					receipt.setPlantSupplier(plantSupplier);
+				}
+				
+				if ("543".equals(movetype) || "544".equals(movetype)) {
+					continue;
 				}
 
 				Item item = null;
