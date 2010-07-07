@@ -349,7 +349,6 @@ public class DeliveryOrderAction extends BaseAction {
 		if (this.doNo != null) {
 			deliveryOrder = this.deliveryOrderManager.get(doNo, true);
 		} else if (purchaseOrderDetailList != null) {
-
 			// po ´´½¨ do
 			boolean hasError = false;
 			List<PurchaseOrderDetail> noneZeroPurchaseOrderDetailList = new ArrayList<PurchaseOrderDetail>();
@@ -420,7 +419,7 @@ public class DeliveryOrderAction extends BaseAction {
 							deliveryOrderDetail.setUnitCount(scheduleItem.getItem().getUnitCount());
 							deliveryOrderDetail.setUom(scheduleItem.getUom());
 							deliveryOrderDetail.setScheduleItemDetail(scheduleItemDetail);
-							deliveryOrderDetail.setQty(scheduleItemDetail.getRemainQty());
+							deliveryOrderDetail.setQty(BigDecimal.ZERO);
 							// deliveryOrderDetail.setOrderQty(scheduleItemDetail.getReleaseQty());
 							deliveryOrderDetail.setReferenceOrderNo(scheduleItem.getSchedule().getScheduleNo());
 							deliveryOrderDetail.setReferenceSequence(scheduleItem.getSequence());
