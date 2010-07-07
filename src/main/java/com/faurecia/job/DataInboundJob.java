@@ -142,6 +142,9 @@ public class DataInboundJob {
 					String fileName = fileNameList.get(j); // 获取下载文件名
 					String filePrefix = fileName.substring(0, fileName.lastIndexOf('.'));
 					String fileSuffix = fileName.substring(fileName.lastIndexOf('.') - 1);
+					if (!fileName.toLowerCase().endsWith(".xml")) {
+						continue;
+					}
 
 					// 查找是否已经记录过日志
 					InboundLog inboundLog = this.inboundLogManager.getInboundLogByDataTypeAndFileName(dataType, fileName);
