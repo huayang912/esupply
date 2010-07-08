@@ -52,6 +52,7 @@ public class DeliveryOrder extends BaseObject {
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
+	private Boolean isPrint;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -291,6 +292,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setIsExport(Boolean isExport) {
 		this.isExport = isExport;
+	}
+	
+	@Column(name = "is_print", nullable = true)
+	public Boolean getIsPrint() {
+		return isPrint;
+	}
+
+	public void setIsPrint(Boolean isPrint) {
+		this.isPrint = isPrint;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliveryOrder")

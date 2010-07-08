@@ -403,6 +403,7 @@ public class DeliveryOrderAction extends BaseAction {
 
 							deliveryOrder.setCreateDate(new Date());
 							deliveryOrder.setIsExport(false);
+							deliveryOrder.setIsPrint(false);
 							deliveryOrder.setAllowOverQty(allowOverQty);
 						}
 
@@ -512,6 +513,10 @@ public class DeliveryOrderAction extends BaseAction {
 				deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(), deliveryOrder);
 
 		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";
+		if (deliveryOrder.getIsPrint() == null || !deliveryOrder.getIsPrint()) {
+			deliveryOrder.setIsPrint(true);
+			this.deliveryOrderManager.save(deliveryOrder);
+		}
 		return SUCCESS;
 	}
 

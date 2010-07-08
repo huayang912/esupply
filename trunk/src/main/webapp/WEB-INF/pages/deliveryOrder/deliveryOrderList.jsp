@@ -98,6 +98,10 @@
 		sortable="true" titleKey="deliveryOrder.createDate" />
 	<display:column property="status" sortable="true"
 		titleKey="deliveryOrder.status" />
+	<display:column sortable="true" titleKey="deliveryOrder.isPrint">
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${deliveryOrders.isPrint}">checked="checked"</c:if> />
+	</display:column>
 	<display:column sortable="true" titleKey="deliveryOrder.isExport">
 		<input type="checkbox" disabled="disabled"
 			<c:if test="${deliveryOrders.isExport}">checked="checked"</c:if> />
