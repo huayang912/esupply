@@ -72,7 +72,9 @@
 				key="deliveryOrder.createDate" /> <s:hidden
 				name="deliveryOrder.plantSupplier.id"
 				key="deliveryOrder.plantSupplier.id" /> <s:hidden
-				name="deliveryOrder.isExport" key="deliveryOrder.isExport" /> <s:hidden
+				name="deliveryOrder.isExport" key="deliveryOrder.isExport" />
+				<s:hidden
+				name="deliveryOrder.isPrint" key="deliveryOrder.isPrint" /> <s:hidden
 				name="deliveryOrder.allowOverQty" key="deliveryOrder.allowOverQty" />
 			</td>
 		</tr>
@@ -113,13 +115,14 @@
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.status" cssClass="text medium" /></td>
-			<td><s:label key="deliveryOrder.isExport"
+			<td><s:label key="deliveryOrder.isPrint"
 				cssClass="text medium" /></td>
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.createDate"
 				cssClass="text medium" /></td>
-			<td></td>
+			<td><s:label key="deliveryOrder.isExport"
+				cssClass="text medium" /></td>
 		</tr>
 	</table>
 

@@ -107,6 +107,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
 				deliveryOrder.setCreateDate(new Date());
 				deliveryOrder.setIsExport(false);
+				deliveryOrder.setIsPrint(false);
 				deliveryOrder.setStatus("Create");
 			}
 
@@ -231,6 +232,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		criteria.createAlias("plantSupplier", "ps");
 		
 		criteria.add(Restrictions.eq("ps.plant", plant));
+		criteria.add(Restrictions.eq("isPrint", true));
 		criteria.add(Restrictions.eq("isExport", false));
 		criteria.add(Restrictions.eq("status", "Confirm"));
 		criteria.addOrder(Order.asc("createDate"));
