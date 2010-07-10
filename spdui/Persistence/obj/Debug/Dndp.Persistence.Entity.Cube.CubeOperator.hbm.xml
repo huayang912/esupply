@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeOperator, Dndp.Persistence" table="Cube_Operator">
+	  <id name="Id" column="Cube_Operator_Id" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	  <many-to-one name="TheCube" class="Dndp.Persistence.Entity.Cube.CubeDefinition, Dndp.Persistence" column="Cube_Id" cascade="none" />
+	  <many-to-one name="TheUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="USER_ID" cascade="none" />
+	  <property name="AllowType" column="Allow_Type" type="String" length="20" />
+  </class>
+</hibernate-mapping>

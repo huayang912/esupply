@@ -1,0 +1,923 @@
+2010-07-01 10:04:02.167 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: x0_0_
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Loader.Loader - result row: 
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: x0_0_
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Loader.Loader - result row: 
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Type.StringType - returning 'Validation' as column: x0_0_
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Loader.Loader - done processing result set (6 rows)
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:04:02.276 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - initializing non-lazy collections
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Transaction.AdoTransaction - commit
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - flushing session
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - Flushing entities and processing referenced collections
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - Processing unreferenced collections
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - scheduling collection removes/(re)creates/updates
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - Flushed: 0 insertions, 0 updates, 0 deletions to 0 objects
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - executing flush
+2010-07-01 10:04:02.277 [4544] DEBUG NHibernate.Impl.SessionImpl - post flush
+2010-07-01 10:04:02.278 [4544] DEBUG NHibernate.Impl.SessionImpl - transaction completion
+2010-07-01 10:04:02.278 [4544] DEBUG NHibernate.Transaction.AdoTransaction - running AdoTransaction.Dispose()
+2010-07-01 10:04:02.278 [4544] DEBUG NHibernate.Impl.SessionImpl - running ISession.Dispose()
+2010-07-01 10:04:02.278 [4544] DEBUG NHibernate.Transaction.AdoTransaction - running AdoTransaction.Dispose()
+2010-07-01 10:04:02.278 [4544] DEBUG NHibernate.Impl.BatcherImpl - running BatcherImpl.Dispose(true)
+2010-07-01 10:04:02.278 [4544] DEBUG NHibernate.Connection.ConnectionProvider - Closing connection
+2010-07-01 10:04:02.279 [4544] DEBUG NHibernate.Impl.SessionImpl - opened session
+2010-07-01 10:04:02.279 [4544] DEBUG NHibernate.Transaction.AdoTransaction - begin
+2010-07-01 10:04:02.279 [4544] DEBUG NHibernate.Connection.DriverConnectionProvider - Obtaining IDbConnection from Driver
+2010-07-01 10:04:02.279 [4544] DEBUG NHibernate.Impl.SessionImpl - find: from DataSource ds where ds.ActiveFlag=1  order by ds.DSType, ds.Description
+2010-07-01 10:04:02.279 [4544] DEBUG NHibernate.Engine.QueryParameters - named parameters: {}
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - flushing session
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - Flushing entities and processing referenced collections
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - Processing unreferenced collections
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - scheduling collection removes/(re)creates/updates
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - Flushed: 0 insertions, 0 updates, 0 deletions to 0 objects
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - Flushed: 0 (re)creations, 0 updates, 0 removals to 0 collections
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.SessionImpl - dont need to execute flush
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Hql.QueryTranslator - HQL: from Dndp.Persistence.Entity.Dui.DataSource ds where ds.ActiveFlag=1  order by ds.DSType, ds.Description
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Hql.QueryTranslator - SQL: select datasource0_.DATA_SOURCE_ID as DATA_SOU1_, datasource0_.DATA_SOURCE_TYPE as DATA_SOU4_, datasource0_.DATA_SOURCE_NAME as DATA_SOU2_, datasource0_.CREATE_BY_USER_ID as CREATE_B9_, datasource0_.WITHDRAWTABLES as WITHDRAW8_, datasource0_.ACTIVE_FLAG as ACTIVE_F7_, datasource0_.DESCRIPTION as DESCRIPT3_, datasource0_.LAST_UPDATE_DATE as LAST_UPD6_, datasource0_.CREATE_DATE as CREATE_D5_, datasource0_.LAST_UPDATE_USER_ID as LAST_UP10_ from DATA_SOURCE datasource0_ where (datasource0_.ACTIVE_FLAG=1) order by  datasource0_.DATA_SOURCE_TYPE , datasource0_.DESCRIPTION
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:04:02.280 [4544] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: select datasource0_.DATA_SOURCE_ID as DATA_SOU1_, datasource0_.DATA_SOURCE_TYPE as DATA_SOU4_, datasource0_.DATA_SOURCE_NAME as DATA_SOU2_, datasource0_.CREATE_BY_USER_ID as CREATE_B9_, datasource0_.WITHDRAWTABLES as WITHDRAW8_, datasource0_.ACTIVE_FLAG as ACTIVE_F7_, datasource0_.DESCRIPTION as DESCRIPT3_, datasource0_.LAST_UPDATE_DATE as LAST_UPD6_, datasource0_.CREATE_DATE as CREATE_D5_, datasource0_.LAST_UPDATE_USER_ID as LAST_UP10_ from DATA_SOURCE datasource0_ where (datasource0_.ACTIVE_FLAG=1) order by  datasource0_.DATA_SOURCE_TYPE , datasource0_.DESCRIPTION
+2010-07-01 10:04:02.281 [4544] INFO  NHibernate.Loader.Loader - select datasource0_.DATA_SOURCE_ID as DATA_SOU1_, datasource0_.DATA_SOURCE_TYPE as DATA_SOU4_, datasource0_.DATA_SOURCE_NAME as DATA_SOU2_, datasource0_.CREATE_BY_USER_ID as CREATE_B9_, datasource0_.WITHDRAWTABLES as WITHDRAW8_, datasource0_.ACTIVE_FLAG as ACTIVE_F7_, datasource0_.DESCRIPTION as DESCRIPT3_, datasource0_.LAST_UPDATE_DATE as LAST_UPD6_, datasource0_.CREATE_DATE as CREATE_D5_, datasource0_.LAST_UPDATE_USER_ID as LAST_UP10_ from DATA_SOURCE datasource0_ where (datasource0_.ACTIVE_FLAG=1) order by  datasource0_.DATA_SOURCE_TYPE , datasource0_.DESCRIPTION
+2010-07-01 10:04:02.281 [4544] DEBUG NHibernate.SQL - select datasource0_.DATA_SOURCE_ID as DATA_SOU1_, datasource0_.DATA_SOURCE_TYPE as DATA_SOU4_, datasource0_.DATA_SOURCE_NAME as DATA_SOU2_, datasource0_.CREATE_BY_USER_ID as CREATE_B9_, datasource0_.WITHDRAWTABLES as WITHDRAW8_, datasource0_.ACTIVE_FLAG as ACTIVE_F7_, datasource0_.DESCRIPTION as DESCRIPT3_, datasource0_.LAST_UPDATE_DATE as LAST_UPD6_, datasource0_.CREATE_DATE as CREATE_D5_, datasource0_.LAST_UPDATE_USER_ID as LAST_UP10_ from DATA_SOURCE datasource0_ where (datasource0_.ACTIVE_FLAG=1) order by  datasource0_.DATA_SOURCE_TYPE , datasource0_.DESCRIPTION
+2010-07-01 10:04:02.283 [4544] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:04:02.283 [4544] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:04:02.283 [4544] DEBUG NHibernate.Type.Int32Type - returning '80' as column: DATA_SOU1_
+2010-07-01 10:04:02.283 [4544] DEBUG NHibernate.Loader.Loader - result row: 80
+2010-07-01 10:04:02.283 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 80
+2010-07-01 10:04:02.283 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#80
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerLinkTable' as column: DATA_SOU4_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerLinkageTable' as column: DATA_SOU2_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer Level Linkage Table' as column: DESCRIPT3_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/8/15' as column: LAST_UPD6_
+2010-07-01 10:04:02.284 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/3/27' as column: CREATE_D5_
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Type.Int32Type - returning '42' as column: DATA_SOU1_
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Loader.Loader - result row: 42
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 42
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#42
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Type.StringType - returning 'LinkTable' as column: DATA_SOU4_
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Type.StringType - returning 'LinkageTable' as column: DATA_SOU2_
+2010-07-01 10:04:02.285 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.StringType - returning 'LinkageTable Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/11' as column: LAST_UPD6_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/4' as column: CREATE_D5_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.Int32Type - returning '36' as column: DATA_SOU1_
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Loader.Loader - result row: 36
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 36
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#36
+2010-07-01 10:04:02.286 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_City' as column: DATA_SOU2_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.StringType - returning 'City Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/26' as column: CREATE_D5_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Type.Int32Type - returning '69' as column: DATA_SOU1_
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Loader.Loader - result row: 69
+2010-07-01 10:04:02.287 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 69
+2010-07-01 10:04:02.288 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#69
+2010-07-01 10:04:02.288 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.288 [4544] DEBUG NHibernate.Type.StringType - returning 'CityMarketSegment' as column: DATA_SOU2_
+2010-07-01 10:04:02.288 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.288 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.288 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.StringType - returning 'City MarketSegment Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/10/23' as column: LAST_UPD6_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/12' as column: CREATE_D5_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.Int32Type - returning '83' as column: DATA_SOU1_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Loader.Loader - result row: 83
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 83
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#83
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer_SubKA' as column: DATA_SOU2_
+2010-07-01 10:04:02.289 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer and SubKA Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: CREATE_D5_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '32' as column: DATA_SOU1_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Loader.Loader - result row: 32
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 32
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#32
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_Customer' as column: DATA_SOU2_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.290 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/25' as column: CREATE_D5_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.Int32Type - returning '8' as column: DATA_SOU1_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Loader.Loader - result row: 8
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 8
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#8
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer_CustomerSubgroup' as column: DATA_SOU2_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer_CustomerSubgroup Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.291 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.Int32Type - returning '40' as column: DATA_SOU1_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Loader.Loader - result row: 40
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 40
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#40
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_CustomerGroup' as column: DATA_SOU2_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerGroup Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/3' as column: CREATE_D5_
+2010-07-01 10:04:02.292 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.Int32Type - returning '33' as column: DATA_SOU1_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Loader.Loader - result row: 33
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 33
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#33
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_CustomerSubGroup' as column: DATA_SOU2_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerSubGroup Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/25' as column: CREATE_D5_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Type.Int32Type - returning '44' as column: DATA_SOU1_
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Loader.Loader - result row: 44
+2010-07-01 10:04:02.293 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 44
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#44
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_Distributor' as column: DATA_SOU2_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.StringType - returning 'Distributor Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/4' as column: LAST_UPD6_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/4' as column: CREATE_D5_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.Int32Type - returning '78' as column: DATA_SOU1_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Loader.Loader - result row: 78
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 78
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#78
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.294 [4544] DEBUG NHibernate.Type.StringType - returning 'KeyAccount' as column: DATA_SOU2_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: CREATE_B9_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.StringType - returning 'Key Account Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/23' as column: LAST_UPD6_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/23' as column: CREATE_D5_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '76' as column: DATA_SOU1_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Loader.Loader - result row: 76
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 76
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#76
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_ProductCommonName' as column: DATA_SOU2_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: CREATE_B9_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.295 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_ProductCommonName' as column: DESCRIPT3_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: LAST_UPD6_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: CREATE_D5_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.Int32Type - returning '75' as column: DATA_SOU1_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Loader.Loader - result row: 75
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 75
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#75
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_ProductSegment' as column: DATA_SOU2_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: CREATE_B9_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_ProductSegment' as column: DESCRIPT3_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: LAST_UPD6_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: CREATE_D5_
+2010-07-01 10:04:02.296 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.Int32Type - returning '37' as column: DATA_SOU1_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Loader.Loader - result row: 37
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 37
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#37
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_Product' as column: DATA_SOU2_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.StringType - returning 'Product Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/28' as column: CREATE_D5_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Type.Int32Type - returning '59' as column: DATA_SOU1_
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Loader.Loader - result row: 59
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 59
+2010-07-01 10:04:02.297 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#59
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_SalesOrg' as column: DATA_SOU2_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Organization Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/8' as column: LAST_UPD6_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/8' as column: CREATE_D5_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '46' as column: DATA_SOU1_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Loader.Loader - result row: 46
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 46
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#46
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_SalesPerson' as column: DATA_SOU2_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.298 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesPerson Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: CREATE_D5_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.Int32Type - returning '48' as column: DATA_SOU1_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Loader.Loader - result row: 48
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 48
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#48
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesPerson_SalesOrg' as column: DATA_SOU2_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesPerson_SalesOrg Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.299 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/9/6' as column: LAST_UPD6_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/6' as column: CREATE_D5_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '82' as column: DATA_SOU1_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Loader.Loader - result row: 82
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 82
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#82
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_SubKA' as column: DATA_SOU2_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.StringType - returning 'Sub KeyAccount Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: CREATE_D5_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Type.Int32Type - returning '35' as column: DATA_SOU1_
+2010-07-01 10:04:02.300 [4544] DEBUG NHibernate.Loader.Loader - result row: 35
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 35
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#35
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_Vendor' as column: DATA_SOU2_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.StringType - returning 'Vendor Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/26' as column: CREATE_D5_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Type.Int32Type - returning '43' as column: DATA_SOU1_
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Loader.Loader - result row: 43
+2010-07-01 10:04:02.301 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 43
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#43
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.StringType - returning 'Mapping' as column: DATA_SOU4_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.StringType - returning 'Map_WholeSaler' as column: DATA_SOU2_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.StringType - returning 'WholeSaler Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/4' as column: LAST_UPD6_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/4' as column: CREATE_D5_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.Int32Type - returning '68' as column: DATA_SOU1_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Loader.Loader - result row: 68
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 68
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#68
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.StringType - returning 'City' as column: DATA_SOU2_
+2010-07-01 10:04:02.302 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.StringType - returning 'City Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/12' as column: CREATE_D5_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.Int32Type - returning '3' as column: DATA_SOU1_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Loader.Loader - result row: 3
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 3
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#3
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer' as column: DATA_SOU2_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.303 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.Int32Type - returning '72' as column: DATA_SOU1_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Loader.Loader - result row: 72
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 72
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#72
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerSubGroupCommonName' as column: DATA_SOU2_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.304 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer SubGroup Common Name Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/12' as column: CREATE_D5_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.Int32Type - returning '6' as column: DATA_SOU1_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Loader.Loader - result row: 6
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 6
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#6
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerGroup' as column: DATA_SOU2_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerGroup Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.305 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.Int32Type - returning '39' as column: DATA_SOU1_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Loader.Loader - result row: 39
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 39
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#39
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerSubGroup' as column: DATA_SOU2_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerSubGroup Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/3' as column: CREATE_D5_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Type.Int32Type - returning '53' as column: DATA_SOU1_
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Loader.Loader - result row: 53
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 53
+2010-07-01 10:04:02.306 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#53
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerQuintile' as column: DATA_SOU2_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerSubGroup Product Quintile Mapping' as column: DESCRIPT3_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/10/12' as column: LAST_UPD6_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: CREATE_D5_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.Int32Type - returning '4' as column: DATA_SOU1_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Loader.Loader - result row: 4
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 4
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#4
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.StringType - returning 'Distributor' as column: DATA_SOU2_
+2010-07-01 10:04:02.307 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.308 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.308 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.308 [4544] DEBUG NHibernate.Type.StringType - returning 'Distributor Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.311 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.Int32Type - returning '77' as column: DATA_SOU1_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Loader.Loader - result row: 77
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 77
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#77
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.StringType - returning 'ExchangeRate' as column: DATA_SOU2_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: CREATE_B9_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.StringType - returning 'ExchangeRate' as column: DESCRIPT3_
+2010-07-01 10:04:02.312 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: LAST_UPD6_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: CREATE_D5_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '13' as column: DATA_SOU1_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Loader.Loader - result row: 13
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 13
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#13
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.StringType - returning 'Product' as column: DATA_SOU2_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.StringType - returning 'Product Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.313 [4544] DEBUG NHibernate.Type.Int32Type - returning '70' as column: DATA_SOU1_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Loader.Loader - result row: 70
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 70
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#70
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.StringType - returning 'ProductSegment' as column: DATA_SOU2_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.StringType - returning 'Product Segment Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/12' as column: CREATE_D5_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.Int32Type - returning '38' as column: DATA_SOU1_
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Loader.Loader - result row: 38
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 38
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#38
+2010-07-01 10:04:02.314 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.StringType - returning 'ProductCommonName' as column: DATA_SOU2_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.StringType - returning 'ProductCommonName Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/2' as column: CREATE_D5_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '47' as column: DATA_SOU1_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Loader.Loader - result row: 47
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 47
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#47
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesOrg' as column: DATA_SOU2_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.315 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Organization Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/6' as column: CREATE_D5_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.Int32Type - returning '41' as column: DATA_SOU1_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Loader.Loader - result row: 41
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 41
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#41
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesPerson' as column: DATA_SOU2_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesPerson Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.316 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/4' as column: CREATE_D5_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '81' as column: DATA_SOU1_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Loader.Loader - result row: 81
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 81
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#81
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.StringType - returning 'SubKeyAccount' as column: DATA_SOU2_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.StringType - returning 'SubKey Account Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/8' as column: LAST_UPD6_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: CREATE_D5_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.317 [4544] DEBUG NHibernate.Type.Int32Type - returning '14' as column: DATA_SOU1_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Loader.Loader - result row: 14
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 14
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#14
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.StringType - returning 'Vendor' as column: DATA_SOU2_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.StringType - returning 'Vendor Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: DATA_SOU1_
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Loader.Loader - result row: 2
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 2
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#2
+2010-07-01 10:04:02.318 [4544] DEBUG NHibernate.Type.StringType - returning 'Master' as column: DATA_SOU4_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.StringType - returning 'WholeSaler' as column: DATA_SOU2_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.StringType - returning 'WholeSaler Master' as column: DESCRIPT3_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/20' as column: LAST_UPD6_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/19' as column: CREATE_D5_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.Int32Type - returning '21' as column: DATA_SOU1_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Loader.Loader - result row: 21
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 21
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#21
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.319 [4544] DEBUG NHibernate.Type.StringType - returning 'SDA' as column: DATA_SOU2_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.StringType - returning 'CPA Data' as column: DESCRIPT3_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/8/14' as column: LAST_UPD6_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/20' as column: CREATE_D5_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '55' as column: DATA_SOU1_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Loader.Loader - result row: 55
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 55
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#55
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerBiding' as column: DATA_SOU2_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.320 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer Biding' as column: DESCRIPT3_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: CREATE_D5_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.Int32Type - returning '56' as column: DATA_SOU1_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Loader.Loader - result row: 56
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 56
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#56
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerListing' as column: DATA_SOU2_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer Listing' as column: DESCRIPT3_
+2010-07-01 10:04:02.321 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: CREATE_D5_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.Int32Type - returning '54' as column: DATA_SOU1_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Loader.Loader - result row: 54
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 54
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#54
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.StringType - returning 'CustomerReimbursement' as column: DATA_SOU2_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.StringType - returning 'Customer Reimbursement' as column: DESCRIPT3_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.322 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: CREATE_D5_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '51' as column: DATA_SOU1_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Loader.Loader - result row: 51
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 51
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#51
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.StringType - returning 'DistributorInventory' as column: DATA_SOU2_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.StringType - returning 'Distributor Inventory' as column: DESCRIPT3_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/6' as column: LAST_UPD6_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/6' as column: CREATE_D5_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.323 [4544] DEBUG NHibernate.Type.Int32Type - returning '58' as column: DATA_SOU1_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Loader.Loader - result row: 58
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 58
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#58
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.StringType - returning 'IMS' as column: DATA_SOU2_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.StringType - returning 'IMS Data' as column: DESCRIPT3_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: CREATE_D5_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Type.Int32Type - returning '25' as column: DATA_SOU1_
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Loader.Loader - result row: 25
+2010-07-01 10:04:02.324 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 25
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#25
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.StringType - returning 'InMarketSales' as column: DATA_SOU2_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.StringType - returning 'InMarketSales' as column: DESCRIPT3_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/21' as column: CREATE_D5_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.Int32Type - returning '26' as column: DATA_SOU1_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Loader.Loader - result row: 26
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 26
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#26
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.325 [4544] DEBUG NHibernate.Type.StringType - returning 'InMarketSalesBudget' as column: DATA_SOU2_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.StringType - returning 'InMarketSalesBudget' as column: DESCRIPT3_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/9/6' as column: LAST_UPD6_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/21' as column: CREATE_D5_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '85' as column: DATA_SOU1_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Loader.Loader - result row: 85
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 85
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#85
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.StringType - returning 'KAASFE' as column: DATA_SOU2_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.326 [4544] DEBUG NHibernate.Type.StringType - returning 'KA-A SFE Data' as column: DESCRIPT3_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/7' as column: CREATE_D5_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.Int32Type - returning '22' as column: DATA_SOU1_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Loader.Loader - result row: 22
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 22
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#22
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.StringType - returning 'PrimarySales' as column: DATA_SOU2_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.StringType - returning 'Primary Sales' as column: DESCRIPT3_
+2010-07-01 10:04:02.327 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/20' as column: CREATE_D5_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.Int32Type - returning '23' as column: DATA_SOU1_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Loader.Loader - result row: 23
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 23
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#23
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.StringType - returning 'PrimarySalesBudget' as column: DATA_SOU2_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.328 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.StringType - returning 'PrimarySalesBudget' as column: DESCRIPT3_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/9/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/20' as column: CREATE_D5_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.Int32Type - returning '2' as column: LAST_UP10_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.Int32Type - returning '73' as column: DATA_SOU1_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Loader.Loader - result row: 73
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 73
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#73
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallActual' as column: DATA_SOU2_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Call Actual' as column: DESCRIPT3_
+2010-07-01 10:04:02.329 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/18' as column: LAST_UPD6_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/18' as column: CREATE_D5_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '66' as column: DATA_SOU1_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Loader.Loader - result row: 66
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 66
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#66
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallKPIActual' as column: DATA_SOU2_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Call KPI Actual' as column: DESCRIPT3_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/11' as column: LAST_UPD6_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/11' as column: CREATE_D5_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.330 [4544] DEBUG NHibernate.Type.Int32Type - returning '64' as column: DATA_SOU1_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Loader.Loader - result row: 64
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 64
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#64
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallPromotionPatternTarget' as column: DATA_SOU2_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Call Promotion Pattern Target' as column: DESCRIPT3_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/11' as column: LAST_UPD6_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/11' as column: CREATE_D5_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Type.Int32Type - returning '74' as column: DATA_SOU1_
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Loader.Loader - result row: 74
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 74
+2010-07-01 10:04:02.331 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#74
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCoachCall' as column: DATA_SOU2_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Coach Call' as column: DESCRIPT3_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/18' as column: LAST_UPD6_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/18' as column: CREATE_D5_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.Int32Type - returning '79' as column: DATA_SOU1_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Loader.Loader - result row: 79
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 79
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#79
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.332 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCoachPCT' as column: DATA_SOU2_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.StringType - returning 'Sales Coach Call Percentage' as column: DESCRIPT3_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/10/17' as column: LAST_UPD6_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/10/17' as column: CREATE_D5_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '87' as column: DATA_SOU1_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Loader.Loader - result row: 87
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 87
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#87
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallKPIActual_Product' as column: DATA_SOU2_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.333 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallKPIActual By Product' as column: DESCRIPT3_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/14' as column: LAST_UPD6_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/14' as column: CREATE_D5_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.Int32Type - returning '88' as column: DATA_SOU1_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Loader.Loader - result row: 88
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 88
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#88
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallStat' as column: DATA_SOU2_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.StringType - returning 'SalesCallStat(Doctor Level Sales Call )' as column: DESCRIPT3_
+2010-07-01 10:04:02.334 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/9/12' as column: LAST_UPD6_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/9/3' as column: CREATE_D5_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.Int32Type - returning '24' as column: DATA_SOU1_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Loader.Loader - result row: 24
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 24
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#24
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.StringType - returning 'SecondarySales' as column: DATA_SOU2_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.StringType - returning 'Secondary Sales' as column: DESCRIPT3_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.335 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/6/21' as column: CREATE_D5_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '84' as column: DATA_SOU1_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Loader.Loader - result row: 84
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 84
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#84
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.StringType - returning 'SubKABudget' as column: DATA_SOU2_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.StringType - returning 'Sub KA Budget Data' as column: DESCRIPT3_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: LAST_UPD6_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/5' as column: CREATE_D5_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.336 [4544] DEBUG NHibernate.Type.Int32Type - returning '86' as column: DATA_SOU1_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Loader.Loader - result row: 86
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 86
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#86
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.StringType - returning 'TargetDrugstoreSFE' as column: DATA_SOU2_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.StringType - returning 'Target Drugstore SFE Data' as column: DESCRIPT3_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2007/6/7' as column: CREATE_D5_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Type.Int32Type - returning '57' as column: DATA_SOU1_
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Loader.Loader - result row: 57
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 57
+2010-07-01 10:04:02.337 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#57
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.StringType - returning 'URC' as column: DATA_SOU2_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: WITHDRAW8_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.StringType - returning 'URC Data' as column: DESCRIPT3_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/11/28' as column: LAST_UPD6_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/7' as column: CREATE_D5_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.Int32Type - returning '50' as column: DATA_SOU1_
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Loader.Loader - result row: 50
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 50
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#50
+2010-07-01 10:04:02.338 [4544] DEBUG NHibernate.Type.StringType - returning 'Transaction' as column: DATA_SOU4_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.StringType - returning 'WholeSalerInventory' as column: DATA_SOU2_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.StringType - returning 'WholeSaler Inventory' as column: DESCRIPT3_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/6' as column: LAST_UPD6_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2006/7/6' as column: CREATE_D5_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '89' as column: DATA_SOU1_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Loader.Loader - result row: 89
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 89
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Dui.DataSource#89
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.StringType - returning 'Validation' as column: DATA_SOU4_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.StringType - returning 'DWValidation' as column: DATA_SOU2_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: CREATE_B9_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '0' as column: WITHDRAW8_
+2010-07-01 10:04:02.339 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: ACTIVE_F7_
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Type.StringType - returning 'DW Validation' as column: DESCRIPT3_
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2008/4/7' as column: LAST_UPD6_
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2008/4/7' as column: CREATE_D5_
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: LAST_UP10_
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Loader.Loader - done processing result set (60 rows)
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Loader.Loader - total objects hydrated: 60
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#80]
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#1
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.Type.Int32Type - binding '1' to parameter: 0
+2010-07-01 10:04:02.340 [4544] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:04:02.340 [4544] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Loader.Loader - result row: 1
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 1
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#1
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Type.StringType - returning 'hang.li@spcorp.com' as column: EMAIL0_
+2010-07-01 10:04:02.341 [4544] DEBUG NHibernate.Type.StringType - returning 'Li Hang' as column: USERNAME0_
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Type.StringType - returning 'hli10' as column: WINDOWS_6_0_
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Type.StringType - returning 'APAC' as column: WINDOWS_5_0_
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Type.StringType - returning 'admin' as column: PASSWORD0_
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#80]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#42]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.342 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#42]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#36]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#36]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#69]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#69]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#83]
+2010-07-01 10:04:02.343 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#83]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#32]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#32]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#8]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.344 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#8]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#40]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSource#40]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSource#33]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:04:02.345 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]

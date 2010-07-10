@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Dui.DWDataSourceOperator, Dndp.Persistence" table="DW_DATA_SOURCE_OPERATOR">
+    <id name="Id" column="DW_DATA_SOURCE_OPERATOR_ID" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="AllowType" column="ALLOW_TYPE" type="String" length="50" />
+    <many-to-one name="TheUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="USER_ID" cascade="none" />
+    <many-to-one name="TheDWDataSource" class="Dndp.Persistence.Entity.Dui.DWDataSource, Dndp.Persistence" column="DW_Data_Source_ID" cascade="none" />
+  </class>
+</hibernate-mapping>

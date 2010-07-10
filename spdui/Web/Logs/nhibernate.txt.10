@@ -1,0 +1,801 @@
+2010-07-01 10:02:11.050 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#21]
+2010-07-01 10:02:11.126 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#21]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#21]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12170]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#1532]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#147]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#147]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#147]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#1532]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#6862]
+2010-07-01 10:02:11.127 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#148]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#148]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#148]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#6862]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11139]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#266]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#266]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#266]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11139]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11861]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#28]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#28]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#28]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#283]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#283]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#283]
+2010-07-01 10:02:11.128 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11861]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#6439]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#98]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#98]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#98]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#6439]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#629]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#100]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#100]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#100]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#629]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12171]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#91]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#91]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#91]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12171]
+2010-07-01 10:02:11.129 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12130]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#140]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#140]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#140]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12130]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11743]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#228]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#228]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#228]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11743]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11831]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#254]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#254]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#254]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11831]
+2010-07-01 10:02:11.130 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12085]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#28]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#28]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#28]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#280]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#280]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#280]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12085]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12150]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#29]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#29]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#29]
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#29
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.Type.Int32Type - binding '29' to parameter: 0
+2010-07-01 10:02:11.131 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.131 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Loader.Loader - result row: 29
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 29
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#29
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Type.StringType - returning 'ya_nan_gong@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Type.StringType - returning 'Gong, Ya Nan' as column: USERNAME0_
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Type.StringType - returning 'gongya' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.132 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#29]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#29]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#29]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#305]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#305]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#305]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12150]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12205]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#33]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#33]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#33]
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#33
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.133 [3940] DEBUG NHibernate.Type.Int32Type - binding '33' to parameter: 0
+2010-07-01 10:02:11.133 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Loader.Loader - result row: 33
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 33
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#33
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Type.StringType - returning 'shan_shan_wang@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.134 [3940] DEBUG NHibernate.Type.StringType - returning 'Wang, Shanshan' as column: USERNAME0_
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Type.StringType - returning 'wangsh' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#33]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#33]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#33]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#322]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#322]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#322]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12205]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12207]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#37]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#37]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#37]
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#37
+2010-07-01 10:02:11.135 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.136 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.136 [3940] DEBUG NHibernate.Type.Int32Type - binding '37' to parameter: 0
+2010-07-01 10:02:11.136 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.136 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.136 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.136 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Loader.Loader - result row: 37
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 37
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#37
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Type.StringType - returning 'luo_han_pu@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Type.StringType - returning 'Pu, luohan' as column: USERNAME0_
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Type.StringType - returning 'pul' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#37]
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#37]
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#37]
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#323]
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#323]
+2010-07-01 10:02:11.137 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#323]
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12207]
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12164]
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#30]
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#30]
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#30]
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#30
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.Type.Int32Type - binding '30' to parameter: 0
+2010-07-01 10:02:11.138 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.138 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Loader.Loader - result row: 30
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 30
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#30
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Type.StringType - returning 'min_yan_jiang@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Type.StringType - returning 'Jiang, Min Yan' as column: USERNAME0_
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Type.StringType - returning 'jianminy' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.139 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#30]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#30]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#30]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#324]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#324]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#324]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12164]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12140]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#32]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#32]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#32]
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#32
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.Type.Int32Type - binding '32' to parameter: 0
+2010-07-01 10:02:11.140 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.140 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Loader.Loader - result row: 32
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 32
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#32
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Type.StringType - returning 'sue_su@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Type.StringType - returning 'Su, Sue' as column: USERNAME0_
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Type.StringType - returning 'susueaa1' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.141 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#32]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#32]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#32]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#325]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#325]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#325]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12140]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12210]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#34]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#34]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#34]
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#34
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.Type.Int32Type - binding '34' to parameter: 0
+2010-07-01 10:02:11.142 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.142 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Loader.Loader - result row: 34
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 34
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#34
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Type.StringType - returning 'joyce_yip@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Type.StringType - returning 'Joyce, Yip' as column: USERNAME0_
+2010-07-01 10:02:11.143 [3940] DEBUG NHibernate.Type.StringType - returning 'Yipjoyce' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#34]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#34]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#34]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#326]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#326]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#326]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12210]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12102]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#36]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#36]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#36]
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#36
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.144 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Type.Int32Type - binding '36' to parameter: 0
+2010-07-01 10:02:11.145 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Loader.Loader - result row: 36
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 36
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#36
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Type.StringType - returning 'hua_zhao@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.145 [3940] DEBUG NHibernate.Type.StringType - returning 'Zhao, Hua' as column: USERNAME0_
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Type.StringType - returning 'zhaohua2' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#36]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#36]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#36]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#327]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#327]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#327]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12102]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12141]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#35]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#35]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#35]
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#35
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.146 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Type.Int32Type - binding '35' to parameter: 0
+2010-07-01 10:02:11.147 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Loader.Loader - result row: 35
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 35
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#35
+2010-07-01 10:02:11.147 [3940] DEBUG NHibernate.Type.StringType - returning 'sarah_yu@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Type.StringType - returning 'Sarah, Yu' as column: USERNAME0_
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Type.StringType - returning 'yusa' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#35]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#35]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#35]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#328]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#328]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#328]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12141]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11890]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#225]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#225]
+2010-07-01 10:02:11.148 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#225]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11890]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12168]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#227]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#227]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#227]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12168]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11108]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#226]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#226]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#226]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11108]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#9999]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#75]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#75]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#75]
+2010-07-01 10:02:11.149 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#9999]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11170]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#18]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#18]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#18]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11170]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12174]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#17]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#17]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#17]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12174]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#9997]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#172]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#172]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#172]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#9997]
+2010-07-01 10:02:11.150 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12092]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#36]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#36]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#36]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#285]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#285]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#285]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12092]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12101]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#39]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#39]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.SessionImpl - object not resolved in any cache [Dndp.Persistence.Entity.Security.User#39]
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Persister.EntityPersister - Materializing entity: Dndp.Persistence.Entity.Security.User#39
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened new IDbCommand, open IDbCommands :1
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Impl.BatcherImpl - Building an IDbCommand object for the SqlString: SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=:USER_ID
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.Type.Int32Type - binding '39' to parameter: 0
+2010-07-01 10:02:11.151 [3940] INFO  NHibernate.Loader.Loader - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.151 [3940] DEBUG NHibernate.SQL - SELECT user0_.USER_ID as USER_ID0_, user0_.EMAIL as EMAIL0_, user0_.USERNAME as USERNAME0_, user0_.WINDOWS_USERNAME as WINDOWS_6_0_, user0_.WINDOWS_DOMAIN as WINDOWS_5_0_, user0_.PASSWORD as PASSWORD0_ FROM USERS user0_ WHERE user0_.USER_ID=@p0
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Impl.BatcherImpl - Opened Reader, open Readers :1
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Loader.Loader - processing result set
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Loader.Loader - result row: 39
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 39
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Security.User#39
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Type.StringType - returning 'yan_hui_wang@merck.com' as column: EMAIL0_
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Type.StringType - returning 'Wang, Yan Hui' as column: USERNAME0_
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Type.StringType - returning 'wanyanhu' as column: WINDOWS_6_0_
+2010-07-01 10:02:11.152 [3940] DEBUG NHibernate.Type.StringType - returning 'northamerica' as column: WINDOWS_5_0_
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Type.StringType - returning '' as column: PASSWORD0_
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Loader.Loader - total objects hydrated: 1
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#39]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#39]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#39]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#302]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#302]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#302]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12101]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11169]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#2]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#2]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#2]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11169]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12173]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.153 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#1]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#1]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#1]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12173]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12055]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#253]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#253]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#253]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12055]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#10843]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#83]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#83]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#83]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#10843]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12214]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#28]
+2010-07-01 10:02:11.154 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#28]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#28]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#286]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#286]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#286]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12214]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12197]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#28]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#28]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#28]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#291]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#291]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#291]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12197]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#4048]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#126]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#126]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#126]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#4048]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#4068]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.155 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#127]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#127]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#127]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#4068]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#3331]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#128]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#128]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#128]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#3331]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11174]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#24]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#24]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#24]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11174]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12175]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.156 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#23]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#23]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#23]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12175]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#9860]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#202]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#202]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#202]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#9860]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#9769]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#272]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#272]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#272]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#9769]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12083]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#28]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#28]
+2010-07-01 10:02:11.157 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#28]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#284]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#284]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#284]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12083]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12212]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#29]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#29]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#29]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#306]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#306]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#306]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12212]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12204]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#33]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#33]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#33]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#315]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#315]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#315]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12204]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12074]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#37]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#37]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#37]
+2010-07-01 10:02:11.158 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#316]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#316]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#316]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12074]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12161]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#30]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#30]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#30]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#317]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#317]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#317]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12161]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12138]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#32]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#32]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#32]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#318]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#318]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#318]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12138]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12209]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#34]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#34]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#34]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#319]
+2010-07-01 10:02:11.159 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#319]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#319]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12209]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12100]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#36]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#36]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#36]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#320]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#320]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#320]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12100]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12137]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#35]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#35]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#35]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#321]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#321]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#321]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12137]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11745]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#14]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#14]
+2010-07-01 10:02:11.160 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#14]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11745]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#12208]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#16]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#16]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#16]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#12208]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11062]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#15]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#15]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#15]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11062]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#786]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#176]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#176]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#176]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#786]
+2010-07-01 10:02:11.161 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11597]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#179]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#179]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#179]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11597]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#1281]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#180]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#180]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#180]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#1281]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11601]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#181]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#181]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#181]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11601]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11250]
+2010-07-01 10:02:11.162 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#177]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#177]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#177]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11250]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#9913]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#195]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#195]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#195]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#9913]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#2108]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#186]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#186]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#186]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#2108]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11602]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.163 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#194]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#194]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#194]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11602]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11254]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#184]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#184]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#184]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11254]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#5023]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#163]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#163]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#163]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#5023]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#10857]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.164 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#138]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#138]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#138]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#10857]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#5267]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#13]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#13]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#13]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#207]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#207]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#207]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#5267]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#10531]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#182]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#182]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#182]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#10531]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#8332]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#261]
+2010-07-01 10:02:11.165 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#261]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#261]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#8332]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#11749]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#28]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#28]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#28]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#279]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#279]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#279]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#11749]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#7048]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#7]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#7]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#7]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#110]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#110]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#110]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#7048]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#8856]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.166 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#111]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#111]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#111]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#8856]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#8756]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#112]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#112]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#112]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#8756]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#10879]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#8]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#8]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#8]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#193]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [DataSourceCategory#193]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Dui.DataSourceCategory#193]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Dui.DataSourceUpload#10879]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Dui.DataSourceUpload#860]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [User#10]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#10]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#10]
+2010-07-01 10:02:11.167 [3940] DEBUG NHibernate.Impl.SessionImpl - loading [DataSourceCategory#113]

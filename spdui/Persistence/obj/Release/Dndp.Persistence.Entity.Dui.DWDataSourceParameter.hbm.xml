@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Dui.DWDataSourceParameter, Dndp.Persistence" table="DW_Data_Source_Parameter">
+	  <id name="Id" column="Parameter_Id" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+    <property name="Name" column="Parameter_Name" type="String" length="255" />
+  </class>
+</hibernate-mapping>

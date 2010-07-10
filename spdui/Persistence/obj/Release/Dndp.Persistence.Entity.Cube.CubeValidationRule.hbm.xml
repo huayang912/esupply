@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeValidationRule, Dndp.Persistence" table="Cube_Validation_Rule">
+	  <id name="Id" column="Rule_Id" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	<many-to-one name="TheCube" class="Dndp.Persistence.Entity.Cube.CubeDefinition, Dndp.Persistence" column="Cube_Id" cascade="none" />
+    <property name="Name" column="Rule_Name" type="String" length="200" />
+    <property name="Description" column="Rule_Description" type="String" length="200" />
+    <property name="SeqNo" column="Seq_No" type="Int32" />	
+    <property name="Type" column="Rule_Type" type="String" length="20" />
+    <property name="Content" column="Rule_Content" type="StringClob" />
+    <property name="UpdateContent" column="Update_Content" type="StringClob" />
+	<many-to-one name="CreateUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="Create_User" cascade="none" />
+    <property name="CreateDate" column="Create_Date" type="DateTime" />
+	<many-to-one name="UpdateUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="Last_Update_User" cascade="none" />
+    <property name="UpdateDate" column="Last_Update_Date" type="DateTime" />
+	<property name="ActiveFlag" column="Active_Flag" type="Int32" />
+	<property name="ValidationTarget" column="Validation_Target" type="String" length="20" />
+  </class>
+</hibernate-mapping>

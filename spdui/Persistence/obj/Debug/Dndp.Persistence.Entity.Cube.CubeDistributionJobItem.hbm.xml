@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeDistributionJobItem, Dndp.Persistence" table="CubeDistributionJobItem">
+	  <id name="Id" column="ItemId" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	<many-to-one name="TheJob" column="JobId" class="Dndp.Persistence.Entity.Cube.CubeDistributionJob, Dndp.Persistence" cascade="none" />
+	<many-to-one name="TheCubeUser" column="Cube_User_Id" class="Dndp.Persistence.Entity.Cube.CubeUser, Dndp.Persistence" cascade="none"/>
+    <property name="UserName" column="UserName" type="String" length="200" />
+    <property name="ServerName" column="ServerName" type="String" length="100" />
+    <property name="DatabaseName" column="DatabaseName" type="String" length="100" />
+    <property name="CubeName" column="CubeName" type="String" length="100" />
+    <property name="CubeUserName" column="CubeUserName" type="String" length="100" />
+    <property name="Email" column="Email" type="String" length="100" />
+    <property name="NeedSendMail" column="NeedSendMail" type="String" length="50" />
+    <property name="PortalUserName" column="PortalUserName" type="String" length="100" />
+    <property name="UserPortalSite" column="UserPortalSite" type="String" length="100" />
+    <property name="UserPortalFolder" column="UserPortalFolder" type="String" length="100" />
+    <property name="NeedPublishToPortal" column="NeedPublishToPortal" type="String" length="50" />
+	<property name="PortalFolderReadUsers" column="PortalFolderReadUsers" type="String" length="500" />
+	<property name="PortalFolderFullControlUsers" column="PortalFolderFullControlUsers" type="String" length="500" />
+    <property name="CreateDate" column="CreateDate" type="DateTime" />	
+    <property name="UpdateDate" column="UpdateDate" type="DateTime" />	
+    <property name="Status" column="Status" type="String" length="200" />
+    <property name="StatusDescription" column="StatusDescription" type="String" length="500" />
+  </class>
+</hibernate-mapping>

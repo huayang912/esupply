@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeRoleDimensionMember, Dndp.Persistence" table="Cube_Role_Dimension_Member">
+	  <id name="Id" column="RecId" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	<many-to-one name="TheCubeRole" column="Role_Id" class="Dndp.Persistence.Entity.Cube.CubeRole, Dndp.Persistence" cascade="none"/>
+	<many-to-one name="TheDimension" column="Dimension_Id" class="Dndp.Persistence.Entity.Cube.CubeDimension, Dndp.Persistence" cascade="none"/>
+    <property name="MemberId" column="Member_Id" type="string" />	
+    <property name="MemberName" column="Member_Name" type="String" length="500" />
+    <property name="MemberValue" column="Member_Value" type="String" length="500" />
+	<property name="IsVisualtotal" column="Visualtotal" type="Int32" />
+  </class>
+</hibernate-mapping>

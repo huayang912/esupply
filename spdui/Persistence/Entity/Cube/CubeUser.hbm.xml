@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeUser, Dndp.Persistence" table="Cube_Users">
+	  <id name="Id" column="Cube_User_Id" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	<many-to-one name="TheDistributionUser" column="User_Id" class="Dndp.Persistence.Entity.Distribution.DistributionUser, Dndp.Persistence" cascade="none"/>
+    <property name="Name" column="Cube_User_Name" type="String" length="50" />
+    <property name="Description" column="Description" type="String" length="200" />
+    <property name="CubeSite" column="Cube_Site" type="String" length="500" />
+    <property name="CubeDocumentLibrary" column="Cube_Document_Library" type="String" length="500" />
+    <property name="CubeReadUserList" column="Cube_Read_User_List" type="String" length="500" />
+    <property name="CubeFullControlUserList" column="Cube_Full_Control_User_List" type="String" length="500" />
+    <property name="ActiveFlag" column="Active_Flag" type="Int32" />	
+  </class>
+</hibernate-mapping>

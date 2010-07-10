@@ -1,0 +1,454 @@
+2010-07-01 10:13:40.942 [4544] DEBUG NHibernate.Loader.Loader - Initializing object from DataReader: 1
+2010-07-01 10:13:41.019 [4544] DEBUG NHibernate.Loader.Loader - Hydrating entity: Dndp.Persistence.Entity.Cube.CubeDefinition#1
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringType - returning 'http://shadbs01/olap/msmdpump.dll' as column: ProcessS4_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringType - returning 'SP_CUBE_PROCESS' as column: ProcessD5_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: Last_Up17_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringClobType - returning 'exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Start Cube Update Role',
+  @importance = 'High',
+  @body = 'Start Cube Update Role.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Start Cube Update Role',
+  @importance = 'High',
+  @body = 'Start Cube Update Role.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Start Cube Update Role',
+  @importance = 'High',
+  @body = 'Start Cube Update Role.'' as column: PreUpda19_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringClobType - returning 'exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Start Cube Update Description',
+  @importance = 'High',
+  @body = 'Start Cube Update Description.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Start Cube Update Description',
+  @importance = 'High',
+  @body = 'Start Cube Update Description.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Start Cube Update Description',
+  @importance = 'High',
+  @body = 'Start Cube Update Description.'' as column: PreUpda21_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringClobType - returning '-- Inform User
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Completed Cube Process Job',
+  @importance = 'High',
+  @body = 'Completed Cube Process Job.'
+
+ exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Completed Cube Process Job',
+  @importance = 'High',
+  @body = 'Completed Cube Process Job.'
+
+ exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Completed Cube Process Job',
+  @importance = 'High',
+  @body = 'Completed Cube Process Job.'' as column: PostPro11_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringType - returning 'http://shadbs01/olap/msmdpump.dll' as column: ReleaseS8_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringClobType - returning '-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Completed Cube Release Job',
+  @importance = 'High',
+  @body = 'Completed Cube Release Job.'
+
+-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Completed Cube Release Job',
+  @importance = 'High',
+  @body = 'Completed Cube Release Job.'
+
+-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Completed Cube Release Job',
+  @importance = 'High',
+  @body = 'Completed Cube Release Job.'' as column: PostRel13_2_
+2010-07-01 10:13:41.020 [4544] DEBUG NHibernate.Type.StringType - returning 'SP_CUBE' as column: ReleaseD9_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringClobType - returning 'exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Completed Cube Update Description',
+  @importance = 'High',
+  @body = 'Completed Cube Update Description.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Completed Cube Update Description',
+  @importance = 'High',
+  @body = 'Completed Cube Update Description.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Completed Cube Update Description',
+  @importance = 'High',
+  @body = 'Completed Cube Update Description.'' as column: PostUpd22_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: Active_18_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringClobType - returning 'exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Completed Cube Update Role',
+  @importance = 'High',
+  @body = 'Completed Cube Update Role.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Completed Cube Update Role',
+  @importance = 'High',
+  @body = 'Completed Cube Update Role.'
+
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Completed Cube Update Role',
+  @importance = 'High',
+  @body = 'Completed Cube Update Role.'' as column: PostUpd20_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringType - returning 'SP Cube' as column: Cube_Des2_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringType - returning 'SP_CUBE' as column: Process_3_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2010/5/16' as column: Create_14_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringClobType - returning '-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Start Cube Release Job',
+  @importance = 'High',
+  @body = 'Start Cube Release Job.'
+
+-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'shengjun.fan@spcorp.com',
+  @subject = 'Start Cube Release Job',
+  @importance = 'High',
+  @body = 'Start Cube Release Job.'
+
+-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'maggie.zhang@spcorp.com',
+  @subject = 'Start Cube Release Job',
+  @importance = 'High',
+  @body = 'Start Cube Release Job.'' as column: PreRele12_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.Int32Type - returning '1' as column: Create_15_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.DateTimeType - returning '2010/5/16' as column: Last_Up16_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringClobType - returning '-- Inform User
+exec msdb.dbo.sp_send_dbmail 
+  @profile_name = 'spcn.webmaster@spcorp.com',
+  @recipients = 'hang.li@spcorp.com',
+  @subject = 'Start to prepare data for Cube Process Job',
+  @importance = 'High',
+  @body = 'Start to prepare data for Cube Process Job.'
+
+exec msdb.dbo.sp_send_dbmail 
+ @profile_name = 'spcn.webmaster@spcorp.com',
+ @recipients = 'shengjun.fan@spcorp.com',
+ @subject = 'Start to prepare data for Cube Process Job',
+ @importance = 'High',
+ @body = 'Start to prepare data for Cube Process Job.'
+
+------------------------ Refresh Dimension Begin ---------------------
+EXEC cubedb.dbo.RefreshAllMasterData '2008-1-1'
+EXEC cubedb.dbo.RefreshDimCustomerSubGroup
+EXEC cubedb.dbo.RefreshDimCustomer
+EXEC cubedb.dbo.RefreshDimGeographic
+EXEC cubedb.dbo.RefreshDimSubKa
+EXEC cubedb.dbo.RefreshDimProduct
+EXEC cubedb.dbo.RefreshFactCustomerRBL
+EXEC cubedb.dbo.RefreshTempSalesNetwork '<$InmarketSalesFactDate$>', '2008-1-1'
+EXEC cubedb.dbo.RefreshDimSalesNetwork_Current '<$InmarketSalesFactDate$>'
+EXEC cubedb.dbo.RefreshDimSalesOrgFact
+------------------------ Refresh Dimension End ---------------------
+
+----Refresh Cube Info---------------------
+DELETE CubeDB.dbo.DimCubeInfo
+
+DECLARE @TempDate DateTime
+SET @TempDate = CONVERT(DateTime,'<$InmarketSalesFactDate$>')
+INSERT CubeDB.dbo.DimCubeInfo values('Measure Group','In Market Sales' ,'', @TempDate,'', 'RMB', 'In Market Sales')
+
+SET @TempDate = CONVERT(DateTime,'<$IMSMonthlyDate$>')
+INSERT CubeDB.dbo.DimCubeInfo values('Measure Group','IMS Month','',@TempDate,'', 'RMB', 'IMS Month')
+
+SET @TempDate = CONVERT(DateTime,'<$IMSQuarterlyDate$>')
+INSERT CubeDB.dbo.DimCubeInfo values('Measure Group','IMS Quarter','', @TempDate,'', 'RMB', 'IMS Quarter')
+
+SET @TempDate = CONVERT(DateTime,'<$URCDate$>')
+INSERT CubeDB.dbo.DimCubeInfo values('Measure Group','URC Sales','', @TempDate,'', 'RMB', 'URC Sales')
+
+SET @TempDate = CONVERT(DateTime, '<$CPADate$>')
+INSERT CubeDB.dbo.DimCubeInfo values('Measure Group','CPA Sales','', @TempDate,'', 'RMB', 'CPA Sales')
+
+UPDATE CubeDB.dbo.DimCubeInfo SET CubeItemFullName = CubeItemName + ' has been updated to ' + Convert(nvarchar(7), UpdatedDate, 126), UpdateYearAndMonth = Convert(nvarchar(7), UpdatedDate, 126)
+----Refresh Cube Info---------------------
+
+------------------------ Refresh Fact Begin ---------------------
+EXEC cubedb.dbo.RefreshFactInMarketSales '<$InmarketSalesFactDate$>','2008-1-1'
+EXEC cubedb.dbo.RefreshDimPSRFactAndTerritoryCountKey
+update cubedb.dbo.TempFactInMarketSalesWithLinkage set syscustomer=null where customer=syscustomer
+EXEC cubedb.dbo.RefreshFactInMarketSalesBudget '<$InmarketSalesFactDate$>','2008-1-1'
+
+EXEC cubedb.dbo.RefreshFactIMS_Monthly '<$IMSMonthlyDate$>','2008-1-1'
+
+EXEC cubedb.dbo.RefreshTempIMSQuarterlyWithCHPAOther '<$IMSQuarterlyDate$>','2008-1-1'
+EXEC cubedb.dbo.RefreshFactIMS_Quarterly '<$IMSQuarterlyDate$>','2008-1-1'
+
+EXEC cubedb.dbo.RefreshFactURC '<$URCDate$>','2008-1-1'
+
+EXEC cubedb.dbo.RefreshFactCPA '<$CPADate$>','2008-1-1'
+EXEC CubeDB.dbo.RefreshFactCustomerProductAndCustomerSubGroup
+
+EXEC cubedb.dbo.RefreshFactETMS_CALL '<$InmarketSalesFactDate$>','2008-1-1'
+EXEC cubedb.dbo.RefreshFactETMS_CoachCallPercentage '<$InmarketSalesFactDate$>','2008-1-1'
+EXEC cubedb.dbo.RefreshFactETMS_SFE_KPI '<$InmarketSalesFactDate$>','2008-1-1'
+EXEC cubedb.dbo.RefreshFactSubKaBudget '<$InmarketSalesFactDate$>','2008-1-1'
+------------------------ Refresh Fact End ---------------------
+--delete from cubedb.dbo.factinmarketsales where isnull(measurevalue,0)=0
+
+exec cubedb.dbo.RefreshCubePartition 2010
+
+EXEC cubedb.dbo.DeleteTempData
+----------------------Update Cube DB Update Date----------------------------------------------------
+/*
+update CubeDB.dbo.FactCustomer_Product_CustomerSubGroup 
+set CubeUpdateDateAndTime = Replace(Replace(Replace(convert(nvarchar(16), getDate(), 121), ' ', ''), '-', ''), ':', '')*/' as column: PreProc10_2_
+2010-07-01 10:13:41.021 [4544] DEBUG NHibernate.Type.StringType - returning 'SP_CUBE' as column: Release_7_2_
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Type.StringType - returning '\\shadbs01\f$\SP_CUBE' as column: ProcessC6_2_
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Loader.Loader - done processing result set (1 rows)
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Driver.NHybridDataReader - running NHybridDataReader.Dispose()
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed Reader, open Readers :0
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.BatcherImpl - Closed IDbCommand, open IDbCommands :0
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Loader.Loader - total objects hydrated: 2
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - creating collection wrapper:[Dndp.Persistence.Entity.Security.User.Roles#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Security.User#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#116]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#106]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.022 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#106]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#146]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#146]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#145]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#145]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#105]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#105]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#115]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#115]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#201]
+2010-07-01 10:13:41.023 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#201]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#189]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#189]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#198]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#198]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#140]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#140]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#202]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#202]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#142]
+2010-07-01 10:13:41.024 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#142]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#194]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#194]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#195]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#195]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#211]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#211]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#139]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#139]
+2010-07-01 10:13:41.025 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#203]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#203]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#196]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#196]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#197]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#197]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#190]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.026 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#190]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#204]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#204]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#205]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#205]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#199]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#199]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#206]
+2010-07-01 10:13:41.027 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#206]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#200]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#200]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#144]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#144]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#175]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#175]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#213]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#213]
+2010-07-01 10:13:41.028 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#188]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#188]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#207]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#207]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#208]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#208]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#176]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#176]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#209]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.029 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#209]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#210]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#210]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#191]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#191]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#212]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#212]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#192]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#192]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#143]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.030 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#143]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - resolving associations for: [Dndp.Persistence.Entity.Cube.CubeRole#193]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - loading [CubeDefinition#1]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - attempting to resolve [CubeDefinition#1]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - resolved object in session cache [Dndp.Persistence.Entity.Cube.CubeDefinition#1]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - done materializing entity [Dndp.Persistence.Entity.Cube.CubeRole#193]
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - initializing non-lazy collections
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.SessionImpl - running ISession.Dispose()
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Impl.BatcherImpl - running BatcherImpl.Dispose(true)
+2010-07-01 10:13:41.031 [4544] DEBUG NHibernate.Connection.ConnectionProvider - Closing connection

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Security.Menu, Dndp.Persistence" table="MENUS">
+    <id name="Id" column="MENU_ID" type="Int32" unsaved-value="0">
+      <generator class="identity" />
+    </id>
+    <property name="Title" column="TITLE" type="String(50)" />
+    <property name="Description" column="DESCRIPTION" type="String(200)" />
+    <property name="PathCode" column="PATH_CODE" type="String(50)" />
+    <property name="ParentMenuId" column="PARENT_MENU_ID" type="Int32" />
+    <many-to-one name="TheModule" class="Dndp.Persistence.Entity.Security.Module, Dndp.Persistence" column="MODULE_ID" cascade="none" />
+  </class>
+</hibernate-mapping>
+

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Dui.DataSourceField, Dndp.Persistence" table="DATA_SOURCE_FIELD">
+    <id name="Id" column="FIELD_ID" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="FIELD_NAME" type="String" length="50" />
+    <property name="Description" column="DESCRIPTION" type="String" length="200" />
+    <property name="FieldType" column="FIELD_TYPE" type="String" length="50" />
+    <property name="SequenceNo" column="SEQ_NO" type="Int32" />	
+    <property name="FieldLength" column="FIELD_LENGTH" type="String" length="50" />
+    <property name="IsDataKey" column="IS_DATA_KEY" type="Boolean" />	
+    <property name="IsNullable" column="IS_NULLABLE" type="Boolean" />
+    <many-to-one name="TheDataSource" class="Dndp.Persistence.Entity.Dui.DataSource, Dndp.Persistence" column="DATA_SOURCE_ID" cascade="none" />
+  </class>
+</hibernate-mapping>

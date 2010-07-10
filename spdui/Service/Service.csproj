@@ -1,0 +1,150 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{52CDED16-033D-4D65-A410-961E5C870A40}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dndp.Service</RootNamespace>
+    <AssemblyName>Dndp.Service</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.DynamicProxy, Version=1.1.5.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Castle.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.AutomaticTransactionManagement, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Castle.Facilities.AutomaticTransactionManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Transaction, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Castle.Services.Transaction.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.0.1, Culture=neutral, PublicKeyToken=154fdcb44c4484fc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=1.0.1.0, Culture=neutral, PublicKeyToken=154fdcb44c4484fc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Criteria\ICriteriaMgr.cs" />
+    <Compile Include="Criteria\Impl\CriteriaMgr.cs" />
+    <Compile Include="Cube\ICubeAuthorizationMgr.cs" />
+    <Compile Include="Cube\ICubeDefinedParameterMgr.cs" />
+    <Compile Include="Cube\ICubeDimensionMgr.cs" />
+    <Compile Include="Cube\ICubeDistributionJobMgr.cs" />
+    <Compile Include="Cube\ICubeMeasureMgr.cs" />
+    <Compile Include="Cube\ICubeMgr.cs" />
+    <Compile Include="Cube\ICubeOperatorMgr.cs" />
+    <Compile Include="Cube\ICubeParameterMgr.cs" />
+    <Compile Include="Cube\ICubeProcessMgr.cs" />
+    <Compile Include="Cube\ICubeReleaseMgr.cs" />
+    <Compile Include="Cube\ICubeValidationRuleMgr.cs" />
+    <Compile Include="Cube\ICubeWarmMDXMgr.cs" />
+    <Compile Include="Cube\Impl\CubeAuthorizationMgr.cs" />
+    <Compile Include="Cube\Impl\CubeDefinedParameterMgr.cs" />
+    <Compile Include="Cube\Impl\CubeDimensionMgr.cs" />
+    <Compile Include="Cube\Impl\CubeDistributionJobMgr.cs" />
+    <Compile Include="Cube\Impl\CubeMeasureMgr.cs" />
+    <Compile Include="Cube\Impl\CubeMgr.cs" />
+    <Compile Include="Cube\Impl\CubeOperatorMgr.cs" />
+    <Compile Include="Cube\Impl\CubeParameterMgr.cs" />
+    <Compile Include="Cube\Impl\CubeProcessMgr.cs" />
+    <Compile Include="Cube\Impl\CubeReleaseMgr.cs" />
+    <Compile Include="Cube\Impl\CubeValidationRuleMgr.cs" />
+    <Compile Include="Cube\Impl\CubeWarmMDXMgr.cs" />
+    <Compile Include="Distribution\IDistributionUserMgr.cs" />
+    <Compile Include="Distribution\Impl\DistributionUserMgr.cs" />
+    <Compile Include="Dui\IDWDataSourceParameterMgr.cs" />
+    <Compile Include="Dui\IDWDataSourceMgr.cs" />
+    <Compile Include="Dui\IDataSourceMgr.cs" />
+    <Compile Include="Dui\IDataSourceUploadMgr.cs" />
+    <Compile Include="Dui\Impl\DWDataSourceParameterMgr.cs" />
+    <Compile Include="Dui\Impl\DWDataSourceMgr.cs" />
+    <Compile Include="Dui\Impl\DataSourceMgr.cs" />
+    <Compile Include="Dui\Impl\DataSourceUploadMgr.cs" />
+    <Compile Include="ISession.cs" />
+    <Compile Include="OffLineReport\Impl\ReportBatchMgr.cs" />
+    <Compile Include="OffLineReport\Impl\ReportJobMgr.cs" />
+    <Compile Include="OffLineReport\Impl\ReportParameterMgr.cs" />
+    <Compile Include="OffLineReport\Impl\ReportTemplateMgr.cs" />
+    <Compile Include="OffLineReport\Impl\ReportUserMgr.cs" />
+    <Compile Include="OffLineReport\IReportBatchMgr.cs" />
+    <Compile Include="OffLineReport\IReportJobMgr.cs" />
+    <Compile Include="OffLineReport\IReportParameterMgr.cs" />
+    <Compile Include="OffLineReport\IReportTemplateMgr.cs" />
+    <Compile Include="OffLineReport\IReportUserMgr.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property\Impl\PropertyMgr.cs" />
+    <Compile Include="Property\IPropertyMgr.cs" />
+    <Compile Include="Security\IRoleMgr.cs" />
+    <Compile Include="Security\ISecurityMgr.cs" />
+    <Compile Include="Security\IUserMgr.cs" />
+    <Compile Include="Security\Impl\RoleMgr.cs" />
+    <Compile Include="Security\Impl\SecurityMgr.cs" />
+    <Compile Include="Security\Impl\UserMgr.cs" />
+    <Compile Include="SessionBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SPCubeUtility\SPCubeUtility.csproj">
+      <Project>{F13D14C9-0034-48B9-9B53-A4E2CFB97F9C}</Project>
+      <Name>SPCubeUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Persistence\Persistence.csproj">
+      <Project>{D7A1CE5D-4CD8-419A-A106-3D93EE24CFB3}</Project>
+      <Name>Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{B873A18C-098A-4C57-8CDE-F9A0C7BEBBB2}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

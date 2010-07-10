@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.OffLineReport.ReportUserSheet, Dndp.Persistence" table="OffLine_Report_UserSheet">
+    <id name="Id" column="UserSheet_ID" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <many-to-one name="TheUser" column="User_ID" class="Dndp.Persistence.Entity.OffLineReport.ReportUser, Dndp.Persistence" cascade="none"/>
+    <many-to-one name="TheReport" column="Report_Id" class="Dndp.Persistence.Entity.OffLineReport.ReportTemplate, Dndp.Persistence" cascade="none"/>
+  </class>
+</hibernate-mapping>

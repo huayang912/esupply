@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Dui.DataSourceRule, Dndp.Persistence" table="DATA_SOURCE_RULE">
+    <id name="Id" column="RULE_ID" type="Int32" unsaved-value="0" >
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="RULE_NAME" type="String" length="50" />
+    <property name="Description" column="DESCRIPTION" type="String" length="200" />
+    <property name="CreateDate" column="CREATE_DATE" type="DateTime" />	
+    <property name="LastUpdateDate" column="LAST_UPDATE_DATE" type="DateTime" />	
+    <property name="RuleType" column="RULE_TYPE" type="String" length="50" />
+    <property name="RuleContent" column="RULE_CONTENT" type="StringClob"/>
+    <property name="UpdateContent" column="UPDATE_CONTENT" type="StringClob"/>
+    <property name="SequenceNo" column="SEQ_NO" type="Int32" />
+    <many-to-one name="CreateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="CREATE_BY_USER_ID" cascade="none" />
+    <many-to-one name="LastUpdateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="LAST_UPDATE_USER_ID" cascade="none" />
+    <many-to-one name="TheDataSource" class="Dndp.Persistence.Entity.Dui.DataSource, Dndp.Persistence" column="DATA_SOURCE_ID" cascade="none" />
+  </class>
+</hibernate-mapping>

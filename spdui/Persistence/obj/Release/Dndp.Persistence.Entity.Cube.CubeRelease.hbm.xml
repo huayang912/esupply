@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeRelease, Dndp.Persistence" table="Cube_Release">
+	  <id name="Id" column="Release_Id" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	<many-to-one name="TheProcess" class="Dndp.Persistence.Entity.Cube.CubeProcess, Dndp.Persistence" column="Process_Id" cascade="none" />
+	<many-to-one name="ReleaseUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="Release_User" cascade="none" />
+    <property name="ReleaseDate" column="Release_Date" type="DateTime" />	
+    <property name="NeedWarmCache" column="Need_Warm_Cache" type="Int32" />
+	<property name="Status" column="Release_Status" type="String" />
+	<property name="BackupFile" column="Production_Backup_File" type="String" />
+	<property name="Description" column="Release_Description" type="String" />
+  </class>
+</hibernate-mapping>

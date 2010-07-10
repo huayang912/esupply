@@ -1,0 +1,373 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D7A1CE5D-4CD8-419A-A106-3D93EE24CFB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Dndp.Persistence</RootNamespace>
+    <AssemblyName>Dndp.Persistence</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.DynamicProxy, Version=1.1.5.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Castle.DynamicProxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.NHibernateIntegration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Castle.Facilities.NHibernateIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=1.0.0.2, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.0.1, Culture=neutral, PublicKeyToken=154fdcb44c4484fc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=1.0.1.0, Culture=neutral, PublicKeyToken=154fdcb44c4484fc">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\9.Dll Lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Criteria\Criteria.cs" />
+    <Compile Include="Criteria\Expression\Expression.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dao\Criteria\CriteriaDao.cs" />
+    <Compile Include="Dao\Criteria\ICriteriaDao.cs" />
+    <Compile Include="Dao\Cube\ICubeDao.cs" />
+    <Compile Include="Dao\Cube\ICubeDefinedParameterDao.cs" />
+    <Compile Include="Dao\Cube\ICubeDimensionDao.cs" />
+    <Compile Include="Dao\Cube\ICubeDistributionJobDao.cs" />
+    <Compile Include="Dao\Cube\ICubeDistributionJobItemDao.cs" />
+    <Compile Include="Dao\Cube\ICubeMeasureDao.cs" />
+    <Compile Include="Dao\Cube\ICubeOperatorDao.cs" />
+    <Compile Include="Dao\Cube\ICubeParameterDao.cs" />
+    <Compile Include="Dao\Cube\ICubeProcessDao.cs" />
+    <Compile Include="Dao\Cube\ICubeProcessParameterDao.cs" />
+    <Compile Include="Dao\Cube\ICubeProcessValidationResultDao.cs" />
+    <Compile Include="Dao\Cube\ICubeReleaseDao.cs" />
+    <Compile Include="Dao\Cube\ICubeRoleDao.cs" />
+    <Compile Include="Dao\Cube\ICubeRoleDimensionMemberDao.cs" />
+    <Compile Include="Dao\Cube\ICubeUserDao.cs" />
+    <Compile Include="Dao\Cube\ICubeUserRoleDao.cs" />
+    <Compile Include="Dao\Cube\ICubeValidationRuleDao.cs" />
+    <Compile Include="Dao\Cube\ICubeWarmMDXDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeDefinedParameterDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeDimensionDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeDistributionJobDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeDistributionJobItemDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeMeasureDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeOperatorDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeParameterDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeProcessDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeProcessParameterDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeProcessValidationResultDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeReleaseDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeRoleDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeRoleDimensionMemberDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeUserDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeUserRoleDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeValidationRuleDao.cs" />
+    <Compile Include="Dao\Cube\NH\NHCubeWarmMDXDao.cs" />
+    <Compile Include="Dao\Distribution\IDistributionUserDao.cs" />
+    <Compile Include="Dao\Distribution\NH\NHDistributionUserDao.cs" />
+    <Compile Include="Dao\Dui\IDWDataSourceParameterDao.cs" />
+    <Compile Include="Dao\Dui\IDWDataSourceDao.cs" />
+    <Compile Include="Dao\Dui\IDWDataSourceOperatorDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceCategoryDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceFieldDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceOperatorDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceRuleDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceUploadDao.cs" />
+    <Compile Include="Dao\Dui\IDataSourceWithDrawTableDao.cs" />
+    <Compile Include="Dao\Dui\IValidationResultDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDWDataSourceParameterDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDWDataSourceDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDWDataSourceOperatorDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceCategoryDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceFieldDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceOperatorDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceRuleDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceUploadDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDataSourceWithDrawTableDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHValidationResultDao.cs" />
+    <Compile Include="Dao\IDao.cs" />
+    <Compile Include="Dao\INHDao.cs" />
+    <Compile Include="Dao\NHDaoBase.cs" />
+    <Compile Include="Dao\OffLineReport\IReportBatchDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportBatchReportsDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportJobDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportJobReportDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportJobUserDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportParameterDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportSheetDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportTemplateDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportUserDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportUserSheetDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportUserSheetParameterDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportBatchDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportBatchReportsDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportJobDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportJobReportDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportJobUserDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportParameterDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportSheetDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportTemplateDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportUserDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportUserSheetDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportUserSheetParameterDao.cs" />
+    <Compile Include="Dao\Security\IMenuDao.cs" />
+    <Compile Include="Dao\Security\IRoleDao.cs" />
+    <Compile Include="Dao\Security\IUserDao.cs" />
+    <Compile Include="Dao\Security\NH\NHMenuDao.cs" />
+    <Compile Include="Dao\Security\NH\NHRoleDao.cs" />
+    <Compile Include="Dao\Security\NH\NHUserDao.cs" />
+    <Compile Include="Entity\Cube\CubeDefinedParameter.cs" />
+    <Compile Include="Entity\Cube\CubeDefinition.cs" />
+    <Compile Include="Entity\Cube\CubeDimension.cs" />
+    <Compile Include="Entity\Cube\CubeDistributionJob.cs" />
+    <Compile Include="Entity\Cube\CubeDistributionJobItem.cs" />
+    <Compile Include="Entity\Cube\CubeMeasure.cs" />
+    <Compile Include="Entity\Cube\CubeOperator.cs" />
+    <Compile Include="Entity\Cube\CubeParameter.cs" />
+    <Compile Include="Entity\Cube\CubeProcess.cs" />
+    <Compile Include="Entity\Cube\CubeProcessParameter.cs" />
+    <Compile Include="Entity\Cube\CubeProcessValidationResult.cs" />
+    <Compile Include="Entity\Cube\CubeRelease.cs" />
+    <Compile Include="Entity\Cube\CubeRole.cs" />
+    <Compile Include="Entity\Cube\CubeRoleDimensionMember.cs" />
+    <Compile Include="Entity\Cube\CubeUser.cs" />
+    <Compile Include="Entity\Cube\CubeUserRole.cs" />
+    <Compile Include="Entity\Cube\CubeValidationRule.cs" />
+    <Compile Include="Entity\Cube\CubeWarmMDX.cs" />
+    <Compile Include="Entity\Cube\CubeDimensionMember.cs" />
+    <Compile Include="Entity\Distribute\DistributionUser.cs" />
+    <Compile Include="Entity\Dui\DWDataSourceParameter.cs" />
+    <Compile Include="Entity\Dui\DWDataSourceOperator.cs" />
+    <Compile Include="Entity\Dui\DWDataSource.cs" />
+    <Compile Include="Entity\Dui\DataSource.cs" />
+    <Compile Include="Entity\Dui\DataSourceCategory.cs" />
+    <Compile Include="Entity\Dui\DataSourceField.cs" />
+    <Compile Include="Entity\Dui\DataSourceOperator.cs" />
+    <Compile Include="Entity\Dui\DataSourceRule.cs" />
+    <Compile Include="Entity\Dui\DataSourceUpload.cs" />
+    <Compile Include="Entity\Dui\DataSourceWithDrawTable.cs" />
+    <Compile Include="Entity\Dui\ValidationResult.cs" />
+    <Compile Include="Entity\EntityBase.cs" />
+    <Compile Include="Entity\OffLineReport\ReportBatch.cs" />
+    <Compile Include="Entity\OffLineReport\ReportBatchReports.cs" />
+    <Compile Include="Entity\OffLineReport\ReportJob.cs" />
+    <Compile Include="Entity\OffLineReport\ReportJobReport.cs" />
+    <Compile Include="Entity\OffLineReport\ReportJobUser.cs" />
+    <Compile Include="Entity\OffLineReport\ReportParameter.cs" />
+    <Compile Include="Entity\OffLineReport\ReportSheet.cs" />
+    <Compile Include="Entity\OffLineReport\ReportTemplate.cs" />
+    <Compile Include="Entity\OffLineReport\ReportUser.cs" />
+    <Compile Include="Entity\OffLineReport\ReportUserSheet.cs" />
+    <Compile Include="Entity\OffLineReport\ReportUserSheetParameter.cs" />
+    <Compile Include="Entity\Security\Authorization.cs" />
+    <Compile Include="Entity\Security\Menu.cs" />
+    <Compile Include="Entity\Security\Module.cs" />
+    <Compile Include="Entity\Security\Role.cs" />
+    <Compile Include="Entity\Security\User.cs" />
+    <Compile Include="Criteria\Expression\AndExpression.cs" />
+    <Compile Include="Criteria\Expression\BetweenExpression.cs" />
+    <Compile Include="Criteria\Expression\Conjunction.cs" />
+    <Compile Include="Criteria\Expression\Disjunction.cs" />
+    <Compile Include="Criteria\Expression\EqExpression.cs" />
+    <Compile Include="Criteria\Expression\EqPropertyExpression.cs" />
+    <Compile Include="Criteria\Expression\GeExpression.cs" />
+    <Compile Include="Criteria\Expression\GtExpression.cs" />
+    <Compile Include="Criteria\Expression\IExpression.cs" />
+    <Compile Include="Criteria\Expression\InExpression.cs" />
+    <Compile Include="Criteria\Expression\Junction.cs" />
+    <Compile Include="Criteria\Expression\LeExpression.cs" />
+    <Compile Include="Criteria\Expression\LePropertyExpression.cs" />
+    <Compile Include="Criteria\Expression\LikeExpression.cs" />
+    <Compile Include="Criteria\Expression\LogicalExpression.cs" />
+    <Compile Include="Criteria\Expression\LtExpression.cs" />
+    <Compile Include="Criteria\Expression\LtPropertyExpression.cs" />
+    <Compile Include="Criteria\Expression\MatchMode.cs" />
+    <Compile Include="Criteria\Expression\NotExpression.cs" />
+    <Compile Include="Criteria\Expression\NotNullExpression.cs" />
+    <Compile Include="Criteria\Expression\NullExpression.cs" />
+    <Compile Include="Criteria\Expression\Order.cs" />
+    <Compile Include="Criteria\Expression\OrExpression.cs" />
+    <Compile Include="Criteria\Expression\PropertyExpression.cs" />
+    <Compile Include="Criteria\Expression\SimpleExpression.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dao\SqlHelperDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entity\nhibernate-mapping-2.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Entity\nhibernate-mapping-2.0.xsx">
+      <DependentUpon>nhibernate-mapping-2.0.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Security\User.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Security\Authorization.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Security\Menu.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Security\Module.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Security\Role.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SPCubeUtility\SPCubeUtility.csproj">
+      <Project>{F13D14C9-0034-48B9-9B53-A4E2CFB97F9C}</Project>
+      <Name>SPCubeUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{B873A18C-098A-4C57-8CDE-F9A0C7BEBBB2}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Dui\DataSource.hbm.xml" />
+    <EmbeddedResource Include="Entity\Dui\DataSourceCategory.hbm.xml" />
+    <EmbeddedResource Include="Entity\Dui\DataSourceField.hbm.xml" />
+    <EmbeddedResource Include="Entity\Dui\DataSourceOperator.hbm.xml" />
+    <EmbeddedResource Include="Entity\Dui\DataSourceRule.hbm.xml" />
+    <EmbeddedResource Include="Entity\Dui\DataSourceUpload.hbm.xml" />
+    <EmbeddedResource Include="Entity\Dui\ValidationResult.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Dui\DataSourceWithDrawTable.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Dui\DWDataSource.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Dui\DWDataSourceOperator.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\OffLineReport\ReportBatch.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportBatchReports.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportSheet.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportTemplate.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportUserSheet.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportUserSheetParameter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\OffLineReport\ReportParameter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\OffLineReport\ReportJob.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportJobReport.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportJobUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeParameter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Dui\DWDataSourceParameter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeDefinition.hbm.xml" />
+    <EmbeddedResource Include="Entity\Cube\CubeValidationRule.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeDefinedParameter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeOperator.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeProcess.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeProcessParameter.hbm.xml" />
+    <EmbeddedResource Include="Entity\Cube\CubeProcessValidationResult.hbm.xml" />
+    <EmbeddedResource Include="Entity\Cube\CubeRelease.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeDimension.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Distribute\DistributionUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\OffLineReport\ReportUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeWarmMDX.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeRole.hbm.xml" />
+    <EmbeddedResource Include="Entity\Cube\CubeRoleDimensionMember.hbm.xml" />
+    <EmbeddedResource Include="Entity\Cube\CubeUserRole.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeDistributionJob.hbm.xml" />
+    <EmbeddedResource Include="Entity\Cube\CubeDistributionJobItem.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Cube\CubeMeasure.hbm.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

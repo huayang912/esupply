@@ -1,0 +1,48 @@
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\SPCubeUtility.dll.config
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\SPCubeUtility.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\SPCubeUtility.XmlSerializers.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\SPCubeUtility.pdb
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\Microsoft.AnalysisServices.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\SPEncryptUtility.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Release\Interop.DSOFile.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Release\ResolveAssemblyReference.cache
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Release\Interop.DSOFile.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Release\SPCubeUtility.csproj.ResolveComReference.cache
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Release\SPCubeUtility.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Release\SPCubeUtility.pdb
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Release\SPCubeUtility.XmlSerializers.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPCubeUtility.dll.config
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPCubeUtility.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPCubeUtility.pdb
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\Microsoft.AnalysisServices.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPEncryptUtility.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\Interop.DSOFile.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\Interop.DSOFile.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\SPCubeUtility.csproj.ResolveComReference.cache
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\SPCubeUtility.dll
+C:\Documents and Settings\Vincent\My Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\SPCubeUtility.pdb
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\ResolveAssemblyReference.cache
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\Interop.DSOFile.dll
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\SPCubeUtility.csproj.ResolveComReference.cache
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\SPCubeUtility.dll
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPCubeUtility.dll.config
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPCubeUtility.dll
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPCubeUtility.pdb
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\Microsoft.AnalysisServices.dll
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\SPEncryptUtility.dll
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\bin\Debug\Interop.DSOFile.dll
+D:\Vincent.Workfolder\Vincent Documents\Visual Studio 2005\Projects\SP_CUBE_SOLUTION\SPCubeUtility\obj\Debug\SPCubeUtility.pdb
+I:\DotNet\SPDUISrc\SPCubeUtility\obj\Debug\ResolveAssemblyReference.cache
+I:\DotNet\SPDUISrc\SPCubeUtility\obj\Debug\SPCubeUtility.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\Addin\dsofile.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\Addin\Microsoft.AnalysisServices.AdomdClient.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\Addin\Microsoft.AnalysisServices.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\Addin\SPEncryptUtility.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\SPCubeUtility.dll.config
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\SPCubeUtility.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\SPCubeUtility.pdb
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\Interop.DSOFile.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\Microsoft.AnalysisServices.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\bin\Debug\SPEncryptUtility.dll
+I:\DotNet\SPDUISrc\SPCubeUtility\obj\Debug\SPCubeUtility.pdb

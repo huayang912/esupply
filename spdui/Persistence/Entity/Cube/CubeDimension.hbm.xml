@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+  <class name="Dndp.Persistence.Entity.Cube.CubeDimension, Dndp.Persistence" table="Cube_Dimension">
+	  <id name="Id" column="Dimension_Id" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	  <many-to-one name="TheCube" class="Dndp.Persistence.Entity.Cube.CubeDefinition, Dndp.Persistence" column="Cube_Id" cascade="none" />
+    <property name="DimensionName" column="Dimension_Name" type="String" length="500" />
+    <property name="AttributeName" column="Attribute_Name" type="String" length="500" />
+	<property name="SetDimensionName" column="Set_Dimension_Name" type="String" length="500" />
+	<property name="SetAttributeName" column="Set_Attribute_Name" type="String" length="500" />
+	<property name="RelatedDimensionName" column="Related_Dimension_Name" type="String" length="500" />
+	<property name="RelatedAttributeName" column="Related_Attribute_Name" type="String" length="500" />
+	<property name="MDXFormula" column="MDX_Formula" type="String" length="2000" />
+	<property name="RelatedMDXFormula" column="Related_MDX_Formula" type="String" length="2000" />	
+  </class>
+</hibernate-mapping>

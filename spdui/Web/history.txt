@@ -1,0 +1,5 @@
+--2007-4-10
+1. fixed bug, in new user page when user click back button, error page appeared.
+
+change list:
+\Web\Modules\Security\UserAdmin\Main.ascx.cs
