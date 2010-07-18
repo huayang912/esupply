@@ -681,6 +681,11 @@
  	 		<artifactId>itextpdf</artifactId> 
  	 		<version>${itextpdf.version}</version>
  	 	</dependency>
+ 	 	<dependency>
+	<groupId>net.sf.opencsv</groupId>
+	<artifactId>opencsv</artifactId>
+	<version>${opencsv.version}</version>
+</dependency>
 	</dependencies>
 
 	<reporting>
@@ -1003,5 +1008,6 @@
 		<quartz.version>1.6.1</quartz.version>
 		<poi.version>3.1-FINAL</poi.version>
 		<itextpdf.version>5.0.2</itextpdf.version>
+		<opencsv.version>2.0</opencsv.version>
 	</properties>
 </project>
