@@ -78,51 +78,57 @@
 	</li>
 	<div><s:submit method="list" key="button.search" theme="simple" />
 	<s:submit key="button.cancel" method="cancel" theme="simple" /></div>
+	</ul>
+
+	<display:table name="paginatedList" cellspacing="0" cellpadding="0"
+		requestURI="" id="receiptDetail" class="table" export="true">
+		<c:if test="${receipt.detailOrSummary == 'Detail'}">
+			<display:column property="receipt.receiptNo" sortable="true"
+				sortProperty="r.receiptNo" titleKey="receipt.receiptNo" />
+		</c:if>
+		<c:if test="${receipt.detailOrSummary == 'Detail'}">
+			<display:column property="item.code" sortable="true"
+				sortProperty="i.code" titleKey="receiptDetail.itemCode" />
+		</c:if>
+		<c:if test="${receipt.detailOrSummary == 'Summary'}">
+			<display:column property="itemCode" sortable="true"
+				sortProperty="i.code" titleKey="receiptDetail.itemCode" />
+		</c:if>
+		<display:column property="itemDescription" sortable="true"
+			titleKey="receiptDetail.itemDescription" />
+		<display:column property="supplierItemCode" sortable="true"
+			titleKey="receiptDetail.supplierItemCode" />
+		<display:column property="uom" sortable="true"
+			titleKey="receiptDetail.uom" />
+		<display:column property="qty" sortable="true"
+			titleKey="receiptDetail.qty" />
+		<c:if test="${receipt.detailOrSummary == 'Detail'}">
+			<display:column property="receipt.postingDate"
+				format="{0,date,MM/dd/yyyy}" sortable="true"
+				sortProperty="r.postingDate" titleKey="receipt.postingDate" />
+		</c:if>
+
+		<display:setProperty name="paging.banner.item_name">
+			<fmt:message key="receipt.receipt" />
+		</display:setProperty>
+		<display:setProperty name="paging.banner.items_name">
+			<fmt:message key="receipt.receipts" />
+		</display:setProperty>
+
+		<display:setProperty name="export.excel.filename"
+			value="receipt List.xls" />
+		<display:setProperty name="export.csv.filename"
+			value="receipt List.csv" />
+		<display:setProperty name="export.pdf.filename"
+			value="receipt List.pdf" />
+	</display:table>
+
+	<c:if test="${paginatedList.fullListSize > 0}">
+		<div class="buttonBar bottom"><s:submit key="button.export" action="exportReceiptDetail"
+			theme="simple" /></div>
+	</c:if>
+	<ul style="border: 0px; padding: 0px; margin: 0px">
 </s:form>
-
-<display:table name="paginatedList" cellspacing="0" cellpadding="0"
-	requestURI="" id="receiptDetail" class="table" export="true">
-	<c:if test="${receipt.detailOrSummary == 'Detail'}">
-		<display:column property="receipt.receiptNo" sortable="true"
-		sortProperty="r.receiptNo"
-			titleKey="receipt.receiptNo" />
-	</c:if>
-	<c:if test="${receipt.detailOrSummary == 'Detail'}">
-	<display:column property="item.code" sortable="true"
-		sortProperty="i.code" titleKey="receiptDetail.itemCode" />
-	</c:if>
-	<c:if test="${receipt.detailOrSummary == 'Summary'}">
-		<display:column property="itemCode" sortable="true"
-		sortProperty="i.code" titleKey="receiptDetail.itemCode" />
-	</c:if>
-	<display:column property="itemDescription" sortable="true"
-		titleKey="receiptDetail.itemDescription" />
-	<display:column property="supplierItemCode" sortable="true"
-		titleKey="receiptDetail.supplierItemCode" />
-	<display:column property="uom" sortable="true"
-		titleKey="receiptDetail.uom" />
-	<display:column property="qty" sortable="true"
-		titleKey="receiptDetail.qty" />
-	<c:if test="${receipt.detailOrSummary == 'Detail'}">
-		<display:column property="receipt.postingDate"
-			format="{0,date,MM/dd/yyyy}" sortable="true"
-			sortProperty="r.postingDate" titleKey="receipt.postingDate" />
-	</c:if>
-	
-	<display:setProperty name="paging.banner.item_name">
-		<fmt:message key="receipt.receipt" />
-	</display:setProperty>
-	<display:setProperty name="paging.banner.items_name">
-		<fmt:message key="receipt.receipts" />
-	</display:setProperty>
-
-	<display:setProperty name="export.excel.filename"
-		value="receipt List.xls" />
-	<display:setProperty name="export.csv.filename"
-		value="receipt List.csv" />
-	<display:setProperty name="export.pdf.filename"
-		value="receipt List.pdf" />
-</display:table>
 
 <script type="text/javascript">
     highlightTableRows("receiptDetail");    
