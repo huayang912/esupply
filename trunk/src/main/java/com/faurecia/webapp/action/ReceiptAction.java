@@ -191,8 +191,8 @@ public class ReceiptAction extends BaseAction {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(receipt.getPostingDateTo());
 			calendar.add(Calendar.DATE, 1);
-			selectCriteria.add(Restrictions.le("postingDate", calendar.getTime()));
-			selectCountCriteria.add(Restrictions.le("postingDate", calendar.getTime()));
+			selectCriteria.add(Restrictions.lt("postingDate", calendar.getTime()));
+			selectCountCriteria.add(Restrictions.lt("postingDate", calendar.getTime()));
 		}
 		
 		if (receipt.getPlantSupplier() != null) {
