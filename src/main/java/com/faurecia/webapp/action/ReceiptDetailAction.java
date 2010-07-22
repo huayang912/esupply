@@ -2,10 +2,9 @@ package com.faurecia.webapp.action;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,8 +23,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
 
-import au.com.bytecode.opencsv.CSVWriter;
-
 import com.faurecia.Constants;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Receipt;
@@ -33,7 +30,7 @@ import com.faurecia.model.ReceiptDetail;
 import com.faurecia.model.User;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ReceiptManager;
-import com.faurecia.util.DeliveryOrderExportUtil;
+import com.faurecia.util.CSVWriter;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
 public class ReceiptDetailAction extends BaseAction {
@@ -241,8 +238,8 @@ public class ReceiptDetailAction extends BaseAction {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(receipt.getPostingDateTo());
 			calendar.add(Calendar.DATE, 1);
-			selectCriteria.add(Restrictions.le("r.postingDate", calendar.getTime()));
-			selectCountCriteria.add(Restrictions.le("r.postingDate", calendar.getTime()));
+			selectCriteria.add(Restrictions.lt("r.postingDate", calendar.getTime()));
+			selectCountCriteria.add(Restrictions.lt("r.postingDate", calendar.getTime()));
 		}
 
 		if (receipt.getPlantSupplier() != null) {
@@ -368,8 +365,8 @@ public class ReceiptDetailAction extends BaseAction {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(receipt.getPostingDateTo());
 			calendar.add(Calendar.DATE, 1);
-			selectCriteria.add(Restrictions.le("r.postingDate", calendar.getTime()));
-			selectCountCriteria.add(Restrictions.le("r.postingDate", calendar.getTime()));
+			selectCriteria.add(Restrictions.lt("r.postingDate", calendar.getTime()));
+			selectCountCriteria.add(Restrictions.lt("r.postingDate", calendar.getTime()));
 		}
 
 		if (receipt.getPlantSupplier() != null) {
@@ -410,9 +407,8 @@ public class ReceiptDetailAction extends BaseAction {
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			fileName = "receipt.csv";
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
 	
-			CSVWriter writer = new CSVWriter(outputStreamWriter, ',', '"');
+			CSVWriter writer = new CSVWriter(outputStream, ',', Charset.forName("GBK"));
 			for(int i = 0; i < receiptDetailList.size(); i++) 
 			{
 				ReceiptDetail receiptDetail = receiptDetailList.get(i);
@@ -427,7 +423,7 @@ public class ReceiptDetailAction extends BaseAction {
 					entries[5] =  receiptDetail.getQty().toString();
 					entries[6] =  dateFormat.format(receiptDetail.getReceipt().getPostingDate());
 					
-					writer.writeNext(entries);
+					writer.writeRecord(entries);
 				} else {
 					String[] entries = new String[5];
 					
@@ -437,7 +433,7 @@ public class ReceiptDetailAction extends BaseAction {
 					entries[3] =  receiptDetail.getUom();
 					entries[4] =  receiptDetail.getQty().toString();
 					
-					writer.writeNext(entries);
+					writer.writeRecord(entries);
 				}
 			}
 			writer.close();
