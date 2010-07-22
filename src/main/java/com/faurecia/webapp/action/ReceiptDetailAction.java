@@ -416,7 +416,7 @@ public class ReceiptDetailAction extends BaseAction {
 					String[] entries = new String[7];
 					
 					entries[0] =  receiptDetail.getReceipt().getReceiptNo();
-					entries[1] =  receiptDetail.getItemCode();
+					entries[1] =  receiptDetail.getItem().getCode();
 					entries[2] =  receiptDetail.getItemDescription();
 					entries[3] =  receiptDetail.getSupplierItemCode();
 					entries[4] =  receiptDetail.getUom();
@@ -427,7 +427,7 @@ public class ReceiptDetailAction extends BaseAction {
 				} else {
 					String[] entries = new String[5];
 					
-					entries[0] =  receiptDetail.getItemCode();
+					entries[0] =  receiptDetail.getItem().getCode();
 					entries[1] =  receiptDetail.getItemDescription();
 					entries[2] =  receiptDetail.getSupplierItemCode();
 					entries[3] =  receiptDetail.getUom();
