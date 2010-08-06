@@ -2,13 +2,17 @@
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A610065F-20A5-44F1-B14E-39F89A811C09}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Dndp.ad = Dndp.ad
 		Dndp.vsmdi = Dndp.vsmdi
 		localtestrun.testrunconfig = localtestrun.testrunconfig
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "I:\...\Web\", "Web\", "{D6F9A2F6-CAAB-406D-8B82-1D0B272185D6}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "D:\...\Web\", "Web\", "{D6F9A2F6-CAAB-406D-8B82-1D0B272185D6}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = ""
 		SccAuxPath = ""
@@ -29,7 +33,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "I:\...\Web\", "Web\", "{D6F
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "24099"
+		VWDPort = "2010"
 		VWDDynamicPort = "true"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
@@ -38,12 +42,28 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "I:\...\Web\", "Web\", "{D6F
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{B873A18C-098A-4C57-8CDE-F9A0C7BEBBB2}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{D7A1CE5D-4CD8-419A-A106-3D93EE24CFB3}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{52CDED16-033D-4D65-A410-961E5C870A40}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPCubeUtility", "SPCubeUtility\SPCubeUtility.csproj", "{F13D14C9-0034-48B9-9B53-A4E2CFB97F9C}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
