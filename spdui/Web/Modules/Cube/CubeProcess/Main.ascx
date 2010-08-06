@@ -3,6 +3,8 @@
 <%@ Register Src="New.ascx" TagName="New" TagPrefix="uc2" %>
 <%@ Register Src="History.ascx" TagName="History" TagPrefix="uc3" %>
 <asp:Panel ID="pnlMain" runat="server">
+<script type="text/javascript" src="Popup/lhgcore.min.js"></script>
+<script type="text/javascript" src="Popup/lhgdialog.js"></script>
 <script language="vbscript" type="text/vbscript">
 function ButtonWarning(Action)
     Dim ReturnVal
@@ -89,11 +91,20 @@ end function
 <script language="javascript" type="text/javascript">
     function RevalidateAll(processId, vrIds)
     {        
-	    window.showModalDialog(
-	        "Popup/ProcessValidationRule.aspx?processId=" + processId + "&validationIds=" + vrIds
-	        , null
-	        , "dialogWidth:400px;dialogHeight:300px;status:no;help:no;scroll:yes");
+	    var cusfn = function()
+	    {
+		    J.dialog.inwin['ValidationRule'].J('#xbtn').click( function(){ 
+		        document.getElementById("<%= btnValidationFinish.ClientID %>").click(); 
+		        J.dialog.inwin['ValidationRule'].cancel();
+		    } );		  
+	    };
 	    
-	    document.getElementById("<%= btnValidationFinish.ClientID %>").click(); 
+	    var fn = function()
+	    {
+	        document.getElementById("<%= btnValidationFinish.ClientID %>").click(); 
+		    J.dialog.inwin['ValidationRule'].cancel();
+	    };
+	    
+	     J.dialog.get( "ValidationRule", {  top: 90, cover: true, custom: fn, closeWin: cusfn, title : "Data Validation", page: "ProcessValidationRule.aspx?processId=" + processId + "&validationIds=" + vrIds } );   
     }
 </script>

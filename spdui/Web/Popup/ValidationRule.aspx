@@ -6,17 +6,24 @@
 <head runat="server">
     <title>Rule Validation</title>
     <link href="../style.css" type="text/css" rel="stylesheet" />
+    <script type="text/javascript">
+    var P = window.parent, E = P.setDialog();
+
+    window.onload = function()
+    {
+	    P.S.auto();
+    }
+</script>
 </head>
-<body onunload="window.opener">
-<BASE target="_self"/>
+<body>
     <form id="form1" runat="server">
     <div>
         <table border="0" width="100%">
             <tr>
                 <td colspan="2" align="right">
-                    <input type="button" name="pause" value="Pause" onclick="onPause();" style="display:inline"/>&nbsp;
-                    <input type="button" name="start" value="Start" onclick="onStart();" style="display:none"/>&nbsp;
-                    <input type="button" name="close" value="Close" onclick="window.close();"/>&nbsp;
+                    <input type="button" id="pause" name="pause" value="Pause" onclick="onPause();" style="display:inline"/>&nbsp;
+                    <input type="button" id="start" name="start" value="Start" onclick="onStart();" style="display:none"/>&nbsp;                    
+                    <input type="button" id="close" name="close" value="Close" onclick="onClose();"/>&nbsp;
                 </td>
             </tr>
             <tr>
@@ -68,7 +75,11 @@
     if (document.getElementById("<%= txtValidationIds.ClientID %>").value != "") 
     {           
        intervalId =  window.setInterval("autoSubmit()", 1000);                       
-    }   
+    }    
+    else
+    {
+        intervalId =  window.setInterval("autoClose()", 1000);    
+    }
     
     function onPause()
     {
@@ -91,6 +102,16 @@
             document.getElementById("pause").disabled = true;
             document.getElementById("<%= btnInValidation.ClientID %>").click();
         }
-    }              
+    } 
+    
+    function autoClose()
+    {
+        onClose();
+    } 
+    
+    function onClose()
+    {
+       P.A().custom();
+    }          
 
 </script>

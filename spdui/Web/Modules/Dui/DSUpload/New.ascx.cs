@@ -166,7 +166,9 @@ public partial class Modules_Dui_DSUpload_New : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + dsUpload.Name + "_Download.csv");
+        string fileName = HttpUtility.UrlEncode(dsUpload.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_Download.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter); ;
         TheService.DownloadUploadData(dsUpload, csvWriter);

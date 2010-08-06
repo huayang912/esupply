@@ -1,4 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="Validate.ascx.cs" Inherits="Modules_Dui_DSUpload_Validate" %>
+<script type="text/javascript" src="Popup/lhgcore.min.js"></script>
+<script type="text/javascript" src="Popup/lhgdialog.js"></script>
 <script language="vbscript" type="text/vbscript">
 function ButtonWarning(Action)
     Dim ReturnVal
@@ -267,26 +269,34 @@ end function
     }
     
     function openValidateDialog(validationIds)
-    {
-        var dsUploadId = document.getElementById("<%= txtId.ClientID %>").value;
-        
-        windowprops	= "height=300px,width=400px,location=no,scrollbars=yes,status=no,menubars=no,toolbars=no";
-	    window.showModalDialog(
-	        "Popup/ValidationRule.aspx?dsUploadId=" + dsUploadId + "&validationIds=" + validationIds
-	        , null
-	        , "dialogWidth:400px;dialogHeight:300px;status:no;help:no;scroll:yes");
+    {       	   
+	    var cusfn = function()
+	    {
+		    J.dialog.inwin['ValidationRule'].J('#xbtn').click( function(){ 
+		        document.getElementById("<%= btnInValidation.ClientID %>").click(); 
+		        J.dialog.inwin['ValidationRule'].cancel();
+		    } );
+		    
+	    };
 	    
-	    document.getElementById("<%= btnInValidation.ClientID %>").click();      
+	    var fn = function()
+	    {
+	        document.getElementById("<%= btnInValidation.ClientID %>").click(); 
+		    J.dialog.inwin['ValidationRule'].cancel();
+	    };
+	
+        var dsUploadId = document.getElementById("<%= txtId.ClientID %>").value;
+	    J.dialog.get( "ValidationRule", {  top: 90, cover: true, custom: fn, closeWin: cusfn, title : "Data Validation", page: "ValidationRule.aspx?dsUploadId=" + dsUploadId + "&validationIds=" + validationIds } );   
     }
+    
+    function doSubmit()
+    { 
+        document.getElementById("<%= btnInValidation.ClientID %>").click();
+    }  
 <%
     if (TheDataSourceUpload.IsInValidation)
     {
-%>     
-
-    function doSubmit()
-    {                
-        document.getElementById("<%= btnInValidation.ClientID %>").click();
-    }  
+%>         
     document.body.onload = doSubmit;               
 <%        
     }

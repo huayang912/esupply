@@ -1,4 +1,6 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="Edit.ascx.cs" Inherits="Modules_Cube_CubeProcess_Edit" %>
+<script type="text/javascript" src="Popup/lhgcore.min.js"></script>
+<script type="text/javascript" src="Popup/lhgdialog.js"></script>
 <script language="vbscript" type="text/vbscript">
 function ButtonWarning(Action)
     Dim ReturnVal
@@ -239,7 +241,7 @@ end function
         if (validationIds != null) 
         {
             openValidateDialog(validationIds);
-            document.getElementById("<%= btnValidationFinish.ClientID %>").click();   
+            //document.getElementById("<%= btnValidationFinish.ClientID %>").click();   
         }
     }
     
@@ -265,17 +267,27 @@ end function
         if (validationIds != null) 
         {
             openValidateDialog(validationIds);
-            document.getElementById("<%= btnValidationFinish.ClientID %>").click();   
         }
     }
     
     function openValidateDialog(validationIds)
     {
+        var cusfn = function()
+	    {
+		    J.dialog.inwin['ValidationRule'].J('#xbtn').click( function(){ 
+		        document.getElementById("<%= btnValidationFinish.ClientID %>").click(); 
+		        J.dialog.inwin['ValidationRule'].cancel();
+		    } );
+		    
+	    };
+	    
+	    var fn = function()
+	    {
+	        document.getElementById("<%= btnValidationFinish.ClientID %>").click(); 
+		    J.dialog.inwin['ValidationRule'].cancel();
+	    };
+	    	    
         var processId = document.getElementById("<%= txtId.ClientID %>").value;
-	    window.showModalDialog(
-	        "Popup/ProcessValidationRule.aspx?processId=" + processId + "&validationIds=" + validationIds
-	        , null
-	        , "dialogWidth:400px;dialogHeight:300px;status:no;help:no;scroll:yes");
-
+	    J.dialog.get( "ValidationRule", {  top: 90, cover: true, custom: fn, closeWin: cusfn, title : "Data Validation", page: "ProcessValidationRule.aspx?processId=" + processId + "&validationIds=" + validationIds } );   
     }
 </script>

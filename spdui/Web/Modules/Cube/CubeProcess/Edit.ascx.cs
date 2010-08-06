@@ -277,7 +277,9 @@ public partial class Modules_Cube_CubeProcess_Edit : ModuleBase
         CubeProcessValidationResult vr = TheService.LoadCubeProcessValidationResult(validationResultId);
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(TheCubeProcess.TheCube.Description + "_" + vr.TheRule.Name) + "_result.csv");
+        string fileName = HttpUtility.UrlEncode(TheCubeProcess.TheCube.Description + "_" + vr.TheRule.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_result.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter); ;
         TheService.DownloadCubeProcessValidateResult(vr.TheRule.Content, TheCubeProcess.CubeProcessParameterList,csvWriter);

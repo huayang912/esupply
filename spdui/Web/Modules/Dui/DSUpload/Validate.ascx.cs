@@ -196,7 +196,9 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
         ValidationResult vr = TheService.LoadValidationResult(validationResultId);
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(TheDataSourceUpload.Name+"_"+vr.TheDataSourceRule.Name) + "_result.csv");
+        string fileName = HttpUtility.UrlEncode(TheDataSourceUpload.Name + "_" + vr.TheDataSourceRule.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_result.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter);;
         TheService.DownloadValidateResult(vr, csvWriter);
@@ -210,7 +212,9 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
     {
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(TheDataSourceUpload.Name) + "_Download.csv");
+        string fileName = HttpUtility.UrlEncode(TheDataSourceUpload.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_Download.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter); ;
         TheService.DownloadUploadData(TheDataSourceUpload, csvWriter);

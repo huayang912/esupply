@@ -33,8 +33,17 @@ public partial class Modules_Cube_CubeRole_Main : ModuleBase
         }
     }
 
+    protected ICubeReleaseMgr TheCubeReleaseMgr
+    {
+        get
+        {
+            return GetService("CubeReleaseMgr.service") as ICubeReleaseMgr;
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
+        lblMessage.Visible = false;
         //TODO: Add code for Page_Load here.
         if (!IsPostBack)
         {
@@ -87,7 +96,7 @@ public partial class Modules_Cube_CubeRole_Main : ModuleBase
 	//Do data query and binding.
     private void UpdateView()
     {
-        IList<CubeRole> result = TheService.FindCubeRoleByName(txtRoleName.Text);        
+        IList<CubeRole> result = TheService.FindCubeRoleByNameAndDescription(txtRoleName.Text, txtRoleDescription.Text);        
         int recordCount = 0;
         if (result != null)
         {
@@ -95,7 +104,7 @@ public partial class Modules_Cube_CubeRole_Main : ModuleBase
         }
         lblRecordCount.Text = string.Format("Total {0} Records", recordCount);
         gvList.DataSource = result;
-        gvList.DataBind();
+        gvList.DataBind();        
     }
 
 	//The event handler when user click button "Back" on New page.
@@ -111,6 +120,25 @@ public partial class Modules_Cube_CubeRole_Main : ModuleBase
         New1.Visible = true;
         New1.UpdateView();
         pnlMain.Visible = false;
+    }
+
+    protected void btnUpdateCube_Click(object sender, EventArgs e)
+    {
+        IList<int> idList = GetSelectIdList(gvList);
+
+        try
+        {
+            TheCubeReleaseMgr.UploadRoleToCube(idList);
+            lblMessage.Text = "Update Cube Role successfully.";
+            lblMessage.Visible = true;
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = "Update Cube Role fail. " + ex.Message;
+            lblMessage.Visible = true;
+        }
+
+        UpdateView();
     }
 
 	//The event handler when user click button "Delete".

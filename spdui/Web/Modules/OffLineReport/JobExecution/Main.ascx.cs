@@ -96,21 +96,21 @@ public partial class Modules_OffLineReport_JobExecution_Main : ModuleBase
     protected void lbtnCancel_Click(object sender, EventArgs e)
     {
         int Id = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.CancelReportJob(Id);
+        TheService.CancelReportJob(Id, this.CurrentUser);
         UpdateView();
     }
 
     protected void lbtnSubmit_Click(object sender, EventArgs e)
     {
         int Id = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.SubmitReportJob(Id);
+        TheService.SubmitReportJob(Id, this.CurrentUser);
         UpdateView();
     }
 
     protected void lbtnRestart_Click(object sender, EventArgs e)
     {
         int Id = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.RestartReportJob(Id);
+        TheService.RestartReportJob(Id, this.CurrentUser);
         UpdateView();
     }
 
@@ -139,4 +139,82 @@ public partial class Modules_OffLineReport_JobExecution_Main : ModuleBase
         gvReportBatch.PageIndex = e.NewPageIndex;
         UpdateView();
     }
+
+    //protected void gvReportBatch_RowDataBound(object sender, GridViewRowEventArgs e)
+    //{
+    //    if (e.Row.RowType == DataControlRowType.DataRow)
+    //    {
+    //        Label lblBatchType = (Label)e.Row.FindControl("lblBatchType");
+    //        LinkButton lbtnBatchName = (LinkButton)e.Row.FindControl("lbtnBatchName");
+    //        LinkButton lbtnCancel = (LinkButton)e.Row.FindControl("lbtnCancel");
+    //        LinkButton lbtnSubmit = (LinkButton)e.Row.FindControl("lbtnSubmit");
+    //        LinkButton lbtnNewJob = (LinkButton)e.Row.FindControl("lbtnNewJob");
+
+    //        LinkButton lbtnStartTime = (LinkButton)e.Row.FindControl("lbtnStartTime");
+    //        LinkButton lbtnEndTime = (LinkButton)e.Row.FindControl("lbtnEndTime");
+    //        LinkButton lbtnReportDate = (LinkButton)e.Row.FindControl("lbtnReportDate");
+    //        LinkButton lbtnLastUpdateDate = (LinkButton)e.Row.FindControl("lbtnLastUpdateDate");
+    //        LinkButton lbtnLastUpdateUser = (LinkButton)e.Row.FindControl("lbtnLastUpdateUser");
+    //        LinkButton lbtnStatus = (LinkButton)e.Row.FindControl("lbtnStatus");
+
+    //        ReportJob reportJob = (ReportJob)e.Row.DataItem;
+
+    //        if (reportJob.Id == 0) {
+    //            lblBatchType.Text = reportJob.TheBatch.BatchType;
+    //            lbtnBatchName.Text = reportJob.TheBatch.Name;
+    //            lbtnBatchName.Visible = true;
+    //            //lbtnBatchName.CommandArgument = reportJob.TheBatch.Id.ToString();
+    //            lbtnNewJob.Visible = true;
+    //           // lbtnNewJob.CommandArgument = reportJob.TheBatch.Id.ToString();
+
+    //            lbtnStartTime.Text = string.Empty;
+    //            lbtnEndTime.Text = string.Empty;
+    //            lbtnReportDate.Text = string.Empty;
+    //            lbtnLastUpdateDate.Text = string.Empty;
+    //            lbtnLastUpdateUser.Text = string.Empty;
+    //            lbtnStatus.Text = string.Empty;
+    //        }
+    //        else 
+    //        {
+    //            lblBatchType.Text = string.Empty;
+    //            lbtnBatchName.Text = string.Empty;
+    //            lbtnBatchName.Visible = false;
+    //            //lbtnBatchName.CommandArgument = string.Empty;
+    //            lbtnNewJob.Visible = false;
+    //            //lbtnNewJob.CommandArgument = string.Empty;
+               
+    //            lbtnStartTime.Text = reportJob.StartTime.ToString();
+    //            lbtnEndTime.Text = reportJob.EndTime.ToString();
+    //            lbtnReportDate.Text = reportJob.ReportDate.ToString();
+    //            lbtnLastUpdateDate.Text = reportJob.UpdateDate.ToString();
+    //            lbtnLastUpdateUser.Text = reportJob.UpdateUser.UserName;
+    //            lbtnStatus.Text = reportJob.Status;
+    //        }
+            
+    //        if (reportJob.Id != 0 && 
+    //            (reportJob.Status == ReportJob.REPORT_JOB_STATUS_RUNNING
+    //            || reportJob.Status == ReportJob.REPORT_JOB_STATUS_SUBMIT
+    //            || reportJob.Status == ReportJob.REPORT_JOB_STATUS_PENDING))
+    //        {
+    //            //lbtnBatchName.CommandArgument = reportJob.Id.ToString();
+    //            lbtnCancel.Visible = true;
+    //        }
+    //        else 
+    //        {
+    //           // lbtnBatchName.CommandArgument = string.Empty;
+    //            lbtnCancel.Visible = false;
+    //        }
+
+    //        if (reportJob.Id != 0 && reportJob.Status == ReportJob.REPORT_JOB_STATUS_PENDING)
+    //        {
+    //            //lbtnBatchName.CommandArgument = reportJob.Id.ToString();
+    //            lbtnSubmit.Visible = true;               
+    //        }
+    //        else 
+    //        {
+    //            //lbtnBatchName.CommandArgument = string.Empty;
+    //            lbtnSubmit.Visible = false;
+    //        }
+    //    }
+    //}
 }

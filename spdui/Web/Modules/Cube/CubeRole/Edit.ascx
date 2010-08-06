@@ -32,11 +32,13 @@ function ChooseAll()
     }
 }
 </script>
-
+<asp:Label ID="lblMessage" runat="server" CssClass="error"></asp:Label>
 <h2>Cube Role Maintanence</h2>
 <b>Basic Information:</b>
 <p class="formBtnBoard">
-    <asp:Button ID="btnUpdate" runat="server" Text="Update" OnClick="btnUpdate_Click"
+    <asp:Button ID="btnSave" runat="server" Text="Save" OnClick="btnSave_Click"
+        CssClass="btn" />
+    <asp:Button ID="btnUpdateCube" runat="server" Text="Update Cube" OnClick="btnUpdateCube_Click"
         CssClass="btn" />
     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click"
         CssClass="btn" OnClientClick="return ButtonWarning('Delete')" />
@@ -44,11 +46,6 @@ function ChooseAll()
 </p>
 <div class="bgForm">
     <table border="0">
-        <tr>
-            <td colspan="4">
-                <asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
-            </td>
-        </tr>
         <tr>
             <td class="txtForm">Cube Description:</td>
             <td><asp:TextBox ID="txtCubeName" runat="server" Width="200" ReadOnly="true"/></td>
@@ -81,7 +78,7 @@ function ChooseAll()
     </Columns>
     <AlternatingRowStyle CssClass="listA" />
 </asp:GridView>
-<BR/>
+<br/>
 <b>Dimension Data:</b>
 <p class="formBtnBoard">
     <asp:Button ID="btnAssignMember" runat="server" Text="Assign Member" Width="100px" OnClick="btnAssignMember_Click" CssClass="btn" />   
@@ -103,15 +100,15 @@ function ChooseAll()
     <asp:Button ID="btnDeleteUser" runat="server" Text="Delete" OnClick="btnDeleteUser_Click" CssClass="btn" OnClientClick="return ButtonWarning('Delete')" />
 </p>
 
-<asp:GridView runat="server" ID="gvUserList" AutoGenerateColumns="False" PageSize="20" DataKeyNames="Id" CellPadding="4" CssClass="list" GridLines="Horizontal">
+<asp:GridView runat="server" id="gvUserList" AutoGenerateColumns="False" PageSize="20" DataKeyNames="Id" CellPadding="4" CssClass="list" GridLines="Horizontal">
     <HeaderStyle CssClass="listheader" HorizontalAlign="Left" />
     <Columns>
         <asp:TemplateField>
             <headertemplate>
-                <input ID="ckbUserAll" type="checkbox" onclick="ChooseAll();">
+                <input id="ckbUserAll" type="checkbox" onclick="ChooseAll();">
             </headertemplate>
             <ItemTemplate>
-                <asp:CheckBox ID="cbSelect" runat="server" />
+                <asp:CheckBox id="cbSelect" runat="server" />
             </ItemTemplate>
             <HeaderStyle Width="3%" />
         </asp:TemplateField>

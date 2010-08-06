@@ -36,6 +36,14 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
         }
     }
 
+    protected ICubeReleaseMgr TheCubeReleaseMgr
+    {
+        get
+        {
+            return GetService("CubeReleaseMgr.service") as ICubeReleaseMgr;
+        }
+    }
+
     protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
@@ -45,14 +53,15 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//TODO: Add code for Page_Load here.
+        lblMessage.Visible = false;
     }
 
     protected override void InitByPermission()
     {
         base.InitByPermission();
 
-        btnUpdate.Visible = PermissionUpdate;   
+        btnUpdateCube.Visible = PermissionUpdate;
+        btnSave.Visible = PermissionUpdate;   
 		
 		//TODO: Add other permission init codes here.
     }
@@ -89,10 +98,9 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
 
         gvSetDimensionVisualTotal.DataSource = removeSameSetDimensionName(cubeDimensionList);
         gvSetDimensionVisualTotal.DataBind();
-        //Modified by vincent at 2007-11-09 end
-
-        lblMessage.Visible = false;
+        //Modified by vincent at 2007-11-09 end        
     }
+
     //Modified by vincent at 2007-11-09 begin
     IList<CubeDimension> removeSameSetDimensionName(IList<CubeDimension> cubeDimensionList)
     {
@@ -123,15 +131,14 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
         }
     }
 
-    //Event handler when user click button "Update"
-    protected void btnUpdate_Click(object sender, EventArgs e)
+    //Event handler when user click button "Save"
+    protected void btnSave_Click(object sender, EventArgs e)
     {
-        lblMessage.Visible = true;
-
         string name = txtName.Text.Trim();
         if (name.Length == 0)
         {
             lblMessage.Text = "User name cannot be empty.";
+            lblMessage.Visible = true;
             return;
         }
 
@@ -146,11 +153,29 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
             // Modified by vincent at 2007-11-09 begin
             InsertSetDimensionVisualTotal(TheCubeRole.Id, gvSetDimensionVisualTotal);
             // Modified by vincent at 2007-11-09 end
-            lblMessage.Text = "Update successfully.";
+            lblMessage.Text = "Save Cube Role successfully.";
+            lblMessage.Visible = true;
         }
         catch (Exception ex)
         {
+            lblMessage.Text = "Save Cube Role fail. " + ex.Message;
+            lblMessage.Visible = true;
+        }
+    }
+
+    protected void btnUpdateCube_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            TheCubeReleaseMgr.UploadRoleToCube(new int[] { TheCubeRole.Id });
+            lblMessage.Text = "Update Cube Role successfully.";
+            lblMessage.Visible = true;
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = "Update Cube Role fail. " + ex.Message;
             lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 

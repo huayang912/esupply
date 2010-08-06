@@ -41,7 +41,7 @@ namespace Dndp.Web
                     {
                         _page.Session["RequestUrl"] = ApplicationConstant.DEFAULT_PAGE + "?" + GetQueryString(_page);
                     }
-                    _page.Response.Redirect("Login.aspx");
+                    _page.Response.Redirect("LoginPage.aspx");
                 }
 
                 return _page.Session["CurrentUser"] as User;
@@ -60,7 +60,7 @@ namespace Dndp.Web
                 {
                     FormsAuthentication.SignOut();
                     _page.Session.RemoveAll();
-                    _page.Response.Redirect("Login.aspx");
+                    _page.Response.Redirect("LoginPage.aspx");
                 }
 
                 return _page.Session["CurrentModuleName"] as string;

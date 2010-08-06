@@ -128,7 +128,7 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
         if (CheckInput())
         {
             SaveData();
-            TheService.RestartReportJob(TheReportJob);
+            TheService.RestartReportJob(TheReportJob, this.CurrentUser);
             UpdateView();
         }           
     }

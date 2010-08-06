@@ -23,8 +23,9 @@
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Action">
             <ItemTemplate>
-                <asp:LinkButton ID="lbtnCancel" runat="server" Text="[Cancel]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" Visible='<%# (DataBinder.Eval(Container.DataItem, "Status").Equals("Pending") || DataBinder.Eval(Container.DataItem, "Status").Equals("Running"))%>' OnClick="lbtnCancel_Click"></asp:LinkButton>
-                <asp:LinkButton ID="lbtnRestart" runat="server" Text="[Restart]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" Visible='<%# !DataBinder.Eval(Container.DataItem, "Status").Equals("Submit") %>' OnClick="lbtnRestart_Click"></asp:LinkButton>
+                <asp:LinkButton ID="lbtnCancel" runat="server" Text="[Cancel]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" Visible='<%# (DataBinder.Eval(Container.DataItem, "Status").Equals("Pending") || DataBinder.Eval(Container.DataItem, "Status").Equals("Submit") || DataBinder.Eval(Container.DataItem, "Status").Equals("Running"))%>' OnClick="lbtnCancel_Click"></asp:LinkButton>
+                <asp:LinkButton ID="lbtnSubmit" runat="server" Text="[Submit]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "Status").Equals("Pending") %>' OnClick="lbtnSubmit_Click"></asp:LinkButton>
+                <asp:LinkButton ID="lbtnRestart" runat="server" Text="[Restart]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" Visible='<%# !DataBinder.Eval(Container.DataItem, "Status").Equals("Submit") && !DataBinder.Eval(Container.DataItem, "Status").Equals("Pending") %>' OnClick="lbtnRestart_Click"></asp:LinkButton>
             </ItemTemplate>
             <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:TemplateField>
@@ -41,6 +42,16 @@
         <asp:TemplateField HeaderText="Report Date">
             <ItemTemplate>
                 <asp:LinkButton ID="lbtnReportDate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ReportDate") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" OnClick="lbtnEditJob_Click"></asp:LinkButton>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Last Update Date">
+            <ItemTemplate>
+                <asp:LinkButton ID="lbtnLastUpdateDate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "UpdateDate") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" OnClick="lbtnEditJob_Click"></asp:LinkButton>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Last Update User">
+            <ItemTemplate>
+                <asp:LinkButton ID="lbtnLastUpdateUser" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "UpdateUser.UserName") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" OnClick="lbtnEditJob_Click"></asp:LinkButton>
             </ItemTemplate>
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Status">

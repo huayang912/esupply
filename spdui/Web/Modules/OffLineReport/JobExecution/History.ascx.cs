@@ -33,7 +33,6 @@ public partial class Modules_OffLineReport_JobExecution_History : ModuleBase
         }
     }
 
-
     //The event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
@@ -70,14 +69,21 @@ public partial class Modules_OffLineReport_JobExecution_History : ModuleBase
     protected void lbtnCancel_Click(object sender, EventArgs e)
     {
         int Id = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.CancelReportJob(Id);
+        TheService.CancelReportJob(Id, this.CurrentUser);
+        UpdateView();
+    }
+
+    protected void lbtnSubmit_Click(object sender, EventArgs e)
+    {
+        int Id = Int32.Parse(((LinkButton)sender).CommandArgument);
+        TheService.SubmitReportJob(Id, this.CurrentUser);
         UpdateView();
     }
 
     protected void lbtnRestart_Click(object sender, EventArgs e)
     {
         int Id = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.RestartReportJob(Id);
+        TheService.RestartReportJob(Id, this.CurrentUser);
         UpdateView();
     }
 

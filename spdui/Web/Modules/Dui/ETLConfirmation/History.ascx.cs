@@ -33,6 +33,12 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
         }
     }
 
+    //The event handler when user click button "Search"
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
+        UpdateView();
+    }
+
     //The event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
@@ -45,7 +51,7 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     //The public method to clear the view
     public void UpdateView()
     {       
-        IList<DataSourceUpload> dsUploadHistoryList = TheService.FindDataSourceUpload(TheDataSource.Id);
+        IList<DataSourceUpload> dsUploadHistoryList = TheService.FindDataSourceUpload(TheDataSource.Id, ddlDSCategory.SelectedValue, txtSubject.Text, txtFileName.Text, txtCreateBy.Text);
 
         gvDSUploadHistory.DataSource = dsUploadHistoryList;
         gvDSUploadHistory.DataBind();
@@ -106,7 +112,9 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(dsUpload.UploadFileOriginName));
+        string fileName = HttpUtility.UrlEncode(dsUpload.UploadFileOriginName);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName);
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter);
         TheService.DownloadUploadData(dsUpload, csvWriter);
@@ -118,6 +126,29 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        if (!IsPostBack)
+        {
+            UpdateSelection();
+        }
+    }
+
+    protected void gvDSUploadHistory_PageIndexChanging(object sender, GridViewPageEventArgs e)
+    {
+        gvDSUploadHistory.PageIndex = e.NewPageIndex;
+        UpdateView();
+    }
+
+    //Do data query and binding.
+    private void UpdateSelection()
+    {
+        IList<string> FoundResult = TheService.FindDataSourceCategoryListForETLConfirmer((new SessionHelper(Page)).CurrentUser.Id);
+        List<string> DSCategoryList = new List<string>();
+        DSCategoryList.Add("");
+        foreach (string strValue in FoundResult)
+        {
+            DSCategoryList.Add(strValue);
+        }
+        ddlDSCategory.DataSource = DSCategoryList;
+        ddlDSCategory.DataBind();
     }
 }

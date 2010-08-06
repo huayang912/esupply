@@ -69,7 +69,9 @@ public partial class Modules_Dui_ETLExecution_History : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(dsUpload.UploadFileOriginName));
+        string fileName = HttpUtility.UrlEncode(dsUpload.UploadFileOriginName);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName);
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter);
         TheService.DownloadUploadData(dsUpload, csvWriter);
@@ -85,7 +87,9 @@ public partial class Modules_Dui_ETLExecution_History : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(dsUpload.Name) + "_ETLLog.csv");
+        string fileName = HttpUtility.UrlEncode(dsUpload.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_ETLLog.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter);
         TheService.DownloadETLLog(dsUpload, csvWriter);

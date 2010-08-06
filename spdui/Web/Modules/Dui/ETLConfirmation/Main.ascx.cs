@@ -224,7 +224,9 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(dsUpload.Name) + "_ETLLog.csv");
+        string fileName = HttpUtility.UrlEncode(dsUpload.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_ETLLog.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter);
         TheDSUploadService.DownloadETLLog(dsUpload, csvWriter);
@@ -233,6 +235,7 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
 
         UpdateView();
     }
+
     protected void gvDSCategory_PageIndexChanging(object sender, GridViewPageEventArgs e)
     {
         gvDSCategory.PageIndex = e.NewPageIndex;

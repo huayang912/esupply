@@ -109,16 +109,25 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
     void ValidateUpdate1_Back(object sender, EventArgs e)
     {
         ValidateUpdate1.Visible = false;
-        DataSourceUpload dsUpload = ValidateUpdate1.TheValidationResult.TheDataSourceUpload;
-        dsUpload.IsInValidation = false;
-        dsUpload.ValidationResultList =
-            TheDSUploadService.FindValidationResultByDataSourceUploadId(dsUpload.Id);
+        DataSourceUpload dsUpload = TheDSUploadService.LoadDataSourceUpload(ValidateUpdate1.TheValidationResult.TheDataSourceUpload.Id);
+        if (dsUpload != null)
+        {
+            dsUpload.IsInValidation = false;
+            dsUpload.ValidationResultList =
+                TheDSUploadService.FindValidationResultByDataSourceUploadId(dsUpload.Id);
 
-        Validate1.TheDataSourceUpload = dsUpload;
-        Validate1.UpdateView();
-        Validate1.Visible = true;
+            Validate1.TheDataSourceUpload = dsUpload;
+            Validate1.UpdateView();
+            Validate1.Visible = true;
 
-        pnlMain.Visible = false;  
+            pnlMain.Visible = false;
+        }
+        else
+        {
+            Validate1.Visible = false;
+            pnlMain.Visible = true;
+            UpdateView();
+        }
     }
 
     void History1_Back(object sender, EventArgs e)
@@ -245,7 +254,9 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(ds.Description)+"_Template.csv");
+        string fileName = HttpUtility.UrlEncode(ds.Description);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_Template.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter); ;
         TheDSUploadService.DownloadUploadTemplate(ds, csvWriter);
@@ -262,7 +273,9 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(dsUpload.UploadFileOriginName));
+        string fileName = HttpUtility.UrlEncode(dsUpload.UploadFileOriginName);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName);
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter); ;
         TheDSUploadService.DownloadUploadData(dsUpload, csvWriter);
@@ -279,7 +292,9 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
 
         Response.Clear();
         Response.ContentType = "application/octet-stream";
-        Response.AddHeader("Content-Disposition", "attachment;FileName=" + HttpUtility.UrlEncode(dsUpload.Name) + "_ETLLog.csv");
+        string fileName = HttpUtility.UrlEncode(dsUpload.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_ETLLog.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter);
         TheDSUploadService.DownloadETLLog(dsUpload, csvWriter);

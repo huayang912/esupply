@@ -140,7 +140,9 @@ namespace Dndp.Web
             CurrentPage.Response.Buffer = true;
 
             //This will make the browser interpret the output as an Excel file
-            CurrentPage.Response.AddHeader("Content-Disposition", "filename=" + reportName);
+            string fileName = HttpUtility.UrlEncode(reportName);
+            fileName = fileName.Replace("+", "%20");
+            CurrentPage.Response.AddHeader("Content-Disposition", "filename=" + fileName);
             CurrentPage.Response.ContentType = "application/vnd.ms-excel";
 
             //Prepares the html and write it into a StringWriter

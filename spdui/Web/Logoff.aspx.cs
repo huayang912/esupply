@@ -15,6 +15,6 @@ public partial class Logoff : System.Web.UI.Page
     {
         FormsAuthentication.SignOut();
         Session.RemoveAll();
-        Response.Redirect("Login.aspx", true);
+        Response.Redirect("LoginPage.aspx", true);
     }
 }
