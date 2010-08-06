@@ -299,11 +299,52 @@ namespace Dndp.Service.OffLineReport.Impl
         public IList<ReportBatch> FindReportBatchWithJob()
         {
             IList<ReportBatch> reportBatchList = reportBatchDao.LoadAllActiveReportBatch() as IList<ReportBatch>;
+
+            if (reportBatchList != null && reportBatchList.Count > 0)
+            {
+                foreach(ReportBatch reportBatch in reportBatchList) 
+                {
+                    ReportJob reportJob = reportJobDao.FindLastestRunningReportJobByBatchId(reportBatch.Id);
+                    if (reportJob != null)
+                    {
+                        reportBatch.LastestReportJob = reportJob;
+                    }
+                    else
+                    {
+                        reportBatch.LastestReportJob = reportJobDao.FindLastestRunnedReportJobByBatchId(reportBatch.Id);
+                    }
+                }
+            }
+
+            return reportBatchList;
+
             // Modified by vincent at 2007-12-04 begin
             //IList<ReportJob> reportJobList = null;
-            IList reportJobList = new ArrayList();
-            IList<ReportJob> latestJob = reportJobDao.FindAllLastestReportJob();
-            IList<ReportJob> runningJob = reportJobDao.FindAllLastestRunningReportJob();
+            //IList reportJobList = new ArrayList();
+            //IList<ReportJob> latestJob = reportJobDao.FindAllLastestReportJob();
+            //IList<ReportJob> runningJob = reportJobDao.FindAllLastestRunningReportJob();
+            //IList<ReportJob> runningJob = reportJobDao.FindAllReportJobByStatus(new string[] { ReportJob.REPORT_JOB_STATUS_RUNNING, 
+            //    ReportJob.REPORT_JOB_STATUS_SUBMIT, ReportJob.REPORT_JOB_STATUS_PENDING });
+
+            //IList<ReportJob> resultReportJob = new List<ReportJob>();
+            //foreach(ReportBatch reportBatch in reportBatchList) 
+            //{
+            //    ReportJob newReportJob = new ReportJob();
+            //    newReportJob.TheBatch = reportBatch;
+            //    resultReportJob.Add(newReportJob);
+            //    if (runningJob != null && runningJob.Count > 0)
+            //    {
+            //        foreach (ReportJob reportJob in runningJob)
+            //        {
+            //            if (reportJob.TheBatch.Id == reportBatch.Id)
+            //            {
+            //                resultReportJob.Add(reportJob);
+            //            }
+            //        }
+            //    }
+            //}
+
+            //return resultReportJob;
 
             //if (runningJob == null)
             //{
@@ -315,59 +356,58 @@ namespace Dndp.Service.OffLineReport.Impl
             //{
                 //reportJobList = runningJob;
 
-                if (latestJob != null)
-                {
-                    foreach (ReportJob latestrj in latestJob)
-                    {
-                        bool inRunningJob = false;
-                        if (runningJob != null)
-                        {
-                            foreach (ReportJob runningrj in runningJob)
-                            {
-                                if (latestrj.TheBatch.Id == runningrj.TheBatch.Id)
-                                {
-                                    inRunningJob = true;
-                                    reportJobList.Add(runningrj);
-                                    break;
-                                }
-                            }
-                        }
-                        if (!inRunningJob)
-                        {
-                            reportJobList.Add(latestrj);
-                        }
-                    }
-                }
-
+            //if (latestJob != null)
+            //{
+            //    foreach (ReportJob latestrj in latestJob)
+            //    {
+            //        bool inRunningJob = false;
+            //        if (runningJob != null)
+            //        {
+            //            foreach (ReportJob runningrj in runningJob)
+            //            {
+            //                if (latestrj.TheBatch.Id == runningrj.TheBatch.Id)
+            //                {
+            //                    inRunningJob = true;
+            //                    reportJobList.Add(runningrj);
+            //                    break;
+            //                }
+            //            }
+            //        }
+            //        if (!inRunningJob)
+            //        {
+            //            reportJobList.Add(latestrj);
+            //        }
+            //    }
             //}
-            // Modified by vincent at 2007-12-04 end
 
-            if (reportJobList != null && reportBatchList != null)
-            {
-                foreach (ReportJob rj in reportJobList)
-                {
-                    if (!rj.Status.Equals("Sucess"))
-                    {
-                        int reportBatchId = rj.TheBatch.Id;
-                        foreach (ReportBatch rb in reportBatchList)
-                        {
-                            if (rb.Id == reportBatchId)
-                            {
-                                rb.LastestReportJob = rj;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            return reportBatchList;
+            ////}
+            //// Modified by vincent at 2007-12-04 end
+
+            //if (reportJobList != null && reportBatchList != null)
+            //{
+            //    foreach (ReportJob rj in reportJobList)
+            //    {
+            //        if (!rj.Status.Equals("Sucess"))
+            //        {
+            //            int reportBatchId = rj.TheBatch.Id;
+            //            foreach (ReportBatch rb in reportBatchList)
+            //            {
+            //                if (rb.Id == reportBatchId)
+            //                {
+            //                    rb.LastestReportJob = rj;
+            //                    break;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            //return reportBatchList;
         }
 
         #endregion Method Created By CodeSmith
 
         #region Customized Methods
 
-        //TODO: Add other methods here.
         [Transaction(TransactionMode.Unspecified)]
         public IList FindReportJobByBatchId(int Id)
         {
@@ -405,19 +445,22 @@ namespace Dndp.Service.OffLineReport.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void RestartReportJob(ReportJob rj)
+        public void RestartReportJob(ReportJob rj, User user)
         {
             //ReportJob rj = reportJobDao.LoadReportJob(id);
-            if (rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_CANCEL) || rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_FAILED))
+            //if (rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_CANCEL) || rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_FAILED))
+            if (!rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_SUBMIT))
             {
                 rj.Status = ReportJob.REPORT_JOB_STATUS_SUBMIT;
                 rj.EndTime = DateTime.Now;
+                rj.UpdateDate = DateTime.Now;
+                rj.UpdateUser = user;
                 reportJobDao.UpdateReportJob(rj);
             }
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void CancelReportJob(int id)
+        public void CancelReportJob(int id, User user)
         {
             ReportJob rj = reportJobDao.LoadReportJob(id);
             // Modified By Vincent At 2007-10-30 Begin
@@ -427,13 +470,15 @@ namespace Dndp.Service.OffLineReport.Impl
             {
                 rj.Status = ReportJob.REPORT_JOB_STATUS_CANCEL;
                 rj.EndTime = DateTime.Now;
+                rj.UpdateDate = DateTime.Now;
+                rj.UpdateUser = user;
                 reportJobDao.UpdateReportJob(rj);
             }
             // Modified By Vincent At 2007-10-30 End
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void RestartReportJob(int id)
+        public void RestartReportJob(int id, User user)
         {
             ReportJob rj = reportJobDao.LoadReportJob(id);
             //1. restart the report job no matter success, cancel or fail
@@ -442,18 +487,22 @@ namespace Dndp.Service.OffLineReport.Impl
             {
                 rj.Status = ReportJob.REPORT_JOB_STATUS_SUBMIT;
                 rj.EndTime = DateTime.Now;
+                rj.UpdateDate = DateTime.Now;
+                rj.UpdateUser = user;
                 reportJobDao.UpdateReportJob(rj);
             }
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void SubmitReportJob(int id)
+        public void SubmitReportJob(int id, User user)
         {
             ReportJob rj = reportJobDao.LoadReportJob(id);
             if (rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_PENDING))
             {
                 rj.Status = ReportJob.REPORT_JOB_STATUS_SUBMIT;
                 rj.EndTime = DateTime.Now;
+                rj.UpdateDate = DateTime.Now;
+                rj.UpdateUser = user;
                 reportJobDao.UpdateReportJob(rj);
             }
         }
@@ -461,10 +510,10 @@ namespace Dndp.Service.OffLineReport.Impl
         [Transaction(TransactionMode.Requires)]
         public ReportJob CreateNewReportJobByBatchId(int id, User user)
         {
-            ReportJob rj = reportJobDao.FindLastestReportJobByBatchId(id);
-            if (rj == null || (rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_CANCEL)
-                || rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_FAILED) || rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_SUCCESS)))
-            {
+            //ReportJob rj = reportJobDao.FindLastestReportJobByBatchId(id);
+            //if (rj == null || (rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_CANCEL)
+            //    || rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_FAILED) || rj.Status.Equals(ReportJob.REPORT_JOB_STATUS_SUCCESS)))
+            //{
                 ReportBatch rb = reportBatchDao.LoadReportBatch(id);
                 ReportJob newReportJob = new ReportJob();
                 newReportJob.TheBatch = rb;
@@ -525,8 +574,8 @@ namespace Dndp.Service.OffLineReport.Impl
                 }
 
                 return this.LoadReportJob(newReportJob.Id);
-            }
-            return this.LoadReportJob(rj.Id);
+            //}
+            //return this.LoadReportJob(rj.Id);
         }
 
         public IList<ReportUser> FindReportUserByReportBatchIdAndUserNameAndUserDescription(int batchId, string userName, string userDescription)

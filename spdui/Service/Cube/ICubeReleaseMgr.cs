@@ -38,7 +38,7 @@ namespace Dndp.Service.Cube
         void RunPackage(string packageName);
         void WarmCache();
         //void RollbackCube(CubeRelease lastRelease, User user);
-
+        void UploadRoleToCube(IList<int> idList);
         void UploadRoleToCube(int cubeId);
 
         IList<CubeRelease> FindAllCubeReleaseByCubeId(int cubeId, User user);

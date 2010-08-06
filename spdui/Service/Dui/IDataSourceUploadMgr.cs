@@ -103,6 +103,8 @@ namespace Dndp.Service.Dui
 
         Boolean FindETLRunStatus();
 
+        IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy);
+
         #endregion Customized Methods
     }
 }

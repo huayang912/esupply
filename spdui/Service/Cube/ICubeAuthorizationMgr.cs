@@ -61,6 +61,8 @@ namespace Dndp.Service.Cube
 
         IList<CubeRole> FindCubeRoleByName(string roleName);
 
+        IList<CubeRole> FindCubeRoleByNameAndDescription(string roleName, string description);
+
         void UploadRoleToCube(int roleId, string serverAddr, string databaseName, string cubeName);
 
         void UploadRoleToCube(CubeRole role, string serverAddr, string databaseName, string cubeName);

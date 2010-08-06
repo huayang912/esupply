@@ -45,7 +45,7 @@ namespace Dndp.Service.Cube.Impl
         public void CreateCubeRelease(CubeRelease entity)
         {
             //TODO: Add other code here.
-			
+
             releaseDao.CreateCubeRelease(entity);
         }
 
@@ -56,16 +56,16 @@ namespace Dndp.Service.Cube.Impl
             {
                 throw new ArgumentException("Invliad parameter: id");
             }
-			
-			//TODO: Add other code here.
-			
+
+            //TODO: Add other code here.
+
             return releaseDao.LoadCubeRelease(id);
         }
 
         [Transaction(TransactionMode.Requires)]
         public virtual void UpdateCubeRelease(CubeRelease entity)
         {
-        	//TODO: Add other code here.
+            //TODO: Add other code here.
             releaseDao.UpdateCubeRelease(entity);
         }
 
@@ -81,7 +81,7 @@ namespace Dndp.Service.Cube.Impl
             releaseDao.DeleteCubeRelease(entity);
         }
 
-       
+
         [Transaction(TransactionMode.Requires)]
         public void DeleteCubeRelease(IList<int> idList)
         {
@@ -112,13 +112,13 @@ namespace Dndp.Service.Cube.Impl
         {
             sqlHelpDao.ExecuteNonQuery("Use msdb; EXEC dbo.sp_start_job '" + packageName + "'");
         }
-        
+
         public void WarmCache()
         {
             string packageName = "Run SPCubeCacheWarmer";
             sqlHelpDao.ExecuteNonQuery("Use msdb; EXEC dbo.sp_start_job '" + packageName + "'");
         }
-        
+
         public bool IsDistributing(int cubeid)
         {
             bool result = false;
@@ -189,7 +189,7 @@ namespace Dndp.Service.Cube.Impl
             release.NeedWarmCache = 1;
             release.TheProcess = process;
             // Modified by vincent at 2007-11-13 begin
-            release.Status = CubeRelease.RELEASE_STATUS_Running;            
+            release.Status = CubeRelease.RELEASE_STATUS_Running;
             releaseDao.CreateCubeRelease(release);
 
             release.Status = CubeRelease.RELEASE_STATUS_Success;
@@ -235,7 +235,7 @@ namespace Dndp.Service.Cube.Impl
                     // Modified by vincent at 2007-11-13 begin
                     string lastReleaseCubeBackupName = "";
                     lastReleaseCubeBackupName = process.TheCube.ReleaseDatabaseName + "_BAK" + backupFileSuffix;
-                    
+
                     lastReleaseCubeUtility.RenameDatabase(lastReleaseCubeBackupName);
                     // Modified by vincent at 2007-11-13 end
                     release.BackupFile = lastReleaseCubeBackupName;
@@ -248,10 +248,10 @@ namespace Dndp.Service.Cube.Impl
 
                 //rename restored cube from Temp name to formal name
                 CubeUtility releaseCubeUtility = new CubeUtility(process.TheCube.ReleaseServerAddr, cubeReleaseTempDatabaseName, process.TheCube.ReleaseCubeName, propertyMgr.ProductCubeUserName, propertyMgr.ProductCubePassword);
-                
-                releaseCubeUtility.RenameDatabase(process.TheCube.ReleaseDatabaseName);                
-                
-                
+
+                releaseCubeUtility.RenameDatabase(process.TheCube.ReleaseDatabaseName);
+
+
             }
             catch (Exception ex)
             {
@@ -269,10 +269,116 @@ namespace Dndp.Service.Cube.Impl
                     sqlHelpDao.ExecuteNonQuery(postReleaseSQL);
                 }
             }
-            
+
             // Modified by vincent at 2007-11-14 begin
             WarmCache();
             // Modified by vincent at 2007-11-14 end
+        }
+
+        public void UploadRoleToCube(IList<int> idList)
+        {
+            #region find cube for the given cube role ids
+            IList<CubeDefinition> cubes = new List<CubeDefinition>();
+            IList<CubeRole> cubeRoles = new List<CubeRole>();
+            foreach (int roleId in idList)
+            {
+                CubeRole cubeRole = this.authMgr.LoadCubeRole(roleId);
+                cubeRoles.Add(cubeRole);
+
+                bool findMatch = false;
+                foreach (CubeDefinition cube in cubes)
+                {
+                    if (cube.Id == cubeRole.TheCube.Id)
+                    {
+                        findMatch = true;
+                        break;
+                    }
+                }
+
+                if (!findMatch)
+                {
+                    cubes.Add(cubeRole.TheCube);
+                }
+            }
+            #endregion
+
+            #region fetching each cube
+            foreach (CubeDefinition cube in cubes)
+            {
+                #region run preUpdateRoleSQL
+                //string preUpdateRoleSQL = cube.PreUpdateRoleSQL;
+                //if (preUpdateRoleSQL != null && preUpdateRoleSQL.Trim().Length > 0)
+                //{
+                //    sqlHelpDao.ExecuteNonQuery(preUpdateRoleSQL);
+                //}
+                #endregion
+
+                #region find cube role belong to the cube
+                IList<CubeRole> theCubeRoles = new List<CubeRole>();
+                foreach (CubeRole cubeRole in cubeRoles)
+                {
+                    if (cubeRole.TheCube.Id == cube.Id)
+                    {
+                        theCubeRoles.Add(cubeRole);
+                    }
+                }
+                #endregion
+
+                #region update roel to Process Cube
+                CubeUtility processCubeUtility = new CubeUtility(
+                   cube.ProcessServerAddr, cube.ProcessDatabaseName, cube.ProcessCubeName, propertyMgr.ProductCubeUserName, propertyMgr.ProductCubePassword);
+
+                string[] tempRoles = processCubeUtility.GetRoles();
+                foreach (CubeRole cubeRole in theCubeRoles)
+                {
+                    //#region delete cube role
+                    //foreach (string temprole in tempRoles)
+                    //{
+                    //    if (cubeRole.Name == temprole)
+                    //    {
+                    //        processCubeUtility.DeleteRole(temprole);
+                    //        break;
+                    //    }
+                    //}
+                    //#endregion
+
+                    //update roel to Cube
+                    authMgr.UploadRoleToCube(cubeRole, cubeRole.TheCube.ProcessServerAddr, cubeRole.TheCube.ProcessDatabaseName, cubeRole.TheCube.ProcessCubeName);
+                }
+                #endregion
+
+                #region update roel to Release Cube
+                CubeUtility releaseCubeUtility = new CubeUtility(
+                    cube.ReleaseServerAddr, cube.ReleaseDatabaseName, cube.ReleaseCubeName, propertyMgr.ProductCubeUserName, propertyMgr.ProductCubePassword);
+
+                tempRoles = releaseCubeUtility.GetRoles();
+                foreach (CubeRole cubeRole in theCubeRoles)
+                {
+                    //#region delete cube role
+                    //foreach (string temprole in tempRoles)
+                    //{
+                    //    if (cubeRole.Name == temprole)
+                    //    {
+                    //        releaseCubeUtility.DeleteRole(temprole);
+                    //        break;
+                    //    }
+                    //}
+                    //#endregion
+
+                    //update roel to Cube
+                    authMgr.UploadRoleToCube(cubeRole, cubeRole.TheCube.ReleaseServerAddr, cubeRole.TheCube.ReleaseDatabaseName, cubeRole.TheCube.ReleaseCubeName);
+                }
+                #endregion
+
+                #region run postUpdateRoleSQL
+                //string postUpdateRoleSQL = cube.PostUpdateRoleSQL;
+                //if (postUpdateRoleSQL != null && postUpdateRoleSQL.Trim().Length > 0)
+                //{
+                //    sqlHelpDao.ExecuteNonQuery(postUpdateRoleSQL);
+                //}
+                #endregion
+            }
+            #endregion
         }
 
         public void UploadRoleToCube(int cubeId)
@@ -287,7 +393,7 @@ namespace Dndp.Service.Cube.Impl
             }
 
             // Modified by vincent at 2007-11-13 end
-            
+
             CubeUtility cubeUtility = new CubeUtility(
                 cube.ProcessServerAddr, cube.ProcessDatabaseName, cube.ProcessCubeName, propertyMgr.ProductCubeUserName, propertyMgr.ProductCubePassword);
             //cubeUtility.DeleteAllRoles();
@@ -305,13 +411,13 @@ namespace Dndp.Service.Cube.Impl
             }
 
             // Modified by vincent at 2007-11-20 begin
-            
+
 
             IList<CubeRole> roleList = roleDao.FindCubeRoleByCubeId(cubeId);
 
             if (roleList != null && roleList.Count > 0)
             {
-                foreach(CubeRole role in roleList)
+                foreach (CubeRole role in roleList)
                 {
                     // Modified by vincent at 2007-11-20 begin
                     if (IsProcessCancelled(cubeId))
@@ -345,7 +451,7 @@ namespace Dndp.Service.Cube.Impl
         //    if (lastRelease.BackupFile != null)
         //    {
         //        CubeUtility lastCubeUtility = new CubeUtility(process.TheCube.ReleaseServerAddr, process.TheCube.ReleaseDatabaseName, process.TheCube.ReleaseCubeName);
-                
+
         //    }
         //    else
         //    {

@@ -69,13 +69,13 @@ namespace Dndp.Service.OffLineReport
 
         void CancelReportJob(ReportJob job, User user);
 
-        void RestartReportJob(ReportJob job);
+        void RestartReportJob(ReportJob job, User user);
 
-        void CancelReportJob(int jobId);
+        void CancelReportJob(int jobId, User user);
 
-        void RestartReportJob(int jobId);
+        void RestartReportJob(int jobId, User user);
 
-        void SubmitReportJob(int jobId);
+        void SubmitReportJob(int jobId, User user);
 
         ReportJob CreateNewReportJobByBatchId(int id, User user);
 

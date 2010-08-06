@@ -823,6 +823,16 @@ namespace Dndp.Service.Dui.Impl
                     SQLStatement = "Delete From " + ds.Name + " Where Rec_Id = " + RecId;
                     SQLStatement = SQLStatement + " Delete From " + ds.Name + "_History Where BATCH_NO = " + fields[0].ToString() + " and ROW_NO = " + fields[1].ToString() + " and CATEGORY = '" + fields[2].ToString() + "'";
                     sqlHelperDao.ExecuteNonQuery(SQLStatement);
+
+                    TheDataSourceUpload.RecordRows--;
+                    if (TheDataSourceUpload.RecordRows == 0)
+                    {
+                        this.DeleteDataSourceUploadAndUploadedData(TheDataSourceUpload.Id);
+                    }
+                    else
+                    {
+                        this.dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
+                    }
                 }
             }
         }
@@ -955,6 +965,11 @@ namespace Dndp.Service.Dui.Impl
             }
         }
 
+        [Transaction(TransactionMode.Unspecified)]
+        public IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy)
+        {
+            return dataSourceUploadDao.FindDataSourceUpload(datasourceId, category, subject, fileName, createBy);
+        }
         #endregion Customized Methods
     }
 }

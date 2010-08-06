@@ -299,6 +299,12 @@ namespace Dndp.Service.Cube.Impl
             return cubeRoleDao.FindCubeRoleByName(roleName);
         }
 
+        [Transaction(TransactionMode.NotSupported)]
+        public IList<CubeRole> FindCubeRoleByNameAndDescription(string roleName, string description)
+        {
+            return cubeRoleDao.FindCubeRoleByNameAndDescription(roleName, description);
+        }
+
         public void UploadRoleToCube(int roleId, string serverAddr, string databaseName, string cubeName)
         {
             UploadRoleToCube(cubeRoleDao.LoadCubeRole(roleId), serverAddr, databaseName, cubeName);
