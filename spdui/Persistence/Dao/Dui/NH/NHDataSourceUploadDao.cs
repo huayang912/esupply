@@ -166,6 +166,20 @@ namespace Dndp.Persistence.Dao.Dui.NH
             return FindAllWithCustomQuery(hql.ToString()) as IList<DataSourceUpload>;
         }
 
+        public IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy)
+        {
+            string hql = @"from DataSourceUpload as dsu 
+                where dsu.TheDataSourceCategory.TheDataSource.Id = ?"
+                + ((category != null && category.Trim() != string.Empty) ? (" and dsu.TheDataSourceCategory.Name =  '"+category.Trim()+"'") : "")
+                + ((subject != null && subject.Trim() != string.Empty) ? (" and dsu.Name like  '%" + subject.Trim() + "%'") : "")
+                + ((fileName != null && fileName.Trim() != string.Empty) ? (" and dsu.UploadFileOriginName like  '%" + fileName.Trim() + "%'") : "")
+                + ((createBy != null && createBy.Trim() != string.Empty) ? (" and dsu.UploadBy.UserName like '%" + createBy.Trim() + "%'") : "")
+                + @" order by dsu.UploadDate Desc";
+
+            return FindAllWithCustomQuery(hql, new object[] { datasourceId },
+                new IType[] { NHibernateUtil.Int32 }) as IList<DataSourceUpload>;
+        }
+
         #endregion Customized Methods
     }
 }

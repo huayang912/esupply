@@ -32,6 +32,8 @@ namespace Dndp.Persistence.Dao.Cube
 
         IList<CubeRole> FindCubeRoleByName(string roleName);
 
+        IList<CubeRole> FindCubeRoleByNameAndDescription(string roleName, string description);
+
         IList<CubeRole> FindCubeRoleByCubeId(int cubeId);  
 
         #endregion Customized Methods

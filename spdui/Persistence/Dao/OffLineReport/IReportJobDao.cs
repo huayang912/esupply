@@ -43,6 +43,12 @@ namespace Dndp.Persistence.Dao.OffLineReport
 
         void DeleteAllReportJobByBatchId(int batchId);
 
+        IList<ReportJob> FindAllReportJobByStatus(string[] status);
+
+        ReportJob FindLastestRunningReportJobByBatchId(int batchId);
+
+        ReportJob FindLastestRunnedReportJobByBatchId(int batchId);
+
         #endregion Customized Methods
     }
 }

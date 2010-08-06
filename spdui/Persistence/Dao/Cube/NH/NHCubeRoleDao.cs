@@ -89,6 +89,17 @@ namespace Dndp.Persistence.Dao.Cube.NH
             return list;
         }
 
+        public IList<CubeRole> FindCubeRoleByNameAndDescription(string roleName, string description)
+        {
+            string hql = "from CubeRole entity where entity.Name like ? and entity.Description like ? and entity.TheCube.ActiveFlag = 1 order by entity.Name ";
+
+                IList<CubeRole> list = FindAllWithCustomQuery(
+                    hql, new object[] { "%" + roleName + "%", "%" + description + "%" },
+                    new IType[] { NHibernateUtil.String, NHibernateUtil.String }) as IList<CubeRole>;
+
+                return list;
+        }
+
         public IList<CubeRole> FindCubeRoleByCubeId(int cubeId)
         {
             string hql = "from CubeRole entity where entity.TheCube.Id = ? and entity.TheCube.ActiveFlag = 1 order by entity.Name ";

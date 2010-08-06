@@ -8,15 +8,19 @@ using NHibernate.Type;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.OffLineReport;
 using Dndp.Persistence.Dao.OffLineReport;
+using Dndp.Persistence.Dao.Criteria;
 //TODO: Add other using statmens here.
 
 namespace Dndp.Persistence.Dao.OffLineReport.NH
 {
     public class NHReportJobDao : NHDaoBase, IReportJobDao
     {
-        public NHReportJobDao(ISessionManager sessionManager)
+        private ICriteriaDao criteriaDao;
+        public NHReportJobDao(ISessionManager sessionManager,
+            ICriteriaDao criteriaDao)
             : base(sessionManager)
         {
+            this.criteriaDao = criteriaDao;
         }
 
         #region Method Created By CodeSmith
@@ -100,7 +104,7 @@ namespace Dndp.Persistence.Dao.OffLineReport.NH
             string hql = " from ReportJob as entity where entity.Id in "
                        + " (select max(rj.Id) "
                        + " from ReportJob rj"
-                       + " where rj.TheBatch.ActiveFlag = ? AND rj.Status = 'Running'"
+                       + " where rj.TheBatch.ActiveFlag = ? AND rj.Status in ('Running')"
                        + " group by rj.TheBatch) order by entity.TheBatch.Name";
 
             IList<ReportJob> list = FindAllWithCustomQuery(
@@ -142,6 +146,59 @@ namespace Dndp.Persistence.Dao.OffLineReport.NH
         {
             string hql = @"from ReportJob as rj where rj.TheBatch.Id = ?";
             Delete(hql, batchId, NHibernate.NHibernateUtil.Int32);
+        }
+
+        public IList<ReportJob> FindAllReportJobByStatus(string[] status)
+        {
+            if (status == null || status.Length == 0)
+            {
+                return null;
+            }
+
+            string statusCriteria = string.Empty;
+            foreach(string s in status) 
+            {
+                statusCriteria += "'" + s + "',";
+            }
+            statusCriteria = statusCriteria.TrimEnd(',');
+
+
+            return FindAllWithCustomQuery(
+                "from ReportJob as rj where rj.Status in(" + statusCriteria + ") order by rj.Id") as IList<ReportJob>;
+        }
+
+        public ReportJob FindLastestRunningReportJobByBatchId(int batchId)
+        {
+            string hql = @" from ReportJob rj"
+                       + " where rj.TheBatch.Id = ? AND rj.Status in ('Submit','Running')"
+                       + " order by rj.Status, rj.StartTime";
+
+            IList<ReportJob> reportJobList = FindAllWithCustomQuery(hql,
+                new object[] { batchId },
+                new IType[] { NHibernateUtil.Int32 }, 0, 1) as IList<ReportJob>;
+
+            if (reportJobList != null && reportJobList.Count > 0)
+            {
+                return reportJobList[0];
+            }
+            return null;
+        }
+
+        public ReportJob FindLastestRunnedReportJobByBatchId(int batchId)
+        {
+            string hql = @" from ReportJob rj"
+                       + " where rj.TheBatch.Id = ? AND rj.Status not in ('Submit','Running')"
+                       + " order by rj.EndTime desc";
+
+            IList<ReportJob> reportJobList = FindAllWithCustomQuery(hql,
+                new object[] { batchId },
+                new IType[] { NHibernateUtil.Int32 }, 0, 1) as IList<ReportJob>;
+
+            if (reportJobList != null && reportJobList.Count > 0)
+            {
+                return reportJobList[0];
+            }
+            return null;
         }
 
         #endregion Customized Methods

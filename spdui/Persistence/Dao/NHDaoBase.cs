@@ -83,13 +83,14 @@ namespace Dndp.Persistence.Dao
 				{
 					return session.Load(type, id);
 				}
-				catch (ObjectNotFoundException)
+                //catch (ObjectNotFoundException)
+                //{
+                //    throw;
+                //}
+				catch (Exception)
 				{
-					throw;
-				}
-				catch (Exception ex)
-				{
-					throw new DataException("Could not perform FindByPrimaryKey for " + type.Name, ex);
+					//throw new DataException("Could not perform FindByPrimaryKey for " + type.Name, ex);
+                    return null;
 				}
 			}
 		}

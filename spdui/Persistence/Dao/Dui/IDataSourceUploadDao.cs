@@ -46,6 +46,8 @@ namespace Dndp.Persistence.Dao.Dui
 
         IList<DataSourceUpload> FindDataSourceUpload(IList<int> idList);
 
+        IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy);
+
         #endregion Customized Methods
     }
 }
