@@ -13,8 +13,6 @@ using log4net;
 
 public partial class _Default : System.Web.UI.Page 
 {
-    private static ILog log = LogManager.GetLogger("User.Login");
-
     protected void Page_Load(object sender, EventArgs e)
     {
         
@@ -22,7 +20,6 @@ public partial class _Default : System.Web.UI.Page
 
     protected override void OnInit(EventArgs e)
     {
-        log.Debug("OnInit");
         base.OnInit(e);
         DomainLogin();  //new
         LoadModule();
@@ -30,8 +27,6 @@ public partial class _Default : System.Web.UI.Page
 
     private void DomainLogin()  //new function
     {
-        log.Debug("Start DomainLogin");
-        log.Debug("Session[CurrentUser] != null " + Session["CurrentUser"] != null);
         if (Session["CurrentUser"] != null)
         {
             return;
