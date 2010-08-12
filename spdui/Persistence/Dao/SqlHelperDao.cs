@@ -89,6 +89,13 @@ namespace Dndp.Persistence.Dao
             return SqlHelper.ExecuteDataset(connectionString, CommandType.Text, commandText);
         }
 
+        public SqlDataReader ExecuteReader(string commandText, out SqlConnection cn)
+        {
+            cn = new SqlConnection(connectionString);
+			cn.Open();
+            return SqlHelper.ExecuteReader(cn, CommandType.Text, commandText, (SqlParameter[])null);
+        }
+
         private int GetPostion(string commandText, int startPosition)
         {
             int position = 0;

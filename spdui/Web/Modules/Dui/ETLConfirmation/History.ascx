@@ -51,25 +51,14 @@ end function
         <table border="0">
             <tr>
                 <td class="txtForm" style="height: 25">
-                    Data Source Category:&nbsp;&nbsp;
-                    <asp:DropDownList ID="ddlDSCategory" runat="server" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                 </td>
-                 <td class="txtForm" style="height: 25">
+                    Category:&nbsp;
+                    <asp:DropDownList ID="ddlDSCategory" runat="server" />&nbsp;&nbsp;&nbsp
                     Subject:&nbsp;
                     <asp:TextBox ID="txtSubject" runat="server"/>&nbsp;&nbsp;&nbsp;
-                 </td>
-                 <td class="txtForm" style="height: 25">
                     File Name:&nbsp;
                     <asp:TextBox ID="txtFileName" runat="server"/>&nbsp;&nbsp;&nbsp;
-                 </td>
-                 <td class="txtForm" style="height: 25">
                     Create By:&nbsp;
                     <asp:TextBox ID="txtCreateBy" runat="server"/>&nbsp;&nbsp;&nbsp;
-                 </td>
-             </tr>
-             <tr>
-                <td colspan ="3"></td>
-                 <td class="txtForm" style="height: 25" align="right">
                     <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" meta:resourcekey="btnSearchResource1" CssClass=btn1 />
                     <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Back" CssClass="btn1" />
                 </td>

@@ -709,8 +709,11 @@ namespace Utility
 			// detach the SqlParameters from the command object, so they can be used again.
 			cmd.Parameters.Clear();
 
-			// close the connection
-			connection.Close();
+            if (connectionOwnership != SqlConnectionOwnership.External)
+            {
+                // close the connection
+                connection.Close();
+            }
 			
 			return dr;
 		}

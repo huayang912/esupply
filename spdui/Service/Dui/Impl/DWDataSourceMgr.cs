@@ -45,7 +45,7 @@ namespace Dndp.Service.Dui.Impl
         public void CreateDWDataSource(DWDataSource entity)
         {
             //TODO: Add other code here.
-			
+
             DWDataSourceDao.CreateDWDataSource(entity);
         }
 
@@ -62,14 +62,14 @@ namespace Dndp.Service.Dui.Impl
             {
                 ds.DWDataSourceOperatorList = DWDataSourceOperatorDao.FindAllByDWDataSourceId(id);
             }
-			
+
             return ds;
         }
 
         [Transaction(TransactionMode.Requires)]
         public virtual void UpdateDWDataSource(DWDataSource entity)
         {
-        	//TODO: Add other code here.
+            //TODO: Add other code here.
             DWDataSourceDao.UpdateDWDataSource(entity);
         }
 
@@ -87,7 +87,7 @@ namespace Dndp.Service.Dui.Impl
             DeleteDWDataSource(entity.Id);
         }
 
-       
+
         [Transaction(TransactionMode.Requires)]
         public void DeleteDWDataSource(IList<int> idList)
         {
@@ -169,9 +169,10 @@ namespace Dndp.Service.Dui.Impl
 
             //update new operator
             DWDataSource ds = DWDataSourceDao.LoadDWDataSource(dsId);
-            if (userIdList != null && userIdList.Count > 0) 
+            if (userIdList != null && userIdList.Count > 0)
             {
-                foreach(int userId in userIdList) {
+                foreach (int userId in userIdList)
+                {
                     User user = userDao.LoadUser(userId);
                     DWDataSourceOperator dso = new DWDataSourceOperator();
                     dso.AllowType = allowType;
@@ -249,81 +250,113 @@ namespace Dndp.Service.Dui.Impl
             return dwDataSourceTypeList;
         }
 
-        [Transaction(TransactionMode.Unspecified)]
         public void DownloadQueryData(DWDataSource ds, CSVWriter csvWriter)
         {
             string rule = ds.QuerySQL;
 
-            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
-            DataTableReader dataReader = dataSet.CreateDataReader();
-
-            //write csv header
-            string[] header = new string[dataReader.FieldCount];
-            for (int i = 0; i < dataReader.FieldCount; i++)
+            SqlConnection cn = null;
+            SqlDataReader sqlDataReader = null;
+            try
             {
-                header[i] = dataReader.GetName(i);
-            }
-            csvWriter.Write(header);
-            csvWriter.WriteNewLine();
+                sqlDataReader = sqlHelperDao.ExecuteReader(rule, out cn);
+                //DataTableReader dataReader = dataSet.CreateDataReader();
 
-            //write csv content
-            while (dataReader.Read())
-            {
-                object[] fields = new object[dataReader.FieldCount];
-                dataReader.GetValues(fields);
-                string[] strFields = new string[fields.Length];
-                for (int i = 0; i < fields.Length; i++)
+                //write csv header
+                string[] header = new string[sqlDataReader.FieldCount];
+                for (int i = 0; i < sqlDataReader.FieldCount; i++)
                 {
-                    if (fields[i] != null)
-                    {
-                        strFields[i] = fields[i].ToString();
-                    }
-                    else
-                    {
-                        strFields[i] = "";
-                    }
+                    header[i] = sqlDataReader.GetName(i);
                 }
-                csvWriter.Write(strFields);
+                csvWriter.Write(header);
                 csvWriter.WriteNewLine();
+
+                //write csv content
+                while (sqlDataReader.Read())
+                {
+                    object[] fields = new object[sqlDataReader.FieldCount];
+                    sqlDataReader.GetValues(fields);
+                    string[] strFields = new string[fields.Length];
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        if (fields[i] != null)
+                        {
+                            strFields[i] = fields[i].ToString();
+                        }
+                        else
+                        {
+                            strFields[i] = "";
+                        }
+                    }
+                    csvWriter.Write(strFields);
+                    csvWriter.WriteNewLine();
+                }
+            }
+            finally
+            {
+                if (sqlDataReader != null)
+                {
+                    sqlDataReader.Close();
+                }
+
+                if (cn != null)
+                {
+                    cn.Close();
+                }
             }
         }
 
-        [Transaction(TransactionMode.Unspecified)]
         public void DownloadQueryData(DWDataSource ds, CSVWriter csvWriter, string Querydate)
         {
             string rule = ds.QuerySQL.Replace("<$QueryDate$>", Querydate);
 
-            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
-            DataTableReader dataReader = dataSet.CreateDataReader();
-
-            //write csv header
-            string[] header = new string[dataReader.FieldCount];
-            for (int i = 0; i < dataReader.FieldCount; i++)
+            SqlConnection cn = null;
+            SqlDataReader sqlDataReader = null;
+            try
             {
-                header[i] = dataReader.GetName(i);
-            }
-            csvWriter.Write(header);
-            csvWriter.WriteNewLine();
+                sqlDataReader = sqlHelperDao.ExecuteReader(rule, out cn);
+                //DataTableReader dataReader = dataSet.CreateDataReader();
 
-            //write csv content
-            while (dataReader.Read())
-            {
-                object[] fields = new object[dataReader.FieldCount];
-                dataReader.GetValues(fields);
-                string[] strFields = new string[fields.Length];
-                for (int i = 0; i < fields.Length; i++)
+                //write csv header
+                string[] header = new string[sqlDataReader.FieldCount];
+                for (int i = 0; i < sqlDataReader.FieldCount; i++)
                 {
-                    if (fields[i] != null)
-                    {
-                        strFields[i] = fields[i].ToString();
-                    }
-                    else
-                    {
-                        strFields[i] = "";
-                    }
+                    header[i] = sqlDataReader.GetName(i);
                 }
-                csvWriter.Write(strFields);
+                csvWriter.Write(header);
                 csvWriter.WriteNewLine();
+
+                //write csv content
+                while (sqlDataReader.Read())
+                {
+                    object[] fields = new object[sqlDataReader.FieldCount];
+                    sqlDataReader.GetValues(fields);
+                    string[] strFields = new string[fields.Length];
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        if (fields[i] != null)
+                        {
+                            strFields[i] = fields[i].ToString();
+                        }
+                        else
+                        {
+                            strFields[i] = "";
+                        }
+                    }
+                    csvWriter.Write(strFields);
+                    csvWriter.WriteNewLine();
+                }
+            }
+            finally
+            {
+                if (sqlDataReader != null)
+                {
+                    sqlDataReader.Close();
+                }
+
+                if (cn != null)
+                {
+                    cn.Close();
+                }
             }
         }
 
@@ -401,7 +434,7 @@ namespace Dndp.Service.Dui.Impl
         public void DeleteSelectedResult(DWDataSource ds, int RowNo, string ActionSource, string ActionUser, string strCondition)
         {
             string rule = ds.DeleteQuerySQL.ToUpper();
-            
+
             if (strCondition.Trim().Length > 0)
             {
                 rule = "Select * From (" + rule + ") as Res where " + strCondition;
@@ -410,11 +443,11 @@ namespace Dndp.Service.Dui.Impl
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             // Use a DataTable object's DataColumnCollection.
             DataColumnCollection columns = dataSet.Tables[0].Columns;
-            
+
             rule = ds.DeleteSQL.ToUpper();
 
             DataRow dataRow = dataSet.Tables[0].Rows[RowNo];
-            foreach(DataColumn column in columns)
+            foreach (DataColumn column in columns)
             {
                 if (dataRow[column] == null)
                 {

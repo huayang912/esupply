@@ -33,19 +33,27 @@ public partial class _Default : System.Web.UI.Page
         }
 
         Dndp.Service.Security.ISecurityMgr securityMgr = ServiceLocator.GetService("SecurityMgr.service") as Dndp.Service.Security.ISecurityMgr;
-        string domainFullName = this.User.Identity.Name;
-        string[] ary = domainFullName.Split('\\');
-        Dndp.Persistence.Entity.Security.User u = securityMgr.DomainLogin(ary[0], ary[1]);
-
-        if (u == null)
+        if (this.User.Identity.Name != null && this.User.Identity.Name.Trim() != string.Empty)
         {
-            //**********登陆失败处理，可以redirect到一个页面，提示无权限访问本系统***********
-            Response.Redirect("NoPermission.htm", true);
+            string domainFullName = this.User.Identity.Name;
+            string[] ary = domainFullName.Split('\\');
+            Dndp.Persistence.Entity.Security.User u = securityMgr.DomainLogin(ary[0], ary[1]);
+
+            if (u == null)
+            {
+                //**********登陆失败处理，可以redirect到一个页面，提示无权限访问本系统***********
+                Response.Redirect("NoPermission.htm", true);
+                return;
+            }
+
+            FormsAuthentication.SetAuthCookie(u.UserName, false);
+            Session["CurrentUser"] = u;
+        }
+        else
+        {
+            Response.Redirect("LoginPage.aspx", true);
             return;
         }
-
-        FormsAuthentication.SetAuthCookie(u.UserName, false);
-        Session["CurrentUser"] = u;
     }		
 
     private void LoadModule()
