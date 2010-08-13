@@ -117,11 +117,11 @@ public partial class Modules_Dui_DWDSUpdate_Main : ModuleBase
         string fileName = HttpUtility.UrlEncode(ds.Name);
         fileName = fileName.Replace("+", "%20");
         Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_Download.csv");
-        TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
-        CSVWriter csvWriter = new CSVWriter(txtWriter); ;
-        TheService.DownloadQueryData(ds, csvWriter);
-        txtWriter.Flush();
-        Response.End();
+        //TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
+        //CSVWriter csvWriter = new CSVWriter(txtWriter); ;
+        TheService.DownloadQueryData(ds, Response, string.Empty);
+        //txtWriter.Flush();
+        //Response.End();
 
         UpdateView();
     }

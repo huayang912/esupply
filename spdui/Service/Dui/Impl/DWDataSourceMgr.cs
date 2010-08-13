@@ -254,7 +254,7 @@ namespace Dndp.Service.Dui.Impl
 
         public void DownloadQueryData(DWDataSource ds, HttpResponse response, string queryDate)
         {
-            string rule = ds.QuerySQL;//.Replace("<$QueryDate$>", queryDate);
+            string rule = ds.QuerySQL.Replace("<$QueryDate$>", queryDate);
 
             SqlConnection cn = null;
             SqlDataReader sqlDataReader = null;
