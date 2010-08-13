@@ -8,6 +8,7 @@ using Dndp.Utility;
 using Dndp.Utility.CSV;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web;
 //TODO: Add other using statements here.
 
 namespace Dndp.Service.Dui
@@ -60,9 +61,7 @@ namespace Dndp.Service.Dui
 
         IList<DWDataSource> FindDWDataSource(int userId);
 
-        void DownloadQueryData(DWDataSource ds, CSVWriter csvWriter);
-
-        void DownloadQueryData(DWDataSource ds, CSVWriter csvWriter, string QueryDate);
+        void DownloadQueryData(DWDataSource ds, HttpResponse response, string QueryDate);
 
         void DownloadUpdateQueryData(DWDataSource ds, CSVWriter csvWriter);
 

@@ -16,6 +16,8 @@ using System.Data;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Dao.Security;
 using Dndp.Persistence.Entity.Security;
+using System.IO;
+using System.Web;
 //TODO: Add other using statements here.
 
 namespace Dndp.Service.Dui.Impl
@@ -250,18 +252,23 @@ namespace Dndp.Service.Dui.Impl
             return dwDataSourceTypeList;
         }
 
-        public void DownloadQueryData(DWDataSource ds, CSVWriter csvWriter)
+        public void DownloadQueryData(DWDataSource ds, HttpResponse response, string queryDate)
         {
-            string rule = ds.QuerySQL;
+            string rule = ds.QuerySQL;//.Replace("<$QueryDate$>", queryDate);
 
             SqlConnection cn = null;
             SqlDataReader sqlDataReader = null;
+            TextWriter txtWriter = null;
+            CSVWriter csvWriter = null;
             try
             {
                 sqlDataReader = sqlHelperDao.ExecuteReader(rule, out cn);
                 //DataTableReader dataReader = dataSet.CreateDataReader();
 
                 //write csv header
+                txtWriter = new StreamWriter(response.OutputStream, Encoding.GetEncoding("GB2312"));
+                csvWriter = new CSVWriter(txtWriter);
+
                 string[] header = new string[sqlDataReader.FieldCount];
                 for (int i = 0; i < sqlDataReader.FieldCount; i++)
                 {
@@ -271,8 +278,10 @@ namespace Dndp.Service.Dui.Impl
                 csvWriter.WriteNewLine();
 
                 //write csv content
+                int count = 0;
                 while (sqlDataReader.Read())
                 {
+                    count++;
                     object[] fields = new object[sqlDataReader.FieldCount];
                     sqlDataReader.GetValues(fields);
                     string[] strFields = new string[fields.Length];
@@ -289,61 +298,14 @@ namespace Dndp.Service.Dui.Impl
                     }
                     csvWriter.Write(strFields);
                     csvWriter.WriteNewLine();
-                }
-            }
-            finally
-            {
-                if (sqlDataReader != null)
-                {
-                    sqlDataReader.Close();
-                }
 
-                if (cn != null)
-                {
-                    cn.Close();
-                }
-            }
-        }
-
-        public void DownloadQueryData(DWDataSource ds, CSVWriter csvWriter, string Querydate)
-        {
-            string rule = ds.QuerySQL.Replace("<$QueryDate$>", Querydate);
-
-            SqlConnection cn = null;
-            SqlDataReader sqlDataReader = null;
-            try
-            {
-                sqlDataReader = sqlHelperDao.ExecuteReader(rule, out cn);
-                //DataTableReader dataReader = dataSet.CreateDataReader();
-
-                //write csv header
-                string[] header = new string[sqlDataReader.FieldCount];
-                for (int i = 0; i < sqlDataReader.FieldCount; i++)
-                {
-                    header[i] = sqlDataReader.GetName(i);
-                }
-                csvWriter.Write(header);
-                csvWriter.WriteNewLine();
-
-                //write csv content
-                while (sqlDataReader.Read())
-                {
-                    object[] fields = new object[sqlDataReader.FieldCount];
-                    sqlDataReader.GetValues(fields);
-                    string[] strFields = new string[fields.Length];
-                    for (int i = 0; i < fields.Length; i++)
+                    if (count % 10000 == 0)
                     {
-                        if (fields[i] != null)
-                        {
-                            strFields[i] = fields[i].ToString();
-                        }
-                        else
-                        {
-                            strFields[i] = "";
-                        }
+                        //flush every 10000 records
+                        //csvWriter.Flush();
+                        txtWriter.Flush();
+                        response.Flush();
                     }
-                    csvWriter.Write(strFields);
-                    csvWriter.WriteNewLine();
                 }
             }
             finally
@@ -356,6 +318,18 @@ namespace Dndp.Service.Dui.Impl
                 if (cn != null)
                 {
                     cn.Close();
+                }
+
+                //csvWriter.Flush();
+                if (txtWriter != null)
+                {
+                    txtWriter.Flush();
+                }
+
+                if (response != null)
+                {
+                    response.Flush();
+                    response.End();
                 }
             }
         }

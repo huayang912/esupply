@@ -98,7 +98,7 @@ namespace Utility
 			command.Connection = connection;
 
             //Set TimeOut
-            command.CommandTimeout = 300;
+            command.CommandTimeout = 600;
 
 			//set the command text (stored procedure name or SQL statement)
 			command.CommandText = commandText;

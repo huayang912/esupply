@@ -131,18 +131,7 @@ public partial class Modules_Dui_DWDSQuery_Main : ModuleBase
         string fileName = HttpUtility.UrlEncode(ds.Name);
         fileName = fileName.Replace("+", "%20");
         Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_Download.csv");
-        TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
-        CSVWriter csvWriter = new CSVWriter(txtWriter);
-        if (queryDate.Trim().Length != 0)
-        {
-            TheService.DownloadQueryData(ds, csvWriter, queryDate);
-        }
-        else
-        {
-            TheService.DownloadQueryData(ds, csvWriter);
-        }
-        txtWriter.Flush();
-        Response.End();
+        TheService.DownloadQueryData(ds, Response, queryDate);     
 
         UpdateView();
     }
