@@ -85,7 +85,14 @@ namespace Dndp.Persistence.Dao.Dui.NH
 
         public IList<DataSourceCategory> FindDataSourceCategory(int userId, string allowType, string strCategory, string strType)
         {
-            string QueryStr = "select dsc from DataSourceCategory dsc, DataSourceOperator dso where dsc.TheDataSource.id = dso.TheDataSource.id and dso.TheUser.Id = ? and dso.AllowType = ? and dso.TheDataSource.ActiveFlag = ?";
+            string QueryStr = @"select dsc from DataSourceCategory dsc, DataSourceOperator dso 
+                                where dsc.TheDataSource.id = dso.TheDataSource.id                                 
+                                and dso.AllowType = ? 
+                                and dso.TheDataSource.ActiveFlag = ?
+                                and dsc.ActiveFlag = ?
+                                and dso.TheUser.Id = ?
+                                and dso.TheUser in elements(dsc.Users)";
+
             if (!strCategory.Equals(""))
             {
                 QueryStr = QueryStr + " and dsc.Name = '" + strCategory + "'";
@@ -97,27 +104,47 @@ namespace Dndp.Persistence.Dao.Dui.NH
             QueryStr = QueryStr + " order by dsc.Name, dsc.TheDataSource.DSType, dsc.TheDataSource.Description";
             return FindAllWithCustomQuery(
                 QueryStr,
-                new object[] { userId, allowType, 1},
-                new IType[] { NHibernateUtil.Int32, NHibernateUtil.String, NHibernateUtil.Int32 }
+                new object[] { allowType, 1, 1, userId},
+                new IType[] { NHibernateUtil.String, NHibernateUtil.Int32, NHibernateUtil.Int32, NHibernateUtil.Int32}
                 ) as IList<DataSourceCategory>;
         }
 
-        public IList<string> FindDataSourceCategoryList(int userId, string allowType)
+        public IList<string> FindDataSourceCategoryList(int userId, string allowType, bool includeInactive)
         {
-            string QueryStr = "select distinct dsc.Name from DataSourceCategory dsc, DataSourceOperator dso where dsc.TheDataSource.id = dso.TheDataSource.id and dso.TheUser.Id = ? and dso.AllowType = ? and dso.TheDataSource.ActiveFlag = ?";
+            string QueryStr = @"select distinct dsc.Name 
+                                from DataSourceCategory dsc, 
+                                DataSourceOperator dso 
+                                where dsc.TheDataSource.id = dso.TheDataSource.id 
+                                and dso.TheUser.Id = ? 
+                                and dso.AllowType = ?    
+                                and dso.TheDataSource.ActiveFlag = ?                             
+                                and dso.TheUser in elements(dsc.Users)";
+
+            if (!includeInactive) {
+                QueryStr += " and dsc.ActiveFlag = 1 ";
+                
+            }
             return FindAllWithCustomQuery(
                 QueryStr,
                 new object[] { userId, allowType, 1 },
                 new IType[] { NHibernateUtil.Int32, NHibernateUtil.String, NHibernateUtil.Int32 }
-                ) as IList<string>;
+                ) as IList<string>;          
         }
 
         public IList<string> FindDataSourceTypeList(int userId, string allowType)
         {
             return FindAllWithCustomQuery(
-                "select distinct dsc.TheDataSource.DSType from DataSourceCategory dsc, DataSourceOperator dso where dsc.TheDataSource.id = dso.TheDataSource.id and dso.TheUser.Id = ? and dso.AllowType = ? and dso.TheDataSource.ActiveFlag = ?",
-                new object[] { userId, allowType, 1 },
-                new IType[] { NHibernateUtil.Int32, NHibernateUtil.String, NHibernateUtil.Int32 }
+                @"select distinct dsc.TheDataSource.DSType 
+                            from DataSourceCategory dsc, 
+                            DataSourceOperator dso 
+                            where dsc.TheDataSource.id = dso.TheDataSource.id 
+                            and dso.TheUser.Id = ? 
+                            and dso.AllowType = ? 
+                            and dso.TheDataSource.ActiveFlag = ?
+                            and dsc.ActiveFlag = ?
+                            and dso.TheUser in elements(dsc.Users)",
+                new object[] { userId, allowType, 1, true },
+                new IType[] { NHibernateUtil.Int32, NHibernateUtil.String, NHibernateUtil.Int32, NHibernateUtil.Boolean }
                 ) as IList<string>;
         }
 

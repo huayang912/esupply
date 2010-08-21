@@ -12,6 +12,7 @@ using Dndp.Persistence.Dao;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.UI.WebControls;
+using Dndp.Persistence.Entity.Security;
 
 namespace Dndp.Service.Dui.Impl
 {
@@ -179,7 +180,8 @@ namespace Dndp.Service.Dui.Impl
             IList<DataSourceCategory> dataSourceCategoryList = dataSourceCategoryDao.FindDataSourceCategory(userId, "OWNER", strCategory, strType);
             IList<DataSourceUpload> dataSourceUploadList = dataSourceUploadDao.FindLastestDSUpload(userId, "OWNER");
 
-            if (dataSourceUploadList != null && dataSourceCategoryList != null)
+            if (dataSourceUploadList != null && dataSourceUploadList.Count > 0
+                && dataSourceCategoryList != null && dataSourceUploadList.Count > 0)
             {
                 foreach (DataSourceUpload dataSourceUpload in dataSourceUploadList)
                 {
@@ -199,14 +201,17 @@ namespace Dndp.Service.Dui.Impl
             }
 
             List<DataSourceCategory> FoundResult = new List<DataSourceCategory>();
-            foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
+            if (dataSourceCategoryList != null && dataSourceCategoryList.Count > 0)
             {
-                if (strStatus.Equals("ALL") || 
-                    (dataSourceCategory.LastestDataSourceUpload != null && dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus)))
+                foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
                 {
-                    if (strDSName.Equals("") || dataSourceCategory.TheDataSource.Name.Contains(strDSName) || dataSourceCategory.TheDataSource.Description.Contains(strDSName))
+                    if (strStatus.Equals("ALL") || 
+                        (dataSourceCategory.LastestDataSourceUpload != null && dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus)))
                     {
-                        FoundResult.Add(dataSourceCategory);
+                        if (strDSName.Equals("") || dataSourceCategory.TheDataSource.Name.Contains(strDSName) || dataSourceCategory.TheDataSource.Description.Contains(strDSName))
+                        {
+                            FoundResult.Add(dataSourceCategory);
+                        }
                     }
                 }
             }
@@ -219,7 +224,8 @@ namespace Dndp.Service.Dui.Impl
             IList<DataSourceCategory> dataSourceCategoryList = dataSourceCategoryDao.FindDataSourceCategory(userId, "ETL", strCategory, strType);
             IList<DataSourceUpload> dataSourceUploadList = dataSourceUploadDao.FindLastestDSUpload(userId, "ETL");
 
-            if (dataSourceUploadList != null && dataSourceCategoryList != null)
+            if (dataSourceUploadList != null && dataSourceUploadList.Count > 0
+                && dataSourceCategoryList != null && dataSourceCategoryList.Count > 0)
             {
                 foreach (DataSourceUpload dataSourceUpload in dataSourceUploadList)
                 {
@@ -241,13 +247,17 @@ namespace Dndp.Service.Dui.Impl
             if (!strStatus.Equals("ALL"))
             {
                 List<DataSourceCategory> FoundResult = new List<DataSourceCategory>();
-                foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
+
+                if (dataSourceCategoryList != null && dataSourceCategoryList.Count > 0)
                 {
-                    if (dataSourceCategory.LastestDataSourceUpload != null)
+                    foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
                     {
-                        if (dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus))
+                        if (dataSourceCategory.LastestDataSourceUpload != null)
                         {
-                            FoundResult.Add(dataSourceCategory);
+                            if (dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus))
+                            {
+                                FoundResult.Add(dataSourceCategory);
+                            }
                         }
                     }
                 }
@@ -260,16 +270,16 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Unspecified)]
-        public IList<string> FindDataSourceCategoryListForETLConfirmer(int userId)
+        public IList<string> FindDataSourceCategoryListForETLConfirmer(int userId, bool includeInactive)
         {
-            IList<string> dataSourceCategoryList = dataSourceCategoryDao.FindDataSourceCategoryList(userId, "ETL");
+            IList<string> dataSourceCategoryList = dataSourceCategoryDao.FindDataSourceCategoryList(userId, "ETL", includeInactive);
             return dataSourceCategoryList;
         }
 
         [Transaction(TransactionMode.Unspecified)]
-        public IList<string> FindDataSourceCategoryListForOwner(int userId)
+        public IList<string> FindDataSourceCategoryListForOwner(int userId, bool includeInactive)
         {
-            IList<string> dataSourceCategoryList = dataSourceCategoryDao.FindDataSourceCategoryList(userId, "OWNER");
+            IList<string> dataSourceCategoryList = dataSourceCategoryDao.FindDataSourceCategoryList(userId, "OWNER", includeInactive);
             return dataSourceCategoryList;
         }
 
@@ -966,9 +976,9 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Unspecified)]
-        public IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy)
+        public IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy, User user)
         {
-            return dataSourceUploadDao.FindDataSourceUpload(datasourceId, category, subject, fileName, createBy);
+            return dataSourceUploadDao.FindDataSourceUpload(datasourceId, category, subject, fileName, createBy, user);
         }
         #endregion Customized Methods
     }

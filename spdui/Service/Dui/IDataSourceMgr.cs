@@ -34,6 +34,10 @@ namespace Dndp.Service.Dui
 
         DataSourceUpload LoadDataSourceUpload(int dsUploadId);
 
+        DataSourceCategory LoadDataSourceCategory(int dsCategoryId);
+
+        DataSourceCategory LoadDataSourceCategory(int dsCategoryId, bool includeUser);
+
         IList LoadAllActiveDataSource();
 
         IList<ValidationResult> FindValidationResultByIds(string validationResultIds);
@@ -66,6 +70,8 @@ namespace Dndp.Service.Dui
 
         IList<User> FindUserByRole(int roleId);
 
+        IList<User> GetAllUser();
+
         IList<DataSourceOperator> FindOperatorByDSIdAndAllowType(int dsId, string type);
 
         void CreateDataSourceRule(DataSourceRule dsu);
@@ -75,6 +81,8 @@ namespace Dndp.Service.Dui
         void UpdateDataSourceOperator(IList<int> userIdList, int dsId, string allowType);
 
         void CreateDataSourceCategory(DataSourceCategory dsc);
+
+        void UpdateDataSourceCategory(DataSourceCategory dsc, IList<int> userIdList);
 
         void CreateDataSourceWithDrawTable(DataSourceWithDrawTable dsc);
 

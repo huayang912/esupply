@@ -48,8 +48,32 @@ namespace Dndp.Persistence.Entity.Dui
                 _theDataSource = value;
             }
         }
-		
-        
+
+        private bool _activeFlag;
+        public bool ActiveFlag
+        {
+            get
+            {
+                return _activeFlag;
+            }
+            set
+            {
+                _activeFlag = value;
+            }
+        }
+
+        private IList _users;
+        public IList Users
+        {
+            get
+            {
+                return _users;
+            }
+            set
+            {
+                _users = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties

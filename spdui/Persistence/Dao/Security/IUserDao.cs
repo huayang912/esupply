@@ -42,6 +42,8 @@ namespace Dndp.Persistence.Dao.Security
 
         IList<User> FindUserByRole(int roleId);
 
+        IList<User> GetAllUser();
+
         #endregion Customized Methods
     }
 }

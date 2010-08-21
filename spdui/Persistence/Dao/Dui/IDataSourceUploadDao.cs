@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statements here.
 
 namespace Dndp.Persistence.Dao.Dui
@@ -46,7 +47,7 @@ namespace Dndp.Persistence.Dao.Dui
 
         IList<DataSourceUpload> FindDataSourceUpload(IList<int> idList);
 
-        IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy);
+        IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy, User user);
 
         #endregion Customized Methods
     }

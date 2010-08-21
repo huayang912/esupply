@@ -7,6 +7,7 @@ using System.IO;
 using System.Data;
 using Dndp.Utility.CSV;
 using System.Web.UI.WebControls;
+using Dndp.Persistence.Entity.Security;
 
 namespace Dndp.Service.Dui
 {
@@ -39,9 +40,9 @@ namespace Dndp.Service.Dui
 
         IList<DataSourceCategory> FindDataSourceCategoryForETLConfirmer(int userId, string strCategory, string strType, string strStatus);
 
-        IList<string> FindDataSourceCategoryListForETLConfirmer(int userId);
+        IList<string> FindDataSourceCategoryListForETLConfirmer(int userId, bool includeInactive);
 
-        IList<string> FindDataSourceCategoryListForOwner(int userId);
+        IList<string> FindDataSourceCategoryListForOwner(int userId, bool includeInactive);
 
         IList<string> FindDataSourceTypeListForETLConfirmer(int userId);
 
@@ -103,7 +104,7 @@ namespace Dndp.Service.Dui
 
         Boolean FindETLRunStatus();
 
-        IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy);
+        IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy, User user);
 
         #endregion Customized Methods
     }

@@ -18,6 +18,7 @@ using Dndp.Persistence.Entity.Dui;
 using Dndp.Service.Dui;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 
 //TODO: Add other using statements here.
 
@@ -70,6 +71,8 @@ public partial class Modules_Dui_DWDSUpdate_DWDSUpdate : ModuleBase
             {
                 DataView dv = ds.Tables[0].DefaultView;
                 dv.RowFilter = txtCondition.Text.Trim();
+
+                //gvDWDSUpdate.Columns = dv.Table.Columns;
                 gvDWDSUpdate.DataSource = dv;
                 //gvDWDSUpdate.DataSource = TheService.FindViewUpdateResult(TheDWDataSource);
                 gvDWDSUpdate.DataBind();
@@ -117,7 +120,53 @@ public partial class Modules_Dui_DWDSUpdate_DWDSUpdate : ModuleBase
     protected void gvDWDSUpdate_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         GridViewRow gvr = gvDWDSUpdate.Rows[e.RowIndex];
-        TheService.DeleteSelectedResult(TheDWDataSource, (gvDWDSUpdate.PageIndex) * 20 + e.RowIndex, TheDWDataSource.Name, (new SessionHelper(Page)).CurrentUser.UserName.ToString(), txtCondition.Text.Trim());
+
+        #region find key value pair of the pk of this dw data source 
+        IList<KeyValuePair<string, string>> pkKeyValuePairList = new List<KeyValuePair<string, string>>();
+
+        Regex regex = new Regex(@"<[\\$].+?[\\$]>", RegexOptions.Multiline);
+        MatchCollection matchCollection = regex.Matches(TheDWDataSource.DeleteSQL);
+
+        if (matchCollection != null && matchCollection.Count > 0)
+        {
+            IList<string> primaryKeys = new List<string>();
+            foreach (Match pk in matchCollection)
+            {
+                string strPk = pk.Value.TrimStart(new char[] { '<', '$' }).TrimEnd(new char[] { '$', '>' });
+                if (!primaryKeys.Contains(strPk))
+                {
+                    primaryKeys.Add(strPk);
+                }
+            }
+
+            for (int i = 1; i < gvDWDSUpdate.HeaderRow.Cells.Count; i++)
+            {
+                TableCell cell = gvDWDSUpdate.HeaderRow.Cells[i];
+                foreach (string pk in primaryKeys)
+                {
+                    if (cell.Text.ToUpper() == pk.ToUpper())
+                    {
+                        KeyValuePair<string, string> pkKeyValuePair = new KeyValuePair<string, string>(pk, gvr.Cells[i].Text);
+
+                        pkKeyValuePairList.Add(pkKeyValuePair);
+                    }
+                }
+            }
+        }
+
+        #region if not find, use the first column as key value pair
+        //if (pkKeyValuePairList.Count == 0)
+        //{
+        //    KeyValuePair<string, string> pkKeyValuePair = new KeyValuePair<string, string>(gvDWDSUpdate.HeaderRow.Cells[1].Text, gvr.Cells[1].Text);
+
+        //    pkKeyValuePairList.Add(pkKeyValuePair);
+        //}
+        #endregion
+        #endregion
+
+        //TheService.DeleteSelectedResult(TheDWDataSource, (gvDWDSUpdate.PageIndex) * 20 + e.RowIndex, TheDWDataSource.Name, (new SessionHelper(Page)).CurrentUser.UserName.ToString(), txtCondition.Text.Trim());
+
+        TheService.DeleteSelectedResult(TheDWDataSource, pkKeyValuePairList, this.CurrentUser.UserName);
         gvDWDSUpdate.EditIndex = -1;
         UpdateView();
     }

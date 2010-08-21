@@ -91,22 +91,28 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
         IList<string> FoundResult = TheDSUploadService.FindDataSourceTypeListForETLConfirmer((new SessionHelper(Page)).CurrentUser.Id);
         List<string> DSTypeList = new List<string>();
         DSTypeList.Add("");
-        foreach (string strValue in FoundResult)
+        if (FoundResult != null && FoundResult.Count > 0) 
         {
-            DSTypeList.Add(strValue);
+            foreach (string strValue in FoundResult)
+            {
+                DSTypeList.Add(strValue);
+            }
+            ddlDSType.DataSource = DSTypeList;
+            ddlDSType.DataBind();
         }
-        ddlDSType.DataSource = DSTypeList;
-        ddlDSType.DataBind();
 
-        FoundResult = TheDSUploadService.FindDataSourceCategoryListForETLConfirmer((new SessionHelper(Page)).CurrentUser.Id);
+        FoundResult = TheDSUploadService.FindDataSourceCategoryListForETLConfirmer((new SessionHelper(Page)).CurrentUser.Id, false);
         List<string> DSCategoryList = new List<string>();
         DSCategoryList.Add("");
-        foreach (string strValue in FoundResult)
+        if (FoundResult != null && FoundResult.Count > 0) 
         {
-            DSCategoryList.Add(strValue);
+            foreach (string strValue in FoundResult)
+            {
+                DSCategoryList.Add(strValue);
+            }
+            ddlDSCategory.DataSource = DSCategoryList;
+            ddlDSCategory.DataBind();
         }
-        ddlDSCategory.DataSource = DSCategoryList;
-        ddlDSCategory.DataBind();
 
         List<ListItem> DSStatusList = TheDSUploadService.FindDataSourceStatusListForETLConfirmer((new SessionHelper(Page)).CurrentUser.Id);
         ddlDSStatus.DataSource = DSStatusList;

@@ -71,7 +71,9 @@ namespace Dndp.Service.Dui
 
         DataSet FindViewUpdateResult(DWDataSource ds);
 
-        void DeleteSelectedResult(DWDataSource ds, int RowNo, string ActionSource, string ActionUser, string strCondition);
+        //void DeleteSelectedResult(DWDataSource ds, int RowNo, string ActionSource, string ActionUser, string strCondition);
+
+        void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, string ActionUser);
 
         #endregion Customized Methods
 

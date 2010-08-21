@@ -51,7 +51,7 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     //The public method to clear the view
     public void UpdateView()
     {
-        IList<DataSourceUpload> dsUploadHistoryList = TheService.FindDataSourceUpload(TheDataSource.Id, ddlDSCategory.SelectedValue, txtName.Text, txtFileName.Text, txtCreateBy.Text);
+        IList<DataSourceUpload> dsUploadHistoryList = TheService.FindDataSourceUpload(TheDataSource.Id, ddlDSCategory.SelectedValue, txtName.Text, txtFileName.Text, txtCreateBy.Text, this.CurrentUser);
 
         txtDataSourceName.Text = TheDataSource.Name;
 
@@ -127,14 +127,17 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     //Do data query and binding.
     private void UpdateSelection()
     {
-        IList<string> FoundResult = TheService.FindDataSourceCategoryListForETLConfirmer((new SessionHelper(Page)).CurrentUser.Id);
+        IList<string> FoundResult = TheService.FindDataSourceCategoryListForOwner((new SessionHelper(Page)).CurrentUser.Id, true);
         List<string> DSCategoryList = new List<string>();
         DSCategoryList.Add("");
-        foreach (string strValue in FoundResult)
+        if (FoundResult != null && FoundResult.Count > 0)
         {
-            DSCategoryList.Add(strValue);
+            foreach (string strValue in FoundResult)
+            {
+                DSCategoryList.Add(strValue);
+            }
+            ddlDSCategory.DataSource = DSCategoryList;
+            ddlDSCategory.DataBind();
         }
-        ddlDSCategory.DataSource = DSCategoryList;
-        ddlDSCategory.DataBind();
     }
 }

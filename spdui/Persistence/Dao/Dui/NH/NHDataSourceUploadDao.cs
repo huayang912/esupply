@@ -8,6 +8,7 @@ using NHibernate.Type;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
 using Dndp.Persistence.Dao.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statmens here.
 
 namespace Dndp.Persistence.Dao.Dui.NH
@@ -166,18 +167,19 @@ namespace Dndp.Persistence.Dao.Dui.NH
             return FindAllWithCustomQuery(hql.ToString()) as IList<DataSourceUpload>;
         }
 
-        public IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy)
+        public IList<DataSourceUpload> FindDataSourceUpload(int datasourceId, string category, string subject, string fileName, string createBy, User user)
         {
             string hql = @"from DataSourceUpload as dsu 
-                where dsu.TheDataSourceCategory.TheDataSource.Id = ?"
+                where dsu.TheDataSourceCategory.TheDataSource.Id = ?
+                      and ? in elements(dsu.TheDataSourceCategory.Users) "
                 + ((category != null && category.Trim() != string.Empty) ? (" and dsu.TheDataSourceCategory.Name =  '"+category.Trim()+"'") : "")
                 + ((subject != null && subject.Trim() != string.Empty) ? (" and dsu.Name like  '%" + subject.Trim() + "%'") : "")
                 + ((fileName != null && fileName.Trim() != string.Empty) ? (" and dsu.UploadFileOriginName like  '%" + fileName.Trim() + "%'") : "")
                 + ((createBy != null && createBy.Trim() != string.Empty) ? (" and dsu.UploadBy.UserName like '%" + createBy.Trim() + "%'") : "")
                 + @" order by dsu.UploadDate Desc";
 
-            return FindAllWithCustomQuery(hql, new object[] { datasourceId },
-                new IType[] { NHibernateUtil.Int32 }) as IList<DataSourceUpload>;
+            return FindAllWithCustomQuery(hql, new object[] { datasourceId, user.Id },
+                new IType[] { NHibernateUtil.Int32, NHibernateUtil.Int32 }) as IList<DataSourceUpload>;
         }
 
         #endregion Customized Methods

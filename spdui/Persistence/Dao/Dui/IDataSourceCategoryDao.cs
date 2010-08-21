@@ -36,7 +36,7 @@ namespace Dndp.Persistence.Dao.Dui
 
         void DeleteDataSourceCategoryByDSId(int dsId);
 
-        IList<string> FindDataSourceCategoryList(int userId, string allowType);
+        IList<string> FindDataSourceCategoryList(int userId, string allowType, bool includeInactive);
 
         IList<string> FindDataSourceTypeList(int userId, string allowType);
 

@@ -161,8 +161,13 @@ end function
                         </ItemTemplate>
                         <HeaderStyle Width="3%" />
                     </asp:TemplateField>
-                    <asp:BoundField DataField="Name" HeaderText="Category" />
+                    <asp:TemplateField HeaderText="Category">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lbtnCategoryName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Name") %>' CommandName="Select" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' OnClick="lbtnCategoryName_Click"></asp:LinkButton>
+                        </ItemTemplate>
+                    </asp:TemplateField>
                     <asp:BoundField DataField="Description" HeaderText="Description" />
+                    <asp:BoundField DataField="ActiveFlag" HeaderText="Is Active" />
                 </Columns>
     <AlternatingRowStyle CssClass="listA" />
             </asp:GridView>

@@ -66,6 +66,12 @@ end function
             <asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
         </td>
     </tr> 
+    <tr>
+        <td class="txtForm"valign="top">DW Query Start Date:</td>
+        <td><asp:TextBox ID="TextBox1" runat="server"></asp:TextBox></td>
+        <td class="txtForm"valign="top">End Date:</td>
+        <td><asp:TextBox ID="TextBox2" runat="server"></asp:TextBox></td>
+    </tr>
 <!-- Modified By Vincent On 2006-9-1 End -->   
 </table></div>
 <b>Operators List:</b>

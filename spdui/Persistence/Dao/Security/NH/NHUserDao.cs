@@ -169,6 +169,12 @@ namespace Dndp.Persistence.Dao.Security.NH
             return FindAllWithCustomQuery(hql, new object[] { userId }, new IType[] { NHibernate.NHibernateUtil.Int32 });
         }
 
+        public IList<User> GetAllUser()
+        {
+            string hql = "select u from User as u";
+            return FindAllWithCustomQuery(hql) as IList<User>;
+        }
+
         #endregion Customized Methods
     }
 }

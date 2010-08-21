@@ -295,6 +295,12 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Unspecified)]
+        public IList<User> GetAllUser()
+        {
+            return userDao.GetAllUser();
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
         public IList<DataSourceOperator> FindOperatorByDSIdAndAllowType(int dsId, string type)
         {
             return dataSourceOperatorDao.FindAllByDataSourceIdAndAllowType(dsId, type);
@@ -359,6 +365,20 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
+        public void UpdateDataSourceCategory(DataSourceCategory dsc, IList<int> userIdList)
+        {
+            if (userIdList != null && userIdList.Count > 0)
+            {
+                dsc.Users = new ArrayList();
+                foreach (int id in userIdList)
+                {
+                    dsc.Users.Add(this.userDao.LoadUser(id));
+                }
+            }
+            dataSourceCategoryDao.UpdateDataSourceCategory(dsc);
+        }
+
+        [Transaction(TransactionMode.Requires)]
         public void CreateDataSourceWithDrawTable(DataSourceWithDrawTable dsc)
         {
             dataSourceWithDrawTableDao.CreateDataSourceWithDrawTable(dsc);
@@ -387,6 +407,24 @@ namespace Dndp.Service.Dui.Impl
         public IList<string> FindAllDataSourceType()
         {
             return dataSourceDao.FindAllDataSourceType();
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public DataSourceCategory LoadDataSourceCategory(int dsCategoryId)
+        {
+            return this.LoadDataSourceCategory(dsCategoryId, false);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public DataSourceCategory LoadDataSourceCategory(int dsCategoryId, bool includeUser)
+        {
+            DataSourceCategory dsc = this.dataSourceCategoryDao.LoadDataSourceCategory(dsCategoryId);
+
+            if (includeUser && dsc.Users != null && dsc.Users.Count > 0)
+            {
+            }
+
+            return dsc;
         }
 
         private string GernateCreateTableSql(string dsName)

@@ -160,7 +160,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         ddlDSType.DataSource = DSTypeList;
         ddlDSType.DataBind();
 
-        FoundResult = TheDSUploadService.FindDataSourceCategoryListForOwner((new SessionHelper(Page)).CurrentUser.Id);
+        FoundResult = TheDSUploadService.FindDataSourceCategoryListForOwner((new SessionHelper(Page)).CurrentUser.Id, false);
         List<string> DSCategoryList = new List<string>();
         DSCategoryList.Add("");
         if (FoundResult != null)

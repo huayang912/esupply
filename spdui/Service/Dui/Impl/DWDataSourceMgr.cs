@@ -404,36 +404,49 @@ namespace Dndp.Service.Dui.Impl
             return dataSet;
         }
 
+        //[Transaction(TransactionMode.Unspecified)]
+        //public void DeleteSelectedResult(DWDataSource ds, int RowNo, string ActionSource, string ActionUser, string strCondition)
+        //{
+        //    string rule = ds.DeleteQuerySQL.ToUpper();
+
+        //    if (strCondition.Trim().Length > 0)
+        //    {
+        //        rule = "Select * From (" + rule + ") as Res where " + strCondition;
+        //    }
+
+        //    DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
+        //    // Use a DataTable object's DataColumnCollection.
+        //    DataColumnCollection columns = dataSet.Tables[0].Columns;
+
+        //    rule = ds.DeleteSQL.ToUpper();
+
+        //    DataRow dataRow = dataSet.Tables[0].Rows[RowNo];
+        //    foreach (DataColumn column in columns)
+        //    {
+        //        if (dataRow[column] == null)
+        //        {
+        //            rule = rule.Replace("<$" + column.ColumnName.ToUpper() + "$>", "");
+        //        }
+        //        else
+        //        {
+        //            rule = rule.Replace("<$" + column.ColumnName.ToUpper() + "$>", dataRow[column].ToString());
+        //        }
+        //    }
+        //    sqlHelperDao.ExecuteNonQuery(rule);
+        //    LogDBAction(rule, "DWUpdate", ActionSource, ActionUser);
+        //}
+
         [Transaction(TransactionMode.Unspecified)]
-        public void DeleteSelectedResult(DWDataSource ds, int RowNo, string ActionSource, string ActionUser, string strCondition)
+        public void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, string ActionUser)
         {
-            string rule = ds.DeleteQuerySQL.ToUpper();
+            string rule = ds.DeleteSQL.ToUpper();
 
-            if (strCondition.Trim().Length > 0)
+            foreach (KeyValuePair<string, string> pkKeyValuePair in pkKeyValuePairList)
             {
-                rule = "Select * From (" + rule + ") as Res where " + strCondition;
-            }
-
-            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
-            // Use a DataTable object's DataColumnCollection.
-            DataColumnCollection columns = dataSet.Tables[0].Columns;
-
-            rule = ds.DeleteSQL.ToUpper();
-
-            DataRow dataRow = dataSet.Tables[0].Rows[RowNo];
-            foreach (DataColumn column in columns)
-            {
-                if (dataRow[column] == null)
-                {
-                    rule = rule.Replace("<$" + column.ColumnName.ToUpper() + "$>", "");
-                }
-                else
-                {
-                    rule = rule.Replace("<$" + column.ColumnName.ToUpper() + "$>", dataRow[column].ToString());
-                }
+                rule = rule.Replace("<$" + pkKeyValuePair.Key.ToUpper() + "$>", pkKeyValuePair.Value);
             }
             sqlHelperDao.ExecuteNonQuery(rule);
-            LogDBAction(rule, "DWUpdate", ActionSource, ActionUser);
+            LogDBAction(rule, "DWUpdate", ds.Name, ActionUser);
         }
 
         private void LogDBAction(string ActionSql, string ActionType, string ActionSource, string ActionUser)
