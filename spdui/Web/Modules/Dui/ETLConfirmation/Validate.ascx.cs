@@ -75,7 +75,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
         }
         else
         {
-            if (TheDataSourceUpload.ProcessStatus.Equals("OWNER_CONFIRMED"))
+            if (TheDataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
             {
                 btnConfirm.Visible = true;
                 btnUnConfirm.Visible = false;
@@ -312,7 +312,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
     protected void btnConfirm_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(txtId.Value);
-        TheService.ETLConfirmDataSourceUpload(dsUploadId);
+        TheService.ETLConfirmDataSourceUpload(dsUploadId, this.CurrentUser);
         Back(this, e);
     }
 

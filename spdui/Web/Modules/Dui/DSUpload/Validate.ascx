@@ -32,7 +32,8 @@ end function
 <h2>Data Preparation - Data Validation</h2>
 <p class="formBtnBoard">
     <asp:Button ID="btnUpdate" Text="Update Subject" runat="server" OnClick="btnUpdate_Click" CssClass="btn"/>
-    <%if (TheDataSourceUpload.ProcessStatus.Equals("") || TheDataSourceUpload.ProcessStatus.Equals("OWNER_CONFIRMED")) {%>
+    <%if (TheDataSourceUpload.ProcessStatus.Equals("") || TheDataSourceUpload.ProcessStatus.Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
+      {%>
         <input type="button" name="btnValidateAll" value="Validate All" onclick="validateAll();" class="btn" size=""/>           
         <input type="button" name="btnValidateSelected" value="Validate Selected" onclick="validateSelected();" class="btn" size=""/> 
     <%}%>

@@ -16,3 +16,9 @@
 1. security by category。
 2. disable category 是指不再用的category可以disable掉, disable的category不可用于上传新数据,但还是可以查看历史数据
 3. dw update定位出错问题(现在只能单独定位,然后操作)
+
+
+-----------2010/8/29-----------------------
+1. 上传中断后，再上传会导入双倍数据(需error capture 和 rollback)
+2. 在data_source_upload中加confirmed by 
+

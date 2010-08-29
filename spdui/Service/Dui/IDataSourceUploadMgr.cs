@@ -60,11 +60,11 @@ namespace Dndp.Service.Dui
 
         void DeleteDataSourceUploadAndUploadedData(int id);
 
-        void ConfirmDataSourceUpload(int id);
+        void ConfirmDataSourceUpload(int id, User user);
 
         void UnconfirmDataSourceUpload(int id);
 
-        void ETLConfirmDataSourceUpload(int id);
+        void ETLConfirmDataSourceUpload(int id, User user);
 
         void ETLUnconfirmDataSourceUpload(int id);
 

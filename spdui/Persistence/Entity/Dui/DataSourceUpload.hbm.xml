@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
-  <class name="Dndp.Persistence.Entity.Dui.DataSourceUpload, Dndp.Persistence" table="DATA_SOURCE_UPLOAD">
-    <id name="Id" column="UPLOAD_ID" type="Int32" unsaved-value="0" >
-      <generator class="identity" />
-    </id>
-    <property name="Name" column="UPLOAD_NAME" type="String" length="50" />
-    <property name="BatchNo" column="UPLOAD_BATCH_NO" type="Int32" />
-    <property name="ProcessStatus" column="PROCESS_STATUS" type="String" length="50" />
-    <property name="ProcessStatusDate" column="PROCESS_STATUS_DATE" type="DateTime"/>
-    <property name="UploadDate" column="UPLOAD_DATE" type="DateTime" />
-    <property name="UploadFileOriginName" column="UPLOAD_FILE_ORIGIN_NAME" type="String" length="200" />
-    <property name="UploadFileStoreName" column="UPLOAD_FILE_STORE_NAME" type="String" length="200" />
-    <property name="UploadFileLength" column="UPLOAD_FILE_LENGTH" type="Int64" />
-    <property name="RecordRows" column="RecordRows" type="Int64" />
-    <property name="Errors" column="ERRORS" type="Int32" />
-    <property name="Problems" column="PROBLEMS" type="Int32" />
-	<property name="Warnings" column="WARNINGS" type="Int32" />
-    <property name="IsWithdraw" column="Withdraw_Flag" type="Int32" />
-	<property name="IsHitoryDelete" column="History_Delete_Flag" type="Int32" />	
-    <many-to-one name="UploadBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="UPLOAD_BY_USER_ID" cascade="none" />
-    <many-to-one name="TheDataSourceCategory" class="Dndp.Persistence.Entity.Dui.DataSourceCategory, Dndp.Persistence" column="DATA_SOURCE_CATEGORY_ID" cascade="none" />
-  </class>
+	<class name="Dndp.Persistence.Entity.Dui.DataSourceUpload, Dndp.Persistence" table="DATA_SOURCE_UPLOAD">
+		<id name="Id" column="UPLOAD_ID" type="Int32" unsaved-value="0" >
+			<generator class="identity" />
+		</id>
+		<property name="Name" column="UPLOAD_NAME" type="String" length="50" />
+		<property name="BatchNo" column="UPLOAD_BATCH_NO" type="Int32" />
+		<property name="ProcessStatus" column="PROCESS_STATUS" type="String" length="50" />
+		<property name="ProcessStatusDate" column="PROCESS_STATUS_DATE" type="DateTime"/>
+		<property name="UploadDate" column="UPLOAD_DATE" type="DateTime" />
+		<property name="UploadFileOriginName" column="UPLOAD_FILE_ORIGIN_NAME" type="String" length="200" />
+		<property name="UploadFileStoreName" column="UPLOAD_FILE_STORE_NAME" type="String" length="200" />
+		<property name="UploadFileLength" column="UPLOAD_FILE_LENGTH" type="Int64" />
+		<property name="RecordRows" column="RecordRows" type="Int64" />
+		<property name="Errors" column="ERRORS" type="Int32" />
+		<property name="Problems" column="PROBLEMS" type="Int32" />
+		<property name="Warnings" column="WARNINGS" type="Int32" />
+		<property name="IsWithdraw" column="Withdraw_Flag" type="Int32" />
+		<property name="IsHitoryDelete" column="History_Delete_Flag" type="Int32" />
+		<many-to-one name="UploadBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="UPLOAD_BY_USER_ID" cascade="none" />
+		<many-to-one name="TheDataSourceCategory" class="Dndp.Persistence.Entity.Dui.DataSourceCategory, Dndp.Persistence" column="DATA_SOURCE_CATEGORY_ID" cascade="none" />
+		<many-to-one name="OwnerConfirmBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="OWNER_CONFIRM_BY" cascade="none" />
+		<property name="OwnerConfirmDate" column="OWNER_CONFIRM_DATE" type="DateTime" />
+		<many-to-one name="ETLConfirmBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="ETL_CONFIRM_BY" cascade="none" />
+		<property name="ETLConfirmDate" column="ETL_CONFIRM_DATE" type="DateTime" />
+	</class>
 </hibernate-mapping>

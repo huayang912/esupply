@@ -82,14 +82,14 @@ namespace Dndp.Utility.CSV
 
         public string GetClearTableSql()
         {
-            if (errorMessages != null && errorMessages.Count > 0)
-            {
-                return null;
-            }
-            else
-            {
+            //if (errorMessages != null && errorMessages.Count > 0)
+            //{
+            //    return null;
+            //}
+            //else
+            //{
                 return clearTableSql.ToString();
-            }
+            //}
         }
 
         public void setRecordCountPerParse(int recordCountPerParse)
@@ -207,7 +207,7 @@ namespace Dndp.Utility.CSV
             clearTableSql.Append(" where CATEGORY_id = " + dataSourceCategoryid.ToString() + ";");
             clearTableSql.Append("delete from ");
             clearTableSql.Append(DataSourceHelper.GetHistoryTableName(dataSourceName));
-            clearTableSql.Append(" where CATEGORY_id = " + dataSourceCategoryid.ToString() + "and BATCH_NO = " + this.batchNo + ";");
+            clearTableSql.Append(" where CATEGORY_id = " + dataSourceCategoryid.ToString() + " and BATCH_NO = " + this.batchNo + ";");
 
             //append insert sql common
             insertTempTableSqlCommon.Append("insert into ");

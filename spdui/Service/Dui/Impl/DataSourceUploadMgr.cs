@@ -185,7 +185,7 @@ namespace Dndp.Service.Dui.Impl
             {
                 foreach (DataSourceUpload dataSourceUpload in dataSourceUploadList)
                 {
-                    if (!dataSourceUpload.ProcessStatus.Equals("ETL_SUCCESS"))
+                    if (!dataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS))
                     {
                         int dataSourceCategoryId = dataSourceUpload.TheDataSourceCategory.Id;
                         foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
@@ -229,8 +229,8 @@ namespace Dndp.Service.Dui.Impl
             {
                 foreach (DataSourceUpload dataSourceUpload in dataSourceUploadList)
                 {
-                    if (dataSourceUpload.ProcessStatus.Equals("ETL_LOCKED") || dataSourceUpload.ProcessStatus.Equals("OWNER_CONFIRMED")
-                        || dataSourceUpload.ProcessStatus.Equals("ETL_CONFIRMED") || dataSourceUpload.ProcessStatus.Equals("ETL_FAILED"))
+                    if (dataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_LOCKED) || dataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED)
+                        || dataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED) || dataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED))
                     {
                         int dataSourceCategoryId = dataSourceUpload.TheDataSourceCategory.Id;
                         foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
@@ -303,10 +303,10 @@ namespace Dndp.Service.Dui.Impl
             List<ListItem> dataSourceStatusList = new List<ListItem>();
             dataSourceStatusList.Add(new ListItem("(All)", "ALL"));
             dataSourceStatusList.Add(new ListItem("OWNER_UPLOADED", ""));
-            dataSourceStatusList.Add(new ListItem("OWNER_CONFIRMED", "OWNER_CONFIRMED"));
-            dataSourceStatusList.Add(new ListItem("ETL_CONFIRMED", "ETL_CONFIRMED"));
-            dataSourceStatusList.Add(new ListItem("ETL_FAILED", "ETL_FAILED"));
-            dataSourceStatusList.Add(new ListItem("ETL_LOCKED", "ETL_LOCKED"));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED, DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED, DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED, DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_LOCKED, DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_LOCKED));
 
             return dataSourceStatusList;
         }
@@ -316,10 +316,10 @@ namespace Dndp.Service.Dui.Impl
         {
             List<ListItem> dataSourceStatusList = new List<ListItem>();
             dataSourceStatusList.Add(new ListItem("(All)", "ALL"));
-            dataSourceStatusList.Add(new ListItem("OWNER_CONFIRMED", "OWNER_CONFIRMED"));
-            dataSourceStatusList.Add(new ListItem("ETL_CONFIRMED", "ETL_CONFIRMED"));
-            dataSourceStatusList.Add(new ListItem("ETL_FAILED", "ETL_FAILED"));
-            dataSourceStatusList.Add(new ListItem("ETL_LOCKED", "ETL_LOCKED"));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED, DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED, DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED, DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED));
+            dataSourceStatusList.Add(new ListItem(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_LOCKED, DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_LOCKED));
 
             return dataSourceStatusList;
         }
@@ -346,14 +346,14 @@ namespace Dndp.Service.Dui.Impl
             int batchNo = 0;
             //find and delete if last upload record is confirmed
             DataSourceUpload lastDSUpload = dataSourceUploadDao.FindLastestDSUpload(dscCategory.Id);
-            if (lastDSUpload != null && (lastDSUpload.ProcessStatus.Equals("") || lastDSUpload.ProcessStatus.Equals("OWNER_CONFIRMED")))
+            if (lastDSUpload != null && (lastDSUpload.ProcessStatus.Equals("") || lastDSUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED)))
             {
                 this.DeleteDataSourceUploadAndUploadedData(lastDSUpload.Id);
                 batchNo = lastDSUpload.BatchNo;
             }
             else
             {
-                if (lastDSUpload == null || lastDSUpload.ProcessStatus.Equals("ETL_SUCCESS"))
+                if (lastDSUpload == null || lastDSUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS))
                 {
                     batchNo = dataSourceUploadDao.GenerateBatchNo(dscCategory.Id);
                 }
@@ -494,13 +494,15 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void ConfirmDataSourceUpload(int id)
+        public void ConfirmDataSourceUpload(int id, User user)
         {
             DataSourceUpload dsUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
             if (dsUpload.ProcessStatus == "")
             {
-                dsUpload.ProcessStatus = "OWNER_CONFIRMED";
+                dsUpload.ProcessStatus = DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED;
                 dsUpload.ProcessStatusDate = DateTime.Now;
+                dsUpload.OwnerConfirmBy = user;
+                dsUpload.OwnerConfirmDate = dsUpload.ProcessStatusDate;
                 dataSourceUploadDao.UpdateDataSourceUpload(dsUpload);
             }
         }
@@ -509,22 +511,26 @@ namespace Dndp.Service.Dui.Impl
         public void UnconfirmDataSourceUpload(int id)
         {
             DataSourceUpload dsUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
-            if (dsUpload.ProcessStatus == "OWNER_CONFIRMED")
+            if (dsUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED)
             {
                 dsUpload.ProcessStatus = "";
                 dsUpload.ProcessStatusDate = DateTime.Now;
+                dsUpload.OwnerConfirmBy = null;
+                dsUpload.OwnerConfirmDate = null;
                 dataSourceUploadDao.UpdateDataSourceUpload(dsUpload);
             }
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void ETLConfirmDataSourceUpload(int id)
+        public void ETLConfirmDataSourceUpload(int id, User user)
         {
             DataSourceUpload dsUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
-            if (dsUpload.ProcessStatus == "OWNER_CONFIRMED")
+            if (dsUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED)
             {
-                dsUpload.ProcessStatus = "ETL_CONFIRMED";
+                dsUpload.ProcessStatus = DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED;
                 dsUpload.ProcessStatusDate = DateTime.Now;
+                dsUpload.ETLConfirmBy = user;
+                dsUpload.ETLConfirmDate = dsUpload.ProcessStatusDate;
                 dataSourceUploadDao.UpdateDataSourceUpload(dsUpload);
             }
         }
@@ -533,10 +539,12 @@ namespace Dndp.Service.Dui.Impl
         public void ETLUnconfirmDataSourceUpload(int id)
         {
             DataSourceUpload dsUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
-            if (dsUpload.ProcessStatus == "ETL_CONFIRMED" || dsUpload.ProcessStatus == "ETL_FAILED")
+            if (dsUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED || dsUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED)
             {
-                dsUpload.ProcessStatus = "OWNER_CONFIRMED";
+                dsUpload.ProcessStatus = DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED;
                 dsUpload.ProcessStatusDate = DateTime.Now;
+                dsUpload.ETLConfirmBy = null;
+                dsUpload.ETLConfirmDate = null;
                 dataSourceUploadDao.UpdateDataSourceUpload(dsUpload);
             }
         }
@@ -670,6 +678,7 @@ namespace Dndp.Service.Dui.Impl
         private string UpdateValidationSQLContent(ValidationResult vr, string rule)
         {
             rule = rule.Replace("<$Category$>", vr.TheDataSourceUpload.TheDataSourceCategory.Name.ToString());
+            rule = rule.Replace("<$BatchNo$>", vr.TheDataSourceUpload.BatchNo.ToString());
             rule = rule.Replace("<$DWDBString$>", this.DWDBString);
             return rule;
         }
@@ -788,7 +797,7 @@ namespace Dndp.Service.Dui.Impl
         {
             DataSourceUpload TheDataSourceUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
             string SQLStatement = "";
-            if (TheDataSourceUpload.ProcessStatus == "ETL_SUCCESS")
+            if (TheDataSourceUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS)
             {
                 TheDataSourceUpload.IsWithdraw = 1;
                 dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
@@ -820,7 +829,7 @@ namespace Dndp.Service.Dui.Impl
         public void DeleteUpdateRecord(DataSourceUpload TheDataSourceUpload, String RecId)
         {
             string SQLStatement = "";
-            if (TheDataSourceUpload.ProcessStatus == "" || TheDataSourceUpload.ProcessStatus == "OWNER_CONFIRMED")
+            if (TheDataSourceUpload.ProcessStatus == "" || TheDataSourceUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED)
             {
                 DataSource ds = TheDataSourceUpload.TheDataSourceCategory.TheDataSource;
                 SQLStatement = "Select BATCH_NO, ROW_NO, CATEGORY From " + ds.Name + " Where Rec_Id = " + RecId;
@@ -852,7 +861,7 @@ namespace Dndp.Service.Dui.Impl
         {
             DataSourceUpload TheDataSourceUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
             string SQLStatement = "";
-            if (TheDataSourceUpload.ProcessStatus == "ETL_SUCCESS")
+            if (TheDataSourceUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS)
             {
                 TheDataSourceUpload.IsHitoryDelete = 1;
                 dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
@@ -870,7 +879,7 @@ namespace Dndp.Service.Dui.Impl
         public void SaveUpdateRecord(DataSourceUpload TheDataSourceUpload, String RecId, Hashtable updFieldTable)
         {
             string SQLStatement = "";
-            if (TheDataSourceUpload.ProcessStatus == "" || TheDataSourceUpload.ProcessStatus == "OWNER_CONFIRMED")
+            if (TheDataSourceUpload.ProcessStatus == "" || TheDataSourceUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED)
             {
                 DataSource ds = TheDataSourceUpload.TheDataSourceCategory.TheDataSource;
                 SQLStatement = "Select BATCH_NO, ROW_NO, CATEGORY From " + ds.Name + " Where Rec_Id = " + RecId;

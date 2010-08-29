@@ -138,7 +138,7 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
     protected void lbtnConfirm_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheDSUploadService.ETLConfirmDataSourceUpload(dsUploadId);
+        TheDSUploadService.ETLConfirmDataSourceUpload(dsUploadId, this.CurrentUser);
         UpdateView();
     }
     protected void lbtnUnconfirm_Click(object sender, EventArgs e)

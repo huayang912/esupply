@@ -71,12 +71,12 @@ end function
         <asp:TemplateField HeaderText="Action" meta:resourcekey="TemplateFieldResource8">
             <ItemTemplate>
             <asp:LinkButton ID="lbtnDelete" runat="server" Text="[Delete]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnDeleteResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null && (DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").Equals(""))%>' OnClick="lbtnDelete_Click" OnClientClick="return ButtonWarning('Delete')"></asp:LinkButton>
-            <asp:LinkButton ID="lbtnUpload" runat="server" Text="[Upload]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" meta:resourcekey="lbtnUploadResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") == null || DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").ToString().Equals("ETL_SUCCESS")%>' OnClick="lbtnUpload_Click" ></asp:LinkButton>
+            <asp:LinkButton ID="lbtnUpload" runat="server" Text="[Upload]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" meta:resourcekey="lbtnUploadResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") == null || DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").ToString().Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS)%>' OnClick="lbtnUpload_Click" ></asp:LinkButton>
             <asp:LinkButton ID="lbtnConfirm" runat="server" Text="[Confirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnConfirmResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null && DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").Equals("")  && DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Errors").Equals(0)%>' OnClick="lbtnConfirm_Click" OnClientClick="return ButtonWarning('Confirm')"></asp:LinkButton>
-            <asp:LinkButton ID="lbtnUnconfirm" runat="server" Text="[Unconfirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnUnconfirmResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null && DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").ToString().Equals("OWNER_CONFIRMED") %>' OnClick="lbtnUnconfirm_Click" OnClientClick="return ButtonWarning('UnConfirm')"></asp:LinkButton>
+            <asp:LinkButton ID="lbtnUnconfirm" runat="server" Text="[Unconfirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnUnconfirmResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null && DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").ToString().Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED) %>' OnClick="lbtnUnconfirm_Click" OnClientClick="return ButtonWarning('UnConfirm')"></asp:LinkButton>
             <asp:LinkButton ID="lbtnTemplate" runat="server" Text="[Download Template]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" meta:resourcekey="lbtnUnconfirmResource" OnClick="lbtnTemplate_Click"></asp:LinkButton>
             <asp:LinkButton ID="lbtnDownload" runat="server" Text="[Download]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnUnconfirmResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null%>' OnClick="lbtnDownload_Click"></asp:LinkButton>
-            <asp:LinkButton ID="lbtnETLLog" runat="server" Text="[Log]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnUnconfirmResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null && DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").ToString().Equals("ETL_FAILED") %>' OnClick="lbtnETLLog_Click"></asp:LinkButton>
+            <asp:LinkButton ID="lbtnETLLog" runat="server" Text="[Log]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnUnconfirmResource" Visible='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload") != null && DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ProcessStatus").ToString().Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED) %>' OnClick="lbtnETLLog_Click"></asp:LinkButton>
             </ItemTemplate>
             <ItemStyle HorizontalAlign="Left" Wrap="False" />
         </asp:TemplateField>
@@ -109,9 +109,19 @@ end function
         </asp:TemplateField>
         <asp:TemplateField HeaderText="Created Date" meta:resourcekey="TemplateFieldResource7">
             <ItemTemplate>
-                <asp:LinkButton ID="lbtnCreatedDate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.UploadDate") %>'  CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnCreatedDateResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
+                <asp:LinkButton ID="lbtnCreatedDate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.UploadDate", "{0:d}") %>'  CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnCreatedDateResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
             </ItemTemplate>
             <ItemStyle HorizontalAlign="Center" />
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Owner Confirmed By" meta:resourcekey="TemplateFieldResource8">
+            <ItemTemplate>
+                <asp:LinkButton ID="lbtnOwnerConfirmedBy" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.OwnerConfirmBy.UserName") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnOwnerConfirmedByResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="ETL Confirmed By" meta:resourcekey="TemplateFieldResource9">
+            <ItemTemplate>
+                <asp:LinkButton ID="lbtnETLConfirmedBy" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ETLConfirmBy.UserName") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnETLConfirmedByResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
+            </ItemTemplate>
         </asp:TemplateField>
     </Columns>
     <AlternatingRowStyle CssClass="listA" />

@@ -23,7 +23,8 @@ function ButtonWarning(Action)
 end function
 </script>
 <h2>Data Confirmation - Data Validation</h2>
-<p class="formBtnBoard"> <%if (TheDataSourceUpload.ProcessStatus.Equals("OWNER_CONFIRMED")) {%>
+<p class="formBtnBoard"> <%if (TheDataSourceUpload.ProcessStatus.Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
+                           {%>
             <input type="button" name="btnValidateAll" value="Validate All" onclick="validateAll();" class=btn />        
             <input type="button" name="btnValidateSelected" value="Validate Selected" onclick="validateSelected();" class=btn />
             <%}%>

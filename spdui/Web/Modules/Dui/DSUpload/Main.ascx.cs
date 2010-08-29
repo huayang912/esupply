@@ -223,7 +223,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
     protected void lbtnConfirm_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheDSUploadService.ConfirmDataSourceUpload(dsUploadId);
+        TheDSUploadService.ConfirmDataSourceUpload(dsUploadId, this.CurrentUser);
         UpdateView();
     }
     protected void lbtnUnconfirm_Click(object sender, EventArgs e)

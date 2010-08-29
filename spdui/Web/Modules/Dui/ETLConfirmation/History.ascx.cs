@@ -72,7 +72,7 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     protected void lbtnConfirm_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.ETLConfirmDataSourceUpload(dsUploadId);
+        TheService.ETLConfirmDataSourceUpload(dsUploadId, this.CurrentUser);
         lblMessage.Text = "Confirm successful!";
         lblMessage.Visible = true;
         UpdateView();

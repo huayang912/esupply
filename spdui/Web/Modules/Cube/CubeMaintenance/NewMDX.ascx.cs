@@ -108,7 +108,7 @@ public partial class Modules_Cube_CubeMaintenance_NewMDX : ModuleBase
         {
             Int32.Parse(txtSequenceNo.Text);
         }
-        catch (FormatException ex)
+        catch (FormatException)
         {
             lblMessage.Text = "Sequence No must be an integer";
             lblMessage.Visible = true;

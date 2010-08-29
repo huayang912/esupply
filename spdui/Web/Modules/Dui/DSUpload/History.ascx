@@ -66,6 +66,16 @@ end function
                 HeaderText="Create Date">
                 <ItemStyle HorizontalAlign="Center" />
             </asp:BoundField>
+            <asp:TemplateField ShowHeader="true" HeaderText="Owner Confirmed By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "OwnerConfirmBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField ShowHeader="true" HeaderText="ETL Confirmed By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "ETLConfirmBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField ShowHeader="true" HeaderText="Action" meta:resourcekey="TemplateFieldResource8"
                 ItemStyle-Wrap="false">
                 <ItemTemplate>

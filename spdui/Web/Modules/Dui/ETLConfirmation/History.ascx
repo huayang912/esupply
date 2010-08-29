@@ -94,6 +94,16 @@ end function
                 HeaderText="Create Date">
                 <ItemStyle HorizontalAlign="Center" />
             </asp:BoundField>
+            <asp:TemplateField ShowHeader="true" HeaderText="Owner Confirmed By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "OwnerConfirmBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField ShowHeader="true" HeaderText="ETL Confirmed By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "ETLConfirmBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:TemplateField ShowHeader="true" HeaderText="Action" meta:resourcekey="TemplateFieldResource8"
                 ItemStyle-Wrap="false">
                 <ItemTemplate>
@@ -101,13 +111,13 @@ end function
                         CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0 %>'
                         OnClick="lbtnDownload_Click"></asp:LinkButton>
                     <asp:LinkButton ID="lbtnConfirm" runat="server" Text="[Confirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                        CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals("OWNER_CONFIRMED") && ((int)DataBinder.Eval(Container.DataItem, "Errors")) == 0 %>'
+                        CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED) && ((int)DataBinder.Eval(Container.DataItem, "Errors")) == 0 %>'
                         OnClick="lbtnConfirm_Click" OnClientClick="return ButtonWarning('Confirm')"></asp:LinkButton>
                     <asp:LinkButton ID="lbtnUnconfirm" runat="server" Text="[Unconfirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                        CommandName="Select" Visible='<%# (DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals("ETL_CONFIRMED") || DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals("ETL_FAILED")) %>'
+                        CommandName="Select" Visible='<%# (DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED) || DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED)) %>'
                         OnClick="lbtnUnconfirm_Click" OnClientClick="return ButtonWarning('UnConfirm')"></asp:LinkButton>
                     <asp:LinkButton ID="lbtnWithDrawTable" runat="server" Text="[WithDraw Data]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                        CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals("ETL_SUCCESS") && ((int)DataBinder.Eval(Container.DataItem, "TheDataSourceCategory.TheDataSource.WithDrawTables")) == 1 && ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 0 %>'
+                        CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS) && ((int)DataBinder.Eval(Container.DataItem, "TheDataSourceCategory.TheDataSource.WithDrawTables")) == 1 && ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 0 %>'
                         OnClick="lbtnWithDrawTable_Click" OnClientClick="return ButtonWarning('WithDraw')"></asp:LinkButton>
                     <%# ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 1 ? "WithDrawed" : "" %>
                     <asp:LinkButton ID="LinkDeleteHistory" runat="server" Text="[Delete Raw Data]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'

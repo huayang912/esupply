@@ -219,10 +219,68 @@ namespace Dndp.Persistence.Entity.Dui
             {
                 _isHitoryDelete = value;
             }
-        }  
+        }
+
+        private DateTime? _ownerConfirmDate;
+        public DateTime? OwnerConfirmDate
+        {
+            get
+            {
+                return _ownerConfirmDate;
+            }
+            set
+            {
+                _ownerConfirmDate = value;
+            }
+        }
+
+
+        private User _ownerConfirmBy;
+        public User OwnerConfirmBy
+        {
+            get
+            {
+                return _ownerConfirmBy;
+            }
+            set
+            {
+                _ownerConfirmBy = value;
+            }
+        }
+
+        private DateTime? _etlConfirmDate;
+        public DateTime? ETLConfirmDate
+        {
+            get
+            {
+                return _etlConfirmDate;
+            }
+            set
+            {
+                _etlConfirmDate = value;
+            }
+        }
+
+        private User _etlConfirmBy;
+        public User ETLConfirmBy
+        {
+            get
+            {
+                return _etlConfirmBy;
+            }
+            set
+            {
+                _etlConfirmBy = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties
+        public static string DataSourceUpload_ProcessStatus_OWNER_CONFIRMED = "OWNER_CONFIRMED";
+        public static string DataSourceUpload_ProcessStatus_ETL_CONFIRMED = "ETL_CONFIRMED";
+        public static string DataSourceUpload_ProcessStatus_ETL_SUCCESS = "ETL_SUCCESS";
+        public static string DataSourceUpload_ProcessStatus_ETL_FAILED = "ETL_FAILED";
+        public static string DataSourceUpload_ProcessStatus_ETL_LOCKED = "ETL_LOCKED";
 
         private IList<ValidationResult> _validationResultList;
         public IList<ValidationResult> ValidationResultList
