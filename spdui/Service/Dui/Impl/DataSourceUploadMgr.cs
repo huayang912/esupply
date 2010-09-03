@@ -678,7 +678,7 @@ namespace Dndp.Service.Dui.Impl
         private string UpdateValidationSQLContent(ValidationResult vr, string rule)
         {
             rule = rule.Replace("<$Category$>", vr.TheDataSourceUpload.TheDataSourceCategory.Name.ToString());
-            rule = rule.Replace("<$BatchNo$>", vr.TheDataSourceUpload.BatchNo.ToString());
+            //rule = rule.Replace("<$BatchNo$>", vr.TheDataSourceUpload.BatchNo.ToString());
             rule = rule.Replace("<$DWDBString$>", this.DWDBString);
             return rule;
         }
