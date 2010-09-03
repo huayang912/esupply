@@ -89,6 +89,7 @@ public partial class Modules_Dui_DSMaintenance_NewCategory : ModuleBase
         else
         {
             DataSourceCategory dsc = TheService.LoadDataSourceCategory(int.Parse(txtDscId.Value));
+            dsc.Name = txtCategoryName.Text;
             dsc.Description = txtCategoryDescription.Text;
             dsc.ActiveFlag = bool.Parse(rblIsActive.SelectedValue);
 
@@ -125,7 +126,7 @@ public partial class Modules_Dui_DSMaintenance_NewCategory : ModuleBase
         {
             DataSourceCategory dataSourceCategory = TheService.LoadDataSourceCategory(int.Parse(txtDscId.Value), true);
             txtCategoryName.Text = dataSourceCategory.Name;
-            txtCategoryName.ReadOnly = true;
+            //txtCategoryName.ReadOnly = true;
             txtCategoryDescription.Text = dataSourceCategory.Description;
             if (dataSourceCategory.ActiveFlag)
             {
