@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
+	<class name="Dndp.Persistence.Entity.OffLineReport.ReportValidationResult, Dndp.Persistence" table="OffLine_Report_Validation_Result">
+		<id name="Id" column="RecId" type="Int32" unsaved-value="0" >
+		  <generator class="identity" />
+	  </id>
+	<many-to-one name="TheJob" class="Dndp.Persistence.Entity.OffLineReport.ReportJob, Dndp.Persistence" column="Job_Id" cascade="none" />
+	<many-to-one name="TheRule" class="Dndp.Persistence.Entity.OffLineReport.ReportValidationRule, Dndp.Persistence" column="Rule_Id" cascade="none" />
+    <property name="Status" column="Status" type="String" length="20" />
+    <property name="FailedRowCount" column="Failed_Row_Count" type="Int32" />	
+    <property name="RowNoList" column="Row_No_List" type="StringClob" />
+  </class>
+</hibernate-mapping>

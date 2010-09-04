@@ -48,6 +48,12 @@ namespace Dndp.Service.OffLineReport
 
         IList FindReportByBatchId(int Id);
 
+        void AddReportBatchUser(int batchId, IList<int> userIdList);
+
+        IList FindUserByBatchId(int batchId);
+
+        void DeleteReportBatchUser(IList<int> idList);
+
         #endregion Customized Methods
 
     }

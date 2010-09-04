@@ -77,7 +77,7 @@ public partial class Modules_OffLineReport_JobExecution_Main : ModuleBase
     //Do data query and binding.
     private void UpdateView()
     {
-        IList<ReportBatch> result = TheService.FindReportBatchWithJob();
+        IList<ReportBatch> result = TheService.FindReportBatchWithJob(this.CurrentUser);
         gvReportBatch.DataSource = result;
         gvReportBatch.DataBind();
     }

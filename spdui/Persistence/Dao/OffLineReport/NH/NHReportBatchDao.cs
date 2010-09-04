@@ -8,6 +8,7 @@ using NHibernate.Type;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.OffLineReport;
 using Dndp.Persistence.Dao.OffLineReport;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statmens here.
 
 namespace Dndp.Persistence.Dao.OffLineReport.NH
@@ -84,6 +85,12 @@ namespace Dndp.Persistence.Dao.OffLineReport.NH
             return FindAllWithCustomQuery("from ReportBatch ds where ds.ActiveFlag=1 order by ds.Description");
         }
 
+        public IList LoadlActiveReportBatchByUser(User user)
+        {
+            return FindAllWithCustomQuery(@"select dsu.TheReportBatch
+                                            from ReportBatchUser as dsu
+                                            where dsu.TheReportBatch.ActiveFlag=1 and dsu.TheUser.Id = ? order by dsu.TheReportBatch.Description", user.Id);
+        }
         #endregion Customized Methods
     }
 }

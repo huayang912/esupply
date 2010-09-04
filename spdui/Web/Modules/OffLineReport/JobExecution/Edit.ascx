@@ -221,6 +221,21 @@ function ChooseAll(varControlName)
                 <%# DataBinder.Eval(Container.DataItem, "TheUser.TheUser.DomainAccount")%>
             </ItemTemplate>
         </asp:TemplateField>
+        <asp:TemplateField HeaderText="Create Report">
+            <ItemTemplate>
+                <%# DataBinder.Eval(Container.DataItem, "ReportCreateStatus")%>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Send Email">
+            <ItemTemplate>
+                <%# DataBinder.Eval(Container.DataItem, "ReportEmailStatus")%>
+            </ItemTemplate>
+        </asp:TemplateField>
+        <asp:TemplateField HeaderText="Upload Portal">
+            <ItemTemplate>
+                <%# DataBinder.Eval(Container.DataItem, "ReportPortalStatus")%>
+            </ItemTemplate>
+        </asp:TemplateField>
     </Columns>
     <AlternatingRowStyle CssClass="listA" />
 </asp:GridView>

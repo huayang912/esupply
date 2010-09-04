@@ -59,7 +59,7 @@ namespace Dndp.Service.OffLineReport
         #region Customized Methods
 
         //TODO: Add other methods here.
-        IList<ReportBatch> FindReportBatchWithJob();
+        IList<ReportBatch> FindReportBatchWithJob(User user);
 
         IList FindReportJobByBatchId(int Id);
 

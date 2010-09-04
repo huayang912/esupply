@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default"
-    Culture="auto" UICulture="auto" %>
+    Culture="auto" UICulture="auto" ValidateRequest="false" %>
 
 <%@ Register Src="UserControls/MenuBar.ascx" TagName="MenuBar" TagPrefix="uc3" %>
 <%@ Register Src="UserControls/Top.ascx" TagName="Top" TagPrefix="uc1" %>

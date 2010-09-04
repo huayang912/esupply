@@ -296,9 +296,9 @@ namespace Dndp.Service.OffLineReport.Impl
         }
 
         [Transaction(TransactionMode.Unspecified)]
-        public IList<ReportBatch> FindReportBatchWithJob()
+        public IList<ReportBatch> FindReportBatchWithJob(User user)
         {
-            IList<ReportBatch> reportBatchList = reportBatchDao.LoadAllActiveReportBatch() as IList<ReportBatch>;
+            IList<ReportBatch> reportBatchList = reportBatchDao.LoadlActiveReportBatchByUser(user) as IList<ReportBatch>;
 
             if (reportBatchList != null && reportBatchList.Count > 0)
             {

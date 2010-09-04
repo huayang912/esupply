@@ -104,6 +104,8 @@
     <Compile Include="Dui\Impl\DataSourceMgr.cs" />
     <Compile Include="Dui\Impl\DataSourceUploadMgr.cs" />
     <Compile Include="ISession.cs" />
+    <Compile Include="OffLineReport\Impl\ReportValidationRuleMgr.cs" />
+    <Compile Include="OffLineReport\IReportValidationRuleMgr.cs" />
     <Compile Include="OffLineReport\Impl\ReportBatchMgr.cs" />
     <Compile Include="OffLineReport\Impl\ReportJobMgr.cs" />
     <Compile Include="OffLineReport\Impl\ReportParameterMgr.cs" />

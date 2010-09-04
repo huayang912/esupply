@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.OffLineReport;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statements here.
 
 namespace Dndp.Persistence.Dao.OffLineReport
@@ -33,6 +34,8 @@ namespace Dndp.Persistence.Dao.OffLineReport
         //TODO: Add other customized methods.
 
         IList LoadAllActiveReportBatch();
+
+        IList LoadlActiveReportBatchByUser(User user);
 
         #endregion Customized Methods
     }

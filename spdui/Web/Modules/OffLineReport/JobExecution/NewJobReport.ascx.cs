@@ -43,6 +43,14 @@ public partial class Modules_OffLineReport_JobExecution_NewJobReport : ModuleBas
         }
     }
 
+    protected IReportBatchMgr TheReportBatchService
+    {
+        get
+        {
+            return GetService("ReportBatchMgr.service") as IReportBatchMgr;
+        }
+    }
+
     public IList<ReportJobReport> TheReportJobReport
     {
         get
@@ -52,6 +60,18 @@ public partial class Modules_OffLineReport_JobExecution_NewJobReport : ModuleBas
         set
         {
             ViewState["TheReportJobReport"] = value;
+        }
+    }
+
+    public int TheReportBatchId
+    {
+        get
+        {
+            return (int)ViewState["TheReportBatchId"];
+        }
+        set
+        {
+            ViewState["TheReportBatchId"] = value;
         }
     }
 
@@ -72,7 +92,8 @@ public partial class Modules_OffLineReport_JobExecution_NewJobReport : ModuleBas
             CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
             if (cbSelect.Checked)
             {
-                IdList.Add((int)(gvReportList.DataKeys[row.RowIndex].Value));
+                Label reportId = (Label)row.FindControl("reportId");
+                IdList.Add(int.Parse(reportId.Text));
             }
         }
         TheService.UpdateReportJobReport(IdList, int.Parse(txtReportJobId.Value));
@@ -85,7 +106,7 @@ public partial class Modules_OffLineReport_JobExecution_NewJobReport : ModuleBas
 
     public void UpdateView()
     {
-        gvReportList.DataSource = TheReportService.LoadAllActiveReportTemplate();
+        gvReportList.DataSource = TheReportBatchService.FindReportByBatchId(TheReportBatchId);
         gvReportList.DataBind();
         gvReportList.Visible = true;           
     }

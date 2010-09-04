@@ -66,6 +66,7 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
     {
         base.OnInit(e);
         NewBatchReport1.Back += new System.EventHandler(this.NewBatchReport1_Back);
+        NewBatchUser1.Back += new System.EventHandler(this.NewBatchUser1_Back);
     }
 
 
@@ -85,6 +86,9 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
         gvReportList.DataSource = TheReportBatch.ReportList;
         gvReportList.DataBind();
 
+        gvUserList.DataSource = TheReportBatch.ReportUserList;
+        gvUserList.DataBind();
+
         lblMessage.Visible = false;
     }
 
@@ -102,6 +106,15 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
     {
         NewBatchReport1.Visible = false;
         TheReportBatch.ReportList = TheService.FindReportByBatchId(TheReportBatch.Id);
+        UpdateView();
+        pnlMain.Visible = true;
+    }
+
+    //The event handler when user click button "Back" button on NewBatchUser1 page.
+    void NewBatchUser1_Back(object sender, EventArgs e)
+    {
+        NewBatchUser1.Visible = false;
+        TheReportBatch.ReportUserList = TheService.FindUserByBatchId(TheReportBatch.Id);
         UpdateView();
         pnlMain.Visible = true;
     }
@@ -172,19 +185,37 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
         UpdateView();
     }
 
-    //private IList<int> GetSelectIdList(GridView gv)
-    //{
-    //    IList<int> idList = new List<int>();
+    protected void btnAddUser_Click(object sender, EventArgs e)
+    {
+        NewBatchUser1.TheReportBatchId = this.TheReportBatch.Id;
+        NewBatchUser1.UpdateView();
+        NewBatchUser1.Visible = true;
+        pnlMain.Visible = false;
+    }
 
-    //    foreach (GridViewRow row in gv.Rows)
-    //    {
-    //        CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
-    //        if (cbSelect.Checked)
-    //        {
-    //            idList.Add((int)(gv.DataKeys[row.RowIndex].Value));
-    //        }
-    //    }
+    protected void btnDeleteUser_Click(object sender, EventArgs e)
+    {
+        TheService.DeleteReportBatchUser(GetSelectUserIdList(gvUserList));
 
-    //    return idList;
-    //}
+        //re-load the data source    
+        TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
+
+        UpdateView();
+    }
+
+    private IList<int> GetSelectUserIdList(GridView gv)
+    {
+        IList<int> idList = new List<int>();
+
+        foreach (GridViewRow row in gv.Rows)
+        {
+            CheckBox cbSelect = (CheckBox)row.FindControl("ckbUserItem");
+            if (cbSelect.Checked)
+            {
+                idList.Add((int)(gv.DataKeys[row.RowIndex].Value));
+            }
+        }
+
+        return idList;
+    }
 }

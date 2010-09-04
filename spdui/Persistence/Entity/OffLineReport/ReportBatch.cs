@@ -184,6 +184,19 @@ namespace Dndp.Persistence.Entity.OffLineReport
                 _reportList = value;
             }
         }
+
+        private IList _userList;
+        public IList ReportUserList
+        {
+            get
+            {
+                return _userList;
+            }
+            set
+            {
+                _userList = value;
+            }
+        }
         
         private ReportJob _lastestReportJob;
         public ReportJob LastestReportJob

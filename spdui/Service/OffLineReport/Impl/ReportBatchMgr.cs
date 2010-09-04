@@ -9,6 +9,7 @@ using Castle.Services.Transaction;
 using Utility;
 using Dndp.Persistence.Entity.OffLineReport;
 using Dndp.Persistence.Dao.OffLineReport;
+using Dndp.Persistence.Dao.Security;
 //TODO: Add other using statements here.
 
 namespace Dndp.Service.OffLineReport.Impl
@@ -19,14 +20,20 @@ namespace Dndp.Service.OffLineReport.Impl
         private IReportBatchDao reportBatchDao;
         private IReportBatchReportsDao reportBatchReportsDao;
         private IReportTemplateDao reportTemplateDao;
+        private IReportBatchUserDao reportBatchUserDao;
+        private IUserDao userDao;
 
         public ReportBatchMgr(IReportBatchDao reportBatchDao,
 		    IReportBatchReportsDao reportBatchReportsDao,
-            IReportTemplateDao reportTemplateDao)
+            IReportTemplateDao reportTemplateDao,
+            IReportBatchUserDao reportBatchUserDao,
+            IUserDao userDao)
         {
             this.reportBatchDao = reportBatchDao;
 	        this.reportBatchReportsDao = reportBatchReportsDao;
             this.reportTemplateDao = reportTemplateDao;
+            this.reportBatchUserDao = reportBatchUserDao;
+            this.userDao = userDao;
         }
 
         #region Method Created By CodeSmith
@@ -52,6 +59,7 @@ namespace Dndp.Service.OffLineReport.Impl
             if (rb != null)
             {
                 rb.ReportList = reportBatchReportsDao.FindAllByBatchId(id);
+                rb.ReportUserList = reportBatchUserDao.FindAllByBatchId(id);
             }
 
             return rb;
@@ -206,6 +214,34 @@ namespace Dndp.Service.OffLineReport.Impl
             return (reportBatchReportsDao.FindAllByBatchId(Id) as IList);
         }
 
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindUserByBatchId(int batchId)
+        {
+            return (reportBatchUserDao.FindAllByBatchId(batchId) as IList);
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public void AddReportBatchUser(int batchId, IList<int> userIdList)
+        {
+            if (userIdList != null && userIdList.Count > 0) 
+            {
+                ReportBatch batch = this.reportBatchDao.LoadReportBatch(batchId);
+                foreach(int userId in userIdList) 
+                {
+                    ReportBatchUser batchUser = new ReportBatchUser();
+                    batchUser.TheReportBatch = batch;
+                    batchUser.TheUser = this.userDao.LoadUser(userId);
+
+                    this.reportBatchUserDao.CreateReportBatchUser(batchUser);
+                }
+            }
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public void DeleteReportBatchUser(IList<int> idList)
+        {
+            this.reportBatchUserDao.DeleteReportBatchUser(idList);
+        }
         #endregion Customized Methods
     }
 }

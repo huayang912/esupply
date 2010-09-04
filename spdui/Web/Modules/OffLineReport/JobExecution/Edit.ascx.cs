@@ -338,6 +338,7 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
     {
         NewJobReport1.SetReportJobId(TheReportJob.Id);
         NewJobReport1.TheReportJobReport = (TheService.FindReportByJobId(TheReportJob.Id) as IList<ReportJobReport>);
+        NewJobReport1.TheReportBatchId = TheReportJob.TheBatch.Id;
         NewJobReport1.UpdateView();
         NewJobReport1.Visible = true;
         pnlMain.Visible = false;
