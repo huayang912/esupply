@@ -21,7 +21,7 @@ alter table DATA_SOURCE_UPLOAD add ETL_CONFIRM_BY int;
 alter table DATA_SOURCE_UPLOAD add ETL_CONFIRM_DATE datetime;
 
 
------------2010/8/29-----------------------
+-----------2010/9/3-----------------------
 USE [SPStaging]
 GO
 /****** 对象:  Table [dbo].[OffLine_Report_Validation_Rule]    脚本日期: 08/29/2010 13:24:18 ******/
@@ -95,10 +95,8 @@ ALTER TABLE [dbo].[OffLine_Report_Validation_Result]  WITH CHECK ADD  CONSTRAINT
 REFERENCES [dbo].[OffLine_Report_Validation_Rule] ([Rule_Id])
 GO
 ALTER TABLE [dbo].[OffLine_Report_Validation_Result] CHECK CONSTRAINT [FK_OffLine_Report_Validation_Result_OffLine_Report_Validation_Rule]
+GO
 
-
-
------------2010/9/3-----------------------
 alter table OffLine_Report_JobUser add Report_Create_Status varchar(100);
 alter table OffLine_Report_JobUser add Report_Create_Date DateTime;
 alter table OffLine_Report_JobUser add Report_Email_Status varchar(100);

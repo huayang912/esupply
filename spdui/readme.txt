@@ -22,3 +22,8 @@
 1. 上传中断后，再上传会导入双倍数据(需error capture 和 rollback)
 2. 在data_source_upload中加confirmed by 
 
+-----------2010/9/4-----------------------
+1. report job 完成后可在report job页面根据report用户查看是否成功
+2. report job 授权
+
+
