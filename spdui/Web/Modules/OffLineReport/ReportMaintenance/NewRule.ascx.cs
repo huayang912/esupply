@@ -99,7 +99,7 @@ public partial class Modules_OffLineReport_ReportMaintenance_NewRule : ModuleBas
             TheReportValidationRule = new ReportValidationRule();
             TheReportValidationRule.CreateUser = CurrentUser;
             TheReportValidationRule.CreateDate = System.DateTime.Now;
-            TheReportValidationRule.TheReport = TheService.LoadReportTemplate(ReportId);
+            //TheReportValidationRule.TheReport = TheService.LoadReportTemplate(ReportId);
         }
         TheReportValidationRule.Description = txtRuleDescription.Text;
         TheReportValidationRule.UpdateUser = CurrentUser;
