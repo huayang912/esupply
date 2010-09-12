@@ -59,6 +59,11 @@
                 <asp:LinkButton ID="lbtnStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "Status") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" OnClick="lbtnEditJob_Click"></asp:LinkButton>
             </ItemTemplate>
         </asp:TemplateField>
+        <asp:TemplateField HeaderText="Validate Status">
+            <ItemTemplate>
+                <asp:LinkButton ID="lbtnValidateStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidateStatus") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>' CommandName="Select" OnClick="lbtnEditJob_Click"></asp:LinkButton>
+            </ItemTemplate>
+        </asp:TemplateField>
     </Columns>
     <AlternatingRowStyle CssClass="listA" />
     <PagerStyle HorizontalAlign="Right" />

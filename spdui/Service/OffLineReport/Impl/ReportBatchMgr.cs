@@ -22,18 +22,21 @@ namespace Dndp.Service.OffLineReport.Impl
         private IReportTemplateDao reportTemplateDao;
         private IReportBatchUserDao reportBatchUserDao;
         private IUserDao userDao;
+        private IReportValidationRuleDao reportValidationRuleDao;
 
         public ReportBatchMgr(IReportBatchDao reportBatchDao,
 		    IReportBatchReportsDao reportBatchReportsDao,
             IReportTemplateDao reportTemplateDao,
             IReportBatchUserDao reportBatchUserDao,
-            IUserDao userDao)
+            IUserDao userDao,
+            IReportValidationRuleDao reportValidationRuleDao)
         {
             this.reportBatchDao = reportBatchDao;
 	        this.reportBatchReportsDao = reportBatchReportsDao;
             this.reportTemplateDao = reportTemplateDao;
             this.reportBatchUserDao = reportBatchUserDao;
             this.userDao = userDao;
+            this.reportValidationRuleDao = reportValidationRuleDao;
         }
 
         #region Method Created By CodeSmith
@@ -60,6 +63,7 @@ namespace Dndp.Service.OffLineReport.Impl
             {
                 rb.ReportList = reportBatchReportsDao.FindAllByBatchId(id);
                 rb.ReportUserList = reportBatchUserDao.FindAllByBatchId(id);
+                rb.RuleList = reportValidationRuleDao.GetReportValidationRuleByBatchId(id);
             }
 
             return rb;
@@ -241,6 +245,12 @@ namespace Dndp.Service.OffLineReport.Impl
         public void DeleteReportBatchUser(IList<int> idList)
         {
             this.reportBatchUserDao.DeleteReportBatchUser(idList);
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public void DeleteReportRule(IList<int> idList)
+        {
+            this.reportValidationRuleDao.DeleteReportValidationRule(idList);
         }
         #endregion Customized Methods
     }

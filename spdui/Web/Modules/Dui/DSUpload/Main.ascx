@@ -118,10 +118,11 @@ end function
                 <asp:LinkButton ID="lbtnOwnerConfirmedBy" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.OwnerConfirmBy.UserName") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnOwnerConfirmedByResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
             </ItemTemplate>
         </asp:TemplateField>
-        <asp:TemplateField HeaderText="ETL Confirmed By" meta:resourcekey="TemplateFieldResource9">
+        <asp:TemplateField HeaderText="Owner Confirmed Date" meta:resourcekey="TemplateFieldResource7">
             <ItemTemplate>
-                <asp:LinkButton ID="lbtnETLConfirmedBy" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ETLConfirmBy.UserName") %>' CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnETLConfirmedByResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
+                <asp:LinkButton ID="lbtnOwnerConfirmedDate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.OwnerConfirmDate", "{0:d}") %>'  CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>' CommandName="Select" meta:resourcekey="lbtnOwnerConfirmedDateResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
             </ItemTemplate>
+            <ItemStyle HorizontalAlign="Center" />
         </asp:TemplateField>
     </Columns>
     <AlternatingRowStyle CssClass="listA" />

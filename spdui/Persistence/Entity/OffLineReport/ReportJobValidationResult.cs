@@ -6,7 +6,7 @@ using System.Collections;
 namespace Dndp.Persistence.Entity.OffLineReport
 {
     [Serializable]
-    public class ReportValidationResult : EntityBase
+    public class ReportJobValidationResult : EntityBase
     {
         #region O/R Mapping Properties
 
@@ -93,9 +93,9 @@ namespace Dndp.Persistence.Entity.OffLineReport
 
         #region Non O/R Mapping Properties
 
-        public const string ReportValidationResult_Status_Pending = "";
-        public const string ReportValidationResult_Status_Failed = "Failed";
-        public const string ReportValidationResult_Status_Passed = "Passed";
+        public const string ReportJobValidationResult_Status_Pending = "";
+        public const string ReportJobValidationResult_Status_Failed = "Failed";
+        public const string ReportJobValidationResult_Status_Passed = "Passed";
 
         #endregion
 
@@ -113,7 +113,7 @@ namespace Dndp.Persistence.Entity.OffLineReport
 
         public override bool Equals(object obj)
         {
-            ReportValidationResult another = obj as ReportValidationResult;
+            ReportJobValidationResult another = obj as ReportJobValidationResult;
 			
             if (another == null)
             {

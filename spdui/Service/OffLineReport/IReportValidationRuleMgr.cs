@@ -29,6 +29,8 @@ namespace Dndp.Service.OffLineReport
 
         #region Customized Methods
 
+        IList FindReportValidationRuleByBatchId(int batchId);
+
         #endregion Customized Methods
 
     }

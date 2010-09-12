@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewRule.ascx.cs" Inherits="Modules_OffLineReport_ReportMaintenance_NewRule" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="NewRule.ascx.cs" Inherits="Modules_OffLineReport_BatchMaintenance_NewRule" %>
 
 <h2>Rule Maintenance</h2>
 <p class="formBtnBoard">
@@ -39,6 +39,13 @@
     <td valign="top" class="txtform">Validation Rule SQL:</td>
     <td colspan="3">
         &nbsp;<asp:TextBox ID="txtRuleContent" runat="server"  Columns="80" Rows="15" TextMode="MultiLine">
+        </asp:TextBox>
+    </td>
+</tr>
+<tr>
+    <td valign="top" class="txtform">Rule Result SQL:</td>
+    <td colspan="3">
+        &nbsp;<asp:TextBox ID="txtRuleResultContent" runat="server"  Columns="80" Rows="15" TextMode="MultiLine">
         </asp:TextBox>
     </td>
 </tr>

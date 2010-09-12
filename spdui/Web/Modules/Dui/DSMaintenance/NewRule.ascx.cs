@@ -94,6 +94,7 @@ public partial class Modules_Dui_DSMaintenance_NewRule : ModuleBase
         TheDataSourceRule.LastUpdateDate = System.DateTime.Now;
         TheDataSourceRule.Name = txtRuleName.Text;
         TheDataSourceRule.RuleContent = txtRuleContent.Text;
+        TheDataSourceRule.ResultContent = txtRuleResultContent.Text;
         TheDataSourceRule.UpdateContent = txtUpdateSQLContent.Text;
         TheDataSourceRule.RuleType = ddlRuleType.SelectedItem.Value;
         if (TheDataSourceRule == null || TheDataSourceRule.Id == 0)
@@ -112,6 +113,7 @@ public partial class Modules_Dui_DSMaintenance_NewRule : ModuleBase
         txtRuleName.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.Name : "";
         txtRuleDescription.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.Description : "";
         txtRuleContent.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.RuleContent : "";
+        txtRuleResultContent.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.ResultContent : "";
         if (TheDataSourceRule != null && TheDataSourceRule.Id != 0)
         {
             ddlRuleType.Text = TheDataSourceRule.RuleType;

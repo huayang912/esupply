@@ -13,19 +13,19 @@ using Dndp.Service.OffLineReport;
 using Dndp.Persistence.Entity.OffLineReport;
 using log4net;
 
-public partial class Modules_OffLineReport_ReportMaintenance_NewRule : ModuleBase
+public partial class Modules_OffLineReport_BatchMaintenance_NewRule : ModuleBase
 {
     public event EventHandler Back;
 
     //Get the logger
-    private static ILog log = LogManager.GetLogger("ReportMaintenance");
+    private static ILog log = LogManager.GetLogger("BatchMaintenance");
 
     //The entity service
-    protected IReportTemplateMgr TheService
+    protected IReportBatchMgr TheService
     {
         get
         {
-            return GetService("ReportTemplateMgr.service") as IReportTemplateMgr;
+            return GetService("ReportBatchMgr.service") as IReportBatchMgr;
         }
     }
 
@@ -49,15 +49,15 @@ public partial class Modules_OffLineReport_ReportMaintenance_NewRule : ModuleBas
         }
     }
 
-    public int ReportId
+    public int BatchId
     {
         get
         {
-            return (int)ViewState["ReportId"];
+            return (int)ViewState["BatchId"];
         }
         set
         {
-            ViewState["ReportId"] = value;
+            ViewState["BatchId"] = value;
         }
     }
 
@@ -99,13 +99,14 @@ public partial class Modules_OffLineReport_ReportMaintenance_NewRule : ModuleBas
             TheReportValidationRule = new ReportValidationRule();
             TheReportValidationRule.CreateUser = CurrentUser;
             TheReportValidationRule.CreateDate = System.DateTime.Now;
-            //TheReportValidationRule.TheReport = TheService.LoadReportTemplate(ReportId);
+            TheReportValidationRule.TheReportBatch = TheService.LoadReportBatch(BatchId);
         }
         TheReportValidationRule.Description = txtRuleDescription.Text;
         TheReportValidationRule.UpdateUser = CurrentUser;
         TheReportValidationRule.UpdateDate = System.DateTime.Now;
         TheReportValidationRule.Name = txtRuleName.Text;
         TheReportValidationRule.Content = txtRuleContent.Text;
+        TheReportValidationRule.ResultContent = txtRuleResultContent.Text;
         TheReportValidationRule.UpdateContent = txtUpdateSQLContent.Text;
         TheReportValidationRule.Type = ddlRuleType.SelectedItem.Value;
         TheReportValidationRule.ActiveFlag = 1;
@@ -122,10 +123,10 @@ public partial class Modules_OffLineReport_ReportMaintenance_NewRule : ModuleBas
 
     public void UpdateView()
     {
-        //txtCubeRuleId.Value = (TheCubeValidationRule != null && TheCubeValidationRule.Id != 0) ? TheCubeValidationRule.Id.ToString() : "";
         txtRuleName.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.Name : "";
         txtRuleDescription.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.Description : "";
         txtRuleContent.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.Content : "";
+        txtRuleResultContent.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.ResultContent : "";
         if (TheReportValidationRule != null && TheReportValidationRule.Id != 0)
         {
             ddlRuleType.Text = TheReportValidationRule.Type;

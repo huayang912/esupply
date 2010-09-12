@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Dndp.Persistence.Entity.Security;
+using System.Collections.Generic;
 
 //TODO: Add other using statements here
 
@@ -257,6 +258,57 @@ namespace Dndp.Persistence.Entity.OffLineReport
                 _updateUser = value;
             }
         }
+
+        private int _errors;
+        public int Errors
+        {
+            get
+            {
+                return _errors;
+            }
+            set
+            {
+                _errors = value;
+            }
+        }
+
+        private int _problems;
+        public int Problems
+        {
+            get
+            {
+                return _problems;
+            }
+            set
+            {
+                _problems = value;
+            }
+        }
+
+        private int _warnings;
+        public int Warnings
+        {
+            get
+            {
+                return _warnings;
+            }
+            set
+            {
+                _warnings = value;
+            }
+        }
+        private string _validateStatus;
+        public string ValidateStatus
+        {
+            get
+            {
+                return _validateStatus;
+            }
+            set
+            {
+                _validateStatus = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties
@@ -268,6 +320,10 @@ namespace Dndp.Persistence.Entity.OffLineReport
         public const string REPORT_JOB_STATUS_SUCCESS = "Success";
         public const string REPORT_JOB_STATUS_FAILED = "Failed";
         public const string REPORT_JOB_STATUS_CANCEL = "Canceled";
+
+        public const string REPORT_JOB_VALIDATE_STATUS_WaitingValidate = "Waiting Validate";
+        public const string REPORT_JOB_VALIDATE_STATUS_ValidatedFailed = "Validate Failed";
+        public const string REPORT_JOB_VALIDATE_STATUS_ValidatedPassed = "Validate Passed";
         
         //TODO: Add Non O/R Mapping Properties here. 
         private IList _reportList;
@@ -296,6 +352,111 @@ namespace Dndp.Persistence.Entity.OffLineReport
             }
         }
 
+        private IList _ruleList;
+        public IList RuleList
+        {
+            get
+            {
+                return _ruleList;
+            }
+            set
+            {
+                _ruleList = value;
+            }
+        }
+
+        public IList<ReportJobValidationResult> ErrorReportJobValidationResultList
+        {
+            get
+            {
+                if (RuleList != null)
+                {
+                    IList<ReportJobValidationResult> list = new List<ReportJobValidationResult>();
+                    foreach (ReportJobValidationResult result in RuleList)
+                    {
+                        if (result.TheRule.Type.ToUpper().Equals("ERROR"))
+                        {
+                            list.Add(result);
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public IList<ReportJobValidationResult> ProblemReportJobValidationResultList
+        {
+            get
+            {
+                if (RuleList != null)
+                {
+                    IList<ReportJobValidationResult> list = new List<ReportJobValidationResult>();
+                    foreach (ReportJobValidationResult result in RuleList)
+                    {
+                        if (result.TheRule.Type.ToUpper().Equals("PROBLEM"))
+                        {
+                            list.Add(result);
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public IList<ReportJobValidationResult> WarningReportJobValidationResultList
+        {
+            get
+            {
+                if (RuleList != null)
+                {
+                    IList<ReportJobValidationResult> list = new List<ReportJobValidationResult>();
+                    foreach (ReportJobValidationResult result in RuleList)
+                    {
+                        if (result.TheRule.Type.ToUpper().Equals("WARNING"))
+                        {
+                            list.Add(result);
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public string ReportJobValidationResultIds
+        {
+            get
+            {
+                if (RuleList != null)
+                {
+                    string ids = "";
+                    foreach (ReportJobValidationResult result in RuleList)
+                    {
+                        ids += "," + result.Id.ToString();
+                    }
+
+                    return ids.Trim(',');
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
         #endregion
 
         public override int GetHashCode()

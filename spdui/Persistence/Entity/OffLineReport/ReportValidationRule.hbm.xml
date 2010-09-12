@@ -10,6 +10,7 @@
 		<property name="SeqNo" column="Seq_No" type="Int32" />
 		<property name="Type" column="Rule_Type" type="String" length="20" />
 		<property name="Content" column="Rule_Content" type="StringClob" />
+		<property name="ResultContent" column="RULE_RESULT_CONTENT" type="StringClob"/>
 		<property name="UpdateContent" column="Update_Content" type="StringClob" />
 		<many-to-one name="CreateUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="Create_User" cascade="none" />
 		<property name="CreateDate" column="Create_Date" type="DateTime" />

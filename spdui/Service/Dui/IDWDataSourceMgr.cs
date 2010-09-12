@@ -63,6 +63,8 @@ namespace Dndp.Service.Dui
 
         void DownloadQueryData(DWDataSource ds, HttpResponse response, string QueryDate);
 
+        void DownloadQueryData(DWDataSource TheDWDataSource, string TheQueryDate, string condition, CSVWriter csvWriter);
+
         void DownloadUpdateQueryData(DWDataSource ds, CSVWriter csvWriter);
 
         DataSet FindViewAllResult(DWDataSource ds);

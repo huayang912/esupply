@@ -27,3 +27,13 @@
 2. report job 授权
 
 
+-----------2010/9/12-----------------------
+1. validation rule for report job (same as cube job)，在Batch中加Validation Rule
+		Rule Content中可以传<$ReportDate$>作为参数
+2. 没有Data Preparation权限登录后都会抱Sorry, you have no permission to access this module.
+3. 没有任何菜单权限，登录后报错。
+4. 在data_source_upload中加confirmed by 
+5. Category授权中最后一个人无法通过界面拿掉
+6. DW Query中Data Source Name查询不需要区分大小写，所有查询都应该不区分大小写
+7. Validation Rule SQL改为Validation Rule Result SQL,在增加Validation Rule SQL，Validation的时候取Validation Rule SQL执行。DataSource Upload和Cube Maint.和Report Batch Maint.都要改。
+8. DW query在页面上的查询结果可下载，在页面上显示结果集有几条数据

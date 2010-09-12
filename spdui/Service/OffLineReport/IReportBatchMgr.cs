@@ -54,6 +54,8 @@ namespace Dndp.Service.OffLineReport
 
         void DeleteReportBatchUser(IList<int> idList);
 
+        void DeleteReportRule(IList<int> idList);
+
         #endregion Customized Methods
 
     }

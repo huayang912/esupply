@@ -273,6 +273,58 @@ namespace Dndp.Persistence.Entity.Dui
                 _etlConfirmBy = value;
             }
         }
+
+        private DateTime? _withDrawDate;
+        public DateTime? WithDrawDate
+        {
+            get
+            {
+                return _withDrawDate;
+            }
+            set
+            {
+                _withDrawDate = value;
+            }
+        }
+
+        private User _withDrawBy;
+        public User WithDrawBy
+        {
+            get
+            {
+                return _withDrawBy;
+            }
+            set
+            {
+                _withDrawBy = value;
+            }
+        }
+
+        private DateTime? _rowDeleteDate;
+        public DateTime? RowDeleteDate
+        {
+            get
+            {
+                return _rowDeleteDate;
+            }
+            set
+            {
+                _rowDeleteDate = value;
+            }
+        }
+
+        private User _rowDeleteBy;
+        public User RowDeleteBy
+        {
+            get
+            {
+                return _rowDeleteBy;
+            }
+            set
+            {
+                _rowDeleteBy = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties

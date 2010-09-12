@@ -71,9 +71,14 @@ end function
                     <%# DataBinder.Eval(Container.DataItem, "OwnerConfirmBy.UserName")%>
                 </ItemTemplate>
             </asp:TemplateField>
-            <asp:TemplateField ShowHeader="true" HeaderText="ETL Confirmed By">
+            <asp:TemplateField ShowHeader="true" HeaderText="WithDrawed By">
                 <ItemTemplate>
-                    <%# DataBinder.Eval(Container.DataItem, "ETLConfirmBy.UserName")%>
+                    <%# DataBinder.Eval(Container.DataItem, "WithDrawBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField ShowHeader="true" HeaderText="Row Deteted By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "RowDeleteBy.UserName")%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField ShowHeader="true" HeaderText="Action" meta:resourcekey="TemplateFieldResource8"

@@ -10,6 +10,9 @@ using Utility;
 using Dndp.Persistence.Entity.OffLineReport;
 using Dndp.Persistence.Dao.OffLineReport;
 using Dndp.Persistence.Entity.Security;
+using Dndp.Utility.CSV;
+using System.Data;
+using Dndp.Persistence.Dao;
 //TODO: Add other using statements here.
 
 namespace Dndp.Service.OffLineReport.Impl
@@ -24,6 +27,9 @@ namespace Dndp.Service.OffLineReport.Impl
         private IReportUserDao reportUserDao;
         private IReportTemplateDao reportTemplateDao;
         private IReportUserSheetDao reportUserSheetDao;
+        private IReportJobValidationResultDao reportJobValidationResultDao;
+        private IReportValidationRuleDao reportValidationRuleDao;
+        private SqlHelperDao sqlHelperDao;
 
         public ReportJobMgr(IReportJobDao reportJobDao,
             IReportJobReportDao reportJobReportDao,
@@ -31,7 +37,10 @@ namespace Dndp.Service.OffLineReport.Impl
             IReportBatchDao reportBatchDao,
             IReportUserDao reportUserDao,
             IReportTemplateDao reportTemplateDao,
-            IReportUserSheetDao reportUserSheetDao)
+            IReportUserSheetDao reportUserSheetDao,
+            IReportJobValidationResultDao reportJobValidationResultDao,
+            IReportValidationRuleDao reportValidationRuleDao,
+            SqlHelperDao sqlHelperDao)
         {
             this.reportJobDao = reportJobDao;
             this.reportJobReportDao = reportJobReportDao;
@@ -40,6 +49,9 @@ namespace Dndp.Service.OffLineReport.Impl
             this.reportUserDao = reportUserDao;
             this.reportTemplateDao = reportTemplateDao;
             this.reportUserSheetDao = reportUserSheetDao;
+            this.reportJobValidationResultDao = reportJobValidationResultDao;
+            this.reportValidationRuleDao = reportValidationRuleDao;
+            this.sqlHelperDao = sqlHelperDao;
         }
 
         #region Method Created By CodeSmith
@@ -66,6 +78,7 @@ namespace Dndp.Service.OffLineReport.Impl
             {
                 rj.ReportList = this.FindReportByJobId(id);
                 rj.UserList = this.FindUserByJobId(id);
+                rj.RuleList = this.FindRuleByJobId(id);
             }
 
             return rj;
@@ -83,7 +96,8 @@ namespace Dndp.Service.OffLineReport.Impl
         {
             reportJobDao.DeleteReportJob(id);
             reportJobUserDao.DeleteAllByJobId(id);
-            reportJobReportDao.DeleteAllByJobId(id);
+            reportJobValidationResultDao.DeleteAllByJobId(id);
+            reportJobReportDao.DeleteAllByJobId(id);            
         }
 
         [Transaction(TransactionMode.Requires)]
@@ -91,6 +105,7 @@ namespace Dndp.Service.OffLineReport.Impl
         {
             reportJobDao.DeleteReportJob(entity);
             reportJobUserDao.DeleteAllByJobId(entity.Id);
+            reportJobValidationResultDao.DeleteAllByJobId(entity.Id);
             reportJobReportDao.DeleteAllByJobId(entity.Id);
         }
 
@@ -426,6 +441,12 @@ namespace Dndp.Service.OffLineReport.Impl
             return (reportJobUserDao.FindAllByJobId(Id) as IList);
         }
 
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindRuleByJobId(int Id)
+        {
+            return (reportJobValidationResultDao.FindAllByJobId(Id) as IList);
+        }
+
         [Transaction(TransactionMode.Requires)]
         public void CancelReportJob(ReportJob rj, User user)
         {
@@ -518,6 +539,7 @@ namespace Dndp.Service.OffLineReport.Impl
                 ReportJob newReportJob = new ReportJob();
                 newReportJob.TheBatch = rb;
                 newReportJob.Status = ReportJob.REPORT_JOB_STATUS_PENDING;
+                newReportJob.ValidateStatus = ReportJob.REPORT_JOB_VALIDATE_STATUS_WaitingValidate;
                 newReportJob.EmailBody = rb.EmailBody;
                 newReportJob.EMailSubject = rb.EMailSubject;
 
@@ -573,6 +595,18 @@ namespace Dndp.Service.OffLineReport.Impl
                     }
                 }
 
+                IList rvList = this.reportValidationRuleDao.GetReportValidationRuleByBatchId(id);
+                if (rvList != null)
+                {
+                    foreach (ReportValidationRule rv in rvList)
+                    {
+                        ReportJobValidationResult rjvr = new ReportJobValidationResult();
+                        rjvr.TheJob = newReportJob;
+                        rjvr.TheRule = rv;
+                        this.reportJobValidationResultDao.CreateReportJobValidationResult(rjvr);
+                    }
+                }
+
                 return this.LoadReportJob(newReportJob.Id);
             //}
             //return this.LoadReportJob(rj.Id);
@@ -582,6 +616,148 @@ namespace Dndp.Service.OffLineReport.Impl
         {
             return reportUserSheetDao.FindReportUserByReportBatchIdAndUserNameAndUserDescription(batchId, userName, userDescription);
         }
+
+        public ReportJobValidationResult LoadReportJobValidationResult(int id)
+        {
+            return this.reportJobValidationResultDao.LoadReportJobValidationResult(id);
+        }
+
+        [Transaction(TransactionMode.NotSupported)]
+        public void DownloadValidateResult(string rule, CSVWriter csvWriter, int jobId)
+        {
+    
+            //Update Field Content in the SQL Rule
+            rule = UpdateValidationSQLContent(rule, this.reportJobDao.LoadReportJob(jobId)); 
+
+            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
+            DataTableReader dataReader = dataSet.CreateDataReader();
+
+            //write csv header
+            string[] header = new string[dataReader.FieldCount];
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                header[i] = dataReader.GetName(i);
+            }
+            csvWriter.Write(header);
+            csvWriter.WriteNewLine();
+
+            //write csv content
+            while (dataReader.Read())
+            {
+                object[] fields = new object[dataReader.FieldCount];
+                dataReader.GetValues(fields);
+                string[] strFields = new string[fields.Length];
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    if (fields[i] != null)
+                    {
+                        strFields[i] = fields[i].ToString();
+                    }
+                    else
+                    {
+                        strFields[i] = "";
+                    }
+                }
+                csvWriter.Write(strFields);
+                csvWriter.WriteNewLine();
+            }
+        }
+
+        [Transaction(TransactionMode.NotSupported)]
+        public IList FindValidationResultByIds(string validationIds)
+        {
+            return this.reportJobValidationResultDao.FindValidationResultByIds(validationIds);
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public ReportJobValidationResult ValidateRule(int id)
+        {
+            ReportJobValidationResult vr = this.reportJobValidationResultDao.LoadReportJobValidationResult(id);
+            string rule = vr.TheRule.Content;
+
+            //Update Field Content in the SQL Rule
+            rule = UpdateValidationSQLContent(rule, vr.TheJob);
+
+            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
+            DataTableReader dataReader = dataSet.CreateDataReader();
+            int failRowCount = 0;
+            string orgStatus = vr.Status;
+            while (dataReader.Read())
+            {
+                failRowCount++;
+            }
+            if (failRowCount > 0)
+            {
+                vr.Status = "Failed";
+            }
+            else
+            {
+                vr.Status = "Passed";
+            }
+            vr.FailedRowCount = failRowCount;
+           this.reportJobValidationResultDao.UpdateReportJobValidationResult(vr);
+
+            RefreshValidateResultCount(vr.TheJob.Id);
+            return vr;
+        }
         #endregion Customized Methods
+
+        [Transaction(TransactionMode.Unspecified)]
+        private void RefreshValidateResultCount(int reportJobId)
+        {
+            ReportJob reportJob = this.reportJobDao.LoadReportJob(reportJobId);
+            reportJob.Errors = 0;
+            reportJob.Problems = 0;
+            reportJob.Warnings = 0;
+            reportJob.RuleList = this.reportJobValidationResultDao.FindAllByJobId(reportJobId);
+            if (reportJob.RuleList != null)
+            {
+                IList<ReportJobValidationResult> list = new List<ReportJobValidationResult>();
+                int pendingErrorRule = 0;
+                foreach (ReportJobValidationResult vr in reportJob.RuleList)
+                {
+                    if (vr.TheRule.Type == "ERROR" && vr.Status == ReportJobValidationResult.ReportJobValidationResult_Status_Failed)
+                    {
+                        reportJob.Errors = reportJob.Errors + 1;
+                    }
+
+                    if (vr.TheRule.Type == "ERROR" && vr.Status == ReportJobValidationResult.ReportJobValidationResult_Status_Pending)
+                    {
+                        pendingErrorRule++;
+                    }
+
+                    if (vr.TheRule.Type == "PROBLEM" && vr.Status == ReportJobValidationResult.ReportJobValidationResult_Status_Failed)
+                    {
+                        reportJob.Problems = reportJob.Problems + 1;
+                    }
+                    if (vr.TheRule.Type == "WARNING" && vr.Status == ReportJobValidationResult.ReportJobValidationResult_Status_Failed)
+                    {
+                        reportJob.Warnings = reportJob.Warnings + 1;
+                    }
+                }
+
+                if (reportJob.Errors > 0)
+                {
+                    reportJob.ValidateStatus = ReportJob.REPORT_JOB_VALIDATE_STATUS_ValidatedFailed;
+                }
+                else if (pendingErrorRule > 0)
+                {
+                    reportJob.ValidateStatus = ReportJob.REPORT_JOB_VALIDATE_STATUS_WaitingValidate;
+                }
+                else
+                {
+                    reportJob.ValidateStatus = ReportJob.REPORT_JOB_VALIDATE_STATUS_ValidatedPassed;
+                }
+            }
+        }
+
+        private string UpdateValidationSQLContent(string rule, ReportJob reportJob)
+        {
+            //rule = rule.Replace("<$Category$>", vr.TheDataSourceUpload.TheDataSourceCategory.Name.ToString());
+            ////rule = rule.Replace("<$BatchNo$>", vr.TheDataSourceUpload.BatchNo.ToString());
+            rule = rule.Replace("<$ReportDate$>", reportJob.ReportDate.ToShortDateString());
+            return rule;
+        }
+
     }
 }

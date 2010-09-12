@@ -367,9 +367,9 @@ namespace Dndp.Service.Dui.Impl
         [Transaction(TransactionMode.Requires)]
         public void UpdateDataSourceCategory(DataSourceCategory dsc, IList<int> userIdList)
         {
+            dsc.Users = new ArrayList();
             if (userIdList != null && userIdList.Count > 0)
             {
-                dsc.Users = new ArrayList();
                 foreach (int id in userIdList)
                 {
                     dsc.Users.Add(this.userDao.LoadUser(id));

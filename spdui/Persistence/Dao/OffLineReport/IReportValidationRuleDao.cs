@@ -30,7 +30,7 @@ namespace Dndp.Persistence.Dao.OffLineReport
 
         #region Customized Methods
 
-        IList<ReportValidationRule> GetReportValidationRuleByBatchId(int id);
+        IList GetReportValidationRuleByBatchId(int id);
 
         #endregion Customized Methods
     }

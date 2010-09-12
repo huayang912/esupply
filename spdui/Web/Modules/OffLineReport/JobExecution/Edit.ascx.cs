@@ -19,6 +19,9 @@ using Dndp.Persistence.Entity.OffLineReport;
 using Dndp.Service.OffLineReport;
 
 using System.Data.SqlClient;
+using System.IO;
+using System.Text;
+using Dndp.Utility.CSV;
 
 //TODO: Add other using statements here.
 
@@ -255,7 +258,9 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
     //The public method to clear the view
     public void UpdateView()
     {
+        txtId.Value = TheReportJob.Id.ToString();
         lblBatchName.Text = TheReportJob.TheBatch.Name;
+        lblValidateStatus.Text = TheReportJob.ValidateStatus;
         lblStatus.Text = TheReportJob.Status;
         txtStartTime.Text = TheReportJob.StartTime.ToString();
         lblEndTime.Text = (TheReportJob.EndTime == null) ? "" : TheReportJob.EndTime.ToString();
@@ -329,6 +334,14 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
         gvUserList.DataSource = TheReportJob.UserList;
         gvUserList.DataBind();
 
+        //update ValidationRule info
+        gvErrorValidationRule.DataSource = TheReportJob.ErrorReportJobValidationResultList;
+        gvErrorValidationRule.DataBind();
+        gvProblemValidationRule.DataSource = TheReportJob.ProblemReportJobValidationResultList;
+        gvProblemValidationRule.DataBind();
+        gvWarningValidationRule.DataSource = TheReportJob.WarningReportJobValidationResultList;
+        gvWarningValidationRule.DataBind();
+
         //btnSubmit.Visible = true;
         lblMessage.Text = String.Empty;
         lblMessage.Visible = false;
@@ -374,6 +387,37 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
         SynchronizeData();
         ReportJob newReportJob = TheService.LoadReportJob(TheReportJob.Id);
         TheReportJob.UserList = newReportJob.UserList;
+
+        UpdateView();
+    }
+
+    //Event handler when user click button "Download"
+    protected void gvValidationRule_Click(object sender, EventArgs e)
+    {
+        int validationResultId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        downloadValidationResult(validationResultId);
+    }
+
+    //Event handler when user click button "ValidationFinish"
+    protected void btnValidationFinish_Click(object sender, EventArgs e)
+    {
+        TheReportJob = TheService.LoadReportJob(TheReportJob.Id);
+        UpdateView();
+    }
+
+    private void downloadValidationResult(int validationResultId)
+    {
+        ReportJobValidationResult vr = TheService.LoadReportJobValidationResult(validationResultId);
+        Response.Clear();
+        Response.ContentType = "application/octet-stream";
+        string fileName = HttpUtility.UrlEncode(TheReportJob.TheBatch.Description + "_" + vr.TheRule.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_result.csv");
+        TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
+        CSVWriter csvWriter = new CSVWriter(txtWriter); ;
+        TheService.DownloadValidateResult(vr.TheRule.ResultContent, csvWriter, vr.TheJob.Id);
+        txtWriter.Flush();
+        Response.End();
 
         UpdateView();
     }

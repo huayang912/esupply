@@ -121,6 +121,7 @@ public partial class Modules_Cube_CubeMaintenance_NewRule : ModuleBase
         TheCubeValidationRule.UpdateDate = System.DateTime.Now;
         TheCubeValidationRule.Name = txtRuleName.Text;
         TheCubeValidationRule.Content = txtRuleContent.Text;
+        TheCubeValidationRule.ResultContent = txtRuleResultContent.Text;
         TheCubeValidationRule.UpdateContent = txtUpdateSQLContent.Text;
         TheCubeValidationRule.Type = ddlRuleType.SelectedItem.Value;
         TheCubeValidationRule.ActiveFlag = 1;
@@ -149,6 +150,7 @@ public partial class Modules_Cube_CubeMaintenance_NewRule : ModuleBase
         txtRuleName.Text = (TheCubeValidationRule != null && TheCubeValidationRule.Id != 0) ? TheCubeValidationRule.Name : "";
         txtRuleDescription.Text = (TheCubeValidationRule != null && TheCubeValidationRule.Id != 0) ? TheCubeValidationRule.Description : "";
         txtRuleContent.Text = (TheCubeValidationRule != null && TheCubeValidationRule.Id != 0) ? TheCubeValidationRule.Content : "";
+        txtRuleResultContent.Text = (TheCubeValidationRule != null && TheCubeValidationRule.Id != 0) ? TheCubeValidationRule.ResultContent : "";
         if (TheCubeValidationRule != null && TheCubeValidationRule.Id != 0)
         {
             ddlRuleType.Text = TheCubeValidationRule.Type;

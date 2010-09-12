@@ -90,7 +90,7 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     protected void lbtnWithDrawTable_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.WithDrawLoadedRecord(dsUploadId,(new SessionHelper(Page)).CurrentUser.UserName);
+        TheService.WithDrawLoadedRecord(dsUploadId, this.CurrentUser);
         lblMessage.Text = "Data Warehouse Data withdraw successful!";
         lblMessage.Visible = true;
         UpdateView();
@@ -99,7 +99,7 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     protected void lbtnDeleteHistory_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.DeleteUploadRecordHistory(dsUploadId, (new SessionHelper(Page)).CurrentUser.UserName);
+        TheService.DeleteUploadRecordHistory(dsUploadId, this.CurrentUser);
         lblMessage.Text = "Data Warehouse Data Deleted successful!";
         lblMessage.Visible = true;
         UpdateView();

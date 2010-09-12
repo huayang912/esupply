@@ -60,7 +60,7 @@ public partial class _Default : System.Web.UI.Page
     {
         if (Request.Params["mid"] == null)
         {
-            LoadModule(5);
+            LoadModule(5, true);
             return;
         }
 
@@ -79,25 +79,31 @@ public partial class _Default : System.Web.UI.Page
             return;
         }
 
-        LoadModule(mid);
+        LoadModule(mid, false);
     }
 
-    private void LoadModule(int mid)
+    private void LoadModule(int mid, bool loadInitPage)
     {
-        foreach (Dndp.Persistence.Entity.Security.Authorization auth in CurrentUser.Authorizations)
+        if (CurrentUser.Authorizations != null && CurrentUser.Authorizations.Count > 0)
         {
-            if (auth.TheModule.Id == mid)
+            foreach (Dndp.Persistence.Entity.Security.Authorization auth in CurrentUser.Authorizations)
             {
-                ModuleBase ctlModule = (ModuleBase)(Page.LoadControl(auth.TheModule.SourceFile));
-                ctlModule.CurrentModuleName = auth.TheModule.Name;
-                phModule.Controls.Add(ctlModule);
-                lblErrorMessage.Visible = false;
-                return;
+                if (auth.TheModule.Id == mid)
+                {
+                    ModuleBase ctlModule = (ModuleBase)(Page.LoadControl(auth.TheModule.SourceFile));
+                    ctlModule.CurrentModuleName = auth.TheModule.Name;
+                    phModule.Controls.Add(ctlModule);
+                    lblErrorMessage.Visible = false;
+                    return;
+                }
             }
         }
 
-        lblErrorMessage.Text = "Sorry, you have no permission to access this module.";
-        lblErrorMessage.Visible = true;
+        if (!loadInitPage)
+        {
+            lblErrorMessage.Text = "Sorry, you have no permission to access this module.";
+            lblErrorMessage.Visible = true;
+        }
 
         return;
     }

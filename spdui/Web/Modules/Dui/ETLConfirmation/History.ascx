@@ -94,14 +94,19 @@ end function
                 HeaderText="Create Date">
                 <ItemStyle HorizontalAlign="Center" />
             </asp:BoundField>
-            <asp:TemplateField ShowHeader="true" HeaderText="Owner Confirmed By">
-                <ItemTemplate>
-                    <%# DataBinder.Eval(Container.DataItem, "OwnerConfirmBy.UserName")%>
-                </ItemTemplate>
-            </asp:TemplateField>
             <asp:TemplateField ShowHeader="true" HeaderText="ETL Confirmed By">
                 <ItemTemplate>
                     <%# DataBinder.Eval(Container.DataItem, "ETLConfirmBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField ShowHeader="true" HeaderText="WithDrawed By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "WithDrawBy.UserName")%>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField ShowHeader="true" HeaderText="Row Deteted By">
+                <ItemTemplate>
+                    <%# DataBinder.Eval(Container.DataItem, "RowDeleteBy.UserName")%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField ShowHeader="true" HeaderText="Action" meta:resourcekey="TemplateFieldResource8"

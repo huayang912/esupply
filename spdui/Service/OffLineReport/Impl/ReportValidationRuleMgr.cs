@@ -92,6 +92,12 @@ namespace Dndp.Service.OffLineReport.Impl
 
         #region Customized Methods
 
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindReportValidationRuleByBatchId(int batchId)
+        {
+            return entityDao.GetReportValidationRuleByBatchId(batchId);
+        }
+
         #endregion Customized Methods
     }
 }

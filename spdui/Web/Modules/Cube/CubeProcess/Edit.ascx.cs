@@ -282,7 +282,7 @@ public partial class Modules_Cube_CubeProcess_Edit : ModuleBase
         Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_result.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
         CSVWriter csvWriter = new CSVWriter(txtWriter); ;
-        TheService.DownloadCubeProcessValidateResult(vr.TheRule.Content, TheCubeProcess.CubeProcessParameterList,csvWriter);
+        TheService.DownloadCubeProcessValidateResult(vr.TheRule.ResultContent, TheCubeProcess.CubeProcessParameterList,csvWriter);
         txtWriter.Flush();
         Response.End();
 

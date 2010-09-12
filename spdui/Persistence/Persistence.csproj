@@ -137,7 +137,7 @@
     <Compile Include="Dao\INHDao.cs" />
     <Compile Include="Dao\NHDaoBase.cs" />
     <Compile Include="Dao\OffLineReport\IReportBatchUserDao.cs" />
-    <Compile Include="Dao\OffLineReport\IReportValidationResultDao.cs" />
+    <Compile Include="Dao\OffLineReport\IReportJobValidationResultDao.cs" />
     <Compile Include="Dao\OffLineReport\IReportValidationRuleDao.cs" />
     <Compile Include="Dao\OffLineReport\IReportBatchDao.cs" />
     <Compile Include="Dao\OffLineReport\IReportBatchReportsDao.cs" />
@@ -151,7 +151,7 @@
     <Compile Include="Dao\OffLineReport\IReportUserSheetDao.cs" />
     <Compile Include="Dao\OffLineReport\IReportUserSheetParameterDao.cs" />
     <Compile Include="Dao\OffLineReport\NH\NHReportBatchUserDao.cs" />
-    <Compile Include="Dao\OffLineReport\NH\NHReportValidationResultDao.cs" />
+    <Compile Include="Dao\OffLineReport\NH\NHReportJobValidationResultDao.cs" />
     <Compile Include="Dao\OffLineReport\NH\NHReportValidationRuleDao.cs" />
     <Compile Include="Dao\OffLineReport\NH\NHReportBatchDao.cs" />
     <Compile Include="Dao\OffLineReport\NH\NHReportBatchReportsDao.cs" />
@@ -203,7 +203,7 @@
     <Compile Include="Entity\Dui\ValidationResult.cs" />
     <Compile Include="Entity\EntityBase.cs" />
     <Compile Include="Entity\OffLineReport\ReportBatchUser.cs" />
-    <Compile Include="Entity\OffLineReport\ReportValidationResult.cs" />
+    <Compile Include="Entity\OffLineReport\ReportJobValidationResult.cs" />
     <Compile Include="Entity\OffLineReport\ReportValidationRule.cs" />
     <Compile Include="Entity\OffLineReport\ReportBatch.cs" />
     <Compile Include="Entity\OffLineReport\ReportBatchReports.cs" />
@@ -368,7 +368,7 @@
     <EmbeddedResource Include="Entity\Cube\CubeMeasure.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Entity\OffLineReport\ReportValidationResult.hbm.xml" />
+    <EmbeddedResource Include="Entity\OffLineReport\ReportJobValidationResult.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Entity\OffLineReport\ReportValidationRule.hbm.xml" />

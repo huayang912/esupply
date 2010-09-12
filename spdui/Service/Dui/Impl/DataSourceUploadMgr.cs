@@ -208,7 +208,7 @@ namespace Dndp.Service.Dui.Impl
                     if (strStatus.Equals("ALL") || 
                         (dataSourceCategory.LastestDataSourceUpload != null && dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus)))
                     {
-                        if (strDSName.Equals("") || dataSourceCategory.TheDataSource.Name.Contains(strDSName) || dataSourceCategory.TheDataSource.Description.Contains(strDSName))
+                        if (strDSName.Equals("") || dataSourceCategory.TheDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) || dataSourceCategory.TheDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
                         {
                             FoundResult.Add(dataSourceCategory);
                         }
@@ -624,7 +624,7 @@ namespace Dndp.Service.Dui.Impl
         [Transaction(TransactionMode.Unspecified)]
         public void DownloadValidateResult(ValidationResult vr, CSVWriter csvWriter)
         {
-            string rule = vr.TheDataSourceRule.RuleContent;
+            string rule = vr.TheDataSourceRule.ResultContent;
 
             //Update Field Content in the SQL Rule
             rule = UpdateValidationSQLContent(vr, rule); ;
@@ -793,7 +793,7 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void WithDrawLoadedRecord(int id, string ActionUser)
+        public void WithDrawLoadedRecord(int id, User ActionUser)
         {
             DataSourceUpload TheDataSourceUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
             string SQLStatement = "";
@@ -810,7 +810,12 @@ namespace Dndp.Service.Dui.Impl
                         SQLStatement = SQLStatement + " Delete From " + dsWDT.WithDrawTableName.ToString() + " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString();
                     }
                     sqlHelperDao.ExecuteNonQuery(SQLStatement);
-                    LogDBAction(SQLStatement, "WithDrawData", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser);
+                    LogDBAction(SQLStatement, "WithDrawData", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser.UserName);
+
+                    TheDataSourceUpload.WithDrawBy = ActionUser;
+                    TheDataSourceUpload.WithDrawDate = DateTime.Now;
+
+                    this.dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
                 }
             }
         }
@@ -857,7 +862,7 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public void DeleteUploadRecordHistory(int id, string ActionUser)
+        public void DeleteUploadRecordHistory(int id, User ActionUser)
         {
             DataSourceUpload TheDataSourceUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
             string SQLStatement = "";
@@ -871,7 +876,12 @@ namespace Dndp.Service.Dui.Impl
 
                 sqlHelperDao.ExecuteNonQuery(SQLStatement);
 
-                LogDBAction(SQLStatement, "DeleteHistoryRecord", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser);
+                LogDBAction(SQLStatement, "DeleteHistoryRecord", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser.UserName);
+
+                TheDataSourceUpload.RowDeleteBy = ActionUser;
+                TheDataSourceUpload.RowDeleteDate = DateTime.Now;
+
+                this.dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
             }
         }
 

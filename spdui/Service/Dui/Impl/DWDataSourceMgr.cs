@@ -211,7 +211,7 @@ namespace Dndp.Service.Dui.Impl
                     {
                         if (strType.Equals("") || (dwDataSource.DSType.Equals(strType)))
                         {
-                            if (strDSName.Equals("") || dwDataSource.Name.Contains(strDSName) || dwDataSource.Description.Contains(strDSName))
+                            if (strDSName.Equals("") || dwDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) || dwDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
                             {
                                 FoundResult.Add(dwDataSource);
                             }
@@ -331,6 +331,52 @@ namespace Dndp.Service.Dui.Impl
                     response.Flush();
                     response.End();
                 }
+            }
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public void DownloadQueryData(DWDataSource TheDWDataSource, string TheQueryDate, string condition, CSVWriter csvWriter)
+        {
+            DataSet ds = null;
+            if (TheQueryDate.Trim().Length != 0)
+            {
+                ds = this.FindViewAllResult(TheDWDataSource, TheQueryDate);
+            }
+            else
+            {
+                ds = this.FindViewAllResult(TheDWDataSource);
+            }
+            DataTableReader dataReader = ds.CreateDataReader();
+            DataView dv = ds.Tables[0].DefaultView;
+            dv.RowFilter = condition;
+
+            //write csv header
+            string[] header = new string[dataReader.FieldCount];
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                header[i] = dataReader.GetName(i);
+            }
+            csvWriter.Write(header);
+            csvWriter.WriteNewLine();
+
+            //write csv content
+            foreach (DataRowView row in dv)
+            {
+                string[] strFields = new string[dataReader.FieldCount];
+                for (int i = 0; i < dataReader.FieldCount; i++)
+                {
+                    if (row[header[i]] != null)
+                    {
+                        strFields[i] = row[header[i]].ToString();
+                    }
+                    else
+                    {
+                        strFields[i] = "";
+                    }
+                }
+               
+                csvWriter.Write(strFields);
+                csvWriter.WriteNewLine();
             }
         }
 

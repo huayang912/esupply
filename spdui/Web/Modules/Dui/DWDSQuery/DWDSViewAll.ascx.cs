@@ -18,6 +18,7 @@ using Dndp.Persistence.Entity.Dui;
 using Dndp.Service.Dui;
 using System.Text;
 using System.IO;
+using Dndp.Utility.CSV;
 
 //TODO: Add other using statements here.
 
@@ -90,6 +91,9 @@ public partial class Modules_Dui_DWDSUpdate_DWDSViewAll : ModuleBase
             dv.RowFilter = txtCondition.Text.Trim();
             gvDWDSViewAll.DataSource = dv;
             gvDWDSViewAll.DataBind();
+
+            lblMessage.Text = "Total " + dv.Count + " records";
+            lblMessage.Visible = true;
         }
         catch
         {
@@ -103,6 +107,21 @@ public partial class Modules_Dui_DWDSUpdate_DWDSViewAll : ModuleBase
     {
         UpdateView();
         //TODO: Add other event handler code here.
+    }
+
+    //The event handler when user button "Download".
+    protected void btnDonwload_Click(object sender, EventArgs e)
+    {
+        Response.Clear();
+        Response.ContentType = "application/octet-stream";
+        string fileName = HttpUtility.UrlEncode(TheDWDataSource.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_Download.csv");
+        TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
+        CSVWriter csvWriter = new CSVWriter(txtWriter);
+        TheService.DownloadQueryData(TheDWDataSource, TheQueryDate, txtCondition.Text.Trim(), csvWriter);
+        txtWriter.Flush();
+        Response.End();
     }
 
     //Event handler when user click button "Back"

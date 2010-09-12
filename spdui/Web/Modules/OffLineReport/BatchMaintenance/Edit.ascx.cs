@@ -36,6 +36,14 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
         }
     }
 
+    protected IReportValidationRuleMgr TheRuleService
+    {
+        get
+        {
+            return GetService("ReportValidationRuleMgr.service") as IReportValidationRuleMgr;
+        }
+    }
+
     public ReportBatch TheReportBatch
     {
         get
@@ -67,6 +75,7 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
         base.OnInit(e);
         NewBatchReport1.Back += new System.EventHandler(this.NewBatchReport1_Back);
         NewBatchUser1.Back += new System.EventHandler(this.NewBatchUser1_Back);
+        NewRule1.Back += new System.EventHandler(this.NewRule1_Back);
     }
 
 
@@ -88,6 +97,9 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
 
         gvUserList.DataSource = TheReportBatch.ReportUserList;
         gvUserList.DataBind();
+
+        gvRuleList.DataSource = TheReportBatch.RuleList;
+        gvRuleList.DataBind();
 
         lblMessage.Visible = false;
     }
@@ -115,6 +127,15 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
     {
         NewBatchUser1.Visible = false;
         TheReportBatch.ReportUserList = TheService.FindUserByBatchId(TheReportBatch.Id);
+        UpdateView();
+        pnlMain.Visible = true;
+    }
+
+    //The event handler when user click button "Back" button on NewRule1 page.
+    void NewRule1_Back(object sender, EventArgs e)
+    {
+        NewRule1.Visible = false;
+        TheReportBatch.RuleList = TheRuleService.FindReportValidationRuleByBatchId(TheReportBatch.Id);
         UpdateView();
         pnlMain.Visible = true;
     }
@@ -201,6 +222,35 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
         TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
 
         UpdateView();
+    }
+
+    protected void btnAddRule_Click(object sender, EventArgs e)
+    {
+        NewRule1.BatchId = this.TheReportBatch.Id;
+        NewRule1.TheReportValidationRule = null;
+        NewRule1.UpdateView();
+        NewRule1.Visible = true;
+        pnlMain.Visible = false;
+    }
+
+    protected void btnDeleteRule_Click(object sender, EventArgs e)
+    {
+        TheService.DeleteReportRule(GetSelectIdList(gvRuleList));
+
+        //re-load the data source    
+        TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
+
+        UpdateView();
+    }
+
+    protected void lbtnRuleName_Click(object sender, EventArgs e)
+    {
+        int dsRuleId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        NewRule1.TheReportValidationRule = TheRuleService.LoadReportValidationRule(dsRuleId);
+        NewRule1.BatchId = this.TheReportBatch.Id;
+        NewRule1.UpdateView();
+        NewRule1.Visible = true;
+        pnlMain.Visible = false;
     }
 
     private IList<int> GetSelectUserIdList(GridView gv)

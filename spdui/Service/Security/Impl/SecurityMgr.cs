@@ -78,19 +78,22 @@ namespace Dndp.Service.Security.Impl
 
         private void LoadMenus(User u, IList allMenus)
         {
-            foreach (Authorization auth in u.Authorizations)
+            if (u.Authorizations != null && u.Authorizations.Count > 0)
             {
-                foreach (Menu menu in allMenus)
+                foreach (Authorization auth in u.Authorizations)
                 {
-                    if ((menu.TheModule != null) && (auth.TheModule.Id == menu.TheModule.Id))
+                    foreach (Menu menu in allMenus)
                     {
-                        AddMenuToUser(u, menu.Id, allMenus);
+                        if ((menu.TheModule != null) && (auth.TheModule.Id == menu.TheModule.Id))
+                        {
+                            AddMenuToUser(u, menu.Id, allMenus);
+                        }
                     }
                 }
-            }
 
-            //sort the menus by PathCode
-            ((ArrayList)(u.Menus)).Sort();
+                //sort the menus by PathCode
+                ((ArrayList)(u.Menus)).Sort();
+            }
         }
 
         private void AddMenuToUser(User u, int menuId, IList allMenus)
@@ -141,12 +144,12 @@ namespace Dndp.Service.Security.Impl
 
         private User FindUserByUserNamePassword(string userName, string password)
         {
-            return userDao.SearchUserByUserNmAndPwd(userName, password);           
+            return userDao.SearchUserByUserNmAndPwd(userName, password);
         }
 
         private User FindUserByWindowsDomain(string windowsDomain, string windowsUserName)
         {
-            return userDao.SearchUserByWinDomainAndWinUserNm(windowsDomain, windowsUserName);            
+            return userDao.SearchUserByWinDomainAndWinUserNm(windowsDomain, windowsUserName);
         }
     }
 }

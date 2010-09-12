@@ -78,11 +78,11 @@ namespace Dndp.Persistence.Dao.OffLineReport.NH
 
         #region Customized Methods
 
-        public IList<ReportValidationRule> GetReportValidationRuleByBatchId(int id)
+        public IList GetReportValidationRuleByBatchId(int id)
         {
             string hql = "from ReportValidationRule entity where entity.TheReportBatch.Id = ?";
 
-            return FindAllWithCustomQuery(hql, id) as IList<ReportValidationRule>;
+            return FindAllWithCustomQuery(hql, id);
         }
 
         #endregion Customized Methods

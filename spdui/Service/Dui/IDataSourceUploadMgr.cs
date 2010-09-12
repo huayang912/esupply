@@ -84,9 +84,9 @@ namespace Dndp.Service.Dui
 
         void DownloadETLLog(DataSourceUpload dsFile, CSVWriter csvWriter);
 
-        void WithDrawLoadedRecord(int id, string ActionUser);
+        void WithDrawLoadedRecord(int id, User ActionUser);
 
-        void DeleteUploadRecordHistory(int id, string ActionUser);
+        void DeleteUploadRecordHistory(int id, User ActionUser);
 
         void DeleteUpdateRecord(DataSourceUpload TheDataSourceUpload, String RecId);
 

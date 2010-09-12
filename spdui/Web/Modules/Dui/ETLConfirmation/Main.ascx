@@ -140,19 +140,19 @@ end function
                         CommandName="Select" meta:resourcekey="lbtnCreatedDateResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
                 </ItemTemplate>
                 <ItemStyle HorizontalAlign="Center" />
-            </asp:TemplateField>
-            <asp:TemplateField HeaderText="Owner Confirmed By" meta:resourcekey="TemplateFieldResour11">
-                <ItemTemplate>
-                    <asp:LinkButton ID="lbtnOwnerConfirmedBy" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.OwnerConfirmBy.UserName") %>'
-                        CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>'
-                        CommandName="Select" meta:resourcekey="lbtnOwnerConfirmedByResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
-                </ItemTemplate>
-            </asp:TemplateField>
+            </asp:TemplateField>            
             <asp:TemplateField HeaderText="ETL Confirmed By" meta:resourcekey="TemplateFieldResour12">
                 <ItemTemplate>
                     <asp:LinkButton ID="lbtnETLConfirmedBy" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ETLConfirmBy.UserName") %>'
                         CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>'
                         CommandName="Select" meta:resourcekey="lbtnETLConfirmedByResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="ETL Confirmed Date" meta:resourcekey="TemplateFieldResour11">
+                <ItemTemplate>
+                    <asp:LinkButton ID="lbtnETLConfirmedDate" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.ETLConfirmDate") %>'
+                        CommandArgument='<%# DataBinder.Eval(Container.DataItem, "LastestDataSourceUpload.Id") %>'
+                        CommandName="Select" meta:resourcekey="lbtnETLConfirmedDateResource" OnClick="lbtnValidate_Click"></asp:LinkButton>
                 </ItemTemplate>
             </asp:TemplateField>
         </Columns>

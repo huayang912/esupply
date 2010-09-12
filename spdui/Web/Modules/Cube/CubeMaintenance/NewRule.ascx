@@ -46,6 +46,13 @@
     </td>
 </tr>
 <tr>
+    <td valign="top" class="txtform">Rule Result SQL:</td>
+    <td colspan="3">
+        &nbsp;<asp:TextBox ID="txtRuleResultContent" runat="server"  Columns="80" Rows="15" TextMode="MultiLine">
+        </asp:TextBox>
+    </td>
+</tr>
+<tr>
     <td valign="top" class="txtform">Update Error Data SQL:</td>
     <td colspan="3">
         &nbsp;<asp:TextBox ID="txtUpdateSQLContent" runat="server"  Columns="80" Rows="15" TextMode="MultiLine">

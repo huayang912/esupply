@@ -103,6 +103,7 @@ alter table OffLine_Report_JobUser add Report_Email_Status varchar(100);
 alter table OffLine_Report_JobUser add Report_Email_Date DateTime;
 alter table OffLine_Report_JobUser add Report_Portal_Status varchar(100);
 alter table OffLine_Report_JobUser add Report_Portal_Date DateTime;
+GO
 
 SET ANSI_NULLS ON
 GO
@@ -129,3 +130,33 @@ REFERENCES [dbo].[USERS] ([USER_ID])
 GO
 ALTER TABLE [dbo].[Offline_Report_BatchUser] CHECK CONSTRAINT [FK_Offline_Report_BatchUser_USERS]
 GO
+
+-----------2010/9/12-----------------------
+alter table DATA_SOURCE_UPLOAD add WithDraw_BY int;
+alter table DATA_SOURCE_UPLOAD add WithDraw_DATE datetime;
+alter table DATA_SOURCE_UPLOAD add RowDel_BY int;
+alter table DATA_SOURCE_UPLOAD add RowDel_DATE datetime;
+alter table OffLine_Report_Job add Errors int;
+alter table OffLine_Report_Job add Problems int;
+alter table OffLine_Report_Job add Warnings int;
+alter table OffLine_Report_Job add Validate_Status varchar(20);
+
+alter table DATA_SOURCE_RULE add RULE_RESULT_CONTENT nvarchar(max);
+GO
+update DATA_SOURCE_RULE set RULE_RESULT_CONTENT = RULE_CONTENT
+GO
+alter table DATA_SOURCE_RULE alter column RULE_RESULT_CONTENT nvarchar(max) not null
+GO
+alter table Cube_Validation_Rule add RULE_RESULT_CONTENT nvarchar(max)
+GO
+update Cube_Validation_Rule set RULE_RESULT_CONTENT = RULE_CONTENT
+GO
+alter table Cube_Validation_Rule alter column RULE_RESULT_CONTENT nvarchar(max) not null
+GO
+alter table OffLine_Report_Validation_Rule add RULE_RESULT_CONTENT nvarchar(max)
+GO
+update OffLine_Report_Validation_Rule set RULE_RESULT_CONTENT = RULE_CONTENT
+GO
+alter table OffLine_Report_Validation_Rule alter column RULE_RESULT_CONTENT nvarchar(max) not null
+GO
+

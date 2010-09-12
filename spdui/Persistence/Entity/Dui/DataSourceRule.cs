@@ -90,6 +90,19 @@ namespace Dndp.Persistence.Entity.Dui
 			}
 		}
 
+        private string _resultContent;
+        public string ResultContent
+        {
+            get
+            {
+                return _resultContent;
+            }
+            set
+            {
+                _resultContent = value;
+            }
+        }
+
         private string _updateContent;
         public string UpdateContent
         {

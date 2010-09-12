@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections;
 using Dndp.Persistence.Entity.OffLineReport;
 using Dndp.Persistence.Entity.Security;
+using Dndp.Utility.CSV;
 //TODO: Add other using statements here.
 
 namespace Dndp.Service.OffLineReport
@@ -80,6 +81,14 @@ namespace Dndp.Service.OffLineReport
         ReportJob CreateNewReportJobByBatchId(int id, User user);
 
         IList<ReportUser> FindReportUserByReportBatchIdAndUserNameAndUserDescription(int batchId, string userName, string userDescription);
+
+        ReportJobValidationResult LoadReportJobValidationResult(int id);
+
+        void DownloadValidateResult(string rule, CSVWriter csvWriter, int jobId);
+
+        IList FindValidationResultByIds(string validationIds);
+
+        ReportJobValidationResult ValidateRule(int id );
 
         #endregion Customized Methods
 

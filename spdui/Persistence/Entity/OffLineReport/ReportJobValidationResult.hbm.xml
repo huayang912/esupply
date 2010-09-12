@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
-	<class name="Dndp.Persistence.Entity.OffLineReport.ReportValidationResult, Dndp.Persistence" table="OffLine_Report_Validation_Result">
+	<class name="Dndp.Persistence.Entity.OffLineReport.ReportJobValidationResult, Dndp.Persistence" table="OffLine_Report_Validation_Result">
 		<id name="Id" column="RecId" type="Int32" unsaved-value="0" >
 		  <generator class="identity" />
 	  </id>

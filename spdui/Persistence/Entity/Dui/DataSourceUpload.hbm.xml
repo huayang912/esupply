@@ -24,5 +24,9 @@
 		<property name="OwnerConfirmDate" column="OWNER_CONFIRM_DATE" type="DateTime" />
 		<many-to-one name="ETLConfirmBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="ETL_CONFIRM_BY" cascade="none" />
 		<property name="ETLConfirmDate" column="ETL_CONFIRM_DATE" type="DateTime" />
+		<many-to-one name="WithDrawBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="WithDraw_BY" cascade="none" />
+		<property name="WithDrawDate" column="WithDraw_DATE" type="DateTime" />
+		<many-to-one name="RowDeleteBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="RowDel_BY" cascade="none" />
+		<property name="RowDeleteDate" column="RowDel_DATE" type="DateTime" />
 	</class>
 </hibernate-mapping>
