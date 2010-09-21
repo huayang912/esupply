@@ -6,8 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import com.faurecia.dao.GenericDao;
 import com.faurecia.model.Notice;
+import com.faurecia.model.NoticeReader;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.service.NoticeManager;

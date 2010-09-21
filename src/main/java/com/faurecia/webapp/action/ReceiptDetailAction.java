@@ -208,6 +208,16 @@ public class ReceiptDetailAction extends BaseAction {
 			selectCriteria.add(Restrictions.like("r.receiptNo", receipt.getReceiptNo().trim()));
 			selectCountCriteria.add(Restrictions.like("r.receiptNo", receipt.getReceiptNo().trim()));
 		}
+		
+		if (receipt.getReferenceReceiptNo() != null && receipt.getReferenceReceiptNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("r.referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
+			selectCountCriteria.add(Restrictions.like("r.referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
+		}
+		
+		if (receipt.getBillNo() != null && receipt.getBillNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
+			selectCountCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
+		}
 
 		if (receipt.getItemCode() != null && receipt.getItemCode().trim().length() > 0) {
 			selectCriteria.add(Restrictions.like("i.code", receipt.getItemCode().trim()));
@@ -335,6 +345,16 @@ public class ReceiptDetailAction extends BaseAction {
 			selectCriteria.add(Restrictions.like("r.receiptNo", receipt.getReceiptNo().trim()));
 			selectCountCriteria.add(Restrictions.like("r.receiptNo", receipt.getReceiptNo().trim()));
 		}
+		
+		if (receipt.getReferenceReceiptNo() != null && receipt.getReferenceReceiptNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("r.referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
+			selectCountCriteria.add(Restrictions.like("r.referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
+		}
+		
+		if (receipt.getBillNo() != null && receipt.getBillNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
+			selectCountCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
+		}
 
 		if (receipt.getItemCode() != null && receipt.getItemCode().trim().length() > 0) {
 			selectCriteria.add(Restrictions.like("i.code", receipt.getItemCode().trim()));
@@ -413,15 +433,17 @@ public class ReceiptDetailAction extends BaseAction {
 			{
 				ReceiptDetail receiptDetail = receiptDetailList.get(i);
 				if ("Detail".equals(receipt.getDetailOrSummary())) {
-					String[] entries = new String[7];
+					String[] entries = new String[9];
 					
-					entries[0] =  receiptDetail.getReceipt().getReceiptNo();
-					entries[1] =  receiptDetail.getItem() != null ? receiptDetail.getItem().getCode() : receiptDetail.getItemCode();
-					entries[2] =  receiptDetail.getItemDescription();
-					entries[3] =  receiptDetail.getSupplierItemCode();
-					entries[4] =  receiptDetail.getUom();
-					entries[5] =  receiptDetail.getQty().toString();
-					entries[6] =  dateFormat.format(receiptDetail.getReceipt().getPostingDate());
+					entries[0] =  receiptDetail.getReceipt().getReferenceReceiptNo();
+					entries[1] =  receiptDetail.getReceipt().getReceiptNo();
+					entries[2] =  receiptDetail.getReceipt().getBillNo();
+					entries[3] =  receiptDetail.getItem() != null ? receiptDetail.getItem().getCode() : receiptDetail.getItemCode();
+					entries[4] =  receiptDetail.getItemDescription();
+					entries[5] =  receiptDetail.getSupplierItemCode();
+					entries[6] =  receiptDetail.getUom();
+					entries[7] =  receiptDetail.getQty().toString();
+					entries[8] =  dateFormat.format(receiptDetail.getReceipt().getPostingDate());
 					
 					writer.writeRecord(entries);
 				} else {

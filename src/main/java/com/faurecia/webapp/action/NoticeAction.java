@@ -211,6 +211,14 @@ public class NoticeAction extends BaseAction {
 					notice.getSupplierList().add(new LabelValue(noticeReaderList.get(i).getPlantSupplier().getSupplierName(), noticeReaderList.get(i).getPlantSupplier().getId().toString()));
 				}
 			}
+			
+			List<NoticeReader> readNoticeReaderList = this.noticeReaderManager.getReadNoticeReaderByNoticeId(notice.getId());
+			if (readNoticeReaderList != null && readNoticeReaderList.size() > 0) {
+				notice.setReadList(new ArrayList<LabelValue>());
+				for (int i = 0; i < readNoticeReaderList.size(); i++) {
+					notice.getReadList().add(new LabelValue(readNoticeReaderList.get(i).getPlantSupplier().getSupplierName(), readNoticeReaderList.get(i).getPlantSupplier().getId().toString()));
+				}
+			}
 		}
 		
 		List<PlantSupplier> allPlantSupplierList = this.plantSupplierManager.getPlantSupplierByPlantCode(user.getUserPlant().getCode());

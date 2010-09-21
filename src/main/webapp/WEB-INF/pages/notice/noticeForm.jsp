@@ -14,9 +14,8 @@
 
 <s:form id="noticeForm" action="saveNotice"
 	enctype="multipart/form-data" method="post" validate="true">
-	<li style="display: none"><input type="hidden"
-		name="notice.id" value="${notice.id}" />
-		<input type="hidden" name="from"
+	<li style="display: none"><input type="hidden" name="notice.id"
+		value="${notice.id}" /> <input type="hidden" name="from"
 		value="${param.from}" /></li>
 	<c:set var="buttons">
 		<s:submit cssClass="button" method="save" key="button.save"
@@ -80,12 +79,13 @@
 		</tr>
 		<c:set var="leftList" value="${availableSuppliers}" scope="request" />
 		<s:set name="rightList" value="notice.supplierList" scope="request" />
+		<s:set name="highightList" value="notice.readList" scope="request" />
 		<c:import url="/WEB-INF/pages/pickList.jsp">
 			<c:param name="listCount" value="1" />
 			<c:param name="leftId" value="availableSuppliers" />
 			<c:param name="rightId" value="suppliers" />
 		</c:import>
-	</table>
+	</table>	
 	</fieldset>
 	</li>
 
