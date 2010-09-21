@@ -31,7 +31,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 @Table(name = "notice")
 @NamedQueries( {
 		@NamedQuery(name = "findNoticeByPlant", query = " select n from Notice n where n.plant = :plant order by n.displayDateFrom desc"),
-		@NamedQuery(name = "findNoticeByPlantSupplier", query = " select nr.notice from NoticeReader nr inner join nr.notice as n where nr.plantSupplier = :plantSupplier and n.displayDateFrom <= :dateNow and n.displayDateTo >= :dateNow order by n.displayDateFrom desc") })
+		@NamedQuery(name = "findNoticeByPlantSupplier", query = " select nr.notice from NoticeReader nr inner join nr.notice as n where nr.plantSupplier = :plantSupplier and n.displayDateFrom <= :dateNow and (n.displayDateTo >= :dateNow or n.displayDateTo is null) order by n.displayDateFrom desc") })
 public class Notice extends BaseObject {
 
 	/**
@@ -47,6 +47,7 @@ public class Notice extends BaseObject {
 	private Date displayDateFrom;
 	private Date displayDateTo;
 	private List<LabelValue> supplierList;
+	private List<LabelValue> readList;
 	private List<NoticeReader> noticeReaderList;
 
 	@Id
@@ -123,6 +124,15 @@ public class Notice extends BaseObject {
 		this.displayDateTo = displayDateTo;
 	}
 
+	@Transient
+	public List<LabelValue> getReadList() {
+		return readList;
+	}
+
+	public void setReadList(List<LabelValue> readList) {
+		this.readList = readList;
+	}
+	
 	@Transient
 	public List<LabelValue> getSupplierList() {
 		return supplierList;

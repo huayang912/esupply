@@ -189,7 +189,10 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 			Supplier supplier = null;
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 
-			receipt.setReceiptNo(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getREFDOCNOLONG()); // ReceiptNo
+			receipt.setReceiptNo(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getREFDOCNO()); // SAP ReceiptNo
+			receipt.setReferenceReceiptNo(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getREFDOCNOLONG()); // ReceiptNo
+			receipt.setBillNo(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getBILLOFLADINGLONG());
+			
 			receipt.setPostingDate(dateFormat.parse(mbgmcr.getIDOC().getE1BP2017GMHEAD01().getPSTNGDATE()));
 
 			List<MBGMCR02E1BP2017GMITEMCREATE> E1BP2017GMITEMCREATEList = mbgmcr.getIDOC().getE1BP2017GMITEMCREATE();

@@ -31,6 +31,32 @@ public class NoticeReaderManagerImpl extends GenericManagerImpl<NoticeReader, In
 		return this.findByCriteria(detachedCriteria);
 	}
 	
+	public List<NoticeReader> getReadNoticeReaderByNoticeId(Integer noticeId) {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(NoticeReader.class);
+		detachedCriteria.createAlias("notice", "n");
+		detachedCriteria.add(Restrictions.eq("n.id", noticeId));
+		detachedCriteria.add(Restrictions.eq("isRead", true));
+		
+		return this.findByCriteria(detachedCriteria);
+	}
+	
+	public NoticeReader getNoticeReaderByNoticeIdAndPlantSupplierId(Integer noticeId, Integer plantSupplierId) {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(NoticeReader.class);
+		detachedCriteria.createAlias("notice", "n");
+		detachedCriteria.createAlias("plantSupplier", "p");
+		detachedCriteria.add(Restrictions.eq("n.id", noticeId));
+		detachedCriteria.add(Restrictions.eq("p.id", plantSupplierId));
+		
+		List<NoticeReader> list = this.findByCriteria(detachedCriteria);
+		if (list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
 	public void deleteNoticeReaderByNoticeId(Integer noticeId) {
 		this.jdbcTemplate.execute("delete from notice_reader where notice_id = " + noticeId);
 	}

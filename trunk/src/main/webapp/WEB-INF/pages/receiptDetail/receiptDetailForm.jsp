@@ -29,8 +29,8 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receipt.receiptNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.receiptNo"
+				key="receipt.referenceReceiptNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.referenceReceiptNo"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if
 				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
@@ -40,6 +40,16 @@
 					list="%{suppliers}" listKey="id" listValue="supplierName"
 					theme="simple" /></td>
 			</c:if>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="receipt.receiptNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.receiptNo"
+				cssClass="text medium" theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="receipt.billNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.billNo"
+				cssClass="text medium" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -83,8 +93,12 @@
 	<display:table name="paginatedList" cellspacing="0" cellpadding="0"
 		requestURI="" id="receiptDetail" class="table" export="true">
 		<c:if test="${receipt.detailOrSummary == 'Detail'}">
+			<display:column property="receipt.referenceReceiptNo" sortable="true"
+				sortProperty="r.referenceReceiptNo" titleKey="receipt.referenceReceiptNo" />
 			<display:column property="receipt.receiptNo" sortable="true"
 				sortProperty="r.receiptNo" titleKey="receipt.receiptNo" />
+			<display:column property="receipt.billNo" sortable="true"
+				sortProperty="r.billNo" titleKey="receipt.billNo" />
 		</c:if>
 		<c:if test="${receipt.detailOrSummary == 'Detail'}">
 			<display:column property="item.code" sortable="true"

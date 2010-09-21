@@ -23,9 +23,13 @@
 
 	<table width="100%">
 		<tr>
-			<td><s:label key="receipt.receiptNo" cssClass="text medium" /></td>
+			<td><s:label key="receipt.referenceReceiptNo" cssClass="text medium" /></td>
 			<td><s:label key="receipt.postingDate"
 				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="receipt.receiptNo" cssClass="text medium" /></td>		
+			<td><s:label key="receipt.billNo" cssClass="text medium" /></td>
 		</tr>
 		<tr>
 			<td><s:label key="receipt.plantCode"

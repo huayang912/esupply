@@ -9,11 +9,13 @@ import javax.xml.bind.JAXBException;
 
 import com.faurecia.Constants;
 import com.faurecia.model.Notice;
+import com.faurecia.model.NoticeReader;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.NoticeManager;
+import com.faurecia.service.NoticeReaderManager;
 import com.faurecia.service.PlantSupplierManager;
 
 public class NoticeReaderAction extends BaseAction {
@@ -31,6 +33,7 @@ public class NoticeReaderAction extends BaseAction {
 	private int id;
 	private InputStream inputStream;
 	private String fileName;
+	private NoticeReaderManager noticeReaderManager;
 	
 	public int getId() {
 		return id;
@@ -71,6 +74,11 @@ public class NoticeReaderAction extends BaseAction {
 		this.plantManager = plantManager;
 	}
 	
+	public void setNoticeReaderManager(NoticeReaderManager noticeReaderManager) {
+		this.noticeReaderManager = noticeReaderManager;
+	}
+
+	
 	public String list() {
 		if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
 			return "mainMenu";
@@ -90,7 +98,19 @@ public class NoticeReaderAction extends BaseAction {
 	
 	public String edit() throws JAXBException, MalformedURLException {
 		notice = this.noticeManager.get(id);
-
+		
+		String userCode = this.getRequest().getRemoteUser();
+		User user = this.userManager.getUserByUsername(userCode);
+		Plant plant = this.plantManager.get((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
+		PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());
+		
+		NoticeReader nr = this.noticeReaderManager.getNoticeReaderByNoticeIdAndPlantSupplierId(id, plantSupplier.getId());
+		
+		if (nr != null) {
+			nr.setIsRead(true);
+			this.noticeReaderManager.save(nr);
+		}
+		
 		return SUCCESS;
 	}
 	

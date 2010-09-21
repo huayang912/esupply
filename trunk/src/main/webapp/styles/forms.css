@@ -459,3 +459,7 @@ table.pickList td select {
 	padding-right: 20%;
 	margin: 5px
 }
+
+.flashcat1 { color: #000000; background-color: #FFFFFF; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+.flashcat2 { color: #FFFFFF; background-color: #000000; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+.flashcat3 { color: #CC0000; background-color: #00CCCC; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
