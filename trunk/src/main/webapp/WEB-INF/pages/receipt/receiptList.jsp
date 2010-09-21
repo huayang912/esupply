@@ -33,8 +33,8 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receipt.referenceReceiptNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.referenceReceiptNo"
+				key="receipt.referenceReceiptNoLong" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.referenceReceiptNoLong"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 				<td><label class="desc"><fmt:message
@@ -46,13 +46,13 @@
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receipt.receiptNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.receiptNo"
+				key="receipt.referenceReceiptNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.referenceReceiptNo"
 				cssClass="text medium" theme="simple" /></td>
 			<td><label class="desc"><fmt:message
-				key="receipt.billNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.billNo"
-				cssClass="text medium" theme="simple" /></td>
+				key="receipt.receiptNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.receiptNo"
+				cssClass="text medium" theme="simple" /></td>			
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -79,13 +79,13 @@
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" id="receipts" class="table" export="true">
-	<display:column property="referenceReceiptNo" sortable="true" sortProperty="referenceReceiptNo"
+	<display:column property="referenceReceiptNoLong" sortable="true" sortProperty="referenceReceiptNoLong"
 		url="/editReceipt.html" paramId="receiptNo" paramProperty="receiptNo"
-		titleKey="receipt.referenceReceiptNo" />
+		titleKey="receipt.referenceReceiptNoLong" />
+	<display:column property="referenceReceiptNo" sortable="true"
+		sortProperty="referenceReceiptNo" titleKey="receipt.referenceReceiptNo" />
 	<display:column property="receiptNo" sortable="true"
-		sortProperty="receiptNo" titleKey="receipt.receiptNo" />
-	<display:column property="billNo" sortable="true"
-		sortProperty="billNo" titleKey="receipt.billNo" />
+		sortProperty="receiptNo" titleKey="receipt.receiptNo" />	
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="receipt.plantCode" />
 	<display:column property="plantName" sortable="true"

@@ -214,9 +214,9 @@ public class ReceiptDetailAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.like("r.referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
 		}
 		
-		if (receipt.getBillNo() != null && receipt.getBillNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
-			selectCountCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
+		if (receipt.getReferenceReceiptNoLong() != null && receipt.getReferenceReceiptNoLong().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("r.referenceReceiptNoLong", receipt.getReferenceReceiptNoLong().trim()));
+			selectCountCriteria.add(Restrictions.like("r.referenceReceiptNoLong", receipt.getReferenceReceiptNoLong().trim()));
 		}
 
 		if (receipt.getItemCode() != null && receipt.getItemCode().trim().length() > 0) {
@@ -351,9 +351,9 @@ public class ReceiptDetailAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.like("r.referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
 		}
 		
-		if (receipt.getBillNo() != null && receipt.getBillNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
-			selectCountCriteria.add(Restrictions.like("r.billNo", receipt.getBillNo().trim()));
+		if (receipt.getReferenceReceiptNoLong() != null && receipt.getReferenceReceiptNoLong().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("r.referenceReceiptNoLong", receipt.getReferenceReceiptNoLong().trim()));
+			selectCountCriteria.add(Restrictions.like("r.referenceReceiptNoLong", receipt.getReferenceReceiptNoLong().trim()));
 		}
 
 		if (receipt.getItemCode() != null && receipt.getItemCode().trim().length() > 0) {
@@ -435,9 +435,9 @@ public class ReceiptDetailAction extends BaseAction {
 				if ("Detail".equals(receipt.getDetailOrSummary())) {
 					String[] entries = new String[9];
 					
-					entries[0] =  receiptDetail.getReceipt().getReferenceReceiptNo();
-					entries[1] =  receiptDetail.getReceipt().getReceiptNo();
-					entries[2] =  receiptDetail.getReceipt().getBillNo();
+					entries[0] =  receiptDetail.getReceipt().getReferenceReceiptNoLong();
+					entries[1] =  receiptDetail.getReceipt().getReferenceReceiptNo();
+					entries[2] =  receiptDetail.getReceipt().getReceiptNo();
 					entries[3] =  receiptDetail.getItem() != null ? receiptDetail.getItem().getCode() : receiptDetail.getItemCode();
 					entries[4] =  receiptDetail.getItemDescription();
 					entries[5] =  receiptDetail.getSupplierItemCode();

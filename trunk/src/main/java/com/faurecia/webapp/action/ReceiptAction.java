@@ -187,9 +187,9 @@ public class ReceiptAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.like("referenceReceiptNo", receipt.getReferenceReceiptNo().trim()));
 		}
 		
-		if (receipt.getBillNo() != null && receipt.getBillNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("billNo", receipt.getBillNo().trim()));
-			selectCountCriteria.add(Restrictions.like("billNo", receipt.getBillNo().trim()));
+		if (receipt.getReferenceReceiptNoLong() != null && receipt.getReferenceReceiptNoLong().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("referenceReceiptNoLong", receipt.getReferenceReceiptNoLong().trim()));
+			selectCountCriteria.add(Restrictions.like("referenceReceiptNoLong", receipt.getReferenceReceiptNoLong().trim()));
 		}
 		
 		if (receipt.getPostingDateFrom() != null) {

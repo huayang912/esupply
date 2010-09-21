@@ -38,7 +38,7 @@ public class Receipt extends BaseObject {
 	private String detailOrSummary;
 	private String supplierItemCode;
 	private String referenceOrderNo;
-	private String billNo;
+	private String referenceReceiptNoLong;
 	private String referenceReceiptNo;
 
 	@Id
@@ -87,13 +87,13 @@ public class Receipt extends BaseObject {
 		receiptDetailList.add(receiptDetail);
 	}
 	
-	@Column(name = "bill_no", length = 20)
-	public String getBillNo() {
-		return billNo;
+	@Column(name = "ref_receipt_no_long", length = 50)
+	public String getReferenceReceiptNoLong() {
+		return referenceReceiptNoLong;
 	}
 
-	public void setBillNo(String billNo) {
-		this.billNo = billNo;
+	public void setReferenceReceiptNoLong(String referenceReceiptNoLong) {
+		this.referenceReceiptNoLong = referenceReceiptNoLong;
 	}
 	
 	@Column(name = "ref_receipt_no", length = 20)

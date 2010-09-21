@@ -29,8 +29,8 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receipt.referenceReceiptNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.referenceReceiptNo"
+				key="receipt.referenceReceiptNoLong" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.referenceReceiptNoLong"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 				<td><label class="desc"><fmt:message
@@ -42,12 +42,12 @@
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="receipt.receiptNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.receiptNo"
+				key="receipt.referenceReceiptNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.referenceReceiptNo"
 				cssClass="text medium" theme="simple" /></td>
 			<td><label class="desc"><fmt:message
-				key="receipt.billNo" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.billNo"
+				key="receipt.receiptNo" /></label></td>
+			<td colspan="2"><s:textfield key="receipt.receiptNo"
 				cssClass="text medium" theme="simple" /></td>
 		</tr>
 		<tr>
