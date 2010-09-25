@@ -108,6 +108,7 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
     {
         txtName.Text = TheDataSource.Name;
         txtDescription.Text = TheDataSource.Description;
+        txtRuleContent.Text = TheDataSource.DWQuerySQL;
         txtType.Text = TheDataSource.DSType;
 
         gvFieldList.DataSource = TheDataSource.DataSourceFieldList;
@@ -153,6 +154,7 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
 
         TheDataSource.Name = name;
         TheDataSource.Description = description;
+        TheDataSource.DWQuerySQL = txtRuleContent.Text.Trim();
         TheDataSource.DSType = txtType.Text.Trim();
         TheDataSource.LastUpdateBy = CurrentUser;
         TheDataSource.LastUpdateDate = DateTime.Now;
@@ -272,9 +274,9 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
     {
         int dsRuleId = Int32.Parse(((LinkButton)sender).CommandArgument);
         NewRule1.TheDataSourceRule = TheService.LoadDataSourceRule(dsRuleId);
+        NewRule1.SetDataSourceId(TheDataSource.Id);
         NewRule1.UpdateView();
         NewRule1.Visible = true;
-        NewRule1.SetDataSourceId(TheDataSource.Id);
         pnlMain.Visible = false;
     }
     protected void lbtnCategoryName_Click(object sender, EventArgs e)

@@ -81,6 +81,7 @@ public partial class Modules_Dui_DSMaintenance_New : ModuleBase
             SessionHelper sessionHelper = new SessionHelper(Page);
             NewDataSource.Name = dsName;
             NewDataSource.Description = txtDescription.Text.Trim();
+            NewDataSource.DWQuerySQL = txtRuleContent.Text.Trim();
             NewDataSource.DSType = txtType.Text.Trim();
             NewDataSource.ActiveFlag = 1;
             NewDataSource.CreateBy = sessionHelper.CurrentUser;
@@ -122,6 +123,7 @@ public partial class Modules_Dui_DSMaintenance_New : ModuleBase
         //Add code to clear the view.
         txtName.Text = String.Empty;
         txtDescription.Text = String.Empty;
+        txtRuleContent.Text = string.Empty;
         txtType.Text = String.Empty;
         btnSubmit.Visible = true;
         lblMessage.Text = String.Empty;

@@ -18,5 +18,6 @@
 		<property name="UpdateDate" column="Last_Update_Date" type="DateTime" />
 		<property name="ActiveFlag" column="Active_Flag" type="Int32" />
 		<property name="ValidationTarget" column="Validation_Target" type="String" length="20" />
+		<many-to-one name="DependenceRule" class="Dndp.Persistence.Entity.Cube.CubeValidationRule, Dndp.Persistence" column="DEPENDENCE_RULE" cascade="none" />
 	</class>
 </hibernate-mapping>

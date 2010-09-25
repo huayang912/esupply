@@ -16,5 +16,6 @@
 		<many-to-one name="CreateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="CREATE_BY_USER_ID" cascade="none" />
 		<many-to-one name="LastUpdateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="LAST_UPDATE_USER_ID" cascade="none" />
 		<many-to-one name="TheDataSource" class="Dndp.Persistence.Entity.Dui.DataSource, Dndp.Persistence" column="DATA_SOURCE_ID" cascade="none" />
+		<many-to-one name="DependenceRule" class="Dndp.Persistence.Entity.Dui.DataSourceRule, Dndp.Persistence" column="DEPENDENCE_RULE" cascade="none" />
 	</class>
 </hibernate-mapping>

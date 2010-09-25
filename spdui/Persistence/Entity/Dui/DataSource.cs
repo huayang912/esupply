@@ -129,6 +129,19 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private string _dWQuerySQL;
+        public string DWQuerySQL
+        {
+            get
+            {
+                return _dWQuerySQL;
+            }
+            set
+            {
+                _dWQuerySQL = value;
+            }
+        }
+
         #endregion
 
         #region Non O/R Mapping Properties

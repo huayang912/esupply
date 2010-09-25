@@ -17,5 +17,6 @@
 		<many-to-one name="UpdateUser" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="Last_Update_User" cascade="none" />
 		<property name="UpdateDate" column="Last_Update_Date" type="DateTime" />
 		<property name="ActiveFlag" column="Active_Flag" type="Int32" />
+		<many-to-one name="DependenceRule" class="Dndp.Persistence.Entity.OffLineReport.ReportValidationRule, Dndp.Persistence" column="DEPENDENCE_RULE" cascade="none" />
 	</class>
 </hibernate-mapping>

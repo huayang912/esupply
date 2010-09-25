@@ -88,7 +88,7 @@ public partial class Modules_Dui_DSMaintenance_NewRule : ModuleBase
             TheDataSourceRule.CreateBy = sessionHelper.CurrentUser;
             TheDataSourceRule.CreateDate = System.DateTime.Now;
             TheDataSourceRule.TheDataSource = TheService.LoadDataSource(int.Parse(txtDsId.Value));
-        }              
+        }
         TheDataSourceRule.Description = txtRuleDescription.Text;
         TheDataSourceRule.LastUpdateBy = sessionHelper.CurrentUser;
         TheDataSourceRule.LastUpdateDate = System.DateTime.Now;
@@ -97,6 +97,14 @@ public partial class Modules_Dui_DSMaintenance_NewRule : ModuleBase
         TheDataSourceRule.ResultContent = txtRuleResultContent.Text;
         TheDataSourceRule.UpdateContent = txtUpdateSQLContent.Text;
         TheDataSourceRule.RuleType = ddlRuleType.SelectedItem.Value;
+        if (ddlDependenceRule.SelectedValue != "0")
+        {
+            TheDataSourceRule.DependenceRule = TheService.LoadDataSourceRule(int.Parse(ddlDependenceRule.SelectedValue));
+        }
+        else
+        {
+            TheDataSourceRule.DependenceRule = null;
+        }
         if (TheDataSourceRule == null || TheDataSourceRule.Id == 0)
         {
             TheService.CreateDataSourceRule(TheDataSourceRule);
@@ -110,18 +118,45 @@ public partial class Modules_Dui_DSMaintenance_NewRule : ModuleBase
     public void UpdateView()
     {
         txtDsRuleId.Value = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.Id.ToString() : "";
-        txtRuleName.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.Name : "";
-        txtRuleDescription.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.Description : "";
-        txtRuleContent.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.RuleContent : "";
+        txtRuleName.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.Name : "";
+        txtRuleDescription.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.Description : "";
+        txtRuleContent.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.RuleContent : "";
         txtRuleResultContent.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.ResultContent : "";
         if (TheDataSourceRule != null && TheDataSourceRule.Id != 0)
         {
             ddlRuleType.Text = TheDataSourceRule.RuleType;
         }
+
+        IList newList = new ArrayList();
+        newList.Add(new DataSourceRule());
+        if (txtDsId.Value != string.Empty)
+        {
+            IList list = TheService.FindDataSourceRuleByDataSourceId(int.Parse(txtDsId.Value));
+            if (list != null && list.Count > 0)
+            {
+                foreach (DataSourceRule rule in list)
+                {
+                    if (TheDataSourceRule == null || TheDataSourceRule.Id != rule.Id)
+                    {
+                        newList.Add(rule);
+                    }
+                }
+            }
+        }
+        ddlDependenceRule.DataSource = newList;
+        ddlDependenceRule.DataValueField = "Id";
+        ddlDependenceRule.DataTextField = "Name";
+        ddlDependenceRule.DataBind();
+
+        if (TheDataSourceRule != null && TheDataSourceRule.DependenceRule != null)
+        {
+            ddlDependenceRule.SelectedValue = TheDataSourceRule.DependenceRule.Id.ToString();
+        }
+
         txtUpdateSQLContent.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.UpdateContent : "";
-        lCreateBy.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.CreateBy.UserName : "";
-        lCreateDate.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.CreateDate.ToString() : "";
-        lLastUpdateBy.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.LastUpdateBy.UserName : "";
-        lLastUpdateDate.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0 ) ? TheDataSourceRule.LastUpdateDate.ToString() : "";
+        lCreateBy.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.CreateBy.UserName : "";
+        lCreateDate.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.CreateDate.ToString() : "";
+        lLastUpdateBy.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.LastUpdateBy.UserName : "";
+        lLastUpdateDate.Text = (TheDataSourceRule != null && TheDataSourceRule.Id != 0) ? TheDataSourceRule.LastUpdateDate.ToString() : "";
     }
 }

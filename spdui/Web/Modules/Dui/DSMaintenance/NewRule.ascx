@@ -26,8 +26,11 @@
             <asp:ListItem Text="Warning" Value="WARNING"></asp:ListItem>
         </asp:DropDownList>
     </td>
-    <td></td>
-    <td></td>
+    <td Class="txtform">Dependence Rule:</td>
+    <td valign="middle">
+    &nbsp;<asp:DropDownList ID="ddlDependenceRule" runat="server">
+        </asp:DropDownList>
+    </td>
 </tr>
 <tr>
     <td valign="top" Class="txtform">Validation Rule SQL:</td>

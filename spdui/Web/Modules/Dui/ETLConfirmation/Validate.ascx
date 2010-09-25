@@ -1,6 +1,9 @@
 <%@ Control Language="C#" AutoEventWireup="true" CodeFile="Validate.ascx.cs" Inherits="Modules_Dui_DSUpload_Validate" %>
+
 <script type="text/javascript" src="Popup/lhgcore.min.js"></script>
+
 <script type="text/javascript" src="Popup/lhgdialog.js"></script>
+
 <script language="vbscript">
 function ButtonWarning(Action)
     Dim ReturnVal
@@ -22,140 +25,102 @@ function ButtonWarning(Action)
     end select
 end function
 </script>
-<h2>Data Confirmation - Data Validation</h2>
-<p class="formBtnBoard"> <%if (TheDataSourceUpload.ProcessStatus.Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
+
+<h2>
+    Data Confirmation - Data Validation</h2>
+<p class="formBtnBoard">
+    <%if (TheDataSourceUpload.ProcessStatus.Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
                            {%>
-            <input type="button" name="btnValidateAll" value="Validate All" onclick="validateAll();" class=btn />        
-            <input type="button" name="btnValidateSelected" value="Validate Selected" onclick="validateSelected();" class=btn />
-            <%}%>
-            <asp:Button ID="btnConfirm" Text="Confirm" runat="server" OnClick="btnConfirm_Click" OnClientClick="return ButtonWarning('Confirm')" class=btn />
-            <asp:Button ID="btnUnConfirm" Text="UnConfirm" runat="server" OnClick="btnUnConfirm_Click" OnClientClick="return ButtonWarning('UnConfirm')" class=btn />
-            <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Back"  class=btn />
-            <asp:Button ID="btnDownload" runat="server" OnClick="btnDownload_Click" Text="Download Data"  class=btn />
-        
-        <span style="display:none">
-            <asp:Button ID="btnInValidation" runat="server" OnClick="btnInValidation_Click" Text="Continue" class=btn/>  
-            <asp:HiddenField ID="txtValidationIds" runat="server" />
-        </span>  </p>
-<table border="0" class=list>
-   
-	<tr>
-        <td  class="TXTform">Data Source Name:</td>
+    <input type="button" name="btnValidateAll" value="Validate All" onclick="validateAll();"
+        class="btn" />
+    <input type="button" name="btnValidateSelected" value="Validate Selected" onclick="validateSelected();"
+        class="btn" />
+    <%}%>
+    <asp:Button ID="btnConfirm" Text="Confirm" runat="server" OnClick="btnConfirm_Click"
+        OnClientClick="return ButtonWarning('Confirm')" class="btn" />
+    <asp:Button ID="btnUnConfirm" Text="UnConfirm" runat="server" OnClick="btnUnConfirm_Click"
+        OnClientClick="return ButtonWarning('UnConfirm')" class="btn" />
+    <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Back" class="btn" />
+    <asp:Button ID="btnDownload" runat="server" OnClick="btnDownload_Click" Text="Download Data"
+        class="btn" />
+    <span style="display: none">
+        <asp:Button ID="btnInValidation" runat="server" OnClick="btnInValidation_Click" Text="Continue"
+            class="btn" />
+        <asp:HiddenField ID="txtValidationIds" runat="server" />
+    </span>
+</p>
+<table border="0" class="list">
+    <tr>
+        <td class="TXTform">
+            Data Source Name:</td>
         <td>
             <asp:Label ID="txtName" runat="server"></asp:Label>
             <asp:HiddenField ID="txtId" runat="server" />
         </td>
-        <td  class="TXTform">Category:</td>
+        <td class="TXTform">
+            Category:</td>
         <td>
             <asp:Label ID="txtCategory" runat="server"></asp:Label>
         </td>
     </tr>
     <tr>
-        <td  class="TXTform">Subject:</td>
+        <td class="TXTform">
+            Subject:</td>
         <td>
             <asp:Label ID="txtSubject" runat="server"></asp:Label>
         </td>
-        <td  class="TXTform">Status:</td>
+        <td class="TXTform">
+            Status:</td>
         <td>
             <asp:Label ID="txtStatus" runat="server"></asp:Label>
-        </td>        
+        </td>
     </tr>
     <tr>
-        <td  class="TXTform">File Name:</td>
+        <td class="TXTform">
+            File Name:</td>
         <td>
             <asp:Label ID="txtFileNm" runat="server"></asp:Label>
-        </td>  
-        <td  class="TXTform">Size:</td>
+        </td>
+        <td class="TXTform">
+            Size:</td>
         <td>
             <asp:Label ID="txtSize" runat="server"></asp:Label>bytes
-        </td>       
-    </tr>	
+        </td>
+    </tr>
 </table>
-<asp:Label ID="lblMessage" Font-Bold="true" ForeColor="blue" Text="Now rule validation is in progress, maybe it will take a few minutes, please wait..." runat="server" Visible="false" CssClass=error></asp:Label>
-<hr/>
-
+<asp:Label ID="lblMessage" Font-Bold="true" ForeColor="blue" Text="Now rule validation is in progress, maybe it will take a few minutes, please wait..."
+    runat="server" Visible="false" CssClass="error"></asp:Label>
+<hr />
 <b>Data Validation List for This data source</b>
 <!-- Modified By Vincent On 2006-9-1 Begin -->
 <!--Modify CheckBox Style-->
 <table border="0" width="100%">
     <tr>
         <td width="33%" valign="top">
-            <asp:GridView runat="server" ID="gvErrorValidationRule" AutoGenerateColumns="False" DataKeyNames="Id" meta:resourcekey="gvErrorValidationRuleResource" OnSelectedIndexChanged="gvErrorValidationRule_SelectedIndexChanged" CellPadding="4" CssClass="list" GridLines="Horizontal" >
-                <HeaderStyle CssClass="listheader" />                
-                <Columns>                    
-                    <asp:TemplateField HeaderText="Validation Rule(Error)" meta:resourcekey="TemplateFieldResource1" >
-                        <ItemTemplate>  
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td valign=top>
-                                    <input type="checkbox" class=radio name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' />                           
-                                </td>
-                                <td valign="top">
-                                     <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>                       
-                                </td>    
-                            </tr>
-                        </table>
-                          </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Status">
-                        <ItemTemplate>
-                            <asp:LinkButton ID="lbtnErrorRuleStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? DataBinder.Eval(Container.DataItem, "Status") : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? "In Progress" : "Waiting"%>' CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
-                        </ItemTemplate>
-                        <ItemStyle HorizontalAlign="Center" />
-                    </asp:TemplateField>
-                </Columns>
-                <AlternatingRowStyle CssClass="listA" />
-            </asp:GridView>            
-        </td>
-        <td width="33%" valign="top">
-            <asp:GridView runat="server" ID="gvProblemValidationRule" AutoGenerateColumns="False" DataKeyNames="Id" meta:resourcekey="gvProblemValidationRuleResource" OnSelectedIndexChanged="gvProblemValidationRule_SelectedIndexChanged" CellPadding="4" CssClass="list" GridLines="Horizontal" >
-                <HeaderStyle CssClass="listheader" />                
-                <Columns>                    
-                    <asp:TemplateField HeaderText="Validation Rule(Problem)" meta:resourcekey="TemplateFieldResource2">
-                        <ItemTemplate>
-                        <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td valign=top>
-                                    <input type="checkbox" class=radio name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' />                            
-                                </td>
-                                <td valign="top">
-                                    <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
-                                </td>    
-                            </tr>
-                        </table>
-                        </ItemTemplate>
-                    </asp:TemplateField>
-                    <asp:TemplateField HeaderText="Status">
-                        <ItemTemplate>
-                            <asp:LinkButton ID="lbtnErrorRuleStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? DataBinder.Eval(Container.DataItem, "Status") : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? "In Progress" : "Waiting"%>' CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
-                        </ItemTemplate>
-                        <ItemStyle HorizontalAlign="Center" />
-                    </asp:TemplateField>
-                </Columns>
-                <AlternatingRowStyle CssClass="listA" />
-            </asp:GridView>
-        </td>
-        <td width="33%" valign="top">
-            <asp:GridView runat="server" ID="gvWarningValidationRule" AutoGenerateColumns="False" DataKeyNames="Id" meta:resourcekey="gvWarningValidationRuleResource" OnSelectedIndexChanged="gvWarningValidationRule_SelectedIndexChanged" CellPadding="4" CssClass="list" GridLines="Horizontal" >
-                <HeaderStyle CssClass="listheader" />                
-                <Columns>                    
-                    <asp:TemplateField HeaderText="Validation Rule(Warning)" meta:resourcekey="TemplateFieldResource3">
+            <asp:GridView runat="server" ID="gvErrorValidationRule" AutoGenerateColumns="False"
+                DataKeyNames="Id" meta:resourcekey="gvErrorValidationRuleResource" OnSelectedIndexChanged="gvErrorValidationRule_SelectedIndexChanged"
+                CellPadding="4" CssClass="list" GridLines="Horizontal">
+                <HeaderStyle CssClass="listheader" />
+                <Columns>
+                    <asp:TemplateField HeaderText="Validation Rule(Error)" meta:resourcekey="TemplateFieldResource1">
                         <ItemTemplate>
                             <table cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                                <td valign=top>
-                                    <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' />                            
-                                </td>
-                                <td valign=top>
-                                    <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
-                                </td>
+                                <tr>
+                                    <td valign="top">
+                                        <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>'
+                                            <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
+                                    </td>
+                                    <td valign="top">
+                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                    </td>
                                 </tr>
                             </table>
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Status">
                         <ItemTemplate>
-                            <asp:LinkButton ID="lbtnErrorRuleStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? DataBinder.Eval(Container.DataItem, "Status") : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? "In Progress" : "Waiting"%>' CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
+                            <asp:LinkButton ID="lbtnErrorRuleStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? DataBinder.Eval(Container.DataItem, "Status") : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? "In Progress" : "Waiting"%>'
+                                CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
                         </ItemTemplate>
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:TemplateField>
@@ -163,10 +128,74 @@ end function
                 <AlternatingRowStyle CssClass="listA" />
             </asp:GridView>
         </td>
-    </tr>  
+        <td width="33%" valign="top">
+            <asp:GridView runat="server" ID="gvProblemValidationRule" AutoGenerateColumns="False"
+                DataKeyNames="Id" meta:resourcekey="gvProblemValidationRuleResource" OnSelectedIndexChanged="gvProblemValidationRule_SelectedIndexChanged"
+                CellPadding="4" CssClass="list" GridLines="Horizontal">
+                <HeaderStyle CssClass="listheader" />
+                <Columns>
+                    <asp:TemplateField HeaderText="Validation Rule(Problem)" meta:resourcekey="TemplateFieldResource2">
+                        <ItemTemplate>
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td valign="top">
+                                        <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>'
+                                            <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
+                                    </td>
+                                    <td valign="top">
+                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Status">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lbtnErrorRuleStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? DataBinder.Eval(Container.DataItem, "Status") : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? "In Progress" : "Waiting"%>'
+                                CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
+                        </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Center" />
+                    </asp:TemplateField>
+                </Columns>
+                <AlternatingRowStyle CssClass="listA" />
+            </asp:GridView>
+        </td>
+        <td width="33%" valign="top">
+            <asp:GridView runat="server" ID="gvWarningValidationRule" AutoGenerateColumns="False"
+                DataKeyNames="Id" meta:resourcekey="gvWarningValidationRuleResource" OnSelectedIndexChanged="gvWarningValidationRule_SelectedIndexChanged"
+                CellPadding="4" CssClass="list" GridLines="Horizontal">
+                <HeaderStyle CssClass="listheader" />
+                <Columns>
+                    <asp:TemplateField HeaderText="Validation Rule(Warning)" meta:resourcekey="TemplateFieldResource3">
+                        <ItemTemplate>
+                            <table cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td valign="top">
+                                        <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>'
+                                            <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
+                                    </td>
+                                    <td valign="top">
+                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Status">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lbtnErrorRuleStatus" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? DataBinder.Eval(Container.DataItem, "Status") : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? "In Progress" : "Waiting"%>'
+                                CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
+                        </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Center" />
+                    </asp:TemplateField>
+                </Columns>
+                <AlternatingRowStyle CssClass="listA" />
+            </asp:GridView>
+        </td>
+    </tr>
 </table>
-
 <!-- Modified By Vincent On 2006-9-1 End -->
+
 <script language="javascript" type="text/javascript">
     function validateAll()
     {
@@ -175,14 +204,17 @@ end function
         //fetch all checkbox in the page
         for(i=0; i<obj.length; i++)
         {
-           if (validationIds != null)
-           {
-                validationIds += "," + obj[i].value;
-           }
-           else
-           {
-                validationIds = obj[i].value;
-           }        
+            if (!obj[i].disabled) {
+               if (validationIds != null)
+               {
+                    validationIds += "," + obj[i].value;
+               }
+               else
+               {
+                    
+                    validationIds = obj[i].value;
+               }    
+           }    
         }
         if (validationIds != null) 
         {
@@ -248,4 +280,5 @@ end function
 <%        
     }
 %>
-</script> 
+</script>
+

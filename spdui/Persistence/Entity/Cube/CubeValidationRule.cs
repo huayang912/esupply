@@ -192,6 +192,19 @@ namespace Dndp.Persistence.Entity.Cube
                 _validationTarget = value;
             }
         }
+
+        private CubeValidationRule _dependenceRule;
+        public CubeValidationRule DependenceRule
+        {
+            get
+            {
+                return _dependenceRule;
+            }
+            set
+            {
+                _dependenceRule = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties

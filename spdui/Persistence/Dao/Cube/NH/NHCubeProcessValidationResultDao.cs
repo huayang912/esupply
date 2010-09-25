@@ -102,6 +102,16 @@ namespace Dndp.Persistence.Dao.Cube.NH
             return FindAllWithCustomQuery(hql) as IList<CubeProcessValidationResult>;
         }
 
+        public IList<CubeProcessValidationResult> FindCubeProcessValidationResultByDependenceRuleId(int ruleId)
+        {
+            string hql = "from CubeProcessValidationResult result where result.TheRule.DependenceRule.Id = ? order by result.TheRule.Name ";
+
+            return FindAllWithCustomQuery(
+                hql,
+                ruleId,
+                NHibernateUtil.Int32) as IList<CubeProcessValidationResult>;
+        }
+
         #endregion Customized Methods
     }
 }

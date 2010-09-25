@@ -101,6 +101,25 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
         UpdateView();
     }
 
+    protected void lbtnDownloadDWData_Click(object sender, EventArgs e)
+    {
+        int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        DataSourceUpload dsUpload = TheService.LoadDataSourceUpload(dsUploadId);
+
+        Response.Clear();
+        Response.ContentType = "application/octet-stream";
+        string fileName = HttpUtility.UrlEncode(dsUpload.TheDataSourceCategory.TheDataSource.Name + "_DWData.csv");
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName);
+        TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
+        CSVWriter csvWriter = new CSVWriter(txtWriter);
+        TheService.DownloadDWData(dsUpload, csvWriter);
+        txtWriter.Flush();
+        Response.End();
+
+        UpdateView();
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -113,8 +132,21 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
+            DataSourceUpload dsUpload = (DataSourceUpload)e.Row.DataItem;
             LinkButton lbtnUpdate = (LinkButton)e.Row.FindControl("lbtnUpdate");
             lbtnUpdate.Attributes.Add("onclick", "javascript:return SubjectInput('"+DataBinder.Eval(e.Row.DataItem, "Name")+"')");
+
+            LinkButton lbtnDownloadDWData = (LinkButton)e.Row.FindControl("lbtnDownloadDWData");
+            if (dsUpload.TheDataSourceCategory.TheDataSource.DWQuerySQL != null
+                && dsUpload.TheDataSourceCategory.TheDataSource.DWQuerySQL != string.Empty
+                && dsUpload.IsWithdraw == 0)
+            {
+                lbtnDownloadDWData.Visible = true;
+            }
+            else
+            {
+                lbtnDownloadDWData.Visible = false;
+            }
         }
     }
 

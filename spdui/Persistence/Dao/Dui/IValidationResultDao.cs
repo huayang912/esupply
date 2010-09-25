@@ -40,6 +40,8 @@ namespace Dndp.Persistence.Dao.Dui
 
         void DeleteValidationResultByDSId(int dsId);
 
+        IList<ValidationResult> FindAllByDependenceRuleId(int ruleId);
+
         #endregion Customized Methods
     }
 }

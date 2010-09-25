@@ -12,6 +12,7 @@ using Dndp.Web;
 using Dndp.Service.OffLineReport;
 using Dndp.Persistence.Entity.OffLineReport;
 using log4net;
+using System.Collections.Generic;
 
 public partial class Modules_OffLineReport_BatchMaintenance_NewRule : ModuleBase
 {
@@ -53,7 +54,7 @@ public partial class Modules_OffLineReport_BatchMaintenance_NewRule : ModuleBase
     {
         get
         {
-            return (int)ViewState["BatchId"];
+            return ViewState["BatchId"] != null ? (int)ViewState["BatchId"] : 0;
         }
         set
         {
@@ -111,6 +112,15 @@ public partial class Modules_OffLineReport_BatchMaintenance_NewRule : ModuleBase
         TheReportValidationRule.Type = ddlRuleType.SelectedItem.Value;
         TheReportValidationRule.ActiveFlag = 1;
 
+        if (ddlDependenceRule.SelectedValue != "0")
+        {
+            TheReportValidationRule.DependenceRule = TheRuleService.LoadReportValidationRule(int.Parse(ddlDependenceRule.SelectedValue));
+        }
+        else
+        {
+            TheReportValidationRule.DependenceRule = null;
+        }
+
         if (TheReportValidationRule == null || TheReportValidationRule.Id == 0)
         {
             TheRuleService.CreateReportValidationRule(TheReportValidationRule);
@@ -136,6 +146,32 @@ public partial class Modules_OffLineReport_BatchMaintenance_NewRule : ModuleBase
         lCreateDate.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.CreateDate.ToString() : "";
         lLastUpdateBy.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.UpdateUser.UserName : "";
         lLastUpdateDate.Text = (TheReportValidationRule != null && TheReportValidationRule.Id != 0) ? TheReportValidationRule.UpdateDate.ToString() : "";
+
+        IList<ReportValidationRule> newList = new List<ReportValidationRule>();
+        newList.Add(new ReportValidationRule());
+        if (this.BatchId != 0)
+        {
+            IList list = TheRuleService.FindReportValidationRuleByBatchId(this.BatchId);
+            if (list != null && list.Count > 0)
+            {
+                foreach (ReportValidationRule rule in list)
+                {
+                    if (this.TheReportValidationRule == null || TheReportValidationRule.Id != rule.Id)
+                    {
+                        newList.Add(rule);
+                    }
+                }
+            }
+        }
+        ddlDependenceRule.DataSource = newList;
+        ddlDependenceRule.DataValueField = "Id";
+        ddlDependenceRule.DataTextField = "Name";
+        ddlDependenceRule.DataBind();
+
+        if (TheReportValidationRule != null && TheReportValidationRule.DependenceRule != null)
+        {
+            ddlDependenceRule.SelectedValue = TheReportValidationRule.DependenceRule.Id.ToString();
+        }
     }
 
     //protected void btnInsertParameter_Click(object sender, EventArgs e)

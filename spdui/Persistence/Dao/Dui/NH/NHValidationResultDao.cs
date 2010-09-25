@@ -112,6 +112,12 @@ namespace Dndp.Persistence.Dao.Dui.NH
             Delete(hql, dsId, NHibernate.NHibernateUtil.Int32);
         }
 
+        public IList<ValidationResult> FindAllByDependenceRuleId(int ruleId)
+        {
+            string hql = @"from ValidationResult entity where entity.TheDataSourceRule.DependenceRule.Id = ?";
+            return FindAllWithCustomQuery(hql, ruleId, NHibernate.NHibernateUtil.Int32) as IList<ValidationResult>;
+        }
+
         #endregion Customized Methods
     }
 }

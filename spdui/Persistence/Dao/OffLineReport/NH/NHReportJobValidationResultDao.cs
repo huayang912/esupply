@@ -95,6 +95,13 @@ namespace Dndp.Persistence.Dao.OffLineReport.NH
 
             return FindAllWithCustomQuery(hql);
         }
+
+        public IList FindValidationResultByDependenceRuleId(int ruleId)
+        {
+            string hql = "from ReportJobValidationResult as entity where entity.TheRule.DependenceRule.Id = ?";
+
+            return FindAllWithCustomQuery(hql, ruleId, NHibernate.NHibernateUtil.Int32);
+        }
         #endregion Customized Methods
     }
 }

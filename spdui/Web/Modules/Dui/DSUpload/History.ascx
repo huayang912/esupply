@@ -90,6 +90,8 @@ end function
                     <%# ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 1 ? "RawDeleted" : "" %>
                     <asp:LinkButton ID="lbtnUpdate" runat="server" Text="[Update Subject]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                         CommandName="Select" OnClick="lbtnUpdate_Click" />
+                    <asp:LinkButton ID="lbtnDownloadDWData" runat="server" Text="[Download DW Data]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                        CommandName="Select" OnClick="lbtnDownloadDWData_Click" />
                 </ItemTemplate>
                 <ItemStyle HorizontalAlign="Left" />
             </asp:TemplateField>

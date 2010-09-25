@@ -675,6 +675,8 @@ namespace Dndp.Service.OffLineReport.Impl
             ReportJobValidationResult vr = this.reportJobValidationResultDao.LoadReportJobValidationResult(id);
             string rule = vr.TheRule.Content;
 
+            IList dependenceVRList = this.reportJobValidationResultDao.FindValidationResultByDependenceRuleId(vr.TheRule.Id);
+
             //Update Field Content in the SQL Rule
             rule = UpdateValidationSQLContent(rule, vr.TheJob);
 
@@ -695,7 +697,17 @@ namespace Dndp.Service.OffLineReport.Impl
                 vr.Status = "Passed";
             }
             vr.FailedRowCount = failRowCount;
-           this.reportJobValidationResultDao.UpdateReportJobValidationResult(vr);
+            this.reportJobValidationResultDao.UpdateReportJobValidationResult(vr);
+
+            if (dependenceVRList != null && dependenceVRList.Count > 0)
+            {
+                foreach (ReportJobValidationResult dependenceVR in dependenceVRList)
+                {
+                    dependenceVR.Status = vr.Status;
+                    dependenceVR.FailedRowCount = vr.FailedRowCount;
+                    this.reportJobValidationResultDao.UpdateReportJobValidationResult(dependenceVR);
+                }
+            }
 
             RefreshValidateResultCount(vr.TheJob.Id);
             return vr;

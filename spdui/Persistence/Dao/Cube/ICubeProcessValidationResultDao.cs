@@ -36,6 +36,8 @@ namespace Dndp.Persistence.Dao.Cube
 
         IList<CubeProcessValidationResult> FindCubeProcessValidationResultByIds(string validationIds);
 
+        IList<CubeProcessValidationResult> FindCubeProcessValidationResultByDependenceRuleId(int ruleId);
+
         #endregion Customized Methods
     }
 }

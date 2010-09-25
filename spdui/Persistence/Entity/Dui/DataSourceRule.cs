@@ -167,6 +167,19 @@ namespace Dndp.Persistence.Entity.Dui
                 _lastUpdateBy = value;
             }
         }
+
+        private DataSourceRule _dependenceRule;
+        public DataSourceRule DependenceRule
+        {
+            get
+            {
+                return _dependenceRule;
+            }
+            set
+            {
+                _dependenceRule = value;
+            }
+        }
         
         #endregion
 

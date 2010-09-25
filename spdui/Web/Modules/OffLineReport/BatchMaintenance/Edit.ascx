@@ -188,6 +188,12 @@ function ChooseAll(varControlName)
             </asp:TemplateField>
             <asp:BoundField DataField="Description" HeaderText="Description" />
             <asp:BoundField DataField="Type" HeaderText="Type" />
+            <asp:TemplateField HeaderText="Is Dependence">
+                <ItemTemplate>
+                    <asp:CheckBox ID="lbtnHasDependenceRule" runat="server" Checked='<%# DataBinder.Eval(Container.DataItem, "DependenceRule") != null %>'
+                        CssClass="radio" Enabled="false" />
+                </ItemTemplate>
+            </asp:TemplateField>
             <asp:BoundField DataField="CreateDate" DataFormatString="{0:d}" HeaderText="Create Date" />
             <asp:TemplateField HeaderText="Create By">
                 <ItemTemplate>
@@ -204,5 +210,5 @@ function ChooseAll(varControlName)
     </asp:GridView>
 </asp:Panel>
 <uc1:NewBatchReport ID="NewBatchReport1" runat="server" Visible="False" />
-<uc2:NewBatchUser id="NewBatchUser1" runat="server" Visible="False" />
+<uc2:NewBatchUser ID="NewBatchUser1" runat="server" Visible="False" />
 <uc3:NewRule ID="NewRule1" runat="server" Visible="False" />

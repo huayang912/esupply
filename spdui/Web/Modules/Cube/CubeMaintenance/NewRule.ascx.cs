@@ -132,7 +132,16 @@ public partial class Modules_Cube_CubeMaintenance_NewRule : ModuleBase
         else
         {
             TheCubeValidationRule.ValidationTarget = rdoValidationTargart_CubeDB.Text;
-        }   
+        }
+
+        if (ddlDependenceRule.SelectedValue != "0")
+        {
+            TheCubeValidationRule.DependenceRule = TheRuleService.LoadCubeValidationRule(int.Parse(ddlDependenceRule.SelectedValue));
+        }
+        else
+        {
+            TheCubeValidationRule.DependenceRule = null;
+        }
 
         if (TheCubeValidationRule == null || TheCubeValidationRule.Id == 0)
         {
@@ -168,7 +177,33 @@ public partial class Modules_Cube_CubeMaintenance_NewRule : ModuleBase
         else
         {
             rdoValidationTargart_SPDW.Checked = true;
-        }    
+        }
+
+        IList<CubeValidationRule> newList = new List<CubeValidationRule>();
+        newList.Add(new CubeValidationRule());
+        if (txtCubeId.Value != string.Empty)
+        {
+            IList<CubeValidationRule> list = TheRuleService.FindCubeValidationRuleWithCubeId(int.Parse(txtCubeId.Value));
+            if (list != null && list.Count > 0)
+            {
+                foreach (CubeValidationRule rule in list)
+                {
+                    if (TheCubeValidationRule == null || TheCubeValidationRule.Id != rule.Id)
+                    {
+                        newList.Add(rule);
+                    }
+                }                
+            }
+        }
+        ddlDependenceRule.DataSource = newList;
+        ddlDependenceRule.DataValueField = "Id";
+        ddlDependenceRule.DataTextField = "Name";
+        ddlDependenceRule.DataBind();
+
+        if (TheCubeValidationRule != null && TheCubeValidationRule.DependenceRule != null)
+        {
+            ddlDependenceRule.SelectedValue = TheCubeValidationRule.DependenceRule.Id.ToString();
+        }
     }
 
     protected void btnInsertParameter_Click(object sender, EventArgs e)

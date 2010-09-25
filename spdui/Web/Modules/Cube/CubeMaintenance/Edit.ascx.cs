@@ -446,9 +446,9 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
     {
         int dsRuleId = Int32.Parse(((LinkButton)sender).CommandArgument);
         NewRule1.TheCubeValidationRule = TheRuleService.LoadCubeValidationRule(dsRuleId);
+        NewRule1.SetCubeId(TheCube.Id);
         NewRule1.UpdateView();
         NewRule1.Visible = true;
-        NewRule1.SetCubeId(TheCube.Id);
         pnlMain.Visible = false;
     }
 

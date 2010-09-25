@@ -25,6 +25,5 @@
 	<property name="PostUpdateRoleSQL" column="PostUpdateRoleSQL" type="StringClob" />
 	<property name="PreUpdateDescriptionSQL" column="PreUpdateDescriptionSQL" type="StringClob" />
 	<property name="PostUpdateDescriptionSQL" column="PostUpdateDescriptionSQL" type="StringClob" />
-    
   </class>
 </hibernate-mapping>

@@ -566,6 +566,8 @@ namespace Dndp.Service.Dui.Impl
         {
             ValidationResult vr = validationResultDao.LoadValidationResult(validateResultId);
             string rule = vr.TheDataSourceRule.RuleContent;
+
+            IList<ValidationResult> dependenceVRList = this.validationResultDao.FindAllByDependenceRuleId(vr.TheDataSourceRule.Id);
             
             //Update Field Content in the SQL Rule
             rule = UpdateValidationSQLContent(vr, rule);
@@ -588,6 +590,16 @@ namespace Dndp.Service.Dui.Impl
             }
             vr.FaildRowCount = failRowCount;
             validationResultDao.UpdateValidationResult(vr);
+
+            if (dependenceVRList != null && dependenceVRList.Count > 0)
+            {
+                foreach(ValidationResult dependenceVR in dependenceVRList)
+                {
+                    dependenceVR.Status = vr.Status;
+                    dependenceVR.FaildRowCount = vr.FaildRowCount;
+                    validationResultDao.UpdateValidationResult(dependenceVR);
+                }
+            }
 
             RefreshValidateResultCount(vr.TheDataSourceUpload);
             return vr;
@@ -694,6 +706,48 @@ namespace Dndp.Service.Dui.Impl
             }
 
             rule = rule + "1 from " + dsFile.TheDataSourceCategory.TheDataSource.Name + "_HISTORY where BATCH_NO = " + dsFile.BatchNo + " and CATEGORY = '" + dsFile.TheDataSourceCategory.Name + "' Order by ROW_NO";
+
+            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
+            DataTableReader dataReader = dataSet.CreateDataReader();
+
+            //write csv header
+            string[] header = new string[dataReader.FieldCount];
+            for (int i = 0; i < dataReader.FieldCount - 1; i++)
+            {
+                header[i] = dataReader.GetName(i);
+            }
+            csvWriter.Write(header);
+            csvWriter.WriteNewLine();
+
+            //write csv content
+            while (dataReader.Read())
+            {
+                object[] fields = new object[dataReader.FieldCount];
+                dataReader.GetValues(fields);
+                string[] strFields = new string[fields.Length];
+                for (int i = 0; i < fields.Length - 1; i++)
+                {
+                    if (fields[i] != null)
+                    {
+                        strFields[i] = fields[i].ToString();
+                    }
+                    else
+                    {
+                        strFields[i] = "";
+                    }
+                }
+                csvWriter.Write(strFields);
+                csvWriter.WriteNewLine();
+            }
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public void DownloadDWData(DataSourceUpload dsFile, CSVWriter csvWriter)
+        {
+            string rule = dsFile.TheDataSourceCategory.TheDataSource.DWQuerySQL;
+
+            rule = rule.Replace("<$Category$>", dsFile.TheDataSourceCategory.Name.ToString());
+            rule = rule.Replace("<$BatchNo$>", dsFile.BatchNo.ToString());
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();

@@ -36,6 +36,8 @@ namespace Dndp.Persistence.Dao.OffLineReport
 
         IList FindValidationResultByIds(string validationIds);
 
+        IList FindValidationResultByDependenceRuleId(int ruleId);
+
         #endregion Customized Methods
     }
 }

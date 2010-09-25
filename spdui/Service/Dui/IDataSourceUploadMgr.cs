@@ -80,6 +80,8 @@ namespace Dndp.Service.Dui
         
         void DownloadUploadData(DataSourceUpload dsFile, CSVWriter csvWriter);
 
+        void DownloadDWData(DataSourceUpload dsFile, CSVWriter csvWriter);
+
         void DownloadUploadTemplate(DataSource ds, CSVWriter csvWriter);
 
         void DownloadETLLog(DataSourceUpload dsFile, CSVWriter csvWriter);

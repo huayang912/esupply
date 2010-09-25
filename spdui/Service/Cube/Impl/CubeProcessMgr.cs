@@ -477,6 +477,8 @@ namespace Dndp.Service.Cube.Impl
             CubeProcessValidationResult vr = validationResultDao.LoadCubeProcessValidationResult(validateResultId);
             string rule = vr.TheRule.Content;
 
+            IList<CubeProcessValidationResult> dependenceVRList = this.validationResultDao.FindCubeProcessValidationResultByDependenceRuleId(vr.TheRule.Id);
+
             //Update Field Content in the SQL Rule
             rule = UpdateValidationSQLContent(rule, processParameterList);
 
@@ -498,6 +500,16 @@ namespace Dndp.Service.Cube.Impl
             }
             vr.FailedRowCount = failRowCount;
             validationResultDao.UpdateCubeProcessValidationResult(vr);
+
+            if (dependenceVRList != null && dependenceVRList.Count > 0)
+            {
+                foreach (CubeProcessValidationResult dependenceVR in dependenceVRList)
+                {
+                    dependenceVR.Status = vr.Status;
+                    dependenceVR.FailedRowCount = vr.FailedRowCount;
+                    validationResultDao.UpdateCubeProcessValidationResult(dependenceVR);
+                }
+            }
 
             RefreshValidateResultCount(vr.TheProcess);
             return vr;

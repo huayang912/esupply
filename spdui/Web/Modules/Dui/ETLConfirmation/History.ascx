@@ -68,7 +68,7 @@ end function
     <asp:GridView Width="100%" runat="server" ID="gvDSUploadHistory" AutoGenerateColumns="False"
         DataKeyNames="Id" meta:resourcekey="gvDSUploadHistoryResource" AllowPaging="True" PageSize="100"
         OnPageIndexChanging="gvDSUploadHistory_PageIndexChanging" CellPadding="4" CssClass="list"
-        GridLines="Horizontal">
+        GridLines="Horizontal" OnRowDataBound="gvDSUploadHistory_RowDataBound">
         <HeaderStyle CssClass="listhead" HorizontalAlign="Left" />
         <Columns>
             <asp:TemplateField ShowHeader="true" HeaderText="Category">
@@ -129,6 +129,8 @@ end function
                         CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 1 && ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0 %>'
                         OnClick="lbtnDeleteHistory_Click" OnClientClick="return ButtonWarning('Delete')"></asp:LinkButton>
                     <%# ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 1 ? "RawDeleted" : "" %>
+                    <asp:LinkButton ID="lbtnDownloadDWData" runat="server" Text="[Download DW Data]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                        CommandName="Select" OnClick="lbtnDownloadDWData_Click" />
                 </ItemTemplate>
                 <ItemStyle HorizontalAlign="Left" />
             </asp:TemplateField>

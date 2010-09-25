@@ -179,6 +179,19 @@ namespace Dndp.Persistence.Entity.OffLineReport
                 _activeFlag = value;
             }
         }
+
+        private ReportValidationRule _dependenceRule;
+        public ReportValidationRule DependenceRule
+        {
+            get
+            {
+                return _dependenceRule;
+            }
+            set
+            {
+                _dependenceRule = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties

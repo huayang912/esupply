@@ -160,3 +160,22 @@ GO
 alter table OffLine_Report_Validation_Rule alter column RULE_RESULT_CONTENT nvarchar(max) not null
 GO
 
+
+
+-----------2010/9/16-----------------------
+alter table DATA_SOURCE add DW_QUERY_SQL nvarchar(max);
+alter table DATA_SOURCE_RULE add DEPENDENCE_RULE int;
+GO
+ALTER TABLE [dbo].[DATA_SOURCE_RULE]  WITH CHECK ADD  CONSTRAINT [FK_DATA_SOURCE_RULE_DATA_SOURCE_RULE] FOREIGN KEY([DEPENDENCE_RULE])
+REFERENCES [dbo].[DATA_SOURCE_RULE] ([RULE_ID])
+GO
+alter table Cube_Validation_Rule add DEPENDENCE_RULE int;
+GO
+ALTER TABLE [dbo].[Cube_Validation_Rule]  WITH CHECK ADD  CONSTRAINT [FK_Cube_Validation_Rule_Cube_Validation_Rule] FOREIGN KEY([DEPENDENCE_RULE])
+REFERENCES [dbo].[Cube_Validation_Rule] ([Rule_Id])
+GO
+alter table OffLine_Report_Validation_Rule add DEPENDENCE_RULE int;
+GO
+ALTER TABLE [dbo].[OffLine_Report_Validation_Rule]  WITH CHECK ADD  CONSTRAINT [FK_OffLine_Report_Validation_Rule_OffLine_Report_Validation_Rule] FOREIGN KEY([DEPENDENCE_RULE])
+REFERENCES [dbo].[OffLine_Report_Validation_Rule] ([Rule_Id])
+GO

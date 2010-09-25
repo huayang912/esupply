@@ -193,7 +193,7 @@ function ChooseAll(varControlName)
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
                                 <td valign="top">
-									<input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' />                            
+									<input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' <%# DataBinder.Eval(Container.DataItem, "TheRule.DependenceRule") != null ? "disabled='disabled'" : ""%>/>                            
                             
                                 </td>
                                 <td valign="top">
@@ -230,7 +230,7 @@ function ChooseAll(varControlName)
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
                                 <td valign="top">
-                                    <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' />                           
+                                    <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' <%# DataBinder.Eval(Container.DataItem, "TheRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />                           
                                 </td>
                                 <td valign="top">
                                     <%# DataBinder.Eval(Container.DataItem, "TheRule.Name")%>
@@ -264,7 +264,7 @@ function ChooseAll(varControlName)
                 <Columns>                    
                     <asp:TemplateField HeaderText="Validation Rule(Warning)" meta:resourcekey="TemplateFieldResource1" >
                         <ItemTemplate>  
-                            <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' />                            
+                            <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>' <%# DataBinder.Eval(Container.DataItem, "TheRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />                            
                             <%# DataBinder.Eval(Container.DataItem, "TheRule.Name")%>
                         </ItemTemplate>
                     </asp:TemplateField>
@@ -387,14 +387,16 @@ function ChooseAll(varControlName)
         //fetch all checkbox in the page
         for(i=0; i<obj.length; i++)
         {
-           if (validationIds != null)
-           {
-                validationIds += "," + obj[i].value;
-           }
-           else
-           {
-                validationIds = obj[i].value;
-           }        
+            if (!obj[i].disabled) {
+               if (validationIds != null)
+               {
+                    validationIds += "," + obj[i].value;
+               }
+               else
+               {
+                    validationIds = obj[i].value;
+               }    
+           }    
         }
         if (validationIds != null) 
         {

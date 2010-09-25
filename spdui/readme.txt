@@ -37,3 +37,9 @@
 6. DW Query中Data Source Name查询不需要区分大小写，所有查询都应该不区分大小写
 7. Validation Rule SQL改为Validation Rule Result SQL,在增加Validation Rule SQL，Validation的时候取Validation Rule SQL执行。DataSource Upload和Cube Maint.和Report Batch Maint.都要改。
 8. DW query在页面上的查询结果可下载，在页面上显示结果集有几条数据
+
+
+
+-----------2010/9/16-----------------------
+1. 在Rule Maint.的时候增加选择Dependence Rule，默认为空。如果选择了Dependence Rule，Validation的时候是不Run的，状态和Dependence Rule的状态一样。
+2. 在数据准备中,每一笔已经process的rawdata上都应有可以下载相应dw数据的link,在ETL Confirmation History中增加Download DWData,WithDraw之后就不显示该按钮。
