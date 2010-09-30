@@ -11,17 +11,21 @@ using System.Web.UI.HtmlControls;
 using Dndp.Web;
 using log4net;
 
-public partial class _Default : System.Web.UI.Page 
+public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+
     }
 
     protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
-        DomainLogin();  //new
+        System.Web.Configuration.AuthenticationSection authenticationSection = (System.Web.Configuration.AuthenticationSection)System.Web.Configuration.WebConfigurationManager.GetWebApplicationSection("system.web/authentication");
+        if (authenticationSection != null && authenticationSection.Mode == System.Web.Configuration.AuthenticationMode.Windows)
+        {
+            DomainLogin();  //new
+        }
         LoadModule();
     }
 
@@ -33,28 +37,21 @@ public partial class _Default : System.Web.UI.Page
         }
 
         Dndp.Service.Security.ISecurityMgr securityMgr = ServiceLocator.GetService("SecurityMgr.service") as Dndp.Service.Security.ISecurityMgr;
-        if (this.User.Identity.Name != null && this.User.Identity.Name.Trim() != string.Empty)
-        {
-            string domainFullName = this.User.Identity.Name;
-            string[] ary = domainFullName.Split('\\');
-            Dndp.Persistence.Entity.Security.User u = securityMgr.DomainLogin(ary[0], ary[1]);
 
-            if (u == null)
-            {
-                //**********登陆失败处理，可以redirect到一个页面，提示无权限访问本系统***********
-                Response.Redirect("NoPermission.htm", true);
-                return;
-            }
+        string domainFullName = this.User.Identity.Name;
+        string[] ary = domainFullName.Split('\\');
+        Dndp.Persistence.Entity.Security.User u = securityMgr.DomainLogin(ary[0], ary[1]);
 
-            FormsAuthentication.SetAuthCookie(u.UserName, false);
-            Session["CurrentUser"] = u;
-        }
-        else
+        if (u == null)
         {
-            Response.Redirect("LoginPage.aspx", true);
+            //**********登陆失败处理，可以redirect到一个页面，提示无权限访问本系统***********
+            Response.Redirect("NoPermission.htm", true);
             return;
         }
-    }		
+
+        FormsAuthentication.SetAuthCookie(u.UserName, false);
+        Session["CurrentUser"] = u;
+    }
 
     private void LoadModule()
     {
