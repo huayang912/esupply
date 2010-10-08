@@ -63,7 +63,7 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
     void NewCategory1_Back(object sender, EventArgs e)
     {
         NewCategory1.Visible = false;
-        TheDataSource.DataSourceCategoryList = TheService.FindDataSourceCategoryByDataSourceId(TheDataSource.Id);
+        TheDataSource.DataSourceCategoryList = TheService.FindDataSourceCategoryByDataSourceId(TheDataSource.Id, true);
         UpdateView();
         pnlMain.Visible = true;
     }
@@ -108,6 +108,7 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
     {
         txtName.Text = TheDataSource.Name;
         txtDescription.Text = TheDataSource.Description;
+        txtDataStructure.Text = TheDataSource.DataStructure;
         txtRuleContent.Text = TheDataSource.DWQuerySQL;
         txtType.Text = TheDataSource.DSType;
 
@@ -151,9 +152,11 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
         }
 
         string description = txtDescription.Text.Trim();
+        string dataStructure = txtDataStructure.Text.Trim();
 
         TheDataSource.Name = name;
         TheDataSource.Description = description;
+        TheDataSource.DataStructure = dataStructure;
         TheDataSource.DWQuerySQL = txtRuleContent.Text.Trim();
         TheDataSource.DSType = txtType.Text.Trim();
         TheDataSource.LastUpdateBy = CurrentUser;

@@ -133,6 +133,8 @@
     <Compile Include="Dao\Dui\NH\NHDataSourceUploadDao.cs" />
     <Compile Include="Dao\Dui\NH\NHDataSourceWithDrawTableDao.cs" />
     <Compile Include="Dao\Dui\NH\NHValidationResultDao.cs" />
+    <Compile Include="Dao\Dui\IDWDataSourceMergeRuleDao.cs" />
+    <Compile Include="Dao\Dui\NH\NHDWDataSourceMergeRuleDao.cs" />
     <Compile Include="Dao\IDao.cs" />
     <Compile Include="Dao\INHDao.cs" />
     <Compile Include="Dao\NHDaoBase.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Entity\Dui\DataSourceUpload.cs" />
     <Compile Include="Entity\Dui\DataSourceWithDrawTable.cs" />
     <Compile Include="Entity\Dui\ValidationResult.cs" />
+    <Compile Include="Entity\Dui\DWDataSourceMergeRule.cs" />
     <Compile Include="Entity\EntityBase.cs" />
     <Compile Include="Entity\OffLineReport\ReportBatchUser.cs" />
     <Compile Include="Entity\OffLineReport\ReportJobValidationResult.cs" />
@@ -375,6 +378,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Entity\OffLineReport\ReportBatchUser.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entity\Dui\DWDataSourceMergeRule.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

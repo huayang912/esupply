@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statements here.
 
 namespace Dndp.Persistence.Dao.Dui
@@ -45,6 +46,8 @@ namespace Dndp.Persistence.Dao.Dui
         IList<string> FindAllDWDataSourceTypeList();
 
         IList<DWDataSource> FindDWDataSourceByTypeAndName(string type, string DWName);
+
+        IList<DWDataSource> FindDWDataSourceByTypeAndName(string type, string DWName, User user, string allowType);
 
         #endregion Customized Methods
     }

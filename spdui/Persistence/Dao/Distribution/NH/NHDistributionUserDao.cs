@@ -80,22 +80,23 @@ namespace Dndp.Persistence.Dao.Distribution.NH
 
         public IList<DistributionUser> FindDistributionUserByName(string name)
         {
-            string hql = "from DistributionUser entity where entity.Name like ? and entity.ActiveFlag = 1";
+            string hql = "from DistributionUser entity where (entity.Name like ? or entity.Description like ?) and entity.ActiveFlag = 1";
 
             IList<DistributionUser> list = FindAllWithCustomQuery(
-                hql, new object[] { "%" + name + "%" },
-                new IType[] { NHibernateUtil.String }) as IList<DistributionUser>;
+                hql, new object[] { "%" + name + "%", "%" + name + "%" },
+                new IType[] { NHibernateUtil.String, NHibernateUtil.String }) as IList<DistributionUser>;
 
             return list;
         }
 
         public IList<DistributionUser> FindDistributionUserByName(string name, bool isOfflineReportUser, bool isOfflineCubeUser, bool isOnlineCubeUser)
         {
-            string hql = "from DistributionUser entity where entity.Name like ? and (entity.IsReportUser = ? or entity.IsOfflineCubeUser = ? or entity.IsOnlineCubeUser = ?) and entity.ActiveFlag = 1";
+            string hql = @"from DistributionUser entity where (entity.Name like ? or entity.Description like ?)
+                    and (entity.IsReportUser = ? or entity.IsOfflineCubeUser = ? or entity.IsOnlineCubeUser = ?) and entity.ActiveFlag = 1";
 
             IList<DistributionUser> list = FindAllWithCustomQuery(
-                hql, new object[] { "%" + name + "%", isOfflineReportUser ? 1 : 0, isOfflineCubeUser ? 1 : 0, isOnlineCubeUser ? 1 : 0 },
-                new IType[] { NHibernateUtil.String, NHibernateUtil.Int32, NHibernateUtil.Int32, NHibernateUtil.Int32 }) as IList<DistributionUser>;
+                hql, new object[] { "%" + name + "%", "%" + name + "%", isOfflineReportUser ? 1 : 0, isOfflineCubeUser ? 1 : 0, isOnlineCubeUser ? 1 : 0 },
+                new IType[] { NHibernateUtil.String, NHibernateUtil.String, NHibernateUtil.Int32, NHibernateUtil.Int32, NHibernateUtil.Int32 }) as IList<DistributionUser>;
 
             return list;
         }

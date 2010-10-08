@@ -101,11 +101,11 @@ namespace Dndp.Persistence.Dao.Cube.NH
 
         public IList<CubeUser> FindCubeUserByName(string userName)
         {
-            string hql = "from CubeUser entity where entity.Name like ? and entity.ActiveFlag=1 and entity.TheDistributionUser.ActiveFlag=1 and (entity.TheDistributionUser.IsOnlineCubeUser = 1 or entity.TheDistributionUser.IsOfflineCubeUser = 1) order by entity.Name ";
+            string hql = "from CubeUser entity where (entity.Name like ? or entity.Description like ?) and entity.ActiveFlag=1 and entity.TheDistributionUser.ActiveFlag=1 and (entity.TheDistributionUser.IsOnlineCubeUser = 1 or entity.TheDistributionUser.IsOfflineCubeUser = 1) order by entity.Name ";
 
             IList<CubeUser> list = FindAllWithCustomQuery(
-                hql, new object[] { "%" + userName + "%" },
-                new IType[] { NHibernateUtil.String }) as IList<CubeUser>;
+                hql, new object[] { "%" + userName + "%", "%" + userName + "%" },
+                new IType[] { NHibernateUtil.String, NHibernateUtil.String }) as IList<CubeUser>;
 
             return list;
         }

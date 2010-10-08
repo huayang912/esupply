@@ -627,7 +627,7 @@ namespace Dndp.Service.OffLineReport.Impl
         {
     
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(rule, this.reportJobDao.LoadReportJob(jobId)); 
+            rule = UpdateValidationSQLContent(rule, this.reportJobDao.LoadReportJob(jobId), null); 
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -670,7 +670,7 @@ namespace Dndp.Service.OffLineReport.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public ReportJobValidationResult ValidateRule(int id)
+        public ReportJobValidationResult ValidateRule(int id, User actionUser)
         {
             ReportJobValidationResult vr = this.reportJobValidationResultDao.LoadReportJobValidationResult(id);
             string rule = vr.TheRule.Content;
@@ -678,7 +678,7 @@ namespace Dndp.Service.OffLineReport.Impl
             IList dependenceVRList = this.reportJobValidationResultDao.FindValidationResultByDependenceRuleId(vr.TheRule.Id);
 
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(rule, vr.TheJob);
+            rule = UpdateValidationSQLContent(rule, vr.TheJob, actionUser);
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -763,11 +763,15 @@ namespace Dndp.Service.OffLineReport.Impl
             }
         }
 
-        private string UpdateValidationSQLContent(string rule, ReportJob reportJob)
+        private string UpdateValidationSQLContent(string rule, ReportJob reportJob, User actionUser)
         {
             //rule = rule.Replace("<$Category$>", vr.TheDataSourceUpload.TheDataSourceCategory.Name.ToString());
             ////rule = rule.Replace("<$BatchNo$>", vr.TheDataSourceUpload.BatchNo.ToString());
             rule = rule.Replace("<$ReportDate$>", reportJob.ReportDate.ToShortDateString());
+            if (actionUser != null)
+            {
+                rule = rule.Replace("<$ActionUser$>", actionUser.Id.ToString());
+            }
             return rule;
         }
 

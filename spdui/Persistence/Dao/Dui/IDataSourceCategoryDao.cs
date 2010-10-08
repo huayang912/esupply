@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statements here.
 
 namespace Dndp.Persistence.Dao.Dui
@@ -31,6 +32,10 @@ namespace Dndp.Persistence.Dao.Dui
         #region Customized Methods
 
         IList FindAllByDataSourceId(int dataSourceId);
+
+        IList FindAllByDataSourceId(int dataSourceId, bool includeInactive);
+
+        IList FindAllByDataSourceId(int dataSourceId, bool includeInactive, User user);
 
         IList<DataSourceCategory> FindDataSourceCategory(int userId, string allowType, string strCategory, string strType);
 

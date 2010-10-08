@@ -43,6 +43,8 @@ namespace Dndp.Service.Dui
 
         IList<DWDataSource> FindDWDataSourceByTypeAndName(string strType, string strDSName);
 
+        IList<DWDataSource> FindDWDataSourceByTypeAndName(string strType, string strDSName, User user, string allowType);
+
         IList<string> FindDWDataSourceTypeList(int userId, string AllowType);
 
         IList<string> FindDWDataSourceTypeList(int userId);
@@ -75,7 +77,7 @@ namespace Dndp.Service.Dui
 
         //void DeleteSelectedResult(DWDataSource ds, int RowNo, string ActionSource, string ActionUser, string strCondition);
 
-        void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, string ActionUser);
+        void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, User ActionUser);
 
         #endregion Customized Methods
 

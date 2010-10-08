@@ -8,6 +8,7 @@ using NHibernate.Type;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
 using Dndp.Persistence.Dao.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statmens here.
 
 namespace Dndp.Persistence.Dao.Dui.NH
@@ -130,7 +131,8 @@ namespace Dndp.Persistence.Dao.Dui.NH
 
             if (DWName != null & DWName.Trim().Length > 0)
             {
-                hql += " and ds.Name like ?";
+                hql += " and (ds.Name like ? or ds.Description like ?)";
+                paraCount++;
                 paraCount++;
             }
 
@@ -152,6 +154,9 @@ namespace Dndp.Persistence.Dao.Dui.NH
 
             if (DWName != null & DWName.Trim().Length > 0)
             {
+                i++;
+                paraValues[i] = "%" + DWName + "%";
+                paraTypes[i] = NHibernateUtil.String;
                 i++;
                 paraValues[i] = "%" + DWName + "%";
                 paraTypes[i] = NHibernateUtil.String;
@@ -177,7 +182,8 @@ namespace Dndp.Persistence.Dao.Dui.NH
 
             if (DWName != null & DWName.Trim().Length > 0)
             {
-                hql += " and ds.Name like ?";
+                hql += " and (ds.Name like ? or ds.Description like ?)";
+                paraCount++;
                 paraCount++;
             }
 
@@ -196,6 +202,82 @@ namespace Dndp.Persistence.Dao.Dui.NH
             if (DWName != null & DWName.Trim().Length > 0)
             {                
                 paraValues[i] = "%" + DWName + "%";
+                paraTypes[i] = NHibernateUtil.String;
+                i++;
+                paraValues[i] = "%" + DWName + "%";
+                paraTypes[i] = NHibernateUtil.String;
+                i++;
+            }
+
+
+            IList<DWDataSource> list = FindAllWithCustomQuery(hql, paraValues, paraTypes) as IList<DWDataSource>;
+
+            return list;
+        }
+
+        public IList<DWDataSource> FindDWDataSourceByTypeAndName(string type, string DWName, User user, string allowType)
+        {
+            int paraCount = 0;
+            int i = 0;
+            string hql = " select distinct ds from DWDataSourceOperator as dso inner join dso.TheDWDataSource as ds where 1=1" ;
+
+            if (type != null & type.Trim().Length > 0)
+            {
+                hql += " and ds.DSType = ?";
+                paraCount++;
+            }
+
+            if (DWName != null & DWName.Trim().Length > 0)
+            {
+                hql += " and (ds.Name like ? or ds.Description like ?)";
+                paraCount++;
+                paraCount++;
+            }
+
+            if (user != null)
+            {
+                hql += " and dso.TheUser.Id = ?";
+                paraCount++;
+            }
+
+            if (allowType != null & allowType.Trim().Length > 0)
+            {
+                hql += " and dso.AllowType = ?";
+                paraCount++;
+            }
+
+            hql += " order by ds.Name, ds.DSType";
+
+            object[] paraValues = new object[paraCount];
+            IType[] paraTypes = new IType[paraCount];
+
+            if (type != null & type.Trim().Length > 0)
+            {
+                paraValues[i] = type;
+                paraTypes[i] = NHibernateUtil.String;
+                i++;
+            }
+
+            if (DWName != null & DWName.Trim().Length > 0)
+            {
+                paraValues[i] = "%" + DWName + "%";
+                paraTypes[i] = NHibernateUtil.String;
+                i++;
+                paraValues[i] = "%" + DWName + "%";
+                paraTypes[i] = NHibernateUtil.String;
+                i++;
+            }
+
+            if (user != null)
+            {
+                paraValues[i] = user.Id;
+                paraTypes[i] = NHibernateUtil.Int32;
+                i++;
+            }
+
+            if (allowType != null & allowType.Trim().Length > 0)
+            {
+                paraValues[i] = allowType;
                 paraTypes[i] = NHibernateUtil.String;
                 i++;
             }

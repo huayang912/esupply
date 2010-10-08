@@ -472,7 +472,7 @@ namespace Dndp.Service.Cube.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public CubeProcessValidationResult ValidateCubeProcessRule(int validateResultId, IList<CubeProcessParameter> processParameterList)
+        public CubeProcessValidationResult ValidateCubeProcessRule(int validateResultId, IList<CubeProcessParameter> processParameterList, User actionUser)
         {
             CubeProcessValidationResult vr = validationResultDao.LoadCubeProcessValidationResult(validateResultId);
             string rule = vr.TheRule.Content;
@@ -480,7 +480,7 @@ namespace Dndp.Service.Cube.Impl
             IList<CubeProcessValidationResult> dependenceVRList = this.validationResultDao.FindCubeProcessValidationResultByDependenceRuleId(vr.TheRule.Id);
 
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(rule, processParameterList);
+            rule = UpdateValidationSQLContent(rule, processParameterList, actionUser);
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -520,7 +520,7 @@ namespace Dndp.Service.Cube.Impl
         {
             
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(rule, processParameterList); ;
+            rule = UpdateValidationSQLContent(rule, processParameterList, null); ;
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -559,10 +559,14 @@ namespace Dndp.Service.Cube.Impl
 
         #region private Methods
 
-        private string UpdateValidationSQLContent(string rule, IList<CubeProcessParameter> processParameterList)
+        private string UpdateValidationSQLContent(string rule, IList<CubeProcessParameter> processParameterList, User actionUser)
         {           
             //rule = rule.Replace("<$Category$>", vr.TheDataSourceUpload.TheDataSourceCategory.Name.ToString());
             rule = rule.Replace("<$DWDBString$>", this.DWDBString);
+            if (actionUser != null)
+            {
+                rule = rule.Replace("<$ActionUser$>", actionUser.Id.ToString());
+            }
 
             if (processParameterList != null && processParameterList.Count > 0)
             {

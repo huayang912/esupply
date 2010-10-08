@@ -8,6 +8,7 @@ using NHibernate.Type;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
 using Dndp.Persistence.Dao.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statmens here.
 
 namespace Dndp.Persistence.Dao.Dui.NH
@@ -82,6 +83,31 @@ namespace Dndp.Persistence.Dao.Dui.NH
         {
             return FindAllWithCustomQuery("from DataSourceCategory dsc where dsc.TheDataSource.Id=?", dataSourceId);
         }
+
+        public IList FindAllByDataSourceId(int dataSourceId, bool includeInactive)
+        {
+            if (includeInactive)
+            {
+                return FindAllWithCustomQuery("from DataSourceCategory dsc where dsc.TheDataSource.Id=?", dataSourceId);
+            }
+            else
+            {
+                return FindAllWithCustomQuery("from DataSourceCategory dsc where dsc.TheDataSource.Id=? and dsc.ActiveFlag = 1", dataSourceId);
+            }
+        }
+
+        public IList FindAllByDataSourceId(int dataSourceId, bool includeInactive, User user)
+        {
+            if (includeInactive)
+            {
+                return FindAllWithCustomQuery("from DataSourceCategory dsc where dsc.TheDataSource.Id=? and " + user.Id + " in elements(dsc.Users)", dataSourceId);
+            }
+            else
+            {
+                return FindAllWithCustomQuery("from DataSourceCategory dsc where dsc.TheDataSource.Id=? and dsc.ActiveFlag = 1 and " + user.Id + " in elements(dsc.Users)", dataSourceId);
+            }
+        }
+
 
         public IList<DataSourceCategory> FindDataSourceCategory(int userId, string allowType, string strCategory, string strType)
         {

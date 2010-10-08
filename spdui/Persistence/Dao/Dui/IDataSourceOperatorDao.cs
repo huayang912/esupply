@@ -30,7 +30,6 @@ namespace Dndp.Persistence.Dao.Dui
         #endregion Method Created By CodeSmith
 
         #region Customized Methods
-
         
         IList FindAllByDataSourceId(int dataSourceId);
 

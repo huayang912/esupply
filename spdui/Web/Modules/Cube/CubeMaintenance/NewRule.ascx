@@ -15,12 +15,8 @@
         <tr>
             <td class="txtform">
                 Rule Name:</td>
-            <td>
-                <asp:TextBox ID="txtRuleName" runat="server" Width="150"></asp:TextBox></td>
-            <td class="txtform">
-                Rule Description:</td>
-            <td>
-                <asp:TextBox ID="txtRuleDescription" runat="server" Width="300"></asp:TextBox></td>
+            <td colspan="3">
+                <asp:TextBox ID="txtRuleName" runat="server" Width="300"></asp:TextBox></td>
         </tr>
         <tr>
             <td class="txtform">
@@ -44,9 +40,16 @@
         <tr>
             <td class="txtform">
                 Dependence Rule:</td>
-            <td valign="middle" colspan="3">
+            <td colspan="3">
                 &nbsp;<asp:DropDownList ID="ddlDependenceRule" runat="server">
                 </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" class="txtform">
+                Rule Description:</td>
+            <td colspan="3">
+                <asp:TextBox ID="txtRuleDescription" runat="server" Columns="80" Rows="10" TextMode="MultiLine"></asp:TextBox>
             </td>
         </tr>
         <tr>

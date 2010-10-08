@@ -80,7 +80,7 @@ namespace Dndp.Service.Dui.Impl
             DataSource ds = dataSourceDao.LoadDataSource(id);
             if (ds != null)
             {
-                ds.DataSourceCategoryList = dataSourceCategoryDao.FindAllByDataSourceId(id);
+                ds.DataSourceCategoryList = dataSourceCategoryDao.FindAllByDataSourceId(id, true);
                 ds.DataSourceFieldList = dataSourceFieldDao.FindAllByDataSourceId(id);
                 ds.DataSourceOperatorList = dataSourceOperatorDao.FindAllByDataSourceId(id);
                 ds.DataSourceRuleList = dataSourceRuleDao.FindAllByDataSourceId(id);
@@ -268,7 +268,7 @@ namespace Dndp.Service.Dui.Impl
         public IList FindDataSourceOperatorByDataSourceId(int dsId)
         {
             return dataSourceOperatorDao.FindAllByDataSourceId(dsId);
-        }
+        }      
 
         [Transaction(TransactionMode.Unspecified)]
         public IList FindDataSourceRuleByDataSourceId(int dsId)
@@ -280,6 +280,18 @@ namespace Dndp.Service.Dui.Impl
         public IList FindDataSourceCategoryByDataSourceId(int dsId)
         {
             return dataSourceCategoryDao.FindAllByDataSourceId(dsId);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindDataSourceCategoryByDataSourceId(int dsId, bool includeInactive)
+        {
+            return dataSourceCategoryDao.FindAllByDataSourceId(dsId, includeInactive);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindDataSourceCategoryByDataSourceId(int dsId, bool includeInactive, User user)
+        {
+            return dataSourceCategoryDao.FindAllByDataSourceId(dsId, includeInactive, user);
         }
 
         [Transaction(TransactionMode.Unspecified)]
@@ -404,9 +416,21 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Unspecified)]
+        public IList<DataSource> FindActiveDataSourceByTypeAndName(string type, string name, User user)
+        {
+            return dataSourceDao.FindActiveDataSourceByTypeAndName(type, name, user);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
         public IList<string> FindAllDataSourceType()
         {
             return dataSourceDao.FindAllDataSourceType();
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public IList<string> FindAllDataSourceType(User user)
+        {
+            return dataSourceDao.FindAllDataSourceType(user);
         }
 
         [Transaction(TransactionMode.Unspecified)]

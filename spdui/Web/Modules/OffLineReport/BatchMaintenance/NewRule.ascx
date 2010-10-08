@@ -13,13 +13,7 @@
             <td class="txtform">
                 Rule Name:</td>
             <td>
-                <asp:TextBox ID="txtRuleName" runat="server" Width="150"></asp:TextBox></td>
-            <td class="txtform">
-                Rule Description:</td>
-            <td>
-                <asp:TextBox ID="txtRuleDescription" runat="server" Width="300"></asp:TextBox></td>
-        </tr>
-        <tr>
+                <asp:TextBox ID="txtRuleName" runat="server" Width="300"></asp:TextBox></td>
             <td class="txtform">
                 Rule Type:</td>
             <td valign="middle">
@@ -29,24 +23,21 @@
                     <asp:ListItem Text="Warning" Value="WARNING"></asp:ListItem>
                 </asp:DropDownList>
             </td>
+        </tr>
+        <tr>
             <td class="txtform">
                 Dependence Rule:</td>
-            <td valign="middle">
+            <td colspan="3">
                 &nbsp;<asp:DropDownList ID="ddlDependenceRule" runat="server">
                 </asp:DropDownList>
             </td>
-            <%--<td class="txtForm">Validation Target:</td>
-    <td>&nbsp;<asp:RadioButton ID="rdoValidationTargart_SPDW" Checked="true" GroupName="rdoValidationTargart" runat="server" Text="SPDW" /> &nbsp;&nbsp;
-        <asp:RadioButton ID="rdoValidationTargart_CubeDB" GroupName="rdoValidationTargart" runat="server" Text="CubeDB"/></td>--%>
         </tr>
-        <%--<tr>
-    <td valign="top" class="txtForm">Parameters:</td>
-    <td>
-        &nbsp;<asp:DropDownList ID="ddlParameter" runat="server" Style="width:120;border-color:Red;"></asp:DropDownList>
-    </td>
-    <td><asp:Button ID="btnInsertParameter" runat="server" Text="Insert" CssClass="btn" OnClick="btnInsertParameter_Click"/></td>
-    <td></td>
-</tr>--%>
+        <tr>
+            <td valign="top" class="txtform">
+                Rule Description:</td>
+            <td colspan="3">
+                <asp:TextBox ID="txtRuleDescription" runat="server" Columns="80" Rows="10" TextMode="MultiLine"></asp:TextBox></td>
+        </tr>
         <tr>
             <td valign="top" class="txtform">
                 Validation Rule SQL:</td>

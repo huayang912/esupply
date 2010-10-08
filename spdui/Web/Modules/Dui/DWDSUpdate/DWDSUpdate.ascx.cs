@@ -166,7 +166,7 @@ public partial class Modules_Dui_DWDSUpdate_DWDSUpdate : ModuleBase
 
         //TheService.DeleteSelectedResult(TheDWDataSource, (gvDWDSUpdate.PageIndex) * 20 + e.RowIndex, TheDWDataSource.Name, (new SessionHelper(Page)).CurrentUser.UserName.ToString(), txtCondition.Text.Trim());
 
-        TheService.DeleteSelectedResult(TheDWDataSource, pkKeyValuePairList, this.CurrentUser.UserName);
+        TheService.DeleteSelectedResult(TheDWDataSource, pkKeyValuePairList, this.CurrentUser);
         gvDWDSUpdate.EditIndex = -1;
         UpdateView();
     }

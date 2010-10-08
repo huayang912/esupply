@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.0">
-  <class name="Dndp.Persistence.Entity.Dui.DWDataSource, Dndp.Persistence" table="DW_DATA_SOURCE">
-    <id name="Id" column="DW_Data_Source_ID" type="Int32" unsaved-value="0" >
-      <generator class="identity" />
-    </id>
-    <property name="Name" column="DATA_SOURCE_NAME" type="String" length="50" />
-    <property name="Description" column="DESCRIPTION" type="String" length="200" />
-    <property name="DSType" column="DATA_SOURCE_TYPE" type="String" length="200" />
-    <property name="QuerySQL" column="Query_RULE_CONTENT" type="StringClob"/>
-    <property name="DeleteQuerySQL" column="Query_Delete_Rule_Content" type="StringClob"/>
-    <property name="DeleteSQL" column="Delete_Rule_CONTENT" type="StringClob"/>
-    <property name="CreateDate" column="CREATE_DATE" type="DateTime" />	
-    <property name="LastUpdateDate" column="LAST_UPDATE_DATE" type="DateTime" />
-    <many-to-one name="CreateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="CREATE_BY_USER_ID" cascade="none" />
-    <many-to-one name="LastUpdateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="LAST_UPDATE_USER_ID" cascade="none" />
-    <property name="QueryStartDate" column="Query_Start_date" type="String" />
-    <property name="QueryEndDate" column="Query_End_date" type="String" />	  	  
-  </class>
+	<class name="Dndp.Persistence.Entity.Dui.DWDataSource, Dndp.Persistence" table="DW_DATA_SOURCE">
+		<id name="Id" column="DW_Data_Source_ID" type="Int32" unsaved-value="0" >
+			<generator class="identity" />
+		</id>
+		<property name="Name" column="DATA_SOURCE_NAME" type="String" length="50" />
+		<property name="Description" column="DESCRIPTION" type="String" length="200" />
+		<property name="DSType" column="DATA_SOURCE_TYPE" type="String" length="200" />
+		<property name="QuerySQL" column="Query_RULE_CONTENT" type="StringClob"/>
+		<property name="DeleteQuerySQL" column="Query_Delete_Rule_Content" type="StringClob"/>
+		<property name="DeleteSQL" column="Delete_Rule_CONTENT" type="StringClob"/>
+		<property name="CreateDate" column="CREATE_DATE" type="DateTime" />
+		<property name="LastUpdateDate" column="LAST_UPDATE_DATE" type="DateTime" />
+		<many-to-one name="CreateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="CREATE_BY_USER_ID" cascade="none" />
+		<many-to-one name="LastUpdateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="LAST_UPDATE_USER_ID" cascade="none" />
+		<property name="QueryStartDate" column="Query_Start_date" type="String" />
+		<property name="QueryEndDate" column="Query_End_date" type="String" />
+		<property name="MergeSQL" column="Merge_RULE_CONTENT" type="StringClob"/>
+	</class>
 </hibernate-mapping>

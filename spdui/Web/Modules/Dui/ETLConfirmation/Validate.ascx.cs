@@ -352,7 +352,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
             }
 
             //validate rule
-            ValidationResult validationResult = TheService.ValidateRule(nowValidationId);
+            ValidationResult validationResult = TheService.ValidateRule(nowValidationId, this.CurrentUser);
 
             //update status            
             foreach (ValidationResult vr in TheDataSourceUpload.ValidationResultList)

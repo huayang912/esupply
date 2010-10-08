@@ -101,11 +101,12 @@ namespace Dndp.Persistence.Dao.OffLineReport.NH
 
         public IList<ReportUser> FindReportUserByName(string userName)
         {
-            string hql = "from ReportUser entity where entity.Name like ? and entity.ActiveFlag=1 and entity.TheUser.ActiveFlag=1 and entity.TheUser.IsReportUser = 1 order by entity.Name ";
+            string hql = @"from ReportUser entity where (entity.Name like ? or entity.Description like ?)
+                        and entity.ActiveFlag=1 and entity.TheUser.ActiveFlag=1 and entity.TheUser.IsReportUser = 1 order by entity.Name ";
 
             IList<ReportUser> list = FindAllWithCustomQuery(
-                hql, new object[] { "%" + userName + "%" },
-                new IType[] { NHibernateUtil.String }) as IList<ReportUser>;
+                hql, new object[] { "%" + userName + "%", "%" + userName + "%" },
+                new IType[] { NHibernateUtil.String, NHibernateUtil.String }) as IList<ReportUser>;
 
             return list;
         }

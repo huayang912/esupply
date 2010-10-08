@@ -30,7 +30,7 @@ end function
     Data Confirmation - Data Validation</h2>
 <p class="formBtnBoard">
     <%if (TheDataSourceUpload.ProcessStatus.Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
-                           {%>
+      {%>
     <input type="button" name="btnValidateAll" value="Validate All" onclick="validateAll();"
         class="btn" />
     <input type="button" name="btnValidateSelected" value="Validate Selected" onclick="validateSelected();"
@@ -111,7 +111,8 @@ end function
                                             <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
                                     </td>
                                     <td valign="top">
-                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                        <asp:Label ID="lbName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>'
+                                            ToolTip='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Description")%>' />
                                     </td>
                                 </tr>
                             </table>
@@ -143,7 +144,8 @@ end function
                                             <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
                                     </td>
                                     <td valign="top">
-                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                        <asp:Label ID="lbName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>'
+                                            ToolTip='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Description")%>' />
                                     </td>
                                 </tr>
                             </table>
@@ -175,7 +177,8 @@ end function
                                             <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
                                     </td>
                                     <td valign="top">
-                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                        <asp:Label ID="lbName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>'
+                                            ToolTip='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Description")%>' />
                                     </td>
                                 </tr>
                             </table>

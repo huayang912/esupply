@@ -88,7 +88,7 @@ namespace Dndp.Service.OffLineReport
 
         IList FindValidationResultByIds(string validationIds);
 
-        ReportJobValidationResult ValidateRule(int id );
+        ReportJobValidationResult ValidateRule(int id, User actionUser);
 
         #endregion Customized Methods
 

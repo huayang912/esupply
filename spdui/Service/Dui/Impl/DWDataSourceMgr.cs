@@ -211,7 +211,9 @@ namespace Dndp.Service.Dui.Impl
                     {
                         if (strType.Equals("") || (dwDataSource.DSType.Equals(strType)))
                         {
-                            if (strDSName.Equals("") || dwDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) || dwDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
+                            if (strDSName.Equals("") 
+                                || dwDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) 
+                                || dwDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
                             {
                                 FoundResult.Add(dwDataSource);
                             }
@@ -231,6 +233,13 @@ namespace Dndp.Service.Dui.Impl
         public IList<DWDataSource> FindDWDataSourceByTypeAndName(string strType, string strDSName)
         {
             IList<DWDataSource> FoundResult = DWDataSourceDao.FindDWDataSourceByTypeAndName(strType, strDSName) as IList<DWDataSource>;
+            return FoundResult;
+        }
+
+
+        public IList<DWDataSource> FindDWDataSourceByTypeAndName(string strType, string strDSName, User user, string allowType)
+        {
+            IList<DWDataSource> FoundResult = DWDataSourceDao.FindDWDataSourceByTypeAndName(strType, strDSName, user, allowType) as IList<DWDataSource>;
             return FoundResult;
         }
 
@@ -483,16 +492,16 @@ namespace Dndp.Service.Dui.Impl
         //}
 
         [Transaction(TransactionMode.Unspecified)]
-        public void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, string ActionUser)
+        public void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, User ActionUser)
         {
             string rule = ds.DeleteSQL.ToUpper();
-
+            rule = rule.Replace("<$ActionUser$>", ActionUser.Id.ToString());
             foreach (KeyValuePair<string, string> pkKeyValuePair in pkKeyValuePairList)
             {
                 rule = rule.Replace("<$" + pkKeyValuePair.Key.ToUpper() + "$>", pkKeyValuePair.Value);
             }
             sqlHelperDao.ExecuteNonQuery(rule);
-            LogDBAction(rule, "DWUpdate", ds.Name, ActionUser);
+            LogDBAction(rule, "DWUpdate", ds.Name, ActionUser.UserName);
         }
 
         private void LogDBAction(string ActionSql, string ActionType, string ActionSource, string ActionUser)

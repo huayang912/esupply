@@ -43,3 +43,11 @@
 -----------2010/9/16-----------------------
 1. 在Rule Maint.的时候增加选择Dependence Rule，默认为空。如果选择了Dependence Rule，Validation的时候是不Run的，状态和Dependence Rule的状态一样。
 2. 在数据准备中,每一笔已经process的rawdata上都应有可以下载相应dw数据的link,在ETL Confirmation History中增加Download DWData,WithDraw之后就不显示该按钮。
+
+
+-----------2010/10/2-----------------------
+1. DataSource Preparation中增加Show Data Structure的页面。
+2. 所有替换Rule的地方都要增加替换操作用户Id的参数。
+3. 有根据”Name”的查询， 应又查Name, 又查Description, 且不分大小写
+4. Data Validation的时候，光标移到Rule上，显示Description。Rule Description维护的时候使用TextArea输入，可以带折行。
+5. data process平台权限控制角色(low, 把权限控制单拿出来)。用DataSource Category的User权限来控制可以授权的DataSourceh和DataSource Category。DW DataSource授权也相同

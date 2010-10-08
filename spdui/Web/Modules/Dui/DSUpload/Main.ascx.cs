@@ -144,6 +144,19 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
 		//TODO: Add other event handler code here.
     }
 
+    protected void gvDSCategory_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lbDataSource = (Label)e.Row.FindControl("lbDataSource");
+            DataSourceCategory dsc = (DataSourceCategory)e.Row.DataItem;
+            if (dsc.TheDataSource.DataStructure != null && dsc.TheDataSource.DataStructure .Trim() != string.Empty) {
+                lbDataSource.ToolTip = dsc.TheDataSource.DataStructure;
+            }
+           // ((GridView)(sender)).Columns[2]
+        }
+    }
+
     //Do data query and binding.
     private void UpdateSelection()
     {

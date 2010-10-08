@@ -104,7 +104,7 @@ public partial class Popup_ValidationRule : System.Web.UI.Page
             if (ValidationResult.VALIDATION_STATUS_IN_PROGRESS.Equals(vr.ValidationStatus))
             {
                 //validate rule
-                ValidationResult validationResult = TheUploadService.ValidateRule(vr.Id);
+                ValidationResult validationResult = TheUploadService.ValidateRule(vr.Id, (new SessionHelper(Page)).CurrentUser);
                 vr.ValidationStatus = null;
                 vr.Status = validationResult.Status;
                 vr.FaildRowCount = validationResult.FaildRowCount;

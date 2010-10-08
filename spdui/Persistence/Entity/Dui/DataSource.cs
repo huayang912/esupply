@@ -50,6 +50,19 @@ namespace Dndp.Persistence.Entity.Dui
 				_description = value;
 			}
 		}
+
+        private string _dataStructure;
+        public string DataStructure
+        {
+            get
+            {
+                return _dataStructure;
+            }
+            set
+            {
+                _dataStructure = value;
+            }
+        }
 		
 		private DateTime _createDate;
 		public DateTime CreateDate

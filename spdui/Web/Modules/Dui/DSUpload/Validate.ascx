@@ -137,7 +137,8 @@ end function
                                             <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
                                     </td>
                                     <td valign="top">
-                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                        <asp:Label ID="lbName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>'
+                                            ToolTip='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Description")%>' />
                                     </td>
                                 </tr>
                             </table>
@@ -185,7 +186,8 @@ end function
                                             <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
                                     </td>
                                     <td valign="top">
-                                        <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                                        <asp:Label ID="lbName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>'
+                                            ToolTip='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Description")%>' />
                                     </td>
                                 </tr>
                             </table>
@@ -228,7 +230,8 @@ end function
                         <ItemTemplate>
                             <input type="checkbox" class="radio" name="cbSelect" value='<%# DataBinder.Eval(Container.DataItem, "Id")%>'
                                 <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.DependenceRule") != null ? "disabled='disabled'" : ""%> />
-                            <%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>
+                            <asp:Label ID="lbName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Name")%>'
+                                ToolTip='<%# DataBinder.Eval(Container.DataItem, "TheDataSourceRule.Description")%>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Status">

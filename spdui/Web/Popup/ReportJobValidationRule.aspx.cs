@@ -97,7 +97,7 @@ public partial class Popup_ReportJobValidationRule : System.Web.UI.Page
             if (ValidationResult.VALIDATION_STATUS_IN_PROGRESS.Equals(vr.ValidationStatus))
             {
                 //validate rule
-                ReportJobValidationResult validationResult = TheService.ValidateRule(vr.Id);
+                ReportJobValidationResult validationResult = TheService.ValidateRule(vr.Id, (new SessionHelper(Page)).CurrentUser);
                 vr.ValidationStatus = null;
                 vr.Status = validationResult.Status;
                 vr.FailedRowCount = validationResult.FailedRowCount;

@@ -83,6 +83,7 @@ namespace Dndp.Persistence.Dao.Dui.NH
         {
             return FindAllWithCustomQuery("from DataSourceOperator dso where dso.TheDataSource.Id=?", dataSourceId);
         }
+       
 
         public IList<DataSourceOperator> FindAllByDataSourceIdAndAllowType(int dsId, string type)
         {

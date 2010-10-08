@@ -168,6 +168,18 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private string _mergeSQL;
+        public string MergeSQL
+        {
+            get
+            {
+                return _mergeSQL;
+            }
+            set
+            {
+                _mergeSQL = value;
+            }
+        }
         #endregion
 
         #region Non O/R Mapping Properties

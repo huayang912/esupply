@@ -190,6 +190,20 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
     
     }
 
+    protected void gvDSCategory_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            LinkButton lbtnDSName = (LinkButton)e.Row.FindControl("lbtnDSName");
+            DataSourceCategory dsc = (DataSourceCategory)e.Row.DataItem;
+            if (dsc.TheDataSource.DataStructure != null && dsc.TheDataSource.DataStructure.Trim() != string.Empty)
+            {
+                lbtnDSName.ToolTip = dsc.TheDataSource.DataStructure;
+            }
+            // ((GridView)(sender)).Columns[2]
+        }
+    }
+
     protected string GenerateRevalidateString(DataSourceCategory dsc)
     {
         

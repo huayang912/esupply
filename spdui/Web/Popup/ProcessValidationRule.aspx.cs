@@ -98,7 +98,7 @@ public partial class Popup_ProcessValidationRule : System.Web.UI.Page
             if (ValidationResult.VALIDATION_STATUS_IN_PROGRESS.Equals(vr.ValidationStatus))
             {
                 //validate rule
-                CubeProcessValidationResult validationResult = TheService.ValidateCubeProcessRule(vr.Id, TheCubeProcess.CubeProcessParameterList);
+                CubeProcessValidationResult validationResult = TheService.ValidateCubeProcessRule(vr.Id, TheCubeProcess.CubeProcessParameterList, (new SessionHelper(Page)).CurrentUser);
                 vr.ValidationStatus = null;
                 vr.Status = validationResult.Status;
                 vr.FailedRowCount = validationResult.FailedRowCount;

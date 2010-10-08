@@ -21,7 +21,13 @@
             <td class="txtForm" valign="top">
                 Description:</td>
             <td colspan="3">
-                &nbsp;<asp:TextBox ID="txtDescription" runat="server" Columns="60" Rows="3" TextMode="MultiLine"></asp:TextBox></td>
+                &nbsp;<asp:TextBox ID="txtDescription" runat="server" Columns="80"></asp:TextBox></td>
+        </tr>
+        <tr>
+            <td class="txtForm" valign="top">
+                Data Structure:</td>
+            <td colspan="3">
+                &nbsp;<asp:TextBox ID="txtDataStructure" runat="server" Columns="80" Rows="10" TextMode="MultiLine"></asp:TextBox></td>
         </tr>
         <tr>
             <td valign="top" class="txtform">

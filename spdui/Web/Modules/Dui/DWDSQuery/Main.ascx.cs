@@ -87,7 +87,7 @@ public partial class Modules_Dui_DWDSQuery_Main : ModuleBase
 
     private void UpdateView()
     {
-        IList<DWDataSource> result = TheService.FindDWDataSourceByAllowType((new SessionHelper(Page)).CurrentUser.Id, "VIEWER", ddlDSType.Text, txtDSName.Text);
+        IList<DWDataSource> result = TheService.FindDWDataSourceByAllowType((new SessionHelper(Page)).CurrentUser.Id, "VIEWER", ddlDSType.Text, txtDSName.Text.Trim());
         gvDWDSList.DataSource = result;
         
         gvDWDSList.DataBind();

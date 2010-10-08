@@ -60,11 +60,15 @@ namespace Dndp.Service.Dui
 
         IList FindDataSourceFieldByDataSourceId(int dsId);
 
-        IList FindDataSourceOperatorByDataSourceId(int dsId);
+        IList FindDataSourceOperatorByDataSourceId(int dsId);        
 
         IList FindDataSourceRuleByDataSourceId(int dsId);
 
         IList FindDataSourceCategoryByDataSourceId(int dsId);
+
+        IList FindDataSourceCategoryByDataSourceId(int dsId, bool includeInactive);
+
+        IList FindDataSourceCategoryByDataSourceId(int dsId, bool includeInactive, User user);
 
         IList FindDataSourceWithDrawTableByDataSourceId(int dsId);
 
@@ -88,7 +92,11 @@ namespace Dndp.Service.Dui
 
         IList<DataSource> FindActiveDataSourceByTypeAndName(string type, string name);
 
+        IList<DataSource> FindActiveDataSourceByTypeAndName(string type, string name, User user);
+
         IList<string> FindAllDataSourceType();
+
+        IList<string> FindAllDataSourceType(User user);
 
         #endregion Customized Methods
 

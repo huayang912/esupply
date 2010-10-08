@@ -208,7 +208,9 @@ namespace Dndp.Service.Dui.Impl
                     if (strStatus.Equals("ALL") || 
                         (dataSourceCategory.LastestDataSourceUpload != null && dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus)))
                     {
-                        if (strDSName.Equals("") || dataSourceCategory.TheDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) || dataSourceCategory.TheDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
+                        if (strDSName.Equals("") 
+                                || dataSourceCategory.TheDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) 
+                                || dataSourceCategory.TheDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
                         {
                             FoundResult.Add(dataSourceCategory);
                         }
@@ -562,7 +564,7 @@ namespace Dndp.Service.Dui.Impl
         }
 
         [Transaction(TransactionMode.Requires)]
-        public ValidationResult ValidateRule(int validateResultId)
+        public ValidationResult ValidateRule(int validateResultId, User actionUser)
         {
             ValidationResult vr = validationResultDao.LoadValidationResult(validateResultId);
             string rule = vr.TheDataSourceRule.RuleContent;
@@ -570,7 +572,7 @@ namespace Dndp.Service.Dui.Impl
             IList<ValidationResult> dependenceVRList = this.validationResultDao.FindAllByDependenceRuleId(vr.TheDataSourceRule.Id);
             
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(vr, rule);
+            rule = UpdateValidationSQLContent(vr, rule, actionUser);
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -639,7 +641,7 @@ namespace Dndp.Service.Dui.Impl
             string rule = vr.TheDataSourceRule.ResultContent;
 
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(vr, rule); ;
+            rule = UpdateValidationSQLContent(vr, rule, null); ;
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -681,17 +683,21 @@ namespace Dndp.Service.Dui.Impl
             string rule = vr.TheDataSourceRule.UpdateContent;
 
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(vr, rule);
+            rule = UpdateValidationSQLContent(vr, rule, null);
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             return dataSet;
         }
 
-        private string UpdateValidationSQLContent(ValidationResult vr, string rule)
+        private string UpdateValidationSQLContent(ValidationResult vr, string rule, User actionUser)
         {
             rule = rule.Replace("<$Category$>", vr.TheDataSourceUpload.TheDataSourceCategory.Name.ToString());
             //rule = rule.Replace("<$BatchNo$>", vr.TheDataSourceUpload.BatchNo.ToString());
             rule = rule.Replace("<$DWDBString$>", this.DWDBString);
+            if (actionUser != null)
+            {
+                rule = rule.Replace("<$ActionUser$>", actionUser.Id.ToString());
+            }
             return rule;
         }
 

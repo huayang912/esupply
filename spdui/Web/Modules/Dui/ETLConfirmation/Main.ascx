@@ -50,7 +50,7 @@ end function
     </div>
     <asp:GridView runat="server" ID="gvDSCategory" AutoGenerateColumns="False" DataKeyNames="LastestDataSourceUpload"
         meta:resourcekey="gvDSCategoryResource" AllowPaging="True" PageSize="15" OnPageIndexChanging="gvDSCategory_PageIndexChanging"
-        CellPadding="4" CssClass="list" GridLines="Horizontal">
+        CellPadding="4" CssClass="list" GridLines="Horizontal" OnRowDataBound="gvDSCategory_RowDataBound">
         <HeaderStyle CssClass="listheader" />
         <Columns>
             <asp:TemplateField HeaderText="Category" meta:resourcekey="TemplateFieldResource3">

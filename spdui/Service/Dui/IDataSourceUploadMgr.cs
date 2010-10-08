@@ -72,7 +72,7 @@ namespace Dndp.Service.Dui
 
         IList<ValidationResult> FindValidationResultByDataSourceUploadIdAndRuleType(int datasourceId, string ruleType);
 
-        ValidationResult ValidateRule(int validateResultId);
+        ValidationResult ValidateRule(int validateResultId, User actionUser);
 
         void DownloadValidateResult(ValidationResult vr, CSVWriter csvWriter);
 

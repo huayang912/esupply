@@ -179,3 +179,73 @@ GO
 ALTER TABLE [dbo].[OffLine_Report_Validation_Rule]  WITH CHECK ADD  CONSTRAINT [FK_OffLine_Report_Validation_Rule_OffLine_Report_Validation_Rule] FOREIGN KEY([DEPENDENCE_RULE])
 REFERENCES [dbo].[OffLine_Report_Validation_Rule] ([Rule_Id])
 GO
+
+
+
+-----------2010/10/2-----------------------
+alter table DATA_SOURCE add DATA_STRUCTURE_DESC nvarchar(255);
+
+set identity_insert MODULES on;
+insert into MODULES(MODULE_ID, MODULE_NAME, SOURCE_FILE, DESCRIPTION) values(23, 'Data Source Authorization', 'Modules/Dui/DSAuthorization/Main.ascx', 'The data source authorization.')
+insert into MODULES(MODULE_ID, MODULE_NAME, SOURCE_FILE, DESCRIPTION) values(24, 'DW Data Source Authorization', 'Modules/Dui/DWDSAuthorization/Main.ascx', 'The DW data source authorization.')
+set identity_insert MODULES off;
+
+set identity_insert MENUS on;
+insert into MENUS(MENU_ID, PARENT_MENU_ID, TITLE, PATH_CODE, DESCRIPTION, MODULE_ID) values (25, 5, 'Data Source Auth.', '08.05', 'The data source authorization.', 23)
+insert into MENUS(MENU_ID, PARENT_MENU_ID, TITLE, PATH_CODE, DESCRIPTION, MODULE_ID) values (26, 5, 'DW Data Source Auth.', '08.06', 'The DW data source authorization.', 24)
+set identity_insert MENUS off;
+
+insert into Roles values(3500, 'Data Administrator', 'Data Source, DW Data Source Authorization');
+
+insert into AUTHORIZATIONS(ROLE_ID, MODULE_ID, PERMISSION_VIEW, PERMISSION_UPDATE, PERMISSION_ADD, PERMISSION_DELETE, PERMISSION_FULL) values (3500, 23, 1, 1, 1, 1, 1);
+insert into AUTHORIZATIONS(ROLE_ID, MODULE_ID, PERMISSION_VIEW, PERMISSION_UPDATE, PERMISSION_ADD, PERMISSION_DELETE, PERMISSION_FULL) values (3500, 24, 1, 1, 1, 1, 1);
+
+alter table DW_Data_Source add Merge_RULE_CONTENT varchar(max);
+
+USE [SPStaging]
+GO
+/****** 对象:  Table [dbo].[DW_Data_Source_Merge_Rule]    脚本日期: 10/04/2010 15:48:36 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[DW_Data_Source_Merge_Rule](
+	[RULE_ID] [int] IDENTITY(1,1) NOT NULL,
+	[DW_DATA_SOURCE_ID] [int] NOT NULL,
+	[RULE_NAME] [varchar](200) NOT NULL,
+	[DESCRIPTION] [varchar](200) NULL,
+	[RULE_TYPE] [varchar](20) NOT NULL,
+	[SEQ_NO] [int] NOT NULL,
+	[RULE_CONTENT] [varchar](max) NOT NULL,
+	[RULE_RESULT_CONTENT] [varchar](max) NULL,
+	[UPDATE_CONTENT] [varchar](max) NULL,
+	[DEPENDENCE_RULE] [int] NULL,
+	[CREATE_BY_USER_ID] [int] NOT NULL,
+	[CREATE_DATE] [datetime] NOT NULL,
+	[LAST_UPDATE_USER_ID] [int] NULL,
+	[LAST_UPDATE_DATE] [datetime] NULL,
+ CONSTRAINT [PK_DW_Data_Source_Merge_Rule] PRIMARY KEY CLUSTERED 
+(
+	[RULE_ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule]  WITH CHECK ADD  CONSTRAINT [FK_DW_Data_Source_Merge_Rule_DW_Data_Source_Merge_Rule] FOREIGN KEY([DEPENDENCE_RULE])
+REFERENCES [dbo].[DW_Data_Source_Merge_Rule] ([RULE_ID])
+GO
+ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule] CHECK CONSTRAINT [FK_DW_Data_Source_Merge_Rule_DW_Data_Source_Merge_Rule]
+GO
+ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule]  WITH CHECK ADD  CONSTRAINT [FK_DW_Data_Source_Merge_Rule_USERS_Create_By] FOREIGN KEY([CREATE_BY_USER_ID])
+REFERENCES [dbo].[USERS] ([USER_ID])
+GO
+ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule] CHECK CONSTRAINT [FK_DW_Data_Source_Merge_Rule_USERS_Create_By]
+GO
+ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule]  WITH CHECK ADD  CONSTRAINT [FK_DW_Data_Source_Merge_Rule_USERS_Last_Update_By] FOREIGN KEY([LAST_UPDATE_USER_ID])
+REFERENCES [dbo].[USERS] ([USER_ID])
+GO
+ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule] CHECK CONSTRAINT [FK_DW_Data_Source_Merge_Rule_USERS_Last_Update_By]

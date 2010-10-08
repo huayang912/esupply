@@ -77,10 +77,9 @@ namespace Dndp.Service.Cube
 
         IList<CubeProcessValidationResult> FindCubeProcessValidationResultByProcessId(int processId, string validationTarget);
 
-        CubeProcessValidationResult ValidateCubeProcessRule(int validateResultId, IList<CubeProcessParameter> processParameterList);
+        CubeProcessValidationResult ValidateCubeProcessRule(int validateResultId, IList<CubeProcessParameter> processParameterList, User actionUser);
 
         void DownloadCubeProcessValidateResult(string rule, IList<CubeProcessParameter> processParameterList, CSVWriter csvWriter);
-
         #endregion CubeProcessValidationResult Related
 
         #endregion Method Created By CodeSmith

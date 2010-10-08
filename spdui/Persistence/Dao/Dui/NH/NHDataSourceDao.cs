@@ -8,6 +8,7 @@ using NHibernate.Type;
 using Dndp.Persistence.Dao;
 using Dndp.Persistence.Entity.Dui;
 using Dndp.Persistence.Dao.Dui;
+using Dndp.Persistence.Entity.Security;
 //TODO: Add other using statmens here.
 
 namespace Dndp.Persistence.Dao.Dui.NH
@@ -102,6 +103,14 @@ namespace Dndp.Persistence.Dao.Dui.NH
             return list;
         }
 
+        public IList<string> FindAllDataSourceType(User user)
+        {
+            IList<string> list = FindAllWithCustomQuery(@"select distinct ds.DSType 
+                from DataSourceCategory as dsc inner join dsc.TheDataSource ds 
+                where ds.ActiveFlag=1 and dsc.ActiveFlag=1 and " + user.Id + " in elements(dsc.Users) order by ds.DSType") as IList<string>;
+            return list;
+        }
+
         public IList<DataSource> FindActiveDataSourceByTypeAndName(string type, string name)
         {
             string hql = "from DataSource ds where ds.ActiveFlag=1 ";
@@ -116,7 +125,8 @@ namespace Dndp.Persistence.Dao.Dui.NH
 
             if (name != null & name.Trim().Length > 0)
             {
-                hql += " and ds.Name like ?";
+                hql += " and (ds.Name like ? or ds.Description like ?)";
+                paraCount++;
                 paraCount++;
             }
 
@@ -137,6 +147,65 @@ namespace Dndp.Persistence.Dao.Dui.NH
 
                 if (name != null & name.Trim().Length > 0)
                 {                    
+                    paraValues[i] = "%" + name + "%";
+                    paraTypes[i] = NHibernateUtil.String;
+                    i++;
+
+                    paraValues[i] = "%" + name + "%";
+                    paraTypes[i] = NHibernateUtil.String;
+                    i++;
+                }
+
+                IList<DataSource> list = FindAllWithCustomQuery(hql, paraValues, paraTypes) as IList<DataSource>;
+                return list;
+            }
+            else
+            {
+                IList<DataSource> list = FindAllWithCustomQuery(hql) as IList<DataSource>;
+                return list;
+            }
+        }
+
+        public IList<DataSource> FindActiveDataSourceByTypeAndName(string type, string name, User user)
+        {
+            string hql = "select distinct ds from DataSourceCategory as dsc inner join dsc.TheDataSource as ds where ds.ActiveFlag=1 and dsc.ActiveFlag=1 and " + user.Id + " in elements(dsc.Users) ";
+
+            int paraCount = 0;
+
+            if (type != null & type.Trim().Length > 0)
+            {
+                hql += " and ds.DSType = ?";
+                paraCount++;
+            }
+
+            if (name != null & name.Trim().Length > 0)
+            {
+                hql += " and (ds.Name like ? or ds.Description like ?)";
+                paraCount++;
+                paraCount++;
+            }
+
+            hql += " order by ds.DSType, ds.Description";
+
+            if (paraCount > 0)
+            {
+                object[] paraValues = new object[paraCount];
+                IType[] paraTypes = new IType[paraCount];
+
+                int i = 0;
+                if (type != null & type.Trim().Length > 0)
+                {
+                    paraValues[i] = type;
+                    paraTypes[i] = NHibernateUtil.String;
+                    i++;
+                }
+
+                if (name != null & name.Trim().Length > 0)
+                {
+                    paraValues[i] = "%" + name + "%";
+                    paraTypes[i] = NHibernateUtil.String;
+                    i++;
+
                     paraValues[i] = "%" + name + "%";
                     paraTypes[i] = NHibernateUtil.String;
                     i++;
