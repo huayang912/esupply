@@ -68,7 +68,7 @@ public partial class Modules_Dui_DWDSAuthorization_Main : ModuleBase
 
     private void UpdateSelection()
     {
-        IList<string> FoundResult = TheService.FindDWDataSourceTypeList(this.CurrentUser.Id, "ADMIN");
+        IList<string> FoundResult = TheService.FindDWDataSourceTypeList(this.CurrentUser.Id);
         List<string> DSTypeList = new List<string>();
         DSTypeList.Add("");
         if (FoundResult != null)
@@ -85,7 +85,7 @@ public partial class Modules_Dui_DWDSAuthorization_Main : ModuleBase
     //Do data query and binding.
     private void UpdateView()
     {
-        IList<DWDataSource> result = TheService.FindDWDataSourceByTypeAndName(ddlDSType.Text.Trim(), txtDSName.Text.Trim(), this.CurrentUser, "ADMIN");
+        IList<DWDataSource> result = TheService.FindDWDataSourceByTypeAndName(ddlDSType.Text.Trim(), txtDSName.Text.Trim());
 
         //IList result = TheService.LoadAllDWDataSource();
         int recordCount = 0;
