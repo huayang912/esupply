@@ -184,7 +184,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
             //write csv header
             for (int i = 0; i < dataReader.FieldCount; i++)
             {
-                structure += "<th scope='col'>" + dataReader.GetName(i) + "</th>";
+                structure += "<th scope='col' nowrap='true'>" + dataReader.GetName(i) + "</th>";
             }
             structure += "</tr>";           
 
