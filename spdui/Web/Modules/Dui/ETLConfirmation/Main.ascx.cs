@@ -19,6 +19,7 @@ using Dndp.Service.Dui;
 using System.IO;
 using System.Text;
 using Dndp.Utility.CSV;
+using Dndp.Persistence.Dao;
 
 //TODO: Add other using statements here.
 
@@ -41,6 +42,14 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
         get
         {
             return GetService("DataSourceMgr.service") as IDataSourceMgr;
+        }
+    }
+
+    protected SqlHelperDao TheSqlHelperDao
+    {
+        get
+        {
+            return GetSqlHelper();
         }
     }
 
@@ -198,7 +207,9 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
             DataSourceCategory dsc = (DataSourceCategory)e.Row.DataItem;
             if (dsc.TheDataSource.DataStructure != null && dsc.TheDataSource.DataStructure.Trim() != string.Empty)
             {
-                lbtnDSName.ToolTip = dsc.TheDataSource.DataStructure;
+                e.Row.Cells[2].Attributes.Add("onmouseover", "e=this.style.backgroundColor; this.style.backgroundColor=this.style.borderColor");
+                e.Row.Cells[2].Attributes.Add("onmouseout", "this.style.backgroundColor=e");
+                e.Row.Cells[2].Attributes.Add("title", GetDataStructure(dsc.TheDataSource.DataStructure));
             }
             // ((GridView)(sender)).Columns[2]
         }
@@ -260,5 +271,62 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
     {
         gvDSCategory.PageIndex = e.NewPageIndex;
         UpdateView();
+    }
+
+    private string GetDataStructure(string dataStructure)
+    {
+        string structure = string.Empty;
+        structure += "cssbody=[obbd] cssheader=[obhd] header=[Data Source Structure] body=[";
+        try
+        {
+            DataSet dataSet = this.TheSqlHelperDao.ExecuteDataset(dataStructure);
+
+            structure += "<table class='list' cellspacing='0' cellpadding='1' border='1' style='border-collapse:collapse;'>";
+            structure += "<tr class='listhead' align='left'>";
+
+            DataTableReader dataReader = dataSet.CreateDataReader();
+            //write csv header
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                structure += "<th scope='col'>" + dataReader.GetName(i) + "</th>";
+            }
+            structure += "</tr>";
+
+            //write csv content
+            while (dataReader.Read())
+            {
+                structure += "<tr>";
+                object[] fields = new object[dataReader.FieldCount];
+                dataReader.GetValues(fields);
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        structure += "<td align='left'>";
+                    }
+                    else
+                    {
+                        structure += "<td align='center'>";
+                    }
+                    if (fields[i] != null)
+                    {
+                        structure += fields[i].ToString();
+                    }
+                    else
+                    {
+                        structure += "";
+                    }
+                    structure += "</td>";
+                }
+                structure += "</tr>";
+            }
+            structure += "</table>]";
+        }
+        catch
+        {
+            structure = "Error Data Structure Sql.";
+        }
+
+        return structure;
     }
 }

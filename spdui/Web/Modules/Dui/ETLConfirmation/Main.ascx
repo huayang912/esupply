@@ -6,6 +6,8 @@
     <script type="text/javascript" src="Popup/lhgcore.min.js"></script>
 
     <script type="text/javascript" src="Popup/lhgdialog.js"></script>
+    
+    <script type="text/javascript" src="JS/boxover.js"></script>
 
     <script language="vbscript">
 function ButtonWarning(Action)

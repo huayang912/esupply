@@ -183,7 +183,7 @@ GO
 
 
 -----------2010/10/2-----------------------
-alter table DATA_SOURCE add DATA_STRUCTURE_DESC nvarchar(255);
+alter table DATA_SOURCE add DATA_STRUCTURE_SQL nvarchar(max);
 
 set identity_insert MODULES on;
 insert into MODULES(MODULE_ID, MODULE_NAME, SOURCE_FILE, DESCRIPTION) values(23, 'Data Source Authorization', 'Modules/Dui/DSAuthorization/Main.ascx', 'The data source authorization.')

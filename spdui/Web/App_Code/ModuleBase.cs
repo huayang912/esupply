@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 
 using Dndp.Service;
 using System.Collections.Generic;
+using Dndp.Persistence.Dao;
 
 namespace Dndp.Web
 {
@@ -26,6 +27,11 @@ namespace Dndp.Web
         public ISession GetService(string serviceName)
         {
             return ServiceLocator.GetService(serviceName) as ISession;
+        }
+
+        public SqlHelperDao GetSqlHelper()
+        {
+            return ServiceLocator.GetService("sqlhelp.data.access") as SqlHelperDao;
         }
 
         public string CurrentModuleName

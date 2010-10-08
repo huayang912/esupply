@@ -79,6 +79,15 @@ namespace Dndp.Service.Dui
 
         void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, User ActionUser);
 
+        void DeleteDWDataSourceMergeRule(IList<int> DWDataSourceMergeRuleIdList);
+
+        DWDataSourceMergeRule LoadDWDataSourceMergeRule(int ruleId);
+
+        IList FindDWDataSourceMergeRuleByDWDataSourceId(int dsId);
+
+        void CreateDWDataSourceMergeRule(DWDataSourceMergeRule dwDataSourceMergeRule);
+
+        void UpdateDWDataSourceMergeRule(DWDataSourceMergeRule dwDataSourceMergeRule);
         #endregion Customized Methods
 
     }

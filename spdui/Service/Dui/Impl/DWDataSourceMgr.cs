@@ -28,15 +28,18 @@ namespace Dndp.Service.Dui.Impl
         private IUserDao userDao;
         private IDWDataSourceDao DWDataSourceDao;
         private IDWDataSourceOperatorDao DWDataSourceOperatorDao;
+        private IDWDataSourceMergeRuleDao DWDataSourceMergeRuleDao;
         private SqlHelperDao sqlHelperDao;
 
         public DWDataSourceMgr(IDWDataSourceDao DWDataSourceDao,
             IDWDataSourceOperatorDao DWDataSourceOperatorDao,
+            IDWDataSourceMergeRuleDao DWDataSourceMergeRuleDao,
             SqlHelperDao sqlHelperDao,
             IUserDao userDao)
         {
             this.DWDataSourceDao = DWDataSourceDao;
             this.DWDataSourceOperatorDao = DWDataSourceOperatorDao;
+            this.DWDataSourceMergeRuleDao = DWDataSourceMergeRuleDao;
             this.sqlHelperDao = sqlHelperDao;
             this.userDao = userDao;
         }
@@ -63,6 +66,7 @@ namespace Dndp.Service.Dui.Impl
             if (ds != null)
             {
                 ds.DWDataSourceOperatorList = DWDataSourceOperatorDao.FindAllByDWDataSourceId(id);
+                ds.DWDataSourceMergeRuleList = DWDataSourceMergeRuleDao.FindAllByDWDataSourceId(id);
             }
 
             return ds;
@@ -457,6 +461,36 @@ namespace Dndp.Service.Dui.Impl
             //}
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             return dataSet;
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public void DeleteDWDataSourceMergeRule(IList<int> DWDataSourceMergeRuleIdList)
+        {
+            this.DWDataSourceMergeRuleDao.DeleteDWDataSourceMergeRule(DWDataSourceMergeRuleIdList);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public DWDataSourceMergeRule LoadDWDataSourceMergeRule(int ruleId)
+        {
+            return this.DWDataSourceMergeRuleDao.LoadDWDataSourceMergeRule(ruleId);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindDWDataSourceMergeRuleByDWDataSourceId(int dwDataSourceId)
+        {
+            return this.DWDataSourceMergeRuleDao.FindAllByDWDataSourceId(dwDataSourceId);
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public void CreateDWDataSourceMergeRule(DWDataSourceMergeRule dwDataSourceMergeRule)
+        {
+            this.DWDataSourceMergeRuleDao.CreateDWDataSourceMergeRule(dwDataSourceMergeRule);
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public void UpdateDWDataSourceMergeRule(DWDataSourceMergeRule dwDataSourceMergeRule)
+        {
+            this.DWDataSourceMergeRuleDao.UpdateDWDataSourceMergeRule(dwDataSourceMergeRule);
         }
 
         //[Transaction(TransactionMode.Unspecified)]

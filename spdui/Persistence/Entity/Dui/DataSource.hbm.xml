@@ -6,7 +6,7 @@
 		</id>
 		<property name="Name" column="DATA_SOURCE_NAME" type="String" length="50" />
 		<property name="Description" column="DESCRIPTION" type="String" length="200" />
-		<property name="DataStructure" column="DATA_STRUCTURE_DESC" type="String" length="255" />
+		<property name="DataStructure" column="DATA_STRUCTURE_SQL" type="StringClob" />
 		<property name="DSType" column="DATA_SOURCE_TYPE" type="String" length="50" />
 		<property name="CreateDate" column="CREATE_DATE" type="DateTime" />
 		<property name="LastUpdateDate" column="LAST_UPDATE_DATE" type="DateTime" />

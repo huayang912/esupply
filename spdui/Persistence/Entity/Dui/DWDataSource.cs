@@ -197,6 +197,19 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private IList _dWDataSourceMergeRuleList;
+        public IList DWDataSourceMergeRuleList
+        {
+            get
+            {
+                return _dWDataSourceMergeRuleList;
+            }
+            set
+            {
+                _dWDataSourceMergeRuleList = value;
+            }
+        }
+
         #endregion
 
         public override int GetHashCode()

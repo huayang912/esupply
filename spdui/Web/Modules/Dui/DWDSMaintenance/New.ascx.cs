@@ -81,6 +81,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
     {
         base.OnInit(e);
         NewOperator1.Back += new System.EventHandler(this.NewOperator1_Back);
+        NewRule1.Back += new System.EventHandler(this.NewRule1_Back);
     }
 
     protected void btnInsertParameter_Click(object sender, EventArgs e)
@@ -92,6 +93,14 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
     {
         NewOperator1.Visible = false;
         TheDWDataSource.DWDataSourceOperatorList = TheService.FindDWDataSourceOperatorByDWDataSourceId(TheDWDataSource.Id);
+        UpdateView();
+        pnlMain.Visible = true;
+    }
+
+    void NewRule1_Back(object sender, EventArgs e)
+    {
+        NewRule1.Visible = false;
+        TheDWDataSource.DWDataSourceMergeRuleList = TheService.FindDWDataSourceMergeRuleByDWDataSourceId(TheDWDataSource.Id);
         UpdateView();
         pnlMain.Visible = true;
     }
@@ -126,6 +135,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         TheDWDataSource.QuerySQL = txtQuerySQL.Text;
         TheDWDataSource.DeleteQuerySQL = txtDeleteQuerySQL.Text;
         TheDWDataSource.DeleteSQL = txtDeleteSQL.Text;
+        TheDWDataSource.MergeSQL = txtMergeSQL.Text;
         TheDWDataSource.LastUpdateBy = sessionHelper.CurrentUser;
         TheDWDataSource.LastUpdateDate = System.DateTime.Now;
         if (txtStartDate.Text.Trim().Length != 0)
@@ -219,22 +229,31 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         txtQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.QuerySQL.ToString() : String.Empty;
         txtDeleteQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteQuerySQL.ToString() : String.Empty;
         txtDeleteSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteSQL.ToString() : String.Empty;
+        txtMergeSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.MergeSQL : String.Empty;
 
         if (TheDWDataSource != null && TheDWDataSource.Id != 0)
         {
             gvOperatorList.DataSource = TheDWDataSource.DWDataSourceOperatorList;
             gvOperatorList.DataBind();
             gvOperatorList.Visible = true;
+            gvRuleList.DataSource = TheDWDataSource.DWDataSourceMergeRuleList;
+            gvRuleList.DataBind();
+            gvRuleList.Visible = true;
             btnAddOperator.Visible = true;
             btnDeleteOperator.Visible = true;
             btnDelete.Visible = true;
+            btnAddRule.Visible = true;
+            btnDeleteRule.Visible = true;
         }
         else
         {
             gvOperatorList.Visible = false;
+            gvRuleList.Visible = false;
             btnAddOperator.Visible = false;
             btnDeleteOperator.Visible = false;
             btnDelete.Visible = false;
+            btnAddRule.Visible = false;
+            btnDeleteRule.Visible = false;
         }
 
         btnSubmit.Visible = true;
@@ -260,6 +279,36 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
 
         UpdateView();
     }
+
+    protected void btnAddRule_Click(object sender, EventArgs e)
+    {
+        NewRule1.Visible = true;
+        NewRule1.TheDWDataSourceMergeRule = null;
+        NewRule1.TheDWDataSourceId = TheDWDataSource.Id;
+        NewRule1.UpdateView();
+        pnlMain.Visible = false;
+    }
+
+    protected void lbtnRuleName_Click(object sender, EventArgs e)
+    {
+        int dsRuleId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        NewRule1.TheDWDataSourceMergeRule = TheService.LoadDWDataSourceMergeRule(dsRuleId);
+        NewRule1.TheDWDataSourceId  = TheDWDataSource.Id;
+        NewRule1.UpdateView();
+        NewRule1.Visible = true;
+        pnlMain.Visible = false;
+    }
+
+    protected void btnDeleteRule_Click(object sender, EventArgs e)
+    {
+        TheService.DeleteDWDataSourceMergeRule(GetSelectIdList(gvRuleList));
+
+        //re-load the data source
+        TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
+
+        UpdateView();
+    }
+
 
     //private IList<int> GetSelectIdList(GridView gv)
     //{

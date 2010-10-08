@@ -19,15 +19,16 @@ using Dndp.Service.Dui;
 using System.Text;
 using System.IO;
 using Dndp.Utility.CSV;
+using Dndp.Persistence.Dao;
 
 //TODO: Add other using statements here.
 
 public partial class Modules_Dui_DSUpload_Main : ModuleBase
 {
     //Get the logger
-	private static ILog log = LogManager.GetLogger("DSUpload");
-	
-	//The entity service
+    private static ILog log = LogManager.GetLogger("DSUpload");
+
+    //The entity service
     protected IDataSourceUploadMgr TheDSUploadService
     {
         get
@@ -44,18 +45,26 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         }
     }
 
+    protected SqlHelperDao TheSqlHelperDao
+    {
+        get
+        {
+            return GetSqlHelper();
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e)
     {
-		if (!IsPostBack)
+        if (!IsPostBack)
         {
             UpdateSelection();
             UpdateView();
         }
     }
-	
-	protected override void OnInit(EventArgs e)
+
+    protected override void OnInit(EventArgs e)
     {
-        base.OnInit(e);     
+        base.OnInit(e);
         New1.Back += new EventHandler(New1_Back);
         Validate1.Back += new EventHandler(Validate1_Back);
         Validate1.Update += new EventHandler(Validate1_Update);
@@ -63,7 +72,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         History1.Back += new EventHandler(History1_Back);
         New1.Submit += new EventHandler(New1_Submit);
         //UpdateView();
-		//TODO: Add other init code here.
+        //TODO: Add other init code here.
     }
 
     void New1_Submit(object sender, EventArgs e)
@@ -71,12 +80,12 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         New1.Visible = false;
         DataSourceUpload dsUpload = New1.TheDataSourceCategory.LastestDataSourceUpload;
         dsUpload.IsInValidation = false;
-        
+
         Validate1.TheDataSourceUpload = dsUpload;
         Validate1.UpdateView();
         Validate1.Visible = true;
 
-        pnlMain.Visible = false;    
+        pnlMain.Visible = false;
     }
 
 
@@ -137,11 +146,11 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         UpdateView();
     }
 
-	//The event handler when user button "Search".
+    //The event handler when user button "Search".
     protected void btnSearch_Click(object sender, EventArgs e)
-    {       
-        UpdateView();		
-		//TODO: Add other event handler code here.
+    {
+        UpdateView();
+        //TODO: Add other event handler code here.
     }
 
     protected void gvDSCategory_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -150,11 +159,71 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         {
             Label lbDataSource = (Label)e.Row.FindControl("lbDataSource");
             DataSourceCategory dsc = (DataSourceCategory)e.Row.DataItem;
-            if (dsc.TheDataSource.DataStructure != null && dsc.TheDataSource.DataStructure .Trim() != string.Empty) {
-                lbDataSource.ToolTip = dsc.TheDataSource.DataStructure;
+            if (dsc.TheDataSource.DataStructure != null && dsc.TheDataSource.DataStructure.Trim() != string.Empty)
+            {
+                e.Row.Cells[2].Attributes.Add("onmouseover", "e=this.style.backgroundColor; this.style.backgroundColor=this.style.borderColor");
+                e.Row.Cells[2].Attributes.Add("onmouseout", "this.style.backgroundColor=e");
+                e.Row.Cells[2].Attributes.Add("title", GetDataStructure(dsc.TheDataSource.DataStructure));
+                //lbDataSource.ToolTip = GetDataStructure(dsc.TheDataSource.DataStructure);
             }
-           // ((GridView)(sender)).Columns[2]
         }
+    }
+
+    private string GetDataStructure(string dataStructure)
+    {
+        string structure = string.Empty;
+        structure += "cssbody=[obbd] cssheader=[obhd] header=[Data Source Structure] body=[";
+        try
+        {
+            DataSet dataSet = this.TheSqlHelperDao.ExecuteDataset(dataStructure);
+
+            structure += "<table class='list' cellspacing='0' cellpadding='1' border='1' style='border-collapse:collapse;'>";
+            structure += "<tr class='listhead' align='left'>";
+
+            DataTableReader dataReader = dataSet.CreateDataReader();
+            //write csv header
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                structure += "<th scope='col'>" + dataReader.GetName(i) + "</th>";
+            }
+            structure += "</tr>";           
+
+            //write csv content
+            while (dataReader.Read())
+            {
+                structure += "<tr>";
+                object[] fields = new object[dataReader.FieldCount];
+                dataReader.GetValues(fields);
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        structure += "<td align='left'>";
+                    }
+                    else
+                    {
+                        structure += "<td align='center'>";
+                    }
+                    if (fields[i] != null)
+                    {
+                        structure += fields[i].ToString();
+                    }
+                    else
+                    {
+                        structure += "";
+                    }
+                    structure += "</td>";
+                }
+                structure += "</tr>";
+            }
+            structure += "</table>]";
+        }
+        catch
+        {
+            structure = "Error Data Structure Sql.";
+        }
+
+        return structure;
     }
 
     //Do data query and binding.
@@ -201,31 +270,31 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         gvDSCategory.DataBind();
     }
 
-	//The event handler when user click button "Delete".
+    //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        
+
     }
 
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        
+
     }
 
     protected void gvDSCategory_SelectedIndexChanged(object sender, EventArgs e)
-    {      
+    {
 
     }
     protected void lbtnUpload_Click(object sender, EventArgs e)
-    {        
+    {
         int dsCategoryId = Int32.Parse(((LinkButton)sender).CommandArgument);
         DataSourceCategory dsCategory = TheDSUploadService.LoadDataSourceCategory(dsCategoryId);
 
-        New1.TheDataSourceCategory = dsCategory;    
+        New1.TheDataSourceCategory = dsCategory;
         New1.UpdateView();
         New1.Visible = true;
 
-        pnlMain.Visible = false;        
+        pnlMain.Visible = false;
     }
     protected void lbtnDelete_Click(object sender, EventArgs e)
     {
@@ -250,21 +319,21 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
         DataSourceUpload dsUpload = TheDSUploadService.LoadDataSourceUpload(dsUploadId);
         dsUpload.IsInValidation = false;
-        dsUpload.ValidationResultList = 
+        dsUpload.ValidationResultList =
             TheDSUploadService.FindValidationResultByDataSourceUploadId(dsUploadId);
 
         Validate1.TheDataSourceUpload = dsUpload;
         Validate1.UpdateView();
         Validate1.Visible = true;
 
-        pnlMain.Visible = false;    
+        pnlMain.Visible = false;
     }
 
     protected void lbtnTemplate_Click(object sender, EventArgs e)
     {
         int dscId = Int32.Parse(((LinkButton)sender).CommandArgument);
         DataSource ds = TheDSUploadService.LoadDataSourceCategory(dscId).TheDataSource;
-        
+
         Response.Clear();
         Response.ContentType = "application/octet-stream";
         string fileName = HttpUtility.UrlEncode(ds.Description);
@@ -325,7 +394,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
         History1.UpdateView();
         History1.Visible = true;
 
-        pnlMain.Visible = false; 
+        pnlMain.Visible = false;
     }
 
     protected void gvDSCategory_PageIndexChanging(object sender, GridViewPageEventArgs e)

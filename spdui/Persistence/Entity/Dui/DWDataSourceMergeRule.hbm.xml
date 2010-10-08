@@ -15,7 +15,7 @@
 		<property name="SequenceNo" column="SEQ_NO" type="Int32" />
 		<many-to-one name="CreateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="CREATE_BY_USER_ID" cascade="none" />
 		<many-to-one name="LastUpdateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="LAST_UPDATE_USER_ID" cascade="none" />
-		<many-to-one name="TheDWDataSource" class="Dndp.Persistence.Entity.Dui.DWDataSource, Dndp.Persistence" column="DATA_SOURCE_ID" cascade="none" />
+		<many-to-one name="TheDWDataSource" class="Dndp.Persistence.Entity.Dui.DWDataSource, Dndp.Persistence" column="DW_DATA_SOURCE_ID" cascade="none" />
 		<many-to-one name="DependenceRule" class="Dndp.Persistence.Entity.Dui.DWDataSourceMergeRule, Dndp.Persistence" column="DEPENDENCE_RULE" cascade="none" />
 	</class>
 </hibernate-mapping>

@@ -5,6 +5,8 @@
 <%@ Register Src="ValidateUpdate.ascx" TagName="ValidateUpdate" TagPrefix="uc4" %>
 <asp:Panel ID="pnlMain" runat="server">
 
+    <script type="text/javascript" src="JS/boxover.js"></script>
+
     <script language="vbscript">
 function ButtonWarning(Action)
     Dim ReturnVal
