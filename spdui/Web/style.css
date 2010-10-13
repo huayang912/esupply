@@ -1521,3 +1521,9 @@ margin:-2;
 	  width:350px;
 	  white-space:nowrap;
 }
+
+td.structureHighlight
+{
+	color:#0033ff;
+	cursor:pointer;
+}

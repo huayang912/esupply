@@ -163,6 +163,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
             {
                 e.Row.Cells[2].Attributes.Add("onmouseover", "e=this.style.backgroundColor; this.style.backgroundColor=this.style.borderColor");
                 e.Row.Cells[2].Attributes.Add("onmouseout", "this.style.backgroundColor=e");
+                e.Row.Cells[2].Attributes.Add("class", "structureHighlight");
                 e.Row.Cells[2].Attributes.Add("title", GetDataStructure(dsc.TheDataSource.DataStructure));
                 //lbDataSource.ToolTip = GetDataStructure(dsc.TheDataSource.DataStructure);
             }
@@ -172,7 +173,7 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
     private string GetDataStructure(string dataStructure)
     {
         string structure = string.Empty;
-        structure += "cssbody=[obbd] cssheader=[obhd] header=[Data Source Structure] body=[";
+        structure += "requireclick=[on] cssbody=[obbd] cssheader=[obhd] header=[Data Source Structure] body=[";
         try
         {
             DataSet dataSet = this.TheSqlHelperDao.ExecuteDataset(dataStructure);

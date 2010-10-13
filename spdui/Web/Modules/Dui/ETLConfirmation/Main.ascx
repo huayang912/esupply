@@ -69,9 +69,10 @@ end function
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Data Source" meta:resourcekey="TemplateFieldResource1">
                 <ItemTemplate>
-                    <asp:LinkButton ID="lbtnDSName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSource.Description") %>'
+                     <%# DataBinder.Eval(Container.DataItem, "TheDataSource.Description")%>
+              <%--      <asp:LinkButton ID="lbtnDSName" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "TheDataSource.Description") %>'
                         CommandArgument='<%# DataBinder.Eval(Container.DataItem, "TheDataSource.Id") %>'
-                        CommandName="Select" meta:resourcekey="lbtnDSNameResource" OnClick="lbtnHistory_Click"></asp:LinkButton>
+                        CommandName="Select" meta:resourcekey="lbtnDSNameResource" OnClick="lbtnHistory_Click"></asp:LinkButton>--%>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Action" meta:resourcekey="TemplateFieldResource11">
