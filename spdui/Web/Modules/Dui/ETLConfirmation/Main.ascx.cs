@@ -282,7 +282,7 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
         {
             DataSet dataSet = this.TheSqlHelperDao.ExecuteDataset(dataStructure);
 
-            structure += "<table class='list' cellspacing='0' cellpadding='1' border='1' style='border-collapse:collapse;'>";
+            structure += "<table class='list' cellspacing='0' cellpadding='1' style='border-collapse:collapse;'>";
             structure += "<tr class='listhead' align='left'>";
 
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -293,10 +293,19 @@ public partial class Modules_Dui_DSETLConfirm_Main : ModuleBase
             }
             structure += "</tr>";
 
-            //write csv content
+            bool odd = true;
             while (dataReader.Read())
             {
-                structure += "<tr>";
+                if (odd)
+                {
+                    structure += "<tr>";
+                }
+                else
+                {
+                    structure += "<tr class='listA'>";
+                }
+                odd = !odd;
+
                 object[] fields = new object[dataReader.FieldCount];
                 dataReader.GetValues(fields);
                 for (int i = 0; i < fields.Length; i++)
