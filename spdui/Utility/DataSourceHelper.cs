@@ -17,5 +17,11 @@ namespace Dndp.Utility
             //return "HISTORY_" + dsNm + "_" + dsCategoryNm;
             return dsNm + "_HISTORY";
         }
+
+        public static string GetArchiveTableName(string dsNm)
+        {
+            //return "Archive_" + dsNm + "_" + dsCategoryNm;
+            return dsNm + "_ARCHIVE";
+        }
     }
 }

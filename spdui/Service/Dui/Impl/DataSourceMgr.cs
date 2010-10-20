@@ -455,6 +455,7 @@ namespace Dndp.Service.Dui.Impl
         {
             StringBuilder createTempTableSql = new StringBuilder();
             StringBuilder createHistoryTableSql = new StringBuilder();
+            StringBuilder createArchiveTableSql = new StringBuilder();
 
             createTempTableSql.Append("create table ");
             createTempTableSql.Append(DataSourceHelper.GetTempTableName(dsName));
@@ -476,27 +477,43 @@ namespace Dndp.Service.Dui.Impl
             createHistoryTableSql.Append("CONSTRAINT PK_" + DataSourceHelper.GetHistoryTableName(dsName) + "_1 PRIMARY key CLUSTERED ( Rec_Id));");
             createHistoryTableSql.Append(" CREATE UNIQUE NONCLUSTERED INDEX IX_" + DataSourceHelper.GetHistoryTableName(dsName) + " on " + DataSourceHelper.GetHistoryTableName(dsName) + " (BATCH_NO, CATEGORY, ROW_NO);");
 
-            return createTempTableSql.ToString() + createHistoryTableSql.ToString();
+            createArchiveTableSql.Append(" create table ");
+            createArchiveTableSql.Append(DataSourceHelper.GetArchiveTableName(dsName));
+            createArchiveTableSql.Append(" ( Rec_Id numeric(18, 0) IDENTITY(1,1) NOT NULL, ");
+            createArchiveTableSql.Append("BATCH_NO int not null, ");
+            createArchiveTableSql.Append("ROW_NO int not null, ");
+            createArchiveTableSql.Append("CATEGORY_id int not null, ");
+            createArchiveTableSql.Append("CATEGORY nvarchar(50) not null, ");
+            createArchiveTableSql.Append("CONSTRAINT PK_" + DataSourceHelper.GetArchiveTableName(dsName) + "_1 PRIMARY key CLUSTERED ( Rec_Id));");
+            createArchiveTableSql.Append(" CREATE UNIQUE NONCLUSTERED INDEX IX_" + DataSourceHelper.GetArchiveTableName(dsName) + " on " + DataSourceHelper.GetArchiveTableName(dsName) + " (BATCH_NO, CATEGORY, ROW_NO);");
+
+            return createTempTableSql.ToString() + createHistoryTableSql.ToString() + createArchiveTableSql.ToString();
         }
 
         private string GernateDropTableSql(string dsName)
         {
             StringBuilder dropTempTableSql = new StringBuilder();
             StringBuilder dropHistoryTableSql = new StringBuilder();
+            StringBuilder dropArchiveTableSql = new StringBuilder();
+
 
             dropTempTableSql.Append("drop table ");
             dropTempTableSql.Append(DataSourceHelper.GetTempTableName(dsName) + ";");
 
             dropHistoryTableSql.Append("drop table ");
-            dropHistoryTableSql.Append(DataSourceHelper.GetHistoryTableName(dsName));
+            dropHistoryTableSql.Append(DataSourceHelper.GetHistoryTableName(dsName) + ";");
 
-            return dropTempTableSql.ToString() + dropHistoryTableSql.ToString();
+            dropArchiveTableSql.Append("drop table ");
+            dropArchiveTableSql.Append(DataSourceHelper.GetArchiveTableName(dsName));
+
+            return dropTempTableSql.ToString() + dropHistoryTableSql.ToString() + dropArchiveTableSql.ToString();
         }
 
         private string GernateAlterTableSql(DataSourceField dsf)
         {
             StringBuilder alterTempTableSql = new StringBuilder();
             StringBuilder alterHistoryTableSql = new StringBuilder();
+            StringBuilder alterArchiveTableSql = new StringBuilder();
 
             alterTempTableSql.Append("alter table ");
             alterTempTableSql.Append(DataSourceHelper.GetTempTableName(dsf.TheDataSource.Name));
@@ -508,6 +525,11 @@ namespace Dndp.Service.Dui.Impl
             alterHistoryTableSql.Append(" add ");
             alterHistoryTableSql.Append(GernateCreateFeildForSql(dsf.Name, dsf.FieldType, dsf.FieldLength, dsf.IsNullable, DataSourceHelper.GetHistoryTableName(dsf.TheDataSource.Name)) + ";");
 
+            alterArchiveTableSql.Append("alter table ");
+            alterArchiveTableSql.Append(DataSourceHelper.GetArchiveTableName(dsf.TheDataSource.Name));
+            alterArchiveTableSql.Append(" add ");
+            alterArchiveTableSql.Append(GernateCreateFeildForSql(dsf.Name, dsf.FieldType, dsf.FieldLength, dsf.IsNullable, DataSourceHelper.GetArchiveTableName(dsf.TheDataSource.Name)) + ";");
+
             return alterTempTableSql.ToString() + alterHistoryTableSql.ToString();
         }
 
@@ -515,6 +537,8 @@ namespace Dndp.Service.Dui.Impl
         {
             StringBuilder dropFieldFromTempTableSql = new StringBuilder();
             StringBuilder dropFieldFromHistoryTableSql = new StringBuilder();
+            StringBuilder dropFieldFromArchiveTableSql = new StringBuilder();
+
 
             /*if (dsf.FieldType.Equals("Text"))
             {
@@ -539,7 +563,12 @@ namespace Dndp.Service.Dui.Impl
             dropFieldFromHistoryTableSql.Append(" drop column ");
             dropFieldFromHistoryTableSql.Append(dsf.Name + ";");
 
-            return dropFieldFromTempTableSql.ToString() + dropFieldFromHistoryTableSql.ToString();
+            dropFieldFromArchiveTableSql.Append("alter table ");
+            dropFieldFromArchiveTableSql.Append(DataSourceHelper.GetArchiveTableName(dsf.TheDataSource.Name));
+            dropFieldFromArchiveTableSql.Append(" drop column ");
+            dropFieldFromArchiveTableSql.Append(dsf.Name + ";");
+
+            return dropFieldFromTempTableSql.ToString() + dropFieldFromHistoryTableSql.ToString() + dropFieldFromArchiveTableSql.ToString();
         }
 
         private string GernateCreateFeildForSql(string fieldName, string fieldType, string fieldLength, bool isNullable, string tableNm)
