@@ -479,7 +479,7 @@ namespace Dndp.Service.Dui.Impl
 
             createArchiveTableSql.Append(" create table ");
             createArchiveTableSql.Append(DataSourceHelper.GetArchiveTableName(dsName));
-            createArchiveTableSql.Append(" ( Rec_Id numeric(18, 0) IDENTITY(1,1) NOT NULL, ");
+            createArchiveTableSql.Append(" ( Rec_Id numeric(18, 0)  NOT NULL, ");
             createArchiveTableSql.Append("BATCH_NO int not null, ");
             createArchiveTableSql.Append("ROW_NO int not null, ");
             createArchiveTableSql.Append("CATEGORY_id int not null, ");

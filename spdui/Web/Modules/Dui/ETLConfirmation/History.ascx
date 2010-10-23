@@ -26,6 +26,13 @@ function ButtonWarning(Action)
             else
                 ButtonWarning = false
             end if 
+         case "Archive"
+            ReturnVal = msgbox("Are you sure you want to archive the record?",17)
+            If ReturnVal = 1 then
+                ButtonWarning = true
+            else
+                ButtonWarning = false
+            end if 
         case "Delete"
             ReturnVal = msgbox("Are you sure you want to delete the record?",17)
             If ReturnVal = 1 then
@@ -125,6 +132,10 @@ end function
                         CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS) && ((int)DataBinder.Eval(Container.DataItem, "TheDataSourceCategory.TheDataSource.WithDrawTables")) == 1 && ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 0 %>'
                         OnClick="lbtnWithDrawTable_Click" OnClientClick="return ButtonWarning('WithDraw')"></asp:LinkButton>
                     <%# ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 1 ? "WithDrawed" : "" %>
+                    <asp:LinkButton ID="lbtnArchiveTable" runat="server" Text="[Archive Data]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                        CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsArchive")) == 0 && ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0%>'
+                        OnClick="lbtnArchiveTable_Click" OnClientClick="return ButtonWarning('Archive')"></asp:LinkButton>
+                    <%# ((int)DataBinder.Eval(Container.DataItem, "IsArchive")) == 1 ? "Archived" : "" %>
                     <asp:LinkButton ID="LinkDeleteHistory" runat="server" Text="[Delete Raw Data]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                         CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsWithdraw")) == 1 && ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0 %>'
                         OnClick="lbtnDeleteHistory_Click" OnClientClick="return ButtonWarning('Delete')"></asp:LinkButton>

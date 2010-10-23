@@ -124,6 +124,15 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
         UpdateView();
     }
 
+    protected void lbtnArchiveTable_Click(object sender, EventArgs e)
+    {
+        int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        TheService.ArchiveLoadedRecord(dsUploadId, this.CurrentUser);
+        lblMessage.Text = "Data Warehouse Data archive successful!";
+        lblMessage.Visible = true;
+        UpdateView();
+    }
+
     protected void lbtnDownload_Click(object sender, EventArgs e)
     {
         int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);

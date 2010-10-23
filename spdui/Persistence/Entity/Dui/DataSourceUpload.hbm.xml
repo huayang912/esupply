@@ -18,6 +18,7 @@
 		<property name="Warnings" column="WARNINGS" type="Int32" />
 		<property name="IsWithdraw" column="Withdraw_Flag" type="Int32" />
 		<property name="IsHitoryDelete" column="History_Delete_Flag" type="Int32" />
+    <property name="IsArchive" column="Archive_Flag" type="Int32" />
 		<many-to-one name="UploadBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="UPLOAD_BY_USER_ID" cascade="none" />
 		<many-to-one name="TheDataSourceCategory" class="Dndp.Persistence.Entity.Dui.DataSourceCategory, Dndp.Persistence" column="DATA_SOURCE_CATEGORY_ID" cascade="none" />
 		<many-to-one name="OwnerConfirmBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="OWNER_CONFIRM_BY" cascade="none" />
@@ -28,5 +29,7 @@
 		<property name="WithDrawDate" column="WithDraw_DATE" type="DateTime" />
 		<many-to-one name="RowDeleteBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="RowDel_BY" cascade="none" />
 		<property name="RowDeleteDate" column="RowDel_DATE" type="DateTime" />
+    <many-to-one name="ArchiveBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="Archive_BY" cascade="none" />
+    <property name="ArchiveDate" column="Archive_DATE" type="DateTime" />
 	</class>
 </hibernate-mapping>

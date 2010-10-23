@@ -205,11 +205,11 @@ namespace Dndp.Service.Dui.Impl
             {
                 foreach (DataSourceCategory dataSourceCategory in dataSourceCategoryList)
                 {
-                    if (strStatus.Equals("ALL") || 
+                    if (strStatus.Equals("ALL") ||
                         (dataSourceCategory.LastestDataSourceUpload != null && dataSourceCategory.LastestDataSourceUpload.ProcessStatus.Equals(strStatus)))
                     {
-                        if (strDSName.Equals("") 
-                                || dataSourceCategory.TheDataSource.Name.ToUpper().Contains(strDSName.ToUpper()) 
+                        if (strDSName.Equals("")
+                                || dataSourceCategory.TheDataSource.Name.ToUpper().Contains(strDSName.ToUpper())
                                 || dataSourceCategory.TheDataSource.Description.ToUpper().Contains(strDSName.ToUpper()))
                         {
                             FoundResult.Add(dataSourceCategory);
@@ -406,7 +406,7 @@ namespace Dndp.Service.Dui.Impl
                 catch (SqlException ex)
                 {
                     //manually do rollback transaction
-                    if (dataContainer.GetClearTableSql() != null && dataContainer.GetClearTableSql().Trim().Length != 0) 
+                    if (dataContainer.GetClearTableSql() != null && dataContainer.GetClearTableSql().Trim().Length != 0)
                     {
                         sqlHelperDao.ExecuteNonQuery(dataContainer.GetClearTableSql());
                     }
@@ -570,7 +570,7 @@ namespace Dndp.Service.Dui.Impl
             string rule = vr.TheDataSourceRule.RuleContent;
 
             IList<ValidationResult> dependenceVRList = this.validationResultDao.FindAllByDependenceRuleId(vr.TheDataSourceRule.Id);
-            
+
             //Update Field Content in the SQL Rule
             rule = UpdateValidationSQLContent(vr, rule, actionUser);
 
@@ -595,7 +595,7 @@ namespace Dndp.Service.Dui.Impl
 
             if (dependenceVRList != null && dependenceVRList.Count > 0)
             {
-                foreach(ValidationResult dependenceVR in dependenceVRList)
+                foreach (ValidationResult dependenceVR in dependenceVRList)
                 {
                     dependenceVR.Status = vr.Status;
                     dependenceVR.FaildRowCount = vr.FaildRowCount;
@@ -632,7 +632,7 @@ namespace Dndp.Service.Dui.Impl
                         TheDataSourceUpload.Warnings = TheDataSourceUpload.Warnings + 1;
                     }
                 }
-            } 
+            }
         }
 
         [Transaction(TransactionMode.Unspecified)]
@@ -880,6 +880,35 @@ namespace Dndp.Service.Dui.Impl
             }
         }
 
+        [Transaction(TransactionMode.Requires)]
+        public void ArchiveLoadedRecord(int id, User ActionUser)
+        {
+            DataSourceUpload TheDataSourceUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
+            StringBuilder insertArchiveTableSql = new StringBuilder();
+            if (TheDataSourceUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS)
+            {
+                #region 从history保存到arichieve表
+
+                insertArchiveTableSql.Append("insert into ");
+                insertArchiveTableSql.Append(DataSourceHelper.GetArchiveTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name));
+
+                insertArchiveTableSql.Append(" Select * From " + DataSourceHelper.GetHistoryTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) +
+                      " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString());
+
+                sqlHelperDao.ExecuteNonQuery(insertArchiveTableSql.ToString());
+                LogDBAction(insertArchiveTableSql.ToString(), "ArchiveData", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser.UserName);
+
+                TheDataSourceUpload.IsArchive = 1;
+                TheDataSourceUpload.ArchiveBy = ActionUser;
+                TheDataSourceUpload.ArchiveDate = DateTime.Now;
+
+                this.dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
+                #endregion
+
+
+            }
+        }
+
         private void LogDBAction(string ActionSql, string ActionType, string ActionSource, string ActionUser)
         {
             string rule = "Insert into Sys_Action_Log (ActionCategory, ActionSource, ActionContent, Action_User_Name, ActionDate)";
@@ -931,7 +960,7 @@ namespace Dndp.Service.Dui.Impl
                 TheDataSourceUpload.IsHitoryDelete = 1;
                 dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
 
-                SQLStatement = SQLStatement + " Delete From " + DataSourceHelper.GetHistoryTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) + 
+                SQLStatement = SQLStatement + " Delete From " + DataSourceHelper.GetHistoryTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) +
                         " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString();
 
                 sqlHelperDao.ExecuteNonQuery(SQLStatement);
@@ -968,7 +997,8 @@ namespace Dndp.Service.Dui.Impl
                     string SQLHistoryTable = "; Update " + ds.Name + "_History Set ";
                     foreach (DataSourceField dsField in dsFieldList)
                     {
-                        if (updFieldTable.Contains(dsField.Name.ToUpper())) {
+                        if (updFieldTable.Contains(dsField.Name.ToUpper()))
+                        {
                             if (dsField.FieldType.Equals("Integer") || dsField.FieldType.Equals("Numeric"))
                             {
                                 if (updFieldTable[dsField.Name.ToUpper()].ToString().Trim().Length > 0)
@@ -990,7 +1020,7 @@ namespace Dndp.Service.Dui.Impl
                 }
             }
         }
-        
+
         [Transaction(TransactionMode.Requires)]
         public void RunETLPackage(string ETLJobName)
         {
@@ -1045,10 +1075,11 @@ namespace Dndp.Service.Dui.Impl
             string SQLStatement = "Select rec_id from Sys_ETLAgent_log where Status = 'In Progress'";
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(SQLStatement);
-            if (dataSet.Tables[0].Rows.Count.Equals(0)) {
+            if (dataSet.Tables[0].Rows.Count.Equals(0))
+            {
                 return true;
-            } 
-            else 
+            }
+            else
             {
                 return false;
             }

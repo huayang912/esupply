@@ -208,6 +208,19 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private int _isArchive;
+        public int IsArchive
+        {
+            get
+            {
+                return _isArchive;
+            }
+            set
+            {
+                _isArchive = value;
+            }
+        }
+
         private int _isHitoryDelete;
         public int IsHitoryDelete
         {
@@ -323,6 +336,32 @@ namespace Dndp.Persistence.Entity.Dui
             set
             {
                 _rowDeleteBy = value;
+            }
+        }
+
+        private DateTime? _archiveDate;
+        public DateTime? ArchiveDate
+        {
+            get
+            {
+                return _archiveDate;
+            }
+            set
+            {
+                _archiveDate = value;
+            }
+        }
+
+        private User _archiveBy;
+        public User ArchiveBy
+        {
+            get
+            {
+                return _archiveBy;
+            }
+            set
+            {
+                _archiveBy = value;
             }
         }
         #endregion

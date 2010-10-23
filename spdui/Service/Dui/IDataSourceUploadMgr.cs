@@ -88,6 +88,8 @@ namespace Dndp.Service.Dui
 
         void WithDrawLoadedRecord(int id, User ActionUser);
 
+        void ArchiveLoadedRecord(int id, User ActionUser);
+
         void DeleteUploadRecordHistory(int id, User ActionUser);
 
         void DeleteUpdateRecord(DataSourceUpload TheDataSourceUpload, String RecId);
