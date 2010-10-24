@@ -711,7 +711,18 @@ namespace Dndp.Service.Dui.Impl
                 rule = rule + dsFld.Name.ToString() + ", ";
             }
 
-            rule = rule + "1 from " + dsFile.TheDataSourceCategory.TheDataSource.Name + "_HISTORY where BATCH_NO = " + dsFile.BatchNo + " and CATEGORY = '" + dsFile.TheDataSourceCategory.Name + "' Order by ROW_NO";
+            if (dsFile.IsHitoryDelete == 0)
+            {
+                rule = rule + "1 from " + dsFile.TheDataSourceCategory.TheDataSource.Name + "_HISTORY where BATCH_NO = " + dsFile.BatchNo + " and CATEGORY = '" + dsFile.TheDataSourceCategory.Name + "' Order by ROW_NO";
+            }
+            else if (dsFile.IsArchive == 1)
+            {
+                rule = rule + "1 from " + dsFile.TheDataSourceCategory.TheDataSource.Name + "_ARCHIVE where BATCH_NO = " + dsFile.BatchNo + " and CATEGORY = '" + dsFile.TheDataSourceCategory.Name + "' Order by ROW_NO";
+            }
+            else
+            {
+                throw new Exception();
+            }
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();

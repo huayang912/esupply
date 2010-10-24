@@ -135,6 +135,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         TheDWDataSource.QuerySQL = txtQuerySQL.Text;
         TheDWDataSource.DeleteQuerySQL = txtDeleteQuerySQL.Text;
         TheDWDataSource.DeleteSQL = txtDeleteSQL.Text;
+        TheDWDataSource.MergeQuerySQL = txtMergeQuerySQL.Text;
         TheDWDataSource.MergeSQL = txtMergeSQL.Text;
         TheDWDataSource.LastUpdateBy = sessionHelper.CurrentUser;
         TheDWDataSource.LastUpdateDate = System.DateTime.Now;
@@ -226,9 +227,10 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         txtDescription.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.Description.ToString() : String.Empty;
         txtStartDate.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.QueryStartDate : String.Empty;
         txtEndDate.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.QueryEndDate : String.Empty;
-        txtQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.QuerySQL.ToString() : String.Empty;
-        txtDeleteQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteQuerySQL.ToString() : String.Empty;
-        txtDeleteSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteSQL.ToString() : String.Empty;
+        txtQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.QuerySQL : String.Empty;
+        txtDeleteQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteQuerySQL : String.Empty;
+        txtDeleteSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteSQL : String.Empty;
+        txtMergeQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.MergeQuerySQL : String.Empty;
         txtMergeSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.MergeSQL : String.Empty;
 
         if (TheDWDataSource != null && TheDWDataSource.Id != 0)

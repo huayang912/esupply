@@ -32,9 +32,13 @@ namespace Dndp.Persistence.Dao.Dui
 
         IList FindAllByDWDataSourceId(int dwDataSourceId);
 
+        IList FindAllByDWDataSourceMergeRuleIds(string ruleIds);
+
         int GetMaxSequenceNo(int dataSourceId, string RuleType);
 
         void DeleteDWDataSourceMergeRuleByDSId(int dsId);
+
+        IList FindAllByDependenceRuleId(int ruleId);
 
         #endregion Customized Methods
     }

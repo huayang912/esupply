@@ -120,7 +120,7 @@ end function
                 ItemStyle-Wrap="false">
                 <ItemTemplate>
                     <asp:LinkButton ID="LinkDownload" runat="server" Text="[Download]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                        CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0 %>'
+                        CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0 || ((int)DataBinder.Eval(Container.DataItem, "IsArchive")) == 1 %>'
                         OnClick="lbtnDownload_Click"></asp:LinkButton>
                     <asp:LinkButton ID="lbtnConfirm" runat="server" Text="[Confirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                         CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED) && ((int)DataBinder.Eval(Container.DataItem, "Errors")) == 0 %>'

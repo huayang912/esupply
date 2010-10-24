@@ -87,6 +87,12 @@ end function
             </tr>
             <tr>
                 <td class="txtForm" valign="top">
+                    Data to Merge Query SQL:</td>
+                <td colspan="3">
+                    <asp:TextBox ID="txtMergeQuerySQL" runat="server" Columns="80" Rows="10" TextMode="MultiLine" /></td>
+            </tr>
+            <tr>
+                <td class="txtForm" valign="top">
                     Merge Data SQL:</td>
                 <td colspan="3">
                     <asp:TextBox ID="txtMergeSQL" runat="server" Columns="80" Rows="10" TextMode="MultiLine" /></td>

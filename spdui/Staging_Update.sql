@@ -251,7 +251,7 @@ GO
 ALTER TABLE [dbo].[DW_Data_Source_Merge_Rule] CHECK CONSTRAINT [FK_DW_Data_Source_Merge_Rule_USERS_Last_Update_By]
 
 
-----2010.10.21 wangxiang
+----2010.10.21
 alter table dbo.DATA_SOURCE_UPLOAD add [Archive_BY] [int] NULL,[Archive_DATE] [datetime] NULL,[Archive_Flag] [int] NOT NULL DEFAULT ((0))
 
 ----增加的archive表
@@ -1845,7 +1845,7 @@ CREATE TABLE [dbo].[DWValidation_ARCHIVE](
 )WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
-
+alter table DW_Data_Source add Query_Merge_RULE_CONTENT varchar(max);
 
 
 

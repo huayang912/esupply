@@ -529,13 +529,95 @@ namespace Dndp.Service.Dui.Impl
         public void DeleteSelectedResult(DWDataSource ds, IList<KeyValuePair<string, string>> pkKeyValuePairList, User ActionUser)
         {
             string rule = ds.DeleteSQL.ToUpper();
-            rule = rule.Replace("<$ActionUser$>", ActionUser.Id.ToString());
+            rule = rule.Replace("<$ACTIONUSER$>", ActionUser.Id.ToString());
             foreach (KeyValuePair<string, string> pkKeyValuePair in pkKeyValuePairList)
             {
                 rule = rule.Replace("<$" + pkKeyValuePair.Key.ToUpper() + "$>", pkKeyValuePair.Value);
             }
             sqlHelperDao.ExecuteNonQuery(rule);
             LogDBAction(rule, "DWUpdate", ds.Name, ActionUser.UserName);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public DataSet FindMergeRecords(int dwDataSourceId, string mergeFromRecordId, string mergeToRecordId)
+        {
+            DWDataSource ds = this.DWDataSourceDao.LoadDWDataSource(dwDataSourceId);
+            string mergeFromQuerySql = ds.MergeQuerySQL.Replace("<$RecID$>", mergeFromRecordId);
+            string mergeToQuerySql = ds.MergeQuerySQL.Replace("<$RecID$>", mergeToRecordId);
+
+            DataSet mergedFromDS = sqlHelperDao.ExecuteDataset(mergeFromQuerySql);
+            DataSet mergedToDS = sqlHelperDao.ExecuteDataset(mergeToQuerySql);
+            mergedFromDS.Merge(mergedToDS);
+
+            return mergedFromDS;
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public IList FindDWDataSourceMergeRuleByIds(string ruleIds)
+        {
+            return this.DWDataSourceMergeRuleDao.FindAllByDWDataSourceMergeRuleIds(ruleIds);
+        }
+
+        [Transaction(TransactionMode.Unspecified)]
+        public string ValidateMergeRule(DWDataSourceMergeRule rule, string MergeFromId, string MergeToId, User actionUser)
+        {
+            string ruleContent = rule.RuleContent;            
+
+            //Update Field Content in the SQL Rule
+            ruleContent = UpdateValidationSQLContent(ruleContent, MergeFromId, MergeToId, actionUser);
+
+            DataSet dataSet = sqlHelperDao.ExecuteDataset(ruleContent);
+            DataTableReader dataReader = dataSet.CreateDataReader();
+            int failRowCount = 0;
+            while (dataReader.Read())
+            {
+                failRowCount++;
+            }
+            if (failRowCount > 0)
+            {
+                rule.Status = "Failed";
+            }
+            else
+            {
+                rule.Status = "Passed";
+            }
+            rule.FaildRowCount = failRowCount;
+            rule.ValidationStatus = null;
+
+            string result = rule.Id.ToString() + ":" + rule.Status;
+
+            IList dependenceRuleList = this.DWDataSourceMergeRuleDao.FindAllByDependenceRuleId(rule.Id);
+
+            if (dependenceRuleList != null)
+            {
+                foreach(DWDataSourceMergeRule dRule in dependenceRuleList) 
+                {
+                    result += ";" + dRule.Id.ToString() + ":" + rule.Status;
+                }
+            }
+            return result;
+        }
+
+        public void MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, User actionUser)
+        {
+            DWDataSource ds = this.DWDataSourceDao.LoadDWDataSource(DWDataSourceId);
+            string rule = ds.MergeSQL;
+
+            //Update Field Content in the SQL Rule
+            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
+
+            sqlHelperDao.ExecuteNonQuery(rule);
+        }
+
+        private string UpdateValidationSQLContent(string rule, string MergeFromId, string MergeToId, User actionUser)
+        {
+            rule = rule.Replace("<$MergeFromRecId$>", MergeFromId);
+            rule = rule.Replace("<$MergeToRecId$>", MergeToId);
+            if (actionUser != null)
+            {
+                rule = rule.Replace("<$ActionUser$>", actionUser.Id.ToString());
+            }
+            return rule;
         }
 
         private void LogDBAction(string ActionSql, string ActionType, string ActionSource, string ActionUser)

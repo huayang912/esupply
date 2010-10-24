@@ -85,9 +85,17 @@ namespace Dndp.Service.Dui
 
         IList FindDWDataSourceMergeRuleByDWDataSourceId(int dsId);
 
+        IList FindDWDataSourceMergeRuleByIds(string ruleIds);
+
         void CreateDWDataSourceMergeRule(DWDataSourceMergeRule dwDataSourceMergeRule);
 
         void UpdateDWDataSourceMergeRule(DWDataSourceMergeRule dwDataSourceMergeRule);
+
+        DataSet FindMergeRecords(int dwDataSourceId, string mergeFromRecordId, string mergeToRecordId);
+
+        string ValidateMergeRule(DWDataSourceMergeRule rule, string MergeFromId, string MergeToId, User actionUser);
+
+        void MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, User actionUser);
         #endregion Customized Methods
 
     }

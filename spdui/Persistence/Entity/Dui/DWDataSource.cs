@@ -168,6 +168,19 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private string _mergeQuerySQL;
+        public string MergeQuerySQL
+        {
+            get
+            {
+                return _mergeQuerySQL;
+            }
+            set
+            {
+                _mergeQuerySQL = value;
+            }
+        }
+
         private string _mergeSQL;
         public string MergeSQL
         {

@@ -33,7 +33,7 @@ namespace Dndp.Service.Cube.Impl
         private ICubeDimensionDao cubeDimensionDao;
         private SqlHelperDao sqlDao;
         private IPropertyMgr propertyMgr;
-       
+
 
         public CubeAuthorizationMgr(ICubeUserDao cubeUserDao,
                                     ICubeRoleDao cubeRoleDao,
@@ -62,7 +62,7 @@ namespace Dndp.Service.Cube.Impl
         public void DeleteSetDimensionVisualTotal(int roleid)
         {
             string sql = "DELETE Cube_Role_SetDimension_VisualTotal where roleId = " + roleid.ToString();
-            GetData(sql);            
+            GetData(sql);
         }
 
         public void InsertSetDimensionVisualTotal(int roleid, string setDimensionName, string visualtotal)
@@ -109,7 +109,7 @@ namespace Dndp.Service.Cube.Impl
         public void CreateCubeUser(CubeUser entity)
         {
             //TODO: Add other code here.
-			
+
             cubeUserDao.CreateCubeUser(entity);
         }
 
@@ -120,16 +120,16 @@ namespace Dndp.Service.Cube.Impl
             {
                 throw new ArgumentException("Invliad parameter: id");
             }
-			
-			//TODO: Add other code here.
-			
+
+            //TODO: Add other code here.
+
             return cubeUserDao.LoadCubeUser(id);
         }
 
         [Transaction(TransactionMode.Requires)]
         public virtual void UpdateCubeUser(CubeUser entity)
         {
-        	//TODO: Add other code here.
+            //TODO: Add other code here.
             cubeUserDao.UpdateCubeUser(entity);
         }
 
@@ -148,7 +148,7 @@ namespace Dndp.Service.Cube.Impl
             cubeUserDao.UpdateCubeUser(entity);
         }
 
-       
+
         [Transaction(TransactionMode.Requires)]
         public void DeleteCubeUser(IList<int> idList)
         {
@@ -317,7 +317,7 @@ namespace Dndp.Service.Cube.Impl
             role.CubeRoleDimensionMemberList = cubeRoleDimensionMemberDao.FindCubeRoleDimensionMemberByRoleId(role.Id);
             string[] cubeUserAccount = GetCubeUserAccount(role);
             DataTable dimensionData = GetDimensionData(role);
-            
+
             // Modified by vincent at 2007-11-09 begin
             // Fix Get Dimension Data
             foreach (DataRow dr in dimensionData.Rows)
@@ -524,11 +524,11 @@ namespace Dndp.Service.Cube.Impl
         public IList<CubeDimensionMember> GetDimensionMembers(CubeDefinition cube, string dimensionName, string attributeName)
         {
             IList<CubeDimensionMember> list = new List<CubeDimensionMember>();
-            
+
             try
             {
                 // Modified by vincent at 2007-11-15 begin
-                
+
                 CubeUtility cubeUtility = new CubeUtility(cube.ProcessServerAddr,
                     cube.ProcessDatabaseName, cube.ProcessCubeName,
                     propertyMgr.ProductCubeUserName,
@@ -536,31 +536,33 @@ namespace Dndp.Service.Cube.Impl
                 //CubeUtility cubeUtility = new CubeUtility(cube.ProcessServerAddr, cube.ProcessDatabaseName, cube.ProcessCubeName);
                 // Modified by vincent at 2007-11-15 end
 
-                
-                DataTable dt = cubeUtility.GetAttrributeMembers(dimensionName, attributeName);
+                if (cubeUtility != null)
+                {
+                    DataTable dt = cubeUtility.GetAttrributeMembers(dimensionName, attributeName);
 
-
-                
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {   
-                    CubeDimensionMember cubeDimensionMember = new CubeDimensionMember();
-                    cubeDimensionMember.MemberId = dt.Rows[i][1].ToString();
-
-                    cubeDimensionMember.MemberName = dt.Rows[i][0].ToString() == string.Empty ? "Select All" : dt.Rows[i][0].ToString();
-
-                    cubeDimensionMember.MemberValue = dt.Rows[i][1].ToString();
-
-                    list.Add(cubeDimensionMember);
-
-                    if (cubeDimensionMember.MemberName == "Select All")
+                    if (dt != null && dt.Rows != null && dt.Rows.Count > 0)
                     {
-                        cubeDimensionMember = new CubeDimensionMember();
-                        cubeDimensionMember.MemberId = "";
-                        cubeDimensionMember.MemberName = "Deselect All";                        
-                        list.Add(cubeDimensionMember);
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            CubeDimensionMember cubeDimensionMember = new CubeDimensionMember();
+                            cubeDimensionMember.MemberId = dt.Rows[i][1].ToString();
+
+                            cubeDimensionMember.MemberName = dt.Rows[i][0].ToString() == string.Empty ? "Select All" : dt.Rows[i][0].ToString();
+
+                            cubeDimensionMember.MemberValue = dt.Rows[i][1].ToString();
+
+                            list.Add(cubeDimensionMember);
+
+                            if (cubeDimensionMember.MemberName == "Select All")
+                            {
+                                cubeDimensionMember = new CubeDimensionMember();
+                                cubeDimensionMember.MemberId = "";
+                                cubeDimensionMember.MemberName = "Deselect All";
+                                list.Add(cubeDimensionMember);
+                            }
+                        }
                     }
                 }
-
             }
             catch (Exception ee)
             {
@@ -578,12 +580,12 @@ namespace Dndp.Service.Cube.Impl
             IList<CubeDimension> cubeDimensionList = cubeDimensionDao.FindDimensionByDimensionNameAndAttributeName(dimensionName, attributeName);
 
             foreach (CubeRoleDimensionMember member in memberList)
-            {                
+            {
                 cubeRoleDimensionMemberDao.CreateCubeRoleDimensionMember(member);
 
                 //other CubeDimension which DimensionName and AttributeName are same with current dimension,
                 //also need add CubeRoleDimensionMember same as current dimension
-                foreach(CubeDimension dim in cubeDimensionList)
+                foreach (CubeDimension dim in cubeDimensionList)
                 {
                     if (dim.Id != member.TheDimension.Id)
                     {
@@ -598,7 +600,7 @@ namespace Dndp.Service.Cube.Impl
                         cubeRoleDimensionMemberDao.CreateCubeRoleDimensionMember(otherMember);
                     }
                 }
-            }            
+            }
         }
 
         public void SynchronizeVisualtotal(int cubeId)
@@ -612,13 +614,13 @@ namespace Dndp.Service.Cube.Impl
                                 from Cube_Role_Dimension_Member as member  
                                 inner join Cube_Dimension as dim on member.Dimension_Id = dim.Dimension_Id
                                 group by Cube_Id, Dimension_Name) as target on dim.Dimension_Name = target.Dimension_Name and dim.Cube_Id = target.Cube_Id
-                            where dim.Cube_Id = " + cubeId.ToString() ;
+                            where dim.Cube_Id = " + cubeId.ToString();
 
             sqlDao.ExecuteNonQuery(sql);
         }
 
-        #endregion Method Related to CubeRoleDimensionMember      
-  
+        #endregion Method Related to CubeRoleDimensionMember
+
         #region private method
 
         private string[] GetCubeUserAccount(CubeRole role)
@@ -668,14 +670,14 @@ namespace Dndp.Service.Cube.Impl
                 {
                     if (dim.MDXFormula != null && dim.MDXFormula.Trim().Length > 0)
                     {
-                        AddMDXDimensionRow(dt, role.CubeDimensionList, 
-                            role.CubeRoleDimensionMemberList, 
-                            dim.MDXFormula, 
-                            dim.SetDimensionName, 
-                            dim.SetAttributeName, 
-                            dim.DimensionName, 
-                            dim.AttributeName, 
-                            dim.RelatedDimensionName, 
+                        AddMDXDimensionRow(dt, role.CubeDimensionList,
+                            role.CubeRoleDimensionMemberList,
+                            dim.MDXFormula,
+                            dim.SetDimensionName,
+                            dim.SetAttributeName,
+                            dim.DimensionName,
+                            dim.AttributeName,
+                            dim.RelatedDimensionName,
                             dim.RelatedAttributeName);
                     }
 
@@ -690,14 +692,14 @@ namespace Dndp.Service.Cube.Impl
                             dim.AttributeName,
                             dim.RelatedDimensionName,
                             dim.RelatedAttributeName);
-                    }   
+                    }
                 }
             }
 
             return dt;
         }
 
-        private void AddMDXDimensionRow(DataTable dt, 
+        private void AddMDXDimensionRow(DataTable dt,
             IList<CubeDimension> CubeDimensionList,
             IList<CubeRoleDimensionMember> CubeRoleDimensionMemberList,
             string MDXFormula,
@@ -709,13 +711,13 @@ namespace Dndp.Service.Cube.Impl
             {
                 string[] MDXDimensionData = GetMDXDimensionData(
                         CubeDimensionList,
-                        CubeRoleDimensionMemberList, 
+                        CubeRoleDimensionMemberList,
                         MDXFormula,
-                        SetDimensionName, 
-                        SetAttributeName, 
-                        DimensionName, 
-                        AttributeName, 
-                        RelatedDimensionName, 
+                        SetDimensionName,
+                        SetAttributeName,
+                        DimensionName,
+                        AttributeName,
+                        RelatedDimensionName,
                         RelatedAttributeName);
 
                 if (MDXDimensionData != null)
@@ -845,8 +847,8 @@ namespace Dndp.Service.Cube.Impl
                     return null;
                 }
             }
-                            
-            return new string[] { MDXFormula, isVisualtotal.ToString() };           
+
+            return new string[] { MDXFormula, isVisualtotal.ToString() };
         }
 
         //private string[] GetRelatedMDXDimensionData(IList<CubeDimension> CubeDimensionList,
@@ -958,7 +960,7 @@ namespace Dndp.Service.Cube.Impl
 
             return dt;
         }
-        
+
         #endregion private method
     }
 }

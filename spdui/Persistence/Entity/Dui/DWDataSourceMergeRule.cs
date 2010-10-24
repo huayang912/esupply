@@ -185,8 +185,46 @@ namespace Dndp.Persistence.Entity.Dui
 
         #region Non O/R Mapping Properties
 
-        //TODO: Add Non O/R Mapping Properties here. 
+        private string _status;
+        public string Status
+        {
+            get
+            {
+                return _status;
+            }
+            set
+            {
+                _status = value;
+            }
+        }
 
+        public static string VALIDATION_STATUS_IN_PROGRESS = "In Progress";
+        public static string VALIDATION_STATUS_WAITING = "Waiting";
+        private string _validationStatus;
+        public string ValidationStatus
+        {
+            get
+            {
+                return _validationStatus;
+            }
+            set
+            {
+                _validationStatus = value;
+            }
+        }
+
+        private int _faildRowCount;
+        public int FaildRowCount
+        {
+            get
+            {
+                return _faildRowCount;
+            }
+            set
+            {
+                _faildRowCount = value;
+            }
+        }
         #endregion
 
         public override int GetHashCode()

@@ -105,6 +105,18 @@ namespace Dndp.Persistence.Dao.Dui.NH
             Delete(hql, dsId, NHibernate.NHibernateUtil.Int32);
         }
 
+        public IList FindAllByDWDataSourceMergeRuleIds(string ruleIds)
+        {
+            string hql = @"from DWDataSourceMergeRule entity where entity.Id in (" + ruleIds + ")";
+            return FindAllWithCustomQuery(hql);
+        }
+
+        public IList FindAllByDependenceRuleId(int ruleId)
+        {
+            string hql = @"from DWDataSourceMergeRule entity where entity.DependenceRule.Id = ?";
+            return FindAllWithCustomQuery(hql, ruleId, NHibernate.NHibernateUtil.Int32);
+        }
+
         #endregion Customized Methods
     }
 }

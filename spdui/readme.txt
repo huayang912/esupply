@@ -51,3 +51,9 @@
 3. 有根据”Name”的查询， 应又查Name, 又查Description, 且不分大小写
 4. Data Validation的时候，光标移到Rule上，显示Description。Rule Description维护的时候使用TextArea输入，可以带折行。
 5. data process平台权限控制角色(low, 把权限控制单拿出来)。用DataSource Category的User权限来控制可以授权的DataSourceh和DataSource Category。DW DataSource授权也相同
+
+-----------2010/10/24-----------------------
+1. history archieve
+2. configurable modules to merge duplicate items in master
+	Data to Merge Query SQL中可以传入参数<$RecID$>来定位需要Merge的数据。
+	Merge SQL中可以传入参数<$MergeFromRecId$>和<$MergeToRecId$>来定位Merge前后的记录。

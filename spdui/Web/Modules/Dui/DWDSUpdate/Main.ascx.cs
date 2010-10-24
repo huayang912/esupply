@@ -50,6 +50,7 @@ public partial class Modules_Dui_DWDSUpdate_Main : ModuleBase
         base.OnInit(e);
         DWDSUpdate1.Back += new EventHandler(DWDSUpdate1_Back);
         DWDSViewAll1.Back += new EventHandler(DWDSViewAll1_Back);
+        DWDSMerge1.Back += new EventHandler(DWDSMerge1_Back);
         UpdateView();
         //TODO: Add other init code here.
     }
@@ -66,6 +67,14 @@ public partial class Modules_Dui_DWDSUpdate_Main : ModuleBase
     void DWDSViewAll1_Back(object sender, EventArgs e)
     {
         DWDSViewAll1.Visible = false;
+        pnlMain.Visible = true;
+        UpdateView();
+    }
+
+    //The event handler when user click button "Back" button on New page.
+    void DWDSMerge1_Back(object sender, EventArgs e)
+    {
+        DWDSMerge1.Visible = false;
         pnlMain.Visible = true;
         UpdateView();
     }
@@ -167,6 +176,15 @@ public partial class Modules_Dui_DWDSUpdate_Main : ModuleBase
         DWDSUpdate1.UpdateView();
 
         DWDSUpdate1.Visible = true;
+        pnlMain.Visible = false;
+    }
+
+    protected void lbtnMerge_Click(object sender, EventArgs e)
+    {
+        int dsId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        DWDSMerge1.init(dsId);
+
+        DWDSMerge1.Visible = true;
         pnlMain.Visible = false;
     }
 }
