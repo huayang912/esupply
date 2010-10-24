@@ -56,4 +56,4 @@
 1. history archieve
 2. configurable modules to merge duplicate items in master
 	Data to Merge Query SQL中可以传入参数<$RecID$>来定位需要Merge的数据。
-	Merge SQL中可以传入参数<$MergeFromRecId$>和<$MergeToRecId$>来定位Merge前后的记录。
+	Merge ValidationRule SQL和Merge SQL中可以传入参数<$MergeFromRecId$>和<$MergeToRecId$>来定位Merge前后的记录。
