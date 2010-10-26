@@ -896,6 +896,7 @@ namespace Dndp.Service.Dui.Impl
         {
             DataSourceUpload TheDataSourceUpload = dataSourceUploadDao.LoadDataSourceUpload(id);
             StringBuilder insertArchiveTableSql = new StringBuilder();
+            String deleteHistoryTableSql = string.Empty;
             if (TheDataSourceUpload.ProcessStatus == DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS)
             {
                 #region 从history保存到arichieve表
@@ -908,6 +909,13 @@ namespace Dndp.Service.Dui.Impl
 
                 sqlHelperDao.ExecuteNonQuery(insertArchiveTableSql.ToString());
                 LogDBAction(insertArchiveTableSql.ToString(), "ArchiveData", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser.UserName);
+
+                deleteHistoryTableSql = deleteHistoryTableSql + " Delete From " + DataSourceHelper.GetHistoryTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) +
+                        " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString();
+
+                sqlHelperDao.ExecuteNonQuery(deleteHistoryTableSql);
+
+                LogDBAction(deleteHistoryTableSql, "DeleteHistoryRecord", TheDataSourceUpload.Id.ToString() + "-" + TheDataSourceUpload.Name, ActionUser.UserName);
 
                 TheDataSourceUpload.IsArchive = 1;
                 TheDataSourceUpload.ArchiveBy = ActionUser;
@@ -971,8 +979,16 @@ namespace Dndp.Service.Dui.Impl
                 TheDataSourceUpload.IsHitoryDelete = 1;
                 dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
 
-                SQLStatement = SQLStatement + " Delete From " + DataSourceHelper.GetHistoryTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) +
-                        " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString();
+                if (TheDataSourceUpload.IsArchive == 0)
+                {
+                    SQLStatement = SQLStatement + " Delete From " + DataSourceHelper.GetHistoryTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) +
+                            " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString();
+                }
+                else
+                {
+                    SQLStatement = SQLStatement + " Delete From " + DataSourceHelper.GetArchiveTableName(TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name) +
+                            " Where Category = '" + TheDataSourceUpload.TheDataSourceCategory.Name + "' and Batch_No = " + TheDataSourceUpload.BatchNo.ToString();
+                }
 
                 sqlHelperDao.ExecuteNonQuery(SQLStatement);
 

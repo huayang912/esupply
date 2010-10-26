@@ -117,6 +117,15 @@ function CopyValidationResult()
                         </ItemTemplate>
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lbtnErrorRuleDownload" runat="server" Text="Download" CommandName="Select"
+                                meta:resourcekey="lbtnErrorRuleStatusResource" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                                Visible='<%# DataBinder.Eval(Container.DataItem, "Status") != null && DataBinder.Eval(Container.DataItem, "Status").Equals("Failed")%>'
+                                OnClick="gvValidationRule_Click" />&nbsp;
+                        </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Left" Wrap="False" />
+                    </asp:TemplateField>
                 </Columns>
                 <AlternatingRowStyle CssClass="listA" />
             </asp:GridView>
@@ -150,6 +159,15 @@ function CopyValidationResult()
                         </ItemTemplate>
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lbtnProblemRuleDownload" runat="server" Text="Download" CommandName="Select"
+                                meta:resourcekey="lbtnProblemRuleStatusResource" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                                Visible='<%# DataBinder.Eval(Container.DataItem, "Status") != null && DataBinder.Eval(Container.DataItem, "Status").Equals("Failed")%>'
+                                OnClick="gvValidationRule_Click" />&nbsp;
+                        </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Left" Wrap="False" />
+                    </asp:TemplateField>
                 </Columns>
                 <AlternatingRowStyle CssClass="listA" />
             </asp:GridView>
@@ -182,6 +200,15 @@ function CopyValidationResult()
                                 CommandName="Select" meta:resourcekey="lbtnErrorRuleStatusResource" ForeColor='<%# DataBinder.Eval(Container.DataItem, "ValidationStatus") == null ? (DataBinder.Eval(Container.DataItem, "Status") != null ? (DataBinder.Eval(Container.DataItem, "Status").Equals("Passed") ? System.Drawing.Color.Green : System.Drawing.Color.Red) : System.Drawing.Color.Black) : DataBinder.Eval(Container.DataItem, "ValidationStatus") == "In Progress" ? System.Drawing.Color.Blue : System.Drawing.Color.Gray %>'></asp:LinkButton>
                         </ItemTemplate>
                         <ItemStyle HorizontalAlign="Center" />
+                    </asp:TemplateField>
+                     <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
+                            <asp:LinkButton ID="lbtnWarningRuleDownload" runat="server" Text="Download" CommandName="Select"
+                                meta:resourcekey="lbtnWarningRuleStatusResource" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
+                                Visible='<%# DataBinder.Eval(Container.DataItem, "Status") != null && DataBinder.Eval(Container.DataItem, "Status").Equals("Failed") && DataBinder.Eval(Container.DataItem, "ResultContent") != null && DataBinder.Eval(Container.DataItem, "ResultContent") != string.Empty%>'
+                                OnClick="gvValidationRule_Click" />&nbsp;
+                        </ItemTemplate>
+                        <ItemStyle HorizontalAlign="Left" Wrap="False" />
                     </asp:TemplateField>
                 </Columns>
                 <AlternatingRowStyle CssClass="listA" />

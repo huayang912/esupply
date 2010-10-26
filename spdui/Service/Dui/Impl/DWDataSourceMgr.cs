@@ -609,6 +609,45 @@ namespace Dndp.Service.Dui.Impl
             sqlHelperDao.ExecuteNonQuery(rule);
         }
 
+        public void DownloadMergeRuleErrorResult(DWDataSourceMergeRule mergeRule, string MergeFromId, string MergeToId, User actionUser, CSVWriter csvWriter)
+        {
+            string rule = mergeRule.ResultContent;
+            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
+
+            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
+            DataTableReader dataReader = dataSet.CreateDataReader();
+
+            //write csv header
+            string[] header = new string[dataReader.FieldCount];
+            for (int i = 0; i < dataReader.FieldCount; i++)
+            {
+                header[i] = dataReader.GetName(i);
+            }
+            csvWriter.Write(header);
+            csvWriter.WriteNewLine();
+
+            //write csv content
+            while (dataReader.Read())
+            {
+                object[] fields = new object[dataReader.FieldCount];
+                dataReader.GetValues(fields);
+                string[] strFields = new string[fields.Length];
+                for (int i = 0; i < fields.Length; i++)
+                {
+                    if (fields[i] != null)
+                    {
+                        strFields[i] = fields[i].ToString();
+                    }
+                    else
+                    {
+                        strFields[i] = "";
+                    }
+                }
+                csvWriter.Write(strFields);
+                csvWriter.WriteNewLine();
+            }
+        }
+
         private string UpdateValidationSQLContent(string rule, string MergeFromId, string MergeToId, User actionUser)
         {
             rule = rule.Replace("<$MergeFromRecId$>", MergeFromId);

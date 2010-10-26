@@ -12,6 +12,9 @@ using Dndp.Web;
 using Dndp.Service.Dui;
 using Dndp.Persistence.Entity.Dui;
 using System.Collections.Generic;
+using Dndp.Utility.CSV;
+using System.IO;
+using System.Text;
 
 public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
 {
@@ -212,6 +215,27 @@ public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
             //    ltnDelete.Attributes.Add("onclick", "javascript:return ButtonWarning('Delete')");
             //}
         }
+    }
+
+    protected void gvValidationRule_Click(object sender, EventArgs e)
+    {
+        int ruleId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        downloadErrorResult(ruleId);
+    }
+
+    private void downloadErrorResult(int ruleId)
+    {
+        DWDataSourceMergeRule rule = TheService.LoadDWDataSourceMergeRule(ruleId);
+        Response.Clear();
+        Response.ContentType = "application/octet-stream";
+        string fileName = HttpUtility.UrlEncode(rule.TheDWDataSource.Name + "_" + rule.Name);
+        fileName = fileName.Replace("+", "%20");
+        Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_result.csv");
+        TextWriter txtWriter = new StreamWriter(Response.OutputStream, Encoding.GetEncoding("GB2312"));
+        CSVWriter csvWriter = new CSVWriter(txtWriter); ;
+        TheService.DownloadMergeRuleErrorResult(rule, this.MergeFromId, this.MergeToId, this.CurrentUser, csvWriter);
+        txtWriter.Flush();
+        Response.End();
     }
 
     private void showRules()
