@@ -38,7 +38,8 @@ namespace SPCubeUtility
 
         // ADOMD_CONNECTION_STRING {0} Server, {1} Database, {2} Roles Role=role1,role2
         private const string ADOMD_CONNECTION_STRING = "Provider=MSOLAP.3;Integrated Security=SSPI;Persist Security Info=True;Data Source={0};User Id={1};Password={2};Initial Catalog={3};{4}";
-        
+        private const string ADOMD_CONNECTION_STRING_WITH_NO_SSPI = "Provider=MSOLAP.3;Persist Security Info=True;Data Source={0};User Id={1};Password={2};Initial Catalog={3};{4}";
+
         private string[] emptyStringArray = new string[0];
         #endregion        
         
@@ -47,6 +48,7 @@ namespace SPCubeUtility
         private Server svr;
         private Database db;
         private Cube cube;
+        private string svrName;
         private string userName;
         private string password;
         public CubeUtility(string svrName, string dbName, string cubeName)
@@ -68,8 +70,9 @@ namespace SPCubeUtility
             svr.Connect(connstr);
             db = svr.Databases.FindByName(dbName);
             cube = db.Cubes.FindByName(cubeName);
-            userName = userName.Trim() == "" ? "none" : userName.Trim();
-            password = password.Trim() == "" ? "none" : password.Trim();
+            this.userName = userName.Trim() == "" ? "none" : userName.Trim();
+            this.password = password.Trim() == "" ? "none" : password.Trim();
+            this.svrName = svrName;
         }
 
         #region Get Objects ...
@@ -401,21 +404,30 @@ namespace SPCubeUtility
         {   
             //Microsoft.AnalysisServices.AdomdClient.CellSet result = new Microsoft.AnalysisServices.AdomdClient.CellSet();
             //
-            string mdx = string.Format(MDX_GET_ALL_MEMBERS, cube.Name, attributeName);
-            string connstr = string.Format(ADOMD_CONNECTION_STRING, svr.Name, userName, password,db.Name, "");
-            Microsoft.AnalysisServices.AdomdClient.AdomdConnection adoConn
-                = new Microsoft.AnalysisServices.AdomdClient.AdomdConnection(connstr);
-            Microsoft.AnalysisServices.AdomdClient.AdomdCommand adoComm
-                = new Microsoft.AnalysisServices.AdomdClient.AdomdCommand(mdx);
-            Microsoft.AnalysisServices.AdomdClient.AdomdDataAdapter adoAdap
-                = new Microsoft.AnalysisServices.AdomdClient.AdomdDataAdapter(adoComm);
-            adoComm.Connection = adoConn;
-            DataSet ds = new DataSet();
-            adoAdap.Fill(ds);            
-            adoConn.Open();
-            adoComm.Execute();
-            adoConn.Close();
-            return ds.Tables[0];
+            try
+            {
+                string mdx = string.Format(MDX_GET_ALL_MEMBERS, cube.Name, attributeName);
+                string connstr = string.Format(ADOMD_CONNECTION_STRING_WITH_NO_SSPI, svrName, userName, password, db.Name, "");
+                Microsoft.AnalysisServices.AdomdClient.AdomdConnection adoConn
+                    = new Microsoft.AnalysisServices.AdomdClient.AdomdConnection(connstr);
+                Microsoft.AnalysisServices.AdomdClient.AdomdCommand adoComm
+                    = new Microsoft.AnalysisServices.AdomdClient.AdomdCommand(mdx);
+                Microsoft.AnalysisServices.AdomdClient.AdomdDataAdapter adoAdap
+                    = new Microsoft.AnalysisServices.AdomdClient.AdomdDataAdapter(adoComm);
+                adoComm.Connection = adoConn;
+                DataSet ds = new DataSet();
+                //adoConn.Open();
+                //adoComm.Execute();
+                adoAdap.Fill(ds);
+                adoConn.Close();
+                return ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                //throw new Exception(attributeName, ex);
+            }
+
+            return null;
         }
 
         private DataTable GetAttributeDataOfMeasures()
@@ -446,7 +458,7 @@ namespace SPCubeUtility
 
         public void ExecuteMDX(string playRoles, string mdx)
         {
-            string connstr = string.Format(ADOMD_CONNECTION_STRING, svr.Name, userName, password, db.Name, playRoles);
+            string connstr = string.Format(ADOMD_CONNECTION_STRING_WITH_NO_SSPI, svrName, userName, password, db.Name, playRoles);
             Microsoft.AnalysisServices.AdomdClient.AdomdConnection adoConn
                 = new Microsoft.AnalysisServices.AdomdClient.AdomdConnection(connstr);
             Microsoft.AnalysisServices.AdomdClient.AdomdCommand adoComm

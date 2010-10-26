@@ -525,8 +525,8 @@ namespace Dndp.Service.Cube.Impl
         {
             IList<CubeDimensionMember> list = new List<CubeDimensionMember>();
 
-            try
-            {
+            //try
+            //{
                 // Modified by vincent at 2007-11-15 begin
 
                 CubeUtility cubeUtility = new CubeUtility(cube.ProcessServerAddr,
@@ -563,11 +563,11 @@ namespace Dndp.Service.Cube.Impl
                         }
                     }
                 }
-            }
-            catch (Exception ee)
-            {
-                throw ee;
-            }
+            //}
+            //catch (Exception ee)
+            //{
+            //    throw ee;
+            //}
 
             return list;
         }

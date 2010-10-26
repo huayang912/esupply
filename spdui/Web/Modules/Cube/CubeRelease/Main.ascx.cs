@@ -157,7 +157,7 @@ public partial class Modules_Cube_CubeRelease_Main : ModuleBase
         }
         catch (Exception ee)
         {
-            throw ee;
+            this.lblMessage.Text = ee.Message;
         }
         if (TheService.IsProcessCancelled(cubeid))
         {

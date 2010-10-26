@@ -329,6 +329,7 @@ namespace Dndp.Service.Cube.Impl
                    cube.ProcessServerAddr, cube.ProcessDatabaseName, cube.ProcessCubeName, propertyMgr.ProductCubeUserName, propertyMgr.ProductCubePassword);
 
                 string[] tempRoles = processCubeUtility.GetRoles();
+                string updateCubeRoleErrMsg = string.Empty;
                 foreach (CubeRole cubeRole in theCubeRoles)
                 {
                     //#region delete cube role
@@ -343,7 +344,14 @@ namespace Dndp.Service.Cube.Impl
                     //#endregion
 
                     //update roel to Cube
-                    authMgr.UploadRoleToCube(cubeRole, cubeRole.TheCube.ProcessServerAddr, cubeRole.TheCube.ProcessDatabaseName, cubeRole.TheCube.ProcessCubeName);
+                    try
+                    {
+                        authMgr.UploadRoleToCube(cubeRole, cubeRole.TheCube.ProcessServerAddr, cubeRole.TheCube.ProcessDatabaseName, cubeRole.TheCube.ProcessCubeName);
+                    }
+                    catch (Exception ex)
+                    {
+                        updateCubeRoleErrMsg += ex.Message + " could not update cube role: " + cubeRole.Name + ";";
+                    }
                 }
                 #endregion
 
@@ -366,7 +374,14 @@ namespace Dndp.Service.Cube.Impl
                     //#endregion
 
                     //update roel to Cube
-                    authMgr.UploadRoleToCube(cubeRole, cubeRole.TheCube.ReleaseServerAddr, cubeRole.TheCube.ReleaseDatabaseName, cubeRole.TheCube.ReleaseCubeName);
+                    try
+                    {
+                        authMgr.UploadRoleToCube(cubeRole, cubeRole.TheCube.ReleaseServerAddr, cubeRole.TheCube.ReleaseDatabaseName, cubeRole.TheCube.ReleaseCubeName);
+                    }
+                    catch (Exception ex)
+                    {
+                        updateCubeRoleErrMsg += ex.Message + " could not update cube role: " + cubeRole.Name + ";";
+                    }
                 }
                 #endregion
 
@@ -377,6 +392,11 @@ namespace Dndp.Service.Cube.Impl
                 //    sqlHelpDao.ExecuteNonQuery(postUpdateRoleSQL);
                 //}
                 #endregion
+
+                if (updateCubeRoleErrMsg != string.Empty)
+                {
+                    throw new Exception(updateCubeRoleErrMsg);
+                }
             }
             #endregion
         }
@@ -414,7 +434,7 @@ namespace Dndp.Service.Cube.Impl
 
 
             IList<CubeRole> roleList = roleDao.FindCubeRoleByCubeId(cubeId);
-
+            string updateCubeRoleErrMsg = string.Empty;
             if (roleList != null && roleList.Count > 0)
             {
                 foreach (CubeRole role in roleList)
@@ -425,7 +445,15 @@ namespace Dndp.Service.Cube.Impl
                         break;
                     }
                     // Modified by vincent at 2007-11-20 end
-                    authMgr.UploadRoleToCube(role, role.TheCube.ProcessServerAddr, role.TheCube.ProcessDatabaseName, role.TheCube.ProcessCubeName);
+
+                    try
+                    {
+                        authMgr.UploadRoleToCube(role, role.TheCube.ProcessServerAddr, role.TheCube.ProcessDatabaseName, role.TheCube.ProcessCubeName);
+                    }
+                    catch (Exception ex)
+                    {
+                        updateCubeRoleErrMsg += ex.Message + " could not update cube role: " + role.Name + ";";
+                    }
                 }
             }
 
@@ -436,6 +464,10 @@ namespace Dndp.Service.Cube.Impl
                 sqlHelpDao.ExecuteNonQuery(postUpdateRoleSQL);
             }
 
+            if (updateCubeRoleErrMsg != string.Empty)
+            {
+                throw new Exception(updateCubeRoleErrMsg);
+            }
             // Modified by vincent at 2007-11-13 end
         }
 
