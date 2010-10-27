@@ -84,6 +84,11 @@ namespace Dndp.Persistence.Dao
             }
         }
 
+        public int ExecuteNonQueryWithNoTransaction(string commandText)
+        {
+            return SqlHelper.ExecuteNonQuery(connectionString, CommandType.Text, commandText);
+        }
+
         public DataSet ExecuteDataset(string commandText)
         {
             return SqlHelper.ExecuteDataset(connectionString, CommandType.Text, commandText);
@@ -96,6 +101,11 @@ namespace Dndp.Persistence.Dao
             return SqlHelper.ExecuteReader(cn, CommandType.Text, commandText, (SqlParameter[])null);
         }
 
+        public void ExecuteStoredProcedure(string spName)
+        {
+            SqlHelper.ExecuteNonQuery(connectionString, spName, null);
+        }
+            
         private int GetPostion(string commandText, int startPosition)
         {
             int position = 0;

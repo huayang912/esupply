@@ -606,7 +606,7 @@ namespace Dndp.Service.Dui.Impl
             //Update Field Content in the SQL Rule
             rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
 
-            sqlHelperDao.ExecuteNonQuery(rule);
+            sqlHelperDao.ExecuteNonQueryWithNoTransaction(rule);
             
             rule = ds.MergeResultSQL;
             rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
