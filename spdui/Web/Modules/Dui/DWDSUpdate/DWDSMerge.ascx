@@ -39,7 +39,8 @@ function CopyValidationResult()
         CssClass="btn" />
     <asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Back" CssClass="btn" />
     <span style="display: none">
-        <asp:Button ID="btnInValidation" runat="server" OnClick="btnInValidation_Click" Text="Continue" OnClientClick="CopyValidationResult()" />&nbsp;
+        <asp:Button ID="btnInValidation" runat="server" OnClick="btnInValidation_Click" Text="Continue"
+            OnClientClick="CopyValidationResult()" />&nbsp;
         <asp:HiddenField ID="txtValidationIds" runat="server" />
     </span>
 </p>
@@ -59,7 +60,13 @@ function CopyValidationResult()
         </td>
     </tr>
 </table>
-<asp:Label ID="lblMessage" Font-Bold="true" runat="server" Visible="false" CssClass="error"></asp:Label>
+<table>
+    <tr>
+        <td>
+            <asp:Label ID="lblMessage" Font-Bold="true" runat="server" Visible="false" CssClass="error"></asp:Label>
+        </td>
+    </tr>
+</table>
 <hr runat="server" id="hr1" />
 <b runat="server" id="title2">Master data for merging: </b>
 <table border="0" width="100%">
@@ -75,8 +82,8 @@ function CopyValidationResult()
                 <Columns>
                     <asp:TemplateField ShowHeader="true" HeaderText="MergedTo">
                         <ItemTemplate>
-                            <input type="radio" name="mergedTo" value="<%# Container.DataItemIndex.ToString() %>" disabled="disabled"
-                                <%# Container.DataItemIndex == 1 ? "Checked" : "" %> >
+                            <input type="radio" name="mergedTo" value="<%# Container.DataItemIndex.ToString() %>"
+                                disabled="disabled" <%# Container.DataItemIndex == 1 ? "Checked" : "" %>>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
@@ -201,7 +208,7 @@ function CopyValidationResult()
                         </ItemTemplate>
                         <ItemStyle HorizontalAlign="Center" />
                     </asp:TemplateField>
-                     <asp:TemplateField HeaderText="Action">
+                    <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
                             <asp:LinkButton ID="lbtnWarningRuleDownload" runat="server" Text="Download" CommandName="Select"
                                 meta:resourcekey="lbtnWarningRuleStatusResource" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
@@ -288,3 +295,4 @@ function CopyValidationResult()
 	   J.dialog.get( "ValidationRule", {  top: 90, cover: true, custom: fn, closeWin: cusfn, title : "Data Validation", page: "DWMergeValidationRule.aspx?mergeFromId=<%= this.MergeFromId %>&mergeToId=<%= this.MergeToId %>&validationIds=" + validationIds} );      
     }
 </script>
+
