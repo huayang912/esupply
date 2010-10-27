@@ -182,7 +182,7 @@ public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
                 this.lblMessage.Text = result;
             }
             this.lblMessage.Visible = true;
-            CleanAll();
+            //CleanAll();
         }
         catch (Exception ex)
         {

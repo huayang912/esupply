@@ -614,7 +614,12 @@ namespace Dndp.Service.Dui.Impl
             if (dataSet.Tables != null && dataSet.Tables.Count > 0 
                 && dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
             {
-                return (string)dataSet.Tables[0].Rows[0][0];
+                object obj = dataSet.Tables[0].Rows[0][0];
+
+                if (obj != null)
+                {
+                    return obj.ToString();
+                }
             }
 
             return null;
