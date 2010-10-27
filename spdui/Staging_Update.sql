@@ -1849,3 +1849,5 @@ alter table DW_Data_Source add Query_Merge_RULE_CONTENT varchar(max);
 
 
 
+-----------2010/10/27-----------------------
+alter table DW_Data_Source add Merge_RESULT_CONTENT varchar(max);

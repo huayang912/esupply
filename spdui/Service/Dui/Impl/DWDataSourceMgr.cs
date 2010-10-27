@@ -598,7 +598,7 @@ namespace Dndp.Service.Dui.Impl
             return result;
         }
 
-        public void MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, User actionUser)
+        public string MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, User actionUser)
         {
             DWDataSource ds = this.DWDataSourceDao.LoadDWDataSource(DWDataSourceId);
             string rule = ds.MergeSQL;
@@ -607,6 +607,17 @@ namespace Dndp.Service.Dui.Impl
             rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
 
             sqlHelperDao.ExecuteNonQuery(rule);
+            
+            rule = ds.MergeResultSQL;
+            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
+            DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
+            if (dataSet.Tables != null && dataSet.Tables.Count > 0 
+                && dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
+            {
+                return (string)dataSet.Tables[0].Rows[0][0];
+            }
+
+            return null;
         }
 
         public void DownloadMergeRuleErrorResult(DWDataSourceMergeRule mergeRule, string MergeFromId, string MergeToId, User actionUser, CSVWriter csvWriter)

@@ -98,6 +98,12 @@ end function
                     <asp:TextBox ID="txtMergeSQL" runat="server" Columns="80" Rows="10" TextMode="MultiLine" /></td>
             </tr>
             <tr>
+                <td class="txtForm" valign="top">
+                    Merge Result SQL:</td>
+                <td colspan="3">
+                    <asp:TextBox ID="txtMergeResultSQL" runat="server" Columns="80" Rows="10" TextMode="MultiLine" /></td>
+            </tr>
+            <tr>
                 <td colspan="4">
                     <asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
                 </td>

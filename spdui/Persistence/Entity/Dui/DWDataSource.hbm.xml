@@ -18,5 +18,6 @@
 		<property name="QueryEndDate" column="Query_End_date" type="String" />
 		<property name="MergeQuerySQL" column="Query_Merge_RULE_CONTENT" type="StringClob"/>
 		<property name="MergeSQL" column="Merge_RULE_CONTENT" type="StringClob"/>
+		<property name="MergeResultSQL" column="Merge_RESULT_CONTENT" type="StringClob"/>
 	</class>
 </hibernate-mapping>

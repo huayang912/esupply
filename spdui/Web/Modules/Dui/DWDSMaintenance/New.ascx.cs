@@ -137,6 +137,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         TheDWDataSource.DeleteSQL = txtDeleteSQL.Text;
         TheDWDataSource.MergeQuerySQL = txtMergeQuerySQL.Text;
         TheDWDataSource.MergeSQL = txtMergeSQL.Text;
+        TheDWDataSource.MergeResultSQL = txtMergeResultSQL.Text;
         TheDWDataSource.LastUpdateBy = sessionHelper.CurrentUser;
         TheDWDataSource.LastUpdateDate = System.DateTime.Now;
         if (txtStartDate.Text.Trim().Length != 0)
@@ -232,6 +233,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         txtDeleteSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.DeleteSQL : String.Empty;
         txtMergeQuerySQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.MergeQuerySQL : String.Empty;
         txtMergeSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.MergeSQL : String.Empty;
+        txtMergeResultSQL.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.MergeResultSQL : String.Empty;
 
         if (TheDWDataSource != null && TheDWDataSource.Id != 0)
         {

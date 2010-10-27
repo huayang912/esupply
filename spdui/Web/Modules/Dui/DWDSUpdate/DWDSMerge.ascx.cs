@@ -172,8 +172,15 @@ public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
 
         try
         {
-            this.TheService.MergeDWData(this.DWDataSourceId, this.MergeFromId, this.MergeToId, this.CurrentUser);
-            this.lblMessage.Text = "Data successfully merged.";
+            string result = this.TheService.MergeDWData(this.DWDataSourceId, this.MergeFromId, this.MergeToId, this.CurrentUser);
+            if (result == null || result == string.Empty)
+            {
+                this.lblMessage.Text = "Data successfully merged.";
+            }
+            else
+            {
+                this.lblMessage.Text = result;
+            }
             this.lblMessage.Visible = true;
             CleanAll();
         }
