@@ -45,6 +45,8 @@ public partial class Modules_Dui_DSMaintenance_NewCategory : ModuleBase
     public void SetDataSourceId(int dsId)
     {
         txtDsId.Value = dsId.ToString();
+        //UpdateView();
+        clean();
     }
 
     public void SetDataSourceCategoryId(int dsId)
@@ -70,7 +72,25 @@ public partial class Modules_Dui_DSMaintenance_NewCategory : ModuleBase
     protected void btnSubmitContinue_Click(object sender, EventArgs e)
     {
         SaveCategory();
-        UpdateView();
+        clean();
+        //UpdateView();
+    }
+
+    private void clean()
+    {
+        txtCategoryName.Text = string.Empty;
+        txtCategoryDescription.Text = string.Empty;
+        txtDscId.Value = string.Empty;
+        rblIsActive.SelectedIndex = 0;
+
+        if (gvUser.Rows != null && gvUser.Rows.Count > 0)
+        {
+            foreach (GridViewRow row in gvUser.Rows)
+            {
+                CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                cbSelect.Checked = false;
+            }
+        }
     }
 
     protected void SaveCategory()
@@ -85,6 +105,24 @@ public partial class Modules_Dui_DSMaintenance_NewCategory : ModuleBase
             dsc.TheDataSource = ds;
 
             TheService.CreateDataSourceCategory(dsc);
+
+            IList<int> userIdList = new List<int>();
+            if (gvUser.Rows != null && gvUser.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvUser.Rows)
+                {
+                    CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                    if (cbSelect.Checked)
+                    {
+                        int userId = int.Parse(row.Cells[1].Text);
+                        userIdList.Add(userId);
+                    }
+                }
+            }
+
+            TheService.UpdateDataSourceCategory(dsc, userIdList);
+
+            txtDscId.Value = dsc.Id.ToString();
         }
         else
         {
@@ -121,6 +159,15 @@ public partial class Modules_Dui_DSMaintenance_NewCategory : ModuleBase
             txtCategoryName.Text = string.Empty;
             txtCategoryDescription.Text = string.Empty;
             rblIsActive.SelectedIndex = 0;
+
+            if (gvUser.Rows != null && gvUser.Rows.Count > 0)
+            {
+                foreach (GridViewRow row in gvUser.Rows)
+                {
+                    CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                    cbSelect.Checked = false;
+                }
+            }
         }
         else
         {
