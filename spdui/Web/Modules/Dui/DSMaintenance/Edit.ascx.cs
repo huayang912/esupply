@@ -285,10 +285,10 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
     protected void lbtnCategoryName_Click(object sender, EventArgs e)
     {
         int dsCategoryId = Int32.Parse(((LinkButton)sender).CommandArgument);
+        NewCategory1.SetDataSourceId(TheDataSource.Id);
         NewCategory1.SetDataSourceCategoryId(dsCategoryId);
         NewCategory1.UpdateView();
         NewCategory1.Visible = true;
-        NewCategory1.SetDataSourceId(TheDataSource.Id);
         pnlMain.Visible = false;
     }
     protected void btnAddCategory_Click(object sender, EventArgs e)
