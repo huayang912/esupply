@@ -103,7 +103,7 @@ public class ReceiptDetail extends BaseObject {
 		this.uom = uom;
 	}
 	
-	@Column(nullable = false, precision = 9, scale = 2)
+	@Column(nullable = false, precision = 18, scale = 4)
 	public BigDecimal getQty() {
 		return qty;
 	}

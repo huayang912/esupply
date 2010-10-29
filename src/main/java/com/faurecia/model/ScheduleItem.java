@@ -114,7 +114,7 @@ public class ScheduleItem extends BaseObject {
 		this.uom = uom;
 	}
 
-	@Column(name = "received_qty", nullable = true, precision = 9, scale = 2)
+	@Column(name = "received_qty", nullable = true, precision = 18, scale = 4)
 	public BigDecimal getReceivedQty() {
 		return receivedQty;
 	}
