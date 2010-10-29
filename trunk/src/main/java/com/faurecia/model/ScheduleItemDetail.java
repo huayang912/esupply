@@ -91,7 +91,7 @@ public class ScheduleItemDetail extends BaseObject {
 		this.dateTo = dateTo;
 	}
 
-	@Column(name="release_qty", nullable = false, precision = 9, scale = 2)
+	@Column(name="release_qty", nullable = false, precision = 18, scale = 4)
 	public BigDecimal getReleaseQty() {
 		return releaseQty;
 	}
@@ -100,7 +100,7 @@ public class ScheduleItemDetail extends BaseObject {
 		this.releaseQty = releaseQty;
 	}
 
-	@Column(name="deliver_qty", nullable = true, precision = 9, scale = 2)
+	@Column(name="deliver_qty", nullable = true, precision = 18, scale = 4)
 	public BigDecimal getDeliverQty() {
 		return deliverQty;
 	}

@@ -113,7 +113,7 @@ public class PurchaseOrderDetail extends BaseObject {
 		this.uom = uom;
 	}
 
-	@Column(nullable = false, precision = 9, scale = 2)
+	@Column(nullable = false, precision = 18, scale = 4)
 	public BigDecimal getQty() {
 		return qty;
 	}
@@ -131,7 +131,7 @@ public class PurchaseOrderDetail extends BaseObject {
 		this.deliveryDate = deliveryDate;
 	}
 
-	@Column(nullable = true, precision = 9, scale = 2)
+	@Column(nullable = true, precision = 18, scale = 4)
 	public BigDecimal getShipQty() {
 		return shipQty;
 	}
