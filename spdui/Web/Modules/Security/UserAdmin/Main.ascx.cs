@@ -71,6 +71,7 @@ public partial class Modules_Security_UserAdmin_Main : ModuleBase
             gvUser.DataBind();
             btnDelete.Visible = PermissionDelete;
             lblRecordCount.Text = string.Format(GetGlobalResourceObject("GlobalWebResource", "RecordCount").ToString(), result.Count);
+            lblText.Visible = false;
         }
     }
 
@@ -105,20 +106,30 @@ public partial class Modules_Security_UserAdmin_Main : ModuleBase
 
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        IList<int> userIdList = new List<int>();
-
-        foreach (GridViewRow row in gvUser.Rows)
+        try
         {
-            CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
-            if (cbSelect.Checked)
+            IList<int> userIdList = new List<int>();
+
+            foreach (GridViewRow row in gvUser.Rows)
             {
-                userIdList.Add((int)(gvUser.DataKeys[row.RowIndex].Value));
+                CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                if (cbSelect.Checked)
+                {
+                    userIdList.Add((int)(gvUser.DataKeys[row.RowIndex].Value));
+                }
             }
+
+
+            TheService.DeleteUser(userIdList);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblText.Visible = true;
+            this.lblText.Text = "Record have been cited, can not be deleted";
         }
 
-        TheService.DeleteUser(userIdList);
-
-        UpdateView();
     }
 
     protected void gvUser_Sorting(object sender, GridViewSortEventArgs e)

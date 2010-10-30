@@ -34,6 +34,7 @@ end function
 </table>
 </div>
 <hr size=1><asp:Label ID="lblRecordCount" runat="server" />
+<asp:Label ID="lblText" runat="server"  Visible="false"  ForeColor="red" />
  <p class="formBtnBoard">
 <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn" OnClick="btnDelete_Click" Visible="False" OnClientClick="return ButtonWarning('Delete')"/> 
 </p> 

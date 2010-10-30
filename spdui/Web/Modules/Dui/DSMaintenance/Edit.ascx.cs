@@ -22,12 +22,12 @@ using Dndp.Service.Dui;
 public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
 {
     public event EventHandler Back;
-	
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("DSMaintenance");
-	
-	//The entity service
-	protected IDataSourceMgr TheService
+
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("DSMaintenance");
+
+    //The entity service
+    protected IDataSourceMgr TheService
     {
         get
         {
@@ -37,13 +37,13 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//TODO: Add code for Page_Load here.
+        //TODO: Add code for Page_Load here.
     }
 
 
     protected override void OnInit(EventArgs e)
     {
-        base.OnInit(e);        
+        base.OnInit(e);
         NewField1.Back += new System.EventHandler(this.NewField1_Back);
         NewCategory1.Back += new System.EventHandler(this.NewCategory1_Back);
         NewWithDrawTable1.Back += new System.EventHandler(this.NewWithDrawTable1_Back);
@@ -103,7 +103,7 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
         }
     }
 
-	//Update the view by the entity class stored in ViewState
+    //Update the view by the entity class stored in ViewState
     public void UpdateView()
     {
         txtName.Text = TheDataSource.Name;
@@ -112,25 +112,30 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
         txtRuleContent.Text = TheDataSource.DWQuerySQL;
         txtType.Text = TheDataSource.DSType;
 
+        this.lblFieldDef.Visible = false;
         gvFieldList.DataSource = TheDataSource.DataSourceFieldList;
         gvFieldList.DataBind();
 
+        this.lblOperators.Visible = false;
         gvOperatorList.DataSource = TheDataSource.DataSourceOperatorList;
         gvOperatorList.DataBind();
 
+        this.lblValidation.Visible = false;
         gvRuleList.DataSource = TheDataSource.DataSourceRuleList;
         gvRuleList.DataBind();
 
+        this.lblCategory.Visible = false;
         gvCategoryList.DataSource = TheDataSource.DataSourceCategoryList;
         gvCategoryList.DataBind();
 
+        this.lblWithDrawed.Visible = false;
         gvWithDrawTableList.DataSource = TheDataSource.DataSourceWithDrawTableList;
         gvWithDrawTableList.DataBind();
 
         lblMessage.Visible = false;
     }
 
-	//Event handler when user click button "Back"
+    //Event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -185,12 +190,20 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
 
     protected void btnDeleteField_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSourceField(GetSelectIdList(gvFieldList));
-        
-        //re-load the data source
-        TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
-        
-        UpdateView();
+        try
+        {
+            TheService.DeleteDataSourceField(GetSelectIdList(gvFieldList));
+
+            //re-load the data source
+            TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblFieldDef.Visible = true;
+            this.lblFieldDef.Text = "Record have been cited, can not be deleted";
+        }
     }
 
     protected void btnAddOperator_Click(object sender, EventArgs e)
@@ -204,12 +217,20 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
 
     protected void btnDeleteOperator_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSourceOperator(GetSelectIdList(gvOperatorList));
+        try
+        {
+            TheService.DeleteDataSourceOperator(GetSelectIdList(gvOperatorList));
 
-        //re-load the data source
-        TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
+            //re-load the data source
+            TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblOperators.Visible = true;
+            this.lblOperators.Text = "Record have been cited, can not be deleted";
+        }
     }
 
     //private IList<int> GetSelectIdList(GridView gv)
@@ -230,43 +251,67 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
 
     protected void btnDeleteRule_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSourceRule(GetSelectIdList(gvRuleList));
+        try
+        {
+            TheService.DeleteDataSourceRule(GetSelectIdList(gvRuleList));
 
-        //re-load the data source
-        TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
+            //re-load the data source
+            TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblValidation.Visible = true;
+            this.lblValidation.Text = "Record have been cited, can not be deleted";
+        }
     }
 
     protected void btnDeleteCategory_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSourceCategory(GetSelectIdList(gvCategoryList));
+        try
+        {
+            TheService.DeleteDataSourceCategory(GetSelectIdList(gvCategoryList));
 
-        //re-load the data source
-        TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
+            //re-load the data source
+            TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblCategory.Visible = true;
+            this.lblCategory.Text = "Record have been cited, can not be deleted";
+        }
     }
 
     protected void btnDeleteWithDrawTable_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSourceWithDrawTable(GetSelectIdList(gvWithDrawTableList));
+        try
+        {
+            TheService.DeleteDataSourceWithDrawTable(GetSelectIdList(gvWithDrawTableList));
 
-        //re-load the data source
-        TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
+            //re-load the data source
+            TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblWithDrawed.Visible = true;
+            this.lblWithDrawed.Text = "Record have been cited, can not be deleted";
+        }
     }
 
     protected void btnAddField_Click(object sender, EventArgs e)
-    {        
+    {
         NewField1.Visible = true;
         NewField1.DataSourceId = TheDataSource.Id;
         NewField1.UpdateView();
         pnlMain.Visible = false;
     }
     protected void btnAddRule_Click(object sender, EventArgs e)
-    {        
+    {
         NewRule1.Visible = true;
         NewRule1.TheDataSourceRule = null;
         NewRule1.SetDataSourceId(TheDataSource.Id);

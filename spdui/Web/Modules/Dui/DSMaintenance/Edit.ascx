@@ -72,6 +72,8 @@ end function
         </table>
     </div>
     <b>Field Definitions:</b>
+    <br />
+    <asp:Label ID="lblFieldDef" runat="server" Visible="false" ForeColor="red" />
     <p class="formBtnBoard">
         <asp:Button ID="btnAddField" runat="server" Text="Add Field" Width="100px" OnClick="btnAddField_Click"
             CssClass="btn" />
@@ -109,6 +111,8 @@ end function
         <AlternatingRowStyle CssClass="listA" />
     </asp:GridView>
     <b>Operators List:</b>
+    <br />
+    <asp:Label runat="server" ID="lblOperators" ForeColor="red"  Visible="false"/>
     <p class="formBtnBoard">
         <asp:Button ID="btnAddOperator" runat="server" Text="Add Operator" OnClick="btnAddOperator_Click"
             Width="100px" CssClass="btn" />
@@ -140,6 +144,8 @@ end function
         <AlternatingRowStyle CssClass="listA" />
     </asp:GridView>
     <b>Validation Rules:</b>
+     <br />
+    <asp:Label runat="server" ID="lblValidation" ForeColor="red"  Visible="false"/>
     <p class="formBtnBoard">
         <asp:Button ID="btnAddRule" runat="server" Text="Add Rule" Width="100px" OnClick="btnAddRule_Click"
             CssClass="btn" />
@@ -188,6 +194,8 @@ end function
         <AlternatingRowStyle CssClass="listA" />
     </asp:GridView>
     <b>Category Definitions:</b>
+    <br />
+    <asp:Label ID="lblCategory" runat="server" ForeColor="red" Visible="false" />
     <p class="formBtnBoard">
         <asp:Button ID="btnAddCategory" runat="server" Text="Add Category" Width="100px"
             OnClick="btnAddCategory_Click" CssClass="btn" />
@@ -217,6 +225,8 @@ end function
         <AlternatingRowStyle CssClass="listA" />
     </asp:GridView>
     <b>WithDrawed Table Definitions:</b>
+     <br />
+    <asp:Label runat="server" ID="lblWithDrawed" ForeColor="red"  Visible="false"/>
     <p class="formBtnBoard">
         <asp:Button ID="btnAddWithDrawTable" runat="server" Text="Add" Width="100px" OnClick="btnAddWithDrawTable_Click"
             CssClass="btn" />
