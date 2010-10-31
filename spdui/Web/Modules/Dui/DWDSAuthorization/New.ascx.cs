@@ -126,11 +126,20 @@ public partial class Modules_Dui_DWDSAuthorization_New : ModuleBase
 
     protected void btnDeleteOperator_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDWDataSourceOperator(GetSelectIdList(gvOperatorList));
+        try
+        {
 
-        //re-load the data source
-        TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
+            TheService.DeleteDWDataSourceOperator(GetSelectIdList(gvOperatorList));
 
-        UpdateView();
+            //re-load the data source
+            TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this operator have been used, can not be deleted";
+        }
     }
 }
