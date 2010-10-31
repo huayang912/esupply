@@ -22,10 +22,10 @@ using Dndp.Service.OffLineReport;
 public partial class Modules_OffLineReport_ReportMaintenance_Main : ModuleBase
 {
     //Get the logger
-	private static ILog log = LogManager.GetLogger("ReportMaintenance");
-	
-	//The entity service
-	protected IReportTemplateMgr TheService
+    private static ILog log = LogManager.GetLogger("ReportMaintenance");
+
+    //The entity service
+    protected IReportTemplateMgr TheService
     {
         get
         {
@@ -120,19 +120,28 @@ public partial class Modules_OffLineReport_ReportMaintenance_Main : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        IList<int> idList = new List<int>();
-
-        foreach (GridViewRow row in gvList.Rows)
+        try
         {
-            CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
-            if (cbSelect.Checked)
-            {
-                idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
-            }
-        }
-        TheService.DeleteReportTemplate(idList);
 
-        UpdateView();
+            IList<int> idList = new List<int>();
+
+            foreach (GridViewRow row in gvList.Rows)
+            {
+                CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                if (cbSelect.Checked)
+                {
+                    idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
+                }
+            }
+            TheService.DeleteReportTemplate(idList);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this off line report have been used, can not be deleted";
+        }
     }
 
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)

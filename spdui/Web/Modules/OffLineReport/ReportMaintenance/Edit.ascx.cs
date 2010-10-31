@@ -23,12 +23,12 @@ using Dndp.Service.OffLineReport;
 public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
 {
     public event EventHandler Back;
-	
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("ReportMaintenance");
-	
-	//The entity service
-	protected IReportTemplateMgr TheService
+
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("ReportMaintenance");
+
+    //The entity service
+    protected IReportTemplateMgr TheService
     {
         get
         {
@@ -50,14 +50,14 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
         base.OnInit(e);
         NewReportSheet1.Back += new System.EventHandler(this.NewReportSheet1_Back);
     }
-    
+
     protected override void InitByPermission()
     {
         base.InitByPermission();
 
-        btnUpdate.Visible = PermissionUpdate;   
-		
-		//TODO: Add other permission init codes here.
+        btnUpdate.Visible = PermissionUpdate;
+
+        //TODO: Add other permission init codes here.
     }
 
     public ReportTemplate TheReportTemplate
@@ -72,7 +72,7 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
         }
     }
 
-	//Update the view by the entity class stored in ViewState
+    //Update the view by the entity class stored in ViewState
     public void UpdateView()
     {
         //TODO: Add code here.
@@ -85,14 +85,14 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
         //rdoSendMailYes.Checked =  (TheReportTemplate.NeedSendMail == "YES");
         //rdoSendMailNo.Checked = (TheReportTemplate.NeedSendMail == "NO");
         // Modified By Vincent On 2009-09-04 Begin
-        
+
         gvSheetList.DataSource = TheReportTemplate.ReportSheetList;
         gvSheetList.DataBind();
 
         lblMessage.Visible = false;
     }
 
-	//Event handler when user click button "Back"
+    //Event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -129,7 +129,7 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
         TheReportTemplate.ReportType = txtType.Text.Trim();
         //TheReportTemplate.ConnectionString = txtConnectionString.Text.Trim();
         TheReportTemplate.TemplateFilePath = txtTemplateFilePath.Text.Trim();
-        TheReportTemplate.LastUpdateBy = CurrentUser;        
+        TheReportTemplate.LastUpdateBy = CurrentUser;
         TheReportTemplate.LastUpdateDate = DateTime.Now;
         // Modified By Vincent On 2009-09-04 Begin
         // TheReportTemplate.NeedSendMail = rdoSendMailYes.Checked ? "YES" : "NO";
@@ -153,7 +153,7 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
         TheReportTemplate.ConnectionString = txtConnectionString.Text.Trim();
         TheReportTemplate.LastUpdateBy = CurrentUser;
         TheReportTemplate.LastUpdateDate = DateTime.Now;
-        
+
         try
         {
             TheService.UpdateReportTemplate(TheReportTemplate);
@@ -165,15 +165,25 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
         }
         UpdateView();
     }
-    
+
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportTemplate(TheReportTemplate.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteReportTemplate(TheReportTemplate.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+
         }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report template have been used, can not be deleted";
+        }
+
     }
 
     protected void lbtnSheetName_Click(object sender, EventArgs e)
@@ -188,12 +198,20 @@ public partial class Modules_OffLineReport_ReportMaintenance_Edit : ModuleBase
 
     protected void btnDeleteReportSheet_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportSheet(GetSelectIdList(gvSheetList));
+        try
+        {
+            TheService.DeleteReportSheet(GetSelectIdList(gvSheetList));
 
-        //re-load the data source
-        TheReportTemplate = TheService.LoadReportTemplate(TheReportTemplate.Id);
+            //re-load the data source
+            TheReportTemplate = TheService.LoadReportTemplate(TheReportTemplate.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report sheet have been used, can not be deleted";
+        }
     }
 
     protected void btnAddReportSheet_Click(object sender, EventArgs e)
