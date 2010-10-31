@@ -127,7 +127,7 @@ public partial class Modules_Security_UserAdmin_Main : ModuleBase
         catch (Exception ex)
         {
             this.lblText.Visible = true;
-            this.lblText.Text = "Record have been cited, can not be deleted";
+            this.lblText.Text = "this user have been used, can not be deleted";
         }
 
     }

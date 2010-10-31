@@ -19,6 +19,8 @@ end function
 <!-- Modified By Vincent On 2006-9-4 -->
 
 <h2>User Admin.</h2>
+<br />
+<asp:Label ID="lblText" runat="server"  Visible="false"  ForeColor="red" />
  <p class="formBtnBoard">
 
             <asp:Button ID="btnNew" runat="server" Text="New User" OnClick="btnNew_Click"  CssClass="btn"/>
@@ -34,7 +36,7 @@ end function
 </table>
 </div>
 <hr size=1><asp:Label ID="lblRecordCount" runat="server" />
-<asp:Label ID="lblText" runat="server"  Visible="false"  ForeColor="red" />
+
  <p class="formBtnBoard">
 <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn" OnClick="btnDelete_Click" Visible="False" OnClientClick="return ButtonWarning('Delete')"/> 
 </p> 
