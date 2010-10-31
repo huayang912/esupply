@@ -22,7 +22,7 @@ using System.Data.SqlClient;
 
 public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
 {
-	public event EventHandler Back;
+    public event EventHandler Back;
 
     public DWDataSource TheDWDataSource
     {
@@ -37,11 +37,11 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
     }
 
 
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("DWDSMaintenance");
-	
-	//The entity service
-	protected IDWDataSourceMgr TheService
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("DWDSMaintenance");
+
+    //The entity service
+    protected IDWDataSourceMgr TheService
     {
         get
         {
@@ -67,15 +67,15 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         ddlParameter.DataBind();
     }
 
-	protected void Page_Load(object sender, EventArgs e)
-	{        
-		//Add code for Page_Load here.
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //Add code for Page_Load here.
         if (!IsPostBack)
         {
             InitDDL();
-            UpdateView();            
+            UpdateView();
         }
-	}
+    }
 
     protected override void OnInit(EventArgs e)
     {
@@ -105,9 +105,9 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         pnlMain.Visible = true;
     }
 
-	//The event handler when user click button "Save"
-	protected void btnSubmit_Click(object sender, EventArgs e)
-	{
+    //The event handler when user click button "Save"
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
         if (txtName.Text.Trim().Length == 0)
         {
             lblMessage.Text = "Data Source Name can not be empty";
@@ -117,7 +117,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         {
             SaveData();
         }
-	}
+    }
 
     protected void SaveData()
     {
@@ -197,7 +197,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
         lblMessage.Visible = true;
     }
 
-	//The event handler when user click button "Back"
+    //The event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -209,18 +209,26 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
     //The event handler when user click button "Delete"
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        if (TheDWDataSource != null && TheDWDataSource.Id != 0)
+        try
         {
-            TheService.DeleteDWDataSource(TheDWDataSource.Id);
+            if (TheDWDataSource != null && TheDWDataSource.Id != 0)
+            {
+                TheService.DeleteDWDataSource(TheDWDataSource.Id);
+            }
+            if (Back != null)
+            {
+                Back(this, e);
+            }
         }
-        if (Back != null)
+        catch (Exception ex)
         {
-            Back(this, e);
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this data source have been used, can not be deleted";
         }
     }
 
     //The public method to clear the view
-	public void UpdateView()
+    public void UpdateView()
     {
         //Add code to clear the view.
         txtName.Text = (TheDWDataSource != null && TheDWDataSource.Id != 0) ? TheDWDataSource.Name.ToString() : String.Empty;
@@ -276,12 +284,20 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
 
     protected void btnDeleteOperator_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDWDataSourceOperator(GetSelectIdList(gvOperatorList));
+        try
+        {
+            TheService.DeleteDWDataSourceOperator(GetSelectIdList(gvOperatorList));
 
-        //re-load the data source
-        TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
+            //re-load the data source
+            TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this operator have been used, can not be deleted";
+        }
     }
 
     protected void btnAddRule_Click(object sender, EventArgs e)
@@ -297,7 +313,7 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
     {
         int dsRuleId = Int32.Parse(((LinkButton)sender).CommandArgument);
         NewRule1.TheDWDataSourceMergeRule = TheService.LoadDWDataSourceMergeRule(dsRuleId);
-        NewRule1.TheDWDataSourceId  = TheDWDataSource.Id;
+        NewRule1.TheDWDataSourceId = TheDWDataSource.Id;
         NewRule1.UpdateView();
         NewRule1.Visible = true;
         pnlMain.Visible = false;
@@ -305,12 +321,21 @@ public partial class Modules_Dui_DWDSMaintenance_New : ModuleBase
 
     protected void btnDeleteRule_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDWDataSourceMergeRule(GetSelectIdList(gvRuleList));
+        try
+        {
 
-        //re-load the data source
-        TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
+            TheService.DeleteDWDataSourceMergeRule(GetSelectIdList(gvRuleList));
 
-        UpdateView();
+            //re-load the data source
+            TheDWDataSource = TheService.LoadDWDataSource(TheDWDataSource.Id);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this rule have been used, can not be deleted";
+        }
     }
 
 

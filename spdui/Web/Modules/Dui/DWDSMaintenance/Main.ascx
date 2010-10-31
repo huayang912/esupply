@@ -16,6 +16,8 @@ function ButtonWarning(Action)
 end function
 </script>
 <h2>DW Data Source Maintenance</h2>
+<br />
+<asp:Label ID="lblText" runat="server"  Visible="false"  ForeColor="red" />
 <div class="BGform">
 <table border="0">
     <tr>

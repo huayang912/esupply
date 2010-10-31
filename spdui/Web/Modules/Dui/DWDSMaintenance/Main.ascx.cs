@@ -111,19 +111,27 @@ public partial class Modules_Dui_DWDSMaintenance_Main : ModuleBase
 	//The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        IList<int> idList = new List<int>();
-
-        foreach (GridViewRow row in gvList.Rows)
+        try
         {
-            CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
-            if (cbSelect.Checked)
-            {
-                idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
-            }
-        }
-        TheService.DeleteDWDataSource(idList);
+            IList<int> idList = new List<int>();
 
-        UpdateView();
+            foreach (GridViewRow row in gvList.Rows)
+            {
+                CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                if (cbSelect.Checked)
+                {
+                    idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
+                }
+            }
+            TheService.DeleteDWDataSource(idList);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblText.Visible = true;
+            this.lblText.Text = "this dw data have been used, can not be deleted";
+        }
     }
 
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
