@@ -359,14 +359,22 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
 
     protected void btnDeleteReport_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportJobReport(GetSelectReportIdList(gvReportList));
+        try
+        {
+            TheService.DeleteReportJobReport(GetSelectReportIdList(gvReportList));
 
-        //re-load the data source
-        SynchronizeData();
-        ReportJob newReportJob = TheService.LoadReportJob(TheReportJob.Id);
-        TheReportJob.ReportList = newReportJob.ReportList;
+            //re-load the data source
+            SynchronizeData();
+            ReportJob newReportJob = TheService.LoadReportJob(TheReportJob.Id);
+            TheReportJob.ReportList = newReportJob.ReportList;
 
-        UpdateView();
+            UpdateView();
+        } 
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report have been used, can not be deleted";
+        }
     }
 
     protected void btnAddUser_Click(object sender, EventArgs e)
@@ -381,14 +389,22 @@ public partial class Modules_OffLineReport_JobExecution_Edit : ModuleBase
 
     protected void btnDeleteUser_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportJobUser(GetSelectUserIdList(gvUserList));
+        try
+        {
+            TheService.DeleteReportJobUser(GetSelectUserIdList(gvUserList));
 
-        //re-load the data source    
-        SynchronizeData();
-        ReportJob newReportJob = TheService.LoadReportJob(TheReportJob.Id);
-        TheReportJob.UserList = newReportJob.UserList;
+            //re-load the data source    
+            SynchronizeData();
+            ReportJob newReportJob = TheService.LoadReportJob(TheReportJob.Id);
+            TheReportJob.UserList = newReportJob.UserList;
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this user have been used, can not be deleted";
+        }
     }
 
     //Event handler when user click button "Download"
