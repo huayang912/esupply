@@ -17,6 +17,8 @@ function ButtonWarning(Action)
 end function
 </script>
 <h2>Report Batch</h2>
+<br />
+<asp:Label ID="lblText" runat="server"  Visible="false"  ForeColor="red" />
 <p class="formBtnBoard">
     <asp:Button ID="btnNew" runat="server" Text="New Batch" OnClick="btnNew_Click" CssClass="btn" /> 
     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click"  CssClass="btn" OnClientClick="return ButtonWarning('Delete')"/>

@@ -23,12 +23,12 @@ using Dndp.Service.OffLineReport;
 public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
 {
     public event EventHandler Back;
-	
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("BatchMaintenance");
-	
-	//The entity service
-	protected IReportBatchMgr TheService
+
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("BatchMaintenance");
+
+    //The entity service
+    protected IReportBatchMgr TheService
     {
         get
         {
@@ -58,16 +58,16 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//TODO: Add code for Page_Load here.
+        //TODO: Add code for Page_Load here.
     }
 
     protected override void InitByPermission()
     {
         base.InitByPermission();
 
-        btnUpdate.Visible = PermissionUpdate;   
-		
-		//TODO: Add other permission init codes here.
+        btnUpdate.Visible = PermissionUpdate;
+
+        //TODO: Add other permission init codes here.
     }
 
     protected override void OnInit(EventArgs e)
@@ -79,7 +79,7 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
     }
 
 
-	//Update the view by the entity class stored in ViewState
+    //Update the view by the entity class stored in ViewState
     public void UpdateView()
     {
         //TODO: Add code here.
@@ -104,7 +104,7 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
         lblMessage.Visible = false;
     }
 
-	//Event handler when user click button "Back"
+    //Event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -180,10 +180,18 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportBatch(TheReportBatch.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteReportBatch(TheReportBatch.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report have been used, can not be deleted";
         }
     }
 
@@ -198,12 +206,20 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
 
     protected void btnDeleteReport_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportBatchReports(GetSelectIdList(gvReportList));
+        try
+        {
+            TheService.DeleteReportBatchReports(GetSelectIdList(gvReportList));
 
-        //re-load the data source
-        TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
+            //re-load the data source
+            TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report have been used, can not be deleted";
+        }
     }
 
     protected void btnAddUser_Click(object sender, EventArgs e)
@@ -216,12 +232,21 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
 
     protected void btnDeleteUser_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportBatchUser(GetSelectUserIdList(gvUserList));
+        try
+        {
+            TheService.DeleteReportBatchUser(GetSelectUserIdList(gvUserList));
 
-        //re-load the data source    
-        TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
+            //re-load the data source    
+            TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
 
-        UpdateView();
+            UpdateView();
+
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this user have been used, can not be deleted";
+        }
     }
 
     protected void btnAddRule_Click(object sender, EventArgs e)
@@ -235,12 +260,20 @@ public partial class Modules_OffLineReport_BatchMaintenance_Edit : ModuleBase
 
     protected void btnDeleteRule_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportRule(GetSelectIdList(gvRuleList));
+        try
+        {
+            TheService.DeleteReportRule(GetSelectIdList(gvRuleList));
 
-        //re-load the data source    
-        TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
+            //re-load the data source    
+            TheReportBatch = TheService.LoadReportBatch(TheReportBatch.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this rule have been used, can not be deleted";
+        }
     }
 
     protected void lbtnRuleName_Click(object sender, EventArgs e)

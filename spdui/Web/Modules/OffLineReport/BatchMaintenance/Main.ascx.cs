@@ -119,6 +119,7 @@ public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
+       try{
         IList<int> idList = new List<int>();
 
         foreach (GridViewRow row in gvList.Rows)
@@ -132,6 +133,13 @@ public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
         TheService.DeleteReportBatch(idList);
 
         UpdateView();
+        
+         }
+        catch (Exception ex)
+        {
+            this.lblText.Visible = true;
+            this.lblText.Text = "this report have been used, can not be deleted";
+        }
     }
 
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
