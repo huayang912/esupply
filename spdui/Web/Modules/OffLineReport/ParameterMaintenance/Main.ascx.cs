@@ -89,6 +89,7 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Main : ModuleBas
             recordCount = result.Count;
         }
         lblRecordCount.Text = string.Format("Total {0} Records", recordCount);
+        lblText.Visible = false;
         gvList.DataSource = result;
         gvList.DataBind();
     }
@@ -114,19 +115,27 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Main : ModuleBas
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        IList<int> idList = new List<int>();
-
-        foreach (GridViewRow row in gvList.Rows)
+        try
         {
-            CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
-            if (cbSelect.Checked)
-            {
-                idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
-            }
-        }
-        TheService.DeleteReportParameter(idList);
+            IList<int> idList = new List<int>();
 
-        UpdateView();
+            foreach (GridViewRow row in gvList.Rows)
+            {
+                CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                if (cbSelect.Checked)
+                {
+                    idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
+                }
+            }
+            TheService.DeleteReportParameter(idList);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblText.Visible = true;
+            this.lblText.Text = "this report parameter have been used, can not be deleted";
+        }
     }
 
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)

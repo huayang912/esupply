@@ -21,12 +21,12 @@ using Dndp.Service.OffLineReport;
 public partial class Modules_OffLineReport_ParameterMaintenance_Edit : ModuleBase
 {
     public event EventHandler Back;
-	
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("ParameterMaintenance");
-	
-	//The entity service
-	protected IReportParameterMgr TheService
+
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("ParameterMaintenance");
+
+    //The entity service
+    protected IReportParameterMgr TheService
     {
         get
         {
@@ -36,16 +36,16 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Edit : ModuleBas
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//TODO: Add code for Page_Load here.
+        //TODO: Add code for Page_Load here.
     }
 
     protected override void InitByPermission()
     {
         base.InitByPermission();
 
-        btnUpdate.Visible = PermissionUpdate;   
-		
-		//TODO: Add other permission init codes here.
+        btnUpdate.Visible = PermissionUpdate;
+
+        //TODO: Add other permission init codes here.
     }
 
     public ReportParameter TheReportParameter
@@ -60,16 +60,17 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Edit : ModuleBas
         }
     }
 
-	//Update the view by the entity class stored in ViewState
+    //Update the view by the entity class stored in ViewState
     public void UpdateView()
     {
         //TODO: Add code here.
         txtName.Text = TheReportParameter.Name;
-
+        
+        lblText.Visible = false;
         lblMessage.Visible = false;
     }
 
-	//Event handler when user click button "Back"
+    //Event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -106,10 +107,18 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Edit : ModuleBas
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportParameter(TheReportParameter.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteReportParameter(TheReportParameter.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+          }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report patameter have been used, can not be deleted";
         }
     }
 }
