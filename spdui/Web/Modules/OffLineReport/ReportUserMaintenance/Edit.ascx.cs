@@ -161,10 +161,18 @@ public partial class Modules_OffLineReport_ReportUserMaintenance_Edit : ModuleBa
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportUser(TheReportUser.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteReportUser(TheReportUser.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report user have been used, can not be deleted";
         }
     }
 
@@ -179,12 +187,20 @@ public partial class Modules_OffLineReport_ReportUserMaintenance_Edit : ModuleBa
 
     protected void btnDeleteReportSheet_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportUserSheet(GetSelectIdList(gvReportList));
+        try
+        {
+            TheService.DeleteReportUserSheet(GetSelectIdList(gvReportList));
 
-        //re-load the data source
-        TheReportUser = TheService.LoadReportUser(TheReportUser.Id);
+            //re-load the data source
+            TheReportUser = TheService.LoadReportUser(TheReportUser.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report sheet have been used, can not be deleted";
+        }
     }
 
     protected void lbtnParameterName_Click(object sender, EventArgs e)
@@ -199,12 +215,20 @@ public partial class Modules_OffLineReport_ReportUserMaintenance_Edit : ModuleBa
 
     protected void btnDeleteParameter_Click(object sender, EventArgs e)
     {
-        TheService.DeleteReportUserSheetParameter(GetSelectIdList(gvParameterList));
+        try
+        {
+            TheService.DeleteReportUserSheetParameter(GetSelectIdList(gvParameterList));
 
-        //re-load the data source
-        TheReportUser = TheService.LoadReportUser(TheReportUser.Id);
+            //re-load the data source
+            TheReportUser = TheService.LoadReportUser(TheReportUser.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this parameter have been used, can not be deleted";
+        }
     }
 
     protected void btnAddParameter_Click(object sender, EventArgs e)
