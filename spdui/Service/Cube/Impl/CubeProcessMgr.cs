@@ -557,6 +557,11 @@ namespace Dndp.Service.Cube.Impl
         }
         #endregion CubeProcessValidationResult Related
 
+        public CubeProcessParameter FindLastestCubeProcessParameter(int cubeId, int parameterId)
+        {
+            return this.parameterDao.FindLastestCubeProcessParameter(cubeId, parameterId);
+        }
+
         #region private Methods
 
         private string UpdateValidationSQLContent(string rule, IList<CubeProcessParameter> processParameterList, User actionUser)

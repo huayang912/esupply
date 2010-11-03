@@ -21,14 +21,14 @@ using Dndp.Service.Cube;
 
 public partial class Modules_Cube_CubeProcess_New : ModuleBase
 {
-	public event EventHandler Back;
+    public event EventHandler Back;
     public event EventHandler Submit;
-	
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("CubeProcess");
-	
-	//The entity service
-	protected ICubeProcessMgr TheService
+
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("CubeProcess");
+
+    //The entity service
+    protected ICubeProcessMgr TheService
     {
         get
         {
@@ -69,17 +69,17 @@ public partial class Modules_Cube_CubeProcess_New : ModuleBase
         }
     }
 
-	protected void Page_Load(object sender, EventArgs e)
-	{
-		//Add code for Page_Load here.
-	}
-	
-	//The event handler when user click button "Submit"
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        //Add code for Page_Load here.
+    }
+
+    //The event handler when user click button "Submit"
     protected void btnSave_Click(object sender, EventArgs e)
-	{
+    {
         Hashtable ht = new Hashtable();
         if (gvParameterList.Rows.Count > 0)
-        {            
+        {
             for (int i = 0; i < gvParameterList.Rows.Count; i++)
             {
                 GridViewRow gvr = gvParameterList.Rows[i];
@@ -95,7 +95,7 @@ public partial class Modules_Cube_CubeProcess_New : ModuleBase
                     else
                     {
                         Label l = (Label)gvr.FindControl("lblParameterId");
-                        ht.Add(l.Text, tb.Text);                        
+                        ht.Add(l.Text, tb.Text);
                     }
                 }
             }
@@ -107,9 +107,9 @@ public partial class Modules_Cube_CubeProcess_New : ModuleBase
         {
             Submit(this, null);
         }
-	}
+    }
 
-	//The event handler when user click button "Back"
+    //The event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -119,7 +119,7 @@ public partial class Modules_Cube_CubeProcess_New : ModuleBase
     }
 
     //The public method to clear the view
-	public void UpdateView()
+    public void UpdateView()
     {
         lblCubeDescription.Text = TheCube.Description;
         lblCubeName.Text = TheCube.ProcessCubeName;
@@ -127,7 +127,7 @@ public partial class Modules_Cube_CubeProcess_New : ModuleBase
         lblProcessDatabaseName.Text = TheCube.ProcessDatabaseName;
         lblMessage.Text = string.Empty;
         lblMessage.Visible = false;
-        
+
         //txtProcessDescription.Text = string.Empty;
         txtProcessDescription.Text = "Cube has been updated on " + DateTime.Now.ToString("yyyy-MM-dd") + "";
 
@@ -138,12 +138,24 @@ public partial class Modules_Cube_CubeProcess_New : ModuleBase
     //Modified By vincent at 2007-11-8 begin    
     protected void gvParameterList_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        
-        DateTime dt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-1"));
-        TextBox tb = (TextBox)e.Row.FindControl("txtParameterValue");
-        if (tb != null)
+        if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            tb.Text = dt.AddMonths(-1).ToString("yyyy-MM-dd");
+            
+            TextBox tb = (TextBox)e.Row.FindControl("txtParameterValue");
+            
+
+            Label paraId = (Label)e.Row.FindControl("lblParameterId");
+            CubeProcessParameter cubeProcessParameter = TheService.FindLastestCubeProcessParameter(this.TheCube.Id, int.Parse(paraId.Text));
+
+            if (cubeProcessParameter != null)
+            {
+                tb.Text = cubeProcessParameter.Value;
+            }
+            else
+            {
+                DateTime dt = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-1"));
+                tb.Text = dt.AddMonths(-1).ToString("yyyy-MM-dd");
+            }
         }
     }
     //Modified By vincent at 2007-11-8 end

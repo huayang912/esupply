@@ -57,3 +57,7 @@
 2. configurable modules to merge duplicate items in master
 	Data to Merge Query SQL中可以传入参数<$RecID$>来定位需要Merge的数据。
 	Merge ValidationRule SQL和Merge SQL中可以传入参数<$MergeFromRecId$>和<$MergeToRecId$>来定位Merge前后的记录。
+	
+-----------2010/11/3-----------------------
+1. 解决2个用户同时在一个数据源下上传同一个Category的数据。
+2. Cube Process的时候，取最后一次Cube Process的时候设定的日期作为缺省值。

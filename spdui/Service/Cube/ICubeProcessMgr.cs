@@ -86,7 +86,7 @@ namespace Dndp.Service.Cube
 
         #region Customized Methods
 
-        //TODO: Add other methods here.
+        CubeProcessParameter FindLastestCubeProcessParameter(int cubeId, int parameterId);
 
         #endregion Customized Methods
 

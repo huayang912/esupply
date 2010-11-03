@@ -89,7 +89,7 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Main : ModuleBas
             recordCount = result.Count;
         }
         lblRecordCount.Text = string.Format("Total {0} Records", recordCount);
-        lblText.Visible = false;
+        lblMessage.Visible = false;
         gvList.DataSource = result;
         gvList.DataBind();
     }
@@ -133,8 +133,8 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Main : ModuleBas
         }
         catch (Exception ex)
         {
-            this.lblText.Visible = true;
-            this.lblText.Text = "this report parameter have been used, can not be deleted";
+            this.lblMessage.Visible = true;
+            this.lblMessage.Text = "this report parameter have been used, can not be deleted";
         }
     }
 

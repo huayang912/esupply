@@ -92,6 +92,23 @@ namespace Dndp.Persistence.Dao.Cube.NH
             Delete(hql, processId, NHibernateUtil.Int32);
         }
 
+        public CubeProcessParameter FindLastestCubeProcessParameter(int cubeId, int parameterId)
+        {
+            string hql = @"select cpp from CubeProcessParameter cpp 
+                           inner join cpp.TheParameter as para 
+                            inner join cpp.TheProcess as proc 
+                            inner join proc.TheCube as cube
+                            where cube.Id = ? and para.Id = ?
+                          order by proc.Id desc";
+
+            IList<CubeProcessParameter> list = FindAllWithCustomQuery(hql, new object[] { cubeId, parameterId }, 0, 1) as IList<CubeProcessParameter>;
+            if (list != null && list.Count > 0)
+            {
+                return list[0];
+            }
+            return null;
+        }
+
         #endregion Customized Methods
     }
 }

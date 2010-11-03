@@ -29,6 +29,7 @@ namespace Dndp.Service.Dui.Impl
         private string DEFAULT_CSV_ENCODING = "GB2312";
         private string DEFAULT_DW_DBString = "SPDW.dbo.";
         private int DEFAULT_CSV_RECORD_PER_PARSE = 20;
+        private string locker = "locker";
 
         public DataSourceUploadMgr(IDataSourceCategoryDao dataSourceCategoryDao,
                                    IDataSourceRuleDao dataSourceRuleDao,
@@ -431,14 +432,35 @@ namespace Dndp.Service.Dui.Impl
                 //error message
                 return errorList;
             }
-
+            
             //insert a new dsUpload record
             dsUpload.UploadFileLength = s.Length;
             dsUpload.BatchNo = batchNo;
             dsUpload.RecordRows = dataContainer.GetRecordRows();
             dsUpload.ProcessStatus = "";
             dsUpload.ProcessStatusDate = DateTime.Now;
-            dataSourceUploadDao.CreateDataSourceUpload(dsUpload);
+
+            lock (locker)
+            {
+                lastDSUpload = dataSourceUploadDao.FindLastestDSUpload(dscCategory.Id);
+                if ((lastDSUpload != null && !lastDSUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_SUCCESS))
+                    || (lastDSUpload.BatchNo == batchNo))
+                {
+                    //manually do rollback transaction
+                    if (dataContainer.GetClearTableSql() != null && dataContainer.GetClearTableSql().Trim().Length != 0)
+                    {
+                        sqlHelperDao.ExecuteNonQuery(dataContainer.GetClearTableSql());
+                    }
+
+                    List<string> errorArray = new List<string>();
+                    errorArray.Add("The data file can not been uploaded because of there is a same category file in proceeding!");
+                    return errorArray;
+                }
+                else
+                {
+                    dataSourceUploadDao.CreateDataSourceUpload(dsUpload);
+                }
+            }
 
             //insert validate result table
             IList dsRuleList = dataSourceRuleDao.FindAllByDataSourceId(dscCategory.TheDataSource.Id);

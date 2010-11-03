@@ -66,7 +66,6 @@ public partial class Modules_OffLineReport_ParameterMaintenance_Edit : ModuleBas
         //TODO: Add code here.
         txtName.Text = TheReportParameter.Name;
         
-        lblText.Visible = false;
         lblMessage.Visible = false;
     }
 

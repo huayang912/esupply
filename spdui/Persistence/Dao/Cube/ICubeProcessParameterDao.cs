@@ -34,6 +34,8 @@ namespace Dndp.Persistence.Dao.Cube
 
         void DeleteCubeProcessParameterByProcessId(int processId);
 
+        CubeProcessParameter FindLastestCubeProcessParameter(int cubeId, int parameterId);
+
         #endregion Customized Methods
     }
 }

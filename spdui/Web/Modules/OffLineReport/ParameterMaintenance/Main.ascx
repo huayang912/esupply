@@ -20,7 +20,7 @@ end function
 </script>
 <h2>Report Parameter</h2>
 <br />
-<asp:Label ID="lblText" runat="server"  Visible="false"  ForeColor="red" />
+<asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
 <p class="formBtnBoard">
     <asp:Button ID="btnNew" runat="server" Text="New Parameter" OnClick="btnNew_Click" CssClass="btn" /> 
     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click"  CssClass="btn" OnClientClick="return ButtonWarning('Delete')"/>
