@@ -286,9 +286,9 @@ public class DeliveryOrderAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
 
-		if (deliveryOrder.getDoNo() != null && deliveryOrder.getDoNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("doNo", deliveryOrder.getDoNo().trim()));
-			selectCountCriteria.add(Restrictions.like("doNo", deliveryOrder.getDoNo().trim()));
+		if (deliveryOrder.getExternalDoNo() != null && deliveryOrder.getExternalDoNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("externalDoNo", deliveryOrder.getExternalDoNo().trim()));
+			selectCountCriteria.add(Restrictions.like("externalDoNo", deliveryOrder.getExternalDoNo().trim()));
 		}
 
 		if (deliveryOrder.getCreateDateFrom() != null) {

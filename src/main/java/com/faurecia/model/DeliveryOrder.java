@@ -29,6 +29,7 @@ public class DeliveryOrder extends BaseObject {
 	private static final long serialVersionUID = -7456872599350319130L;
 	
 	private String doNo;
+	private String externalDoNo;
 	private PlantSupplier plantSupplier;
 	private String plantName;
 	private String plantAddress1;
@@ -62,6 +63,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setDoNo(String doNo) {
 		this.doNo = doNo;
+	}
+	
+	@Column(name = "ext_do_no", nullable = false, length = 20, unique = true)
+	public String getExternalDoNo() {
+		return externalDoNo;
+	}
+
+	public void setExternalDoNo(String externalDoNo) {
+		this.externalDoNo = externalDoNo;
 	}
 
 	@ManyToOne
