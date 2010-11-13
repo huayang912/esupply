@@ -1,6 +1,7 @@
 package com.faurecia.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -14,6 +15,7 @@ import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -21,6 +23,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.dao.GenericDao;
+import com.faurecia.lisa.kmp58.ManifestFile;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.Item;
@@ -52,6 +55,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager;
 	private PurchaseOrderManager purchaseOrderManager;
 	private Marshaller marshaller;
+	private Unmarshaller unmarshaller;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
 	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
@@ -61,6 +65,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		super(genericDao);
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.delvry");
 		marshaller = jc.createMarshaller();
+		
+		JAXBContext jc2 = JAXBContext.newInstance("com.faurecia.lisa.kmp58");
+		Unmarshaller unmarshaller = jc.createUnmarshaller();
 	}
 
 	public void setNumberControlManager(NumberControlManager numberControlManager) {
@@ -105,6 +112,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
 				
 				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
+				deliveryOrder.setExternalDoNo(deliveryOrder.getDoNo());
 				deliveryOrder.setCreateDate(new Date());
 				deliveryOrder.setIsExport(false);
 				deliveryOrder.setIsPrint(false);
@@ -143,7 +151,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		PlantSupplier plantSupplier = this.plantSupplierManager.get(deliveryOrder.getPlantSupplier().getId());
 		deliveryOrder.setPlantSupplier(plantSupplier);
 		deliveryOrder.setDoNo(this.numberControlManager.generateNumber(plantSupplier.getDoNoPrefix(), 10));
-
+		deliveryOrder.setExternalDoNo(deliveryOrder.getDoNo());
+		
 		List<DeliveryOrderDetail> deliveryOrderDetailList = deliveryOrder.getDeliveryOrderDetailList();
 
 		for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
@@ -292,7 +301,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private void AddE1EDL20List(List<DELVRY03E1EDL20> E1EDL20List, DeliveryOrder deliveryOrder) {
 		DELVRY03E1EDL20 E1EDL20 = new DELVRY03E1EDL20();
 		E1EDL20.setSEGMENT("1");
-		E1EDL20.setVBELN(deliveryOrder.getDoNo());
+		E1EDL20.setVBELN(deliveryOrder.getExternalDoNo());
 
 		List<DELVRY03E1ADRM1> E1ADRM1List = E1EDL20.getE1ADRM1();
 		addE1ADRM1List(E1ADRM1List, deliveryOrder);

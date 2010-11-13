@@ -34,6 +34,8 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String uom;
 	private BigDecimal unitCount;
 	private BigDecimal qty;
+	private BigDecimal orderedQty;
+	private BigDecimal receivedQty;
 	private String referenceOrderNo;
 	private String referenceSequence;
 	private ScheduleItemDetail scheduleItemDetail;
@@ -126,6 +128,24 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setQty(BigDecimal qty) {
 		this.qty = qty;
+	}
+	
+	@Column(name="order_Qty", precision = 18, scale = 4)
+	public BigDecimal getOrderedQty() {
+		return orderedQty;
+	}
+
+	public void setOrderedQty(BigDecimal orderedQty) {
+		this.orderedQty = orderedQty;
+	}
+	
+	@Column(name="receive_Qty", precision = 18, scale = 4)
+	public BigDecimal getReceivedQty() {
+		return receivedQty;
+	}
+
+	public void setReceivedQty(BigDecimal receivedQty) {
+		this.receivedQty = receivedQty;
 	}
 	
 	@Transient

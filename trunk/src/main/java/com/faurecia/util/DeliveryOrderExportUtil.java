@@ -147,7 +147,7 @@ public class DeliveryOrderExportUtil {
 
 		cb.beginText();
 		cb.setFontAndSize(dinBf, 30);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDoNo() != null ? deliveryOrder.getDoNo() : "", 442, 762, 0);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo() != null ? deliveryOrder.getExternalDoNo() : "", 442, 762, 0);
 		cb.endText();
 
 		cb.beginText();

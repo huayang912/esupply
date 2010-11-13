@@ -21,16 +21,15 @@
 	<c:set var="buttons">
 		<table>
 			<tr>
-				<c:if
-					test="${empty deliveryOrder.doNo}">
+				<c:if test="${empty deliveryOrder.doNo}">
 					<td><s:submit key="button.save" /></td>
 				</c:if>
 				<c:if
 					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Create'}">
-					<td><s:submit key="button.save" action="saveDeliveryOrder"/></td>
+					<td><s:submit key="button.save" action="saveDeliveryOrder" /></td>
 					<td><s:submit key="button.confirm"
 						action="confirmDeliveryOrder" /></td>
-					<td><s:submit key="button.delete" action="deleteDeliveryOrder"/></td>
+					<td><s:submit key="button.delete" action="deleteDeliveryOrder" /></td>
 				</c:if>
 				<c:if
 					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
@@ -47,7 +46,7 @@
 
 	<table width="100%">
 		<tr>
-			<td><s:label key="deliveryOrder.doNo" cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.externalDoNo" cssClass="text medium" /></td>
 			<td><s:hidden name="deliveryOrder.doNo" key="deliveryOrder.doNo" />
 			<s:hidden name="deliveryOrder.plantCode"
 				key="deliveryOrder.plantCode" /> <s:hidden
@@ -72,11 +71,11 @@
 				key="deliveryOrder.createDate" /> <s:hidden
 				name="deliveryOrder.plantSupplier.id"
 				key="deliveryOrder.plantSupplier.id" /> <s:hidden
-				name="deliveryOrder.isExport" key="deliveryOrder.isExport" />
-				<s:hidden
+				name="deliveryOrder.isExport" key="deliveryOrder.isExport" /> <s:hidden
 				name="deliveryOrder.isPrint" key="deliveryOrder.isPrint" /> <s:hidden
 				name="deliveryOrder.allowOverQty" key="deliveryOrder.allowOverQty" />
-			</td>
+			<s:hidden name="deliveryOrder.externalDoNo"
+				key="deliveryOrder.externalDoNo" /></td>
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.plantCode"
@@ -115,14 +114,12 @@
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.status" cssClass="text medium" /></td>
-			<td><s:label key="deliveryOrder.isPrint"
-				cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.isPrint" cssClass="text medium" /></td>
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.createDate"
 				cssClass="text medium" /></td>
-			<td><s:label key="deliveryOrder.isExport"
-				cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.isExport" cssClass="text medium" /></td>
 		</tr>
 	</table>
 
