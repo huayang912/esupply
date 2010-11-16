@@ -530,7 +530,7 @@ namespace Dndp.Service.Dui.Impl
             alterArchiveTableSql.Append(" add ");
             alterArchiveTableSql.Append(GernateCreateFeildForSql(dsf.Name, dsf.FieldType, dsf.FieldLength, dsf.IsNullable, DataSourceHelper.GetArchiveTableName(dsf.TheDataSource.Name)) + ";");
 
-            return alterTempTableSql.ToString() + alterHistoryTableSql.ToString();
+            return alterTempTableSql.ToString() + alterHistoryTableSql.ToString() + alterArchiveTableSql.ToString();
         }
 
         private string GernateDropFieldSql(DataSourceField dsf)
