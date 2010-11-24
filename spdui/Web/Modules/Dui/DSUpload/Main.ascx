@@ -54,6 +54,7 @@ end function
             </tr>
         </table>
     </div>
+    <asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>      
     <asp:GridView runat="server" ID="gvDSCategory" AutoGenerateColumns="False" DataKeyNames="LastestDataSourceUpload"
         meta:resourcekey="gvDSCategoryResource" AllowPaging="True" PageSize="15" OnPageIndexChanging="gvDSCategory_PageIndexChanging"
         CellPadding="4" CssClass="list" GridLines="Horizontal" OnRowDataBound="gvDSCategory_RowDataBound">

@@ -15,5 +15,7 @@
 		<many-to-one name="CreateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="CREATE_BY_USER_ID" cascade="none" />
 		<many-to-one name="LastUpdateBy" class="Dndp.Persistence.Entity.Security.User, Dndp.Persistence" column="LAST_UPDATE_USER_ID" cascade="none" />
 		<property name="DWQuerySQL" column="DW_QUERY_SQL" type="StringClob" />
+		<property name="AfterWithdrawSQL" column="AFTER_WITHDRAW_SQL" type="StringClob" />
+		<property name="AfterRowDeleteSQL" column="AFTER_ROW_DEL_SQL" type="StringClob" />
 	</class>
 </hibernate-mapping>

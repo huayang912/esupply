@@ -19,6 +19,7 @@ function ButtonWarning(Action)
 end function
 </script>
 <h2>Cube Parameter</h2>
+<asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>      
 <p class="formBtnBoard">
     <asp:Button ID="btnNew" runat="server" Text="New Parameter" OnClick="btnNew_Click" CssClass="btn" /> 
     <asp:Button ID="btnDelete" runat="server" Text="Delete" OnClick="btnDelete_Click"  CssClass="btn" OnClientClick="return ButtonWarning('Delete')"/>

@@ -308,9 +308,17 @@ public partial class Modules_Dui_DSUpload_Main : ModuleBase
     }
     protected void lbtnDelete_Click(object sender, EventArgs e)
     {
-        int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheDSUploadService.DeleteDataSourceUploadAndUploadedData(dsUploadId);
-        UpdateView();
+        try
+        {
+            int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
+            TheDSUploadService.DeleteDataSourceUploadAndUploadedData(dsUploadId);
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
     protected void lbtnConfirm_Click(object sender, EventArgs e)
     {

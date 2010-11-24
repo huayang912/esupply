@@ -155,6 +155,32 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private string _afterWithdrawSQL;
+        public string AfterWithdrawSQL
+        {
+            get
+            {
+                return _afterWithdrawSQL;
+            }
+            set
+            {
+                _afterWithdrawSQL = value;
+            }
+        }
+
+        private string _afterRowDeleteSQL;
+        public string AfterRowDeleteSQL
+        {
+            get
+            {
+                return _afterRowDeleteSQL;
+            }
+            set
+            {
+                _afterRowDeleteSQL = value;
+            }
+        }
+
         #endregion
 
         #region Non O/R Mapping Properties

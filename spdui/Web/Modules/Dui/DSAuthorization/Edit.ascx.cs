@@ -109,12 +109,20 @@ public partial class Modules_Dui_DSAuthorization_Edit : ModuleBase
 
     protected void btnDeleteOperator_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSourceOperator(GetSelectIdList(gvOperatorList));
+        try
+        {
+            TheService.DeleteDataSourceOperator(GetSelectIdList(gvOperatorList));
 
-        //re-load the data source
-        TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
+            //re-load the data source
+            TheDataSource = TheService.LoadDataSource(TheDataSource.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void lbtnCategoryName_Click(object sender, EventArgs e)

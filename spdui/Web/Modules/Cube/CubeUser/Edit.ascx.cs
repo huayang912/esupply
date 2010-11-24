@@ -130,10 +130,18 @@ public partial class Modules_Cube_CubeUser_Edit : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteCubeUser(TheCubeUser.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteCubeUser(TheCubeUser.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 }

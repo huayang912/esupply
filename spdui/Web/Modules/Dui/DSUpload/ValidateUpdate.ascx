@@ -17,6 +17,7 @@ function ButtonWarning(Action)
     end select
 end function
 </script>
+<asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>      
 <table border="0" width="100%">
     <tr>
         <td>

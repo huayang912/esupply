@@ -34,6 +34,8 @@ namespace Dndp.Persistence.Dao.Dui
         IList FindAllByDWDataSourceId(int DWDataSourceId);
 
         IList<DWDataSourceOperator> FindAllByDWDataSourceIdAndAllowType(int dsId, string type);
+
+        IList<DWDataSourceOperator> FindAllByUserId(int userId);
         
         void DeleteDWDataSourceOperatorByDSId(int dsId);
 

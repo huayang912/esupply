@@ -133,10 +133,18 @@ public partial class Modules_Cube_CubeDistributionJob_New : ModuleBase
     //The event handler when user click button "Delete"
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteCubeDistributionJob(TheJob);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteCubeDistributionJob(TheJob);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 
@@ -309,19 +317,27 @@ public partial class Modules_Cube_CubeDistributionJob_New : ModuleBase
     //The event handler when user click button "DeleteUser"
     protected void btnDeleteUser_Click(object sender, EventArgs e)
     {
-        IList<int> IdList = new List<int>();
-        foreach (GridViewRow row in gvUserList.Rows)
+        try
         {
-            CheckBox cbSelect = (CheckBox)row.FindControl("ckbUserItem");
-            if (cbSelect.Checked)
+            IList<int> IdList = new List<int>();
+            foreach (GridViewRow row in gvUserList.Rows)
             {
-                IdList.Add((int)(gvUserList.DataKeys[row.RowIndex].Value));
+                CheckBox cbSelect = (CheckBox)row.FindControl("ckbUserItem");
+                if (cbSelect.Checked)
+                {
+                    IdList.Add((int)(gvUserList.DataKeys[row.RowIndex].Value));
+                }
             }
-        }
 
-        TheService.DeleteCubeDistributionJobItem(IdList);
-        TheJob.CubeDistributionJobItemList = TheService.FindJobItemByJobId(TheJob.Id);
-        UpdateView();
+            TheService.DeleteCubeDistributionJobItem(IdList);
+            TheJob.CubeDistributionJobItemList = TheService.FindJobItemByJobId(TheJob.Id);
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void NewJobUser1_Back(object sender, EventArgs e)

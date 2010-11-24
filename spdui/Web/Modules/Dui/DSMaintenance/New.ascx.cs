@@ -83,6 +83,8 @@ public partial class Modules_Dui_DSMaintenance_New : ModuleBase
             NewDataSource.Description = txtDescription.Text.Trim();
             NewDataSource.DataStructure = txtDataStructure.Text.Trim();
             NewDataSource.DWQuerySQL = txtRuleContent.Text.Trim();
+            NewDataSource.AfterWithdrawSQL = txtAfterWithdrawSQL.Text.Trim();
+            NewDataSource.AfterRowDeleteSQL = txtAfterRowDelSQL.Text.Trim();
             NewDataSource.DSType = txtType.Text.Trim();
             NewDataSource.ActiveFlag = 1;
             NewDataSource.CreateBy = sessionHelper.CurrentUser;
@@ -126,6 +128,8 @@ public partial class Modules_Dui_DSMaintenance_New : ModuleBase
         txtDescription.Text = String.Empty;
         txtDataStructure.Text = String.Empty;
         txtRuleContent.Text = string.Empty;
+        txtAfterWithdrawSQL.Text = string.Empty;
+        txtAfterRowDelSQL.Text = string.Empty;
         txtType.Text = String.Empty;
         btnSubmit.Visible = true;
         lblMessage.Text = String.Empty;

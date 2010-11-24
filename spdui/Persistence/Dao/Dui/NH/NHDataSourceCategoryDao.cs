@@ -108,6 +108,16 @@ namespace Dndp.Persistence.Dao.Dui.NH
             }
         }
 
+        public IList<DataSourceCategory> FindDataSourceCategory(int userId)
+        {
+            string QueryStr = @"select dsc from DataSourceCategory dsc
+                                where ? in elements(dsc.Users)";
+            return FindAllWithCustomQuery(
+                QueryStr,
+                userId,
+                NHibernateUtil.Int32
+                ) as IList<DataSourceCategory>;
+        }
 
         public IList<DataSourceCategory> FindDataSourceCategory(int userId, string allowType, string strCategory, string strType)
         {
@@ -130,8 +140,8 @@ namespace Dndp.Persistence.Dao.Dui.NH
             QueryStr = QueryStr + " order by dsc.Name, dsc.TheDataSource.DSType, dsc.TheDataSource.Description";
             return FindAllWithCustomQuery(
                 QueryStr,
-                new object[] { allowType, 1, 1, userId},
-                new IType[] { NHibernateUtil.String, NHibernateUtil.Int32, NHibernateUtil.Int32, NHibernateUtil.Int32}
+                new object[] { allowType, 1, 1, userId },
+                new IType[] { NHibernateUtil.String, NHibernateUtil.Int32, NHibernateUtil.Int32, NHibernateUtil.Int32 }
                 ) as IList<DataSourceCategory>;
         }
 
@@ -146,15 +156,16 @@ namespace Dndp.Persistence.Dao.Dui.NH
                                 and dso.TheDataSource.ActiveFlag = ?                             
                                 and dso.TheUser in elements(dsc.Users)";
 
-            if (!includeInactive) {
+            if (!includeInactive)
+            {
                 QueryStr += " and dsc.ActiveFlag = 1 ";
-                
+
             }
             return FindAllWithCustomQuery(
                 QueryStr,
                 new object[] { userId, allowType, 1 },
                 new IType[] { NHibernateUtil.Int32, NHibernateUtil.String, NHibernateUtil.Int32 }
-                ) as IList<string>;          
+                ) as IList<string>;
         }
 
         public IList<string> FindDataSourceTypeList(int userId, string allowType)

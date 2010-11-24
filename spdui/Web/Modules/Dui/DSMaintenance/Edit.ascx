@@ -65,6 +65,23 @@ end function
                 </td>
             </tr>
             <tr>
+                <td valign="top" class="txtform">
+                    After Withdraw SQL:</td>
+                <td colspan="3">
+                    &nbsp;<asp:TextBox ID="txtAfterWithdrawSQL" runat="server" Columns="80" Rows="15"
+                        TextMode="MultiLine">
+                    </asp:TextBox>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="txtform">
+                    After Row Delete SQL:</td>
+                <td colspan="3">
+                    &nbsp;<asp:TextBox ID="txtAfterRowDelSQL" runat="server" Columns="80" Rows="15" TextMode="MultiLine">
+                    </asp:TextBox>
+                </td>
+            </tr>
+            <tr>
                 <td colspan="4">
                     <asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
                 </td>
@@ -112,7 +129,7 @@ end function
     </asp:GridView>
     <b>Operators List:</b>
     <br />
-    <asp:Label runat="server" ID="lblOperators" ForeColor="red"  Visible="false"/>
+    <asp:Label runat="server" ID="lblOperators" ForeColor="red" Visible="false" />
     <p class="formBtnBoard">
         <asp:Button ID="btnAddOperator" runat="server" Text="Add Operator" OnClick="btnAddOperator_Click"
             Width="100px" CssClass="btn" />
@@ -144,8 +161,8 @@ end function
         <AlternatingRowStyle CssClass="listA" />
     </asp:GridView>
     <b>Validation Rules:</b>
-     <br />
-    <asp:Label runat="server" ID="lblValidation" ForeColor="red"  Visible="false"/>
+    <br />
+    <asp:Label runat="server" ID="lblValidation" ForeColor="red" Visible="false" />
     <p class="formBtnBoard">
         <asp:Button ID="btnAddRule" runat="server" Text="Add Rule" Width="100px" OnClick="btnAddRule_Click"
             CssClass="btn" />
@@ -225,8 +242,8 @@ end function
         <AlternatingRowStyle CssClass="listA" />
     </asp:GridView>
     <b>WithDrawed Table Definitions:</b>
-     <br />
-    <asp:Label runat="server" ID="lblWithDrawed" ForeColor="red"  Visible="false"/>
+    <br />
+    <asp:Label runat="server" ID="lblWithDrawed" ForeColor="red" Visible="false" />
     <p class="formBtnBoard">
         <asp:Button ID="btnAddWithDrawTable" runat="server" Text="Add" Width="100px" OnClick="btnAddWithDrawTable_Click"
             CssClass="btn" />

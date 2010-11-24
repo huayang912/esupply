@@ -108,10 +108,18 @@ public partial class Modules_Dui_DSUpload_ValidateUpdate : ModuleBase
     }
     protected void gvValidationUpdate_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
-        GridViewRow gvr = gvValidationUpdate.Rows[e.RowIndex];
-        TheService.DeleteUpdateRecord(TheValidationResult.TheDataSourceUpload, gvValidationUpdate.DataKeys[e.RowIndex].Value.ToString());
-        gvValidationUpdate.EditIndex = -1;
-        UpdateView();
+        try
+        {
+            GridViewRow gvr = gvValidationUpdate.Rows[e.RowIndex];
+            TheService.DeleteUpdateRecord(TheValidationResult.TheDataSourceUpload, gvValidationUpdate.DataKeys[e.RowIndex].Value.ToString());
+            gvValidationUpdate.EditIndex = -1;
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
     protected void gvValidationUpdate_RowCommand(object sender, GridViewCommandEventArgs e)
     {

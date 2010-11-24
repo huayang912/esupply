@@ -1357,6 +1357,13 @@ div.BGform
     font-weight:bold;
 }
 
+.TXTform2
+{
+    text-align:left;
+    font-weight:bold;
+}
+
+
 INPUT.btn {
 	FONT-SIZE: 11px;  COLOR: #577ea4;
 	border: 0 ;

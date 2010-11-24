@@ -23,9 +23,9 @@ using Dndp.Service.Cube;
 public partial class Modules_Cube_Cube_Edit : ModuleBase
 {
     public event EventHandler Back;
-	
-	//Get the logger
-	private static ILog log = LogManager.GetLogger("Cube");
+
+    //Get the logger
+    private static ILog log = LogManager.GetLogger("Cube");
 
     //The entity service
     #region service define
@@ -125,7 +125,7 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
     void NewRule1_Back(object sender, EventArgs e)
     {
         NewRule1.Visible = false;
-        TheCube.CubeValidationRuleList = TheRuleService.FindCubeValidationRuleWithCubeId(TheCube.Id);        
+        TheCube.CubeValidationRuleList = TheRuleService.FindCubeValidationRuleWithCubeId(TheCube.Id);
         UpdateView();
         pnlMain.Visible = true;
     }
@@ -166,9 +166,9 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
     {
         base.InitByPermission();
 
-        btnUpdate.Visible = PermissionUpdate;   
-		
-		//TODO: Add other permission init codes here.
+        btnUpdate.Visible = PermissionUpdate;
+
+        //TODO: Add other permission init codes here.
     }
 
     public CubeDefinition TheCube
@@ -183,7 +183,7 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
         }
     }
 
-	//Update the view by the entity class stored in ViewState
+    //Update the view by the entity class stored in ViewState
     public void UpdateView()
     {
         lblMessage.Text = string.Empty;
@@ -227,7 +227,7 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
 
     }
 
-	//Event handler when user click button "Back"
+    //Event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
     {
         if (Back != null)
@@ -323,10 +323,18 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
     //The event handler when user click button "Delete"
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteCube(TheCube);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteCube(TheCube);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 
@@ -354,49 +362,81 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
     protected void btnDeleteOperator_Click(object sender, EventArgs e)
     {
 
-        TheOperatorService.DeleteCubeOperator(GetSelectIdList(gvRuleList));
-        
+        try
+        {
+            TheOperatorService.DeleteCubeOperator(GetSelectIdList(gvRuleList));
 
-        //re-load the data source
-        TheCube.CubeOperatorList = TheOperatorService.FindOperatorByCubeId(TheCube.Id);        
 
-        UpdateView();
+            //re-load the data source
+            TheCube.CubeOperatorList = TheOperatorService.FindOperatorByCubeId(TheCube.Id);
+
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     //The event handler when user click button "Delete Measure"
     protected void btnDeleteMeasure_Click(object sender, EventArgs e)
     {
 
-        TheMeasureService.DeleteCubeMeasure(GetSelectIdList(gvMeasureList));
+        try
+        {
+            TheMeasureService.DeleteCubeMeasure(GetSelectIdList(gvMeasureList));
 
-        //re-load the data source
-        TheCube.CubeMeasureList = TheMeasureService.FindMeasureByCubeId(TheCube.Id);
+            //re-load the data source
+            TheCube.CubeMeasureList = TheMeasureService.FindMeasureByCubeId(TheCube.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     //The event handler when user click button "Delete Dimension"
     protected void btnDeleteDimension_Click(object sender, EventArgs e)
     {
 
-        TheDimensionService.DeleteCubeDimension(GetSelectIdList(gvDimensionList));
+        try
+        {
+            TheDimensionService.DeleteCubeDimension(GetSelectIdList(gvDimensionList));
 
-        //re-load the data source
-        TheCube.CubeDimensionList = TheDimensionService.FindDimensionByCubeId(TheCube.Id);
+            //re-load the data source
+            TheCube.CubeDimensionList = TheDimensionService.FindDimensionByCubeId(TheCube.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     //The event handler when user click button "Delete Dimension"
     protected void btnDeleteMDX_Click(object sender, EventArgs e)
     {
 
-        TheMDXService.DeleteCubeWarmMDX(GetSelectIdList(gvMDXList));
+        try
+        {
+            TheMDXService.DeleteCubeWarmMDX(GetSelectIdList(gvMDXList));
 
-        //re-load the data source
-        TheCube.CubeWarmMDXList = TheMDXService.FindCubeWarmMDXByCubeId(TheCube.Id);
+            //re-load the data source
+            TheCube.CubeWarmMDXList = TheMDXService.FindCubeWarmMDXByCubeId(TheCube.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void btnAddRule_Click(object sender, EventArgs e)
@@ -411,7 +451,7 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
     protected void btnAddOperator_Click(object sender, EventArgs e)
     {
         NewOperator1.Visible = true;
-        NewOperator1.TheCubeOperators = TheOperatorService.FindOperatorByCubeIdAndAllowType(TheCube.Id, "Process");        
+        NewOperator1.TheCubeOperators = TheOperatorService.FindOperatorByCubeIdAndAllowType(TheCube.Id, "Process");
         NewOperator1.SetCubeId(TheCube.Id);
         NewOperator1.UpdateView();
         pnlMain.Visible = false;
@@ -427,7 +467,7 @@ public partial class Modules_Cube_Cube_Edit : ModuleBase
 
     protected void btnAddDimension_Click(object sender, EventArgs e)
     {
-        NewDimension1.Visible = true;     
+        NewDimension1.Visible = true;
         NewDimension1.SetCubeId(TheCube.Id);
         NewDimension1.TheCubeDimension = null;
         NewDimension1.UpdateView();

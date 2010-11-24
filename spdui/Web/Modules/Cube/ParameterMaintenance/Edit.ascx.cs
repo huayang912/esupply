@@ -105,10 +105,18 @@ public partial class Modules_Cube_ParameterMaintenance_Edit : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteCubeParameter(TheCubeParameter.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteCubeParameter(TheCubeParameter.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 }

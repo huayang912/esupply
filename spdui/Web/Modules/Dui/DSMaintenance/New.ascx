@@ -38,6 +38,23 @@
             </td>
         </tr>
         <tr>
+            <td valign="top" class="txtform">
+                After Withdraw SQL:</td>
+            <td colspan="3">
+                &nbsp;<asp:TextBox ID="txtAfterWithdrawSQL" runat="server" Columns="80" Rows="15"
+                    TextMode="MultiLine">
+                </asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" class="txtform">
+                After Row Delete SQL:</td>
+            <td colspan="3">
+                &nbsp;<asp:TextBox ID="txtAfterRowDelSQL" runat="server" Columns="80" Rows="15" TextMode="MultiLine">
+                </asp:TextBox>
+            </td>
+        </tr>
+        <tr>
             <td colspan="4">
                 <asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
             </td>

@@ -60,12 +60,12 @@ namespace Dndp.Service.Dui.Impl
         public void CreateDataSource(DataSource entity)
         {
             //TODO: Add other code here.
-			
-            dataSourceDao.CreateDataSource(entity);   
- 
+
+            dataSourceDao.CreateDataSource(entity);
+
             //create temp table and history table
             string sql = GernateCreateTableSql(entity.Name);
-            
+
             sqlHelperDao.ExecuteNonQuery(sql);
         }
 
@@ -86,14 +86,14 @@ namespace Dndp.Service.Dui.Impl
                 ds.DataSourceRuleList = dataSourceRuleDao.FindAllByDataSourceId(id);
                 ds.DataSourceWithDrawTableList = dataSourceWithDrawTableDao.FindAllByDataSourceId(id);
             }
-			
+
             return ds;
         }
 
         [Transaction(TransactionMode.Requires)]
         public virtual void UpdateDataSource(DataSource entity)
         {
-        	//TODO: Add other code here.
+            //TODO: Add other code here.
             dataSourceDao.UpdateDataSource(entity);
         }
 
@@ -102,7 +102,7 @@ namespace Dndp.Service.Dui.Impl
         {
             DataSource ds = dataSourceDao.LoadDataSource(id);
             string sql = GernateDropTableSql(ds.Name);
-            
+
             validationResultDao.DeleteValidationResultByDSId(id);
             dataSourceWithDrawTableDao.DeleteDataSourceWithDrawTableByDSId(id);
             dataSourceUploadDao.DeleteDataSourceUploadByDSId(id);
@@ -112,7 +112,7 @@ namespace Dndp.Service.Dui.Impl
             dataSourceCategoryDao.DeleteDataSourceCategoryByDSId(id);
             dataSourceDao.DeleteDataSource(id);
 
-            sqlHelperDao.ExecuteNonQuery(sql); 
+            sqlHelperDao.ExecuteNonQuery(sql);
         }
 
         [Transaction(TransactionMode.Requires)]
@@ -121,7 +121,7 @@ namespace Dndp.Service.Dui.Impl
             DeleteDataSource(entity.Id);
         }
 
-       
+
         [Transaction(TransactionMode.Requires)]
         public void DeleteDataSource(IList<int> idList)
         {
@@ -154,7 +154,7 @@ namespace Dndp.Service.Dui.Impl
         [Transaction(TransactionMode.Unspecified)]
         public bool IsDuplicateField(int dsId, string newFieldNm)
         {
-           return dataSourceFieldDao.HasField(dsId, newFieldNm);
+            return dataSourceFieldDao.HasField(dsId, newFieldNm);
         }
 
         #endregion Method Created By CodeSmith
@@ -173,10 +173,11 @@ namespace Dndp.Service.Dui.Impl
             if ((fieldIdList == null) || (fieldIdList.Count == 0))
             {
                 return;
-            }                        
+            }
 
             //delete field from temp table and history table
-            foreach (int id in fieldIdList) {
+            foreach (int id in fieldIdList)
+            {
                 DataSourceField dsf = dataSourceFieldDao.LoadDataSourceField(id);
                 string sql = GernateDropFieldSql(dsf);
                 sqlHelperDao.ExecuteNonQuery(sql);
@@ -251,7 +252,7 @@ namespace Dndp.Service.Dui.Impl
             dsf.SequenceNo = dataSourceFieldDao.GetMaxSequenceNo(dataSourceId) + 1;
             dsf.TheDataSource = dataSourceDao.LoadDataSource(dataSourceId);
             dataSourceFieldDao.CreateDataSourceField(dsf);
-           
+
             //alter temp table and history table
             string sql = GernateAlterTableSql(dsf);
 
@@ -268,7 +269,7 @@ namespace Dndp.Service.Dui.Impl
         public IList FindDataSourceOperatorByDataSourceId(int dsId)
         {
             return dataSourceOperatorDao.FindAllByDataSourceId(dsId);
-        }      
+        }
 
         [Transaction(TransactionMode.Unspecified)]
         public IList FindDataSourceRuleByDataSourceId(int dsId)
@@ -337,9 +338,10 @@ namespace Dndp.Service.Dui.Impl
 
             //update new operator
             DataSource ds = dataSourceDao.LoadDataSource(dsId);
-            if (userIdList != null && userIdList.Count > 0) 
+            if (userIdList != null && userIdList.Count > 0)
             {
-                foreach(int userId in userIdList) {
+                foreach (int userId in userIdList)
+                {
                     User user = userDao.LoadUser(userId);
                     DataSourceOperator dso = new DataSourceOperator();
                     dso.AllowType = allowType;
@@ -451,6 +453,80 @@ namespace Dndp.Service.Dui.Impl
             return dsc;
         }
 
+        [Transaction(TransactionMode.Requires)]
+        public void CopyUserPermission(int fromUserId, IList<int> toUserId)
+        {
+            #region copy data source operator
+            IList<DataSourceOperator> dsoList = this.dataSourceOperatorDao.FindAllByUserId(fromUserId);
+
+            foreach (DataSourceOperator dso in dsoList)
+            {
+                IList<DataSourceOperator> list = this.dataSourceOperatorDao.FindAllByDataSourceIdAndAllowType(dso.TheDataSource.Id, dso.AllowType);
+
+                foreach (int id in toUserId)
+                {
+                    if (fromUserId == id)
+                    {
+                        continue;
+                    }
+
+                    bool findMatch = false;
+                    foreach (DataSourceOperator d in list)
+                    {
+                        if (d.TheUser.Id == id)
+                        {
+                            findMatch = true;
+                            break;
+                        }
+                    }
+
+                    if (!findMatch)
+                    {
+                        DataSourceOperator dataSourceOperator = new DataSourceOperator();
+                        dataSourceOperator.AllowType = dso.AllowType;
+                        dataSourceOperator.TheDataSource = dso.TheDataSource;
+                        dataSourceOperator.TheUser = userDao.LoadUser(id);
+
+                        this.dataSourceOperatorDao.CreateDataSourceOperator(dataSourceOperator);
+                    }
+                }
+            }
+            #endregion
+
+            #region copy data source category user
+            IList<DataSourceCategory> dscList = this.dataSourceCategoryDao.FindDataSourceCategory(fromUserId);
+
+            foreach(DataSourceCategory dsc in dscList) 
+            {
+                
+                foreach (int id in toUserId)
+                {
+                    if (fromUserId == id)
+                    {
+                        continue;
+                    }
+
+                    bool findMatch = false;
+                    foreach (User user in dsc.Users)
+                    {
+                        if (user.Id == id)
+                        {
+                            findMatch = true;
+                            break;
+                        }
+                    }
+
+                    if (!findMatch)
+                    {
+                        dsc.Users.Add(this.userDao.LoadUser(id));
+                    }
+                }
+
+                this.dataSourceCategoryDao.UpdateDataSourceCategory(dsc);
+            }
+            #endregion
+        }
+
         private string GernateCreateTableSql(string dsName)
         {
             StringBuilder createTempTableSql = new StringBuilder();
@@ -518,7 +594,7 @@ namespace Dndp.Service.Dui.Impl
             alterTempTableSql.Append("alter table ");
             alterTempTableSql.Append(DataSourceHelper.GetTempTableName(dsf.TheDataSource.Name));
             alterTempTableSql.Append(" add ");
-            alterTempTableSql.Append(GernateCreateFeildForSql(dsf.Name, dsf.FieldType, dsf.FieldLength,dsf.IsNullable, DataSourceHelper.GetTempTableName(dsf.TheDataSource.Name)) + ";");
+            alterTempTableSql.Append(GernateCreateFeildForSql(dsf.Name, dsf.FieldType, dsf.FieldLength, dsf.IsNullable, DataSourceHelper.GetTempTableName(dsf.TheDataSource.Name)) + ";");
 
             alterHistoryTableSql.Append("alter table ");
             alterHistoryTableSql.Append(DataSourceHelper.GetHistoryTableName(dsf.TheDataSource.Name));
@@ -595,7 +671,7 @@ namespace Dndp.Service.Dui.Impl
 
         private string GeneratCreateUniqueKey(string dsNm, string fieldNm, string tableNm)
         {
-            return "alter table " + DataSourceHelper.GetTempTableName(dsNm) + " add unique (BATCH_NO, CATEGORY, " + fieldNm + ")";  
+            return "alter table " + DataSourceHelper.GetTempTableName(dsNm) + " add unique (BATCH_NO, CATEGORY, " + fieldNm + ")";
         }
 
         #endregion Customized Methods

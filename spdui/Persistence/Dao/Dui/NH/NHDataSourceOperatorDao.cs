@@ -83,7 +83,7 @@ namespace Dndp.Persistence.Dao.Dui.NH
         {
             return FindAllWithCustomQuery("from DataSourceOperator dso where dso.TheDataSource.Id=?", dataSourceId);
         }
-       
+
 
         public IList<DataSourceOperator> FindAllByDataSourceIdAndAllowType(int dsId, string type)
         {
@@ -100,6 +100,10 @@ namespace Dndp.Persistence.Dao.Dui.NH
             Delete(hql, dsId, NHibernate.NHibernateUtil.Int32);
         }
 
+        public IList<DataSourceOperator> FindAllByUserId(int userId)
+        {
+            return FindAllWithCustomQuery("from DataSourceOperator dso where dso.TheUser.Id=?", userId) as IList<DataSourceOperator>;
+        }
         #endregion Customized Methods
     }
 }

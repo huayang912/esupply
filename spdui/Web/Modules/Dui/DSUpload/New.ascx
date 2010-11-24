@@ -16,6 +16,7 @@
 <td valign=bottom><p class="formBtnBoard"><asp:Button ID="btnBack" runat="server" OnClick="btnBack_Click" Text="Back" CssClass="btn" /></p>
 </td></tr>
 </table>
+<asp:Label ID="lblMessage" runat="server" Visible="false" CssClass="error"></asp:Label>
 <div class="BGform">
 <table border=0>
 	<tr>

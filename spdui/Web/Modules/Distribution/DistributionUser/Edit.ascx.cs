@@ -119,10 +119,18 @@ public partial class Modules_Distribution_DistributionUser_Edit : ModuleBase
     //Event handler when user click button "Delete"
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDistributionUser(TheDistributionUser);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteDistributionUser(TheDistributionUser);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 }

@@ -909,6 +909,13 @@ namespace Dndp.Service.Dui.Impl
                     TheDataSourceUpload.WithDrawDate = DateTime.Now;
 
                     this.dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
+
+                    string afterWithdrawSql = TheDataSourceUpload.TheDataSourceCategory.TheDataSource.AfterWithdrawSQL;
+                    if (afterWithdrawSql != null && afterWithdrawSql.Trim() != string.Empty)
+                    {
+                        afterWithdrawSql = afterWithdrawSql.Replace("<$ActionUser$>", ActionUser.Id.ToString());
+                        sqlHelperDao.ExecuteNonQuery(afterWithdrawSql);
+                    }
                 }
             }
         }
@@ -1020,6 +1027,13 @@ namespace Dndp.Service.Dui.Impl
                 TheDataSourceUpload.RowDeleteDate = DateTime.Now;
 
                 this.dataSourceUploadDao.UpdateDataSourceUpload(TheDataSourceUpload);
+
+                string afterRowDeleteSQL = TheDataSourceUpload.TheDataSourceCategory.TheDataSource.AfterRowDeleteSQL;
+                if (afterRowDeleteSQL != null && afterRowDeleteSQL.Trim() != string.Empty)
+                {
+                    afterRowDeleteSQL = afterRowDeleteSQL.Replace("<$ActionUser$>", ActionUser.Id.ToString());
+                    sqlHelperDao.ExecuteNonQuery(afterRowDeleteSQL);
+                }
             }
         }
 

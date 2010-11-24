@@ -99,6 +99,11 @@ namespace Dndp.Persistence.Dao.Dui.NH
             Delete(hql, dsId, NHibernate.NHibernateUtil.Int32);
         }
 
+        public IList<DWDataSourceOperator> FindAllByUserId(int userId)
+        {
+            return FindAllWithCustomQuery("from DWDataSourceOperator dso where dso.TheUser.Id=?", userId) as IList<DWDataSourceOperator>;
+        }
+
         #endregion Customized Methods
     }
 }

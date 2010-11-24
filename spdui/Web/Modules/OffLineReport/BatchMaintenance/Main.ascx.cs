@@ -22,10 +22,10 @@ using Dndp.Service.OffLineReport;
 public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
 {
     //Get the logger
-	private static ILog log = LogManager.GetLogger("BatchMaintenance");
-	
-	//The entity service
-	protected IReportBatchMgr TheService
+    private static ILog log = LogManager.GetLogger("BatchMaintenance");
+
+    //The entity service
+    protected IReportBatchMgr TheService
     {
         get
         {
@@ -40,24 +40,24 @@ public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
             UpdateView();
         }
     }
-	
-	protected override void OnInit(EventArgs e)
+
+    protected override void OnInit(EventArgs e)
     {
         base.OnInit(e);
         Edit1.Back += new System.EventHandler(this.Edit1_Back);
         New1.Back += new EventHandler(this.New1_Back);
         New1.Submit += new EventHandler(New1_Submit);
-		//TODO: Add other init code here.
+        //TODO: Add other init code here.
     }
 
-	//Init the page by current user permissions
+    //Init the page by current user permissions
     protected override void InitByPermission()
     {
-		base.InitByPermission();
-        
-		btnNew.Visible = PermissionAdd;
-		
-		//TODO: Add other permission init codes here.
+        base.InitByPermission();
+
+        btnNew.Visible = PermissionAdd;
+
+        //TODO: Add other permission init codes here.
     }
 
     //The event handler when user click button "Back" button on New page.
@@ -73,18 +73,18 @@ public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
         New1.Visible = false;
         pnlMain.Visible = false;
         Edit1.Visible = true;
-        Edit1.TheReportBatch  = New1.NewReportBatch;
+        Edit1.TheReportBatch = New1.NewReportBatch;
         Edit1.UpdateView();
     }
-	//The event handler when user button "Search".
+    //The event handler when user button "Search".
     protected void btnSearch_Click(object sender, EventArgs e)
     {
         UpdateView();
-		
-		//TODO: Add other event handler code here.
+
+        //TODO: Add other event handler code here.
     }
 
-	//Do data query and binding.
+    //Do data query and binding.
     private void UpdateView()
     {
         //TODO: Add your code to do data query and binding here.
@@ -99,13 +99,13 @@ public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
         gvList.DataBind();
     }
 
-	//The event handler when user click button "Back" on New page.
+    //The event handler when user click button "Back" on New page.
     protected void Edit1_Back(object sender, EventArgs e)
     {
         Edit1.Visible = false;
         UpdateView();
         pnlMain.Visible = true;
-		//TODO: Add other code here.
+        //TODO: Add other code here.
     }
 
     protected void btnNew_Click(object sender, EventArgs e)
@@ -113,28 +113,29 @@ public partial class Modules_OffLineReport_BatchMaintenance_Main : ModuleBase
         New1.Visible = true;
         New1.UpdateView();
         pnlMain.Visible = false;
-		//TODO: Add othere code here.
+        //TODO: Add othere code here.
     }
 
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-       try{
-        IList<int> idList = new List<int>();
-
-        foreach (GridViewRow row in gvList.Rows)
+        try
         {
-            CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
-            if (cbSelect.Checked)
-            {
-                idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
-            }
-        }
-        TheService.DeleteReportBatch(idList);
+            IList<int> idList = new List<int>();
 
-        UpdateView();
-        
-         }
+            foreach (GridViewRow row in gvList.Rows)
+            {
+                CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+                if (cbSelect.Checked)
+                {
+                    idList.Add((int)(gvList.DataKeys[row.RowIndex].Value));
+                }
+            }
+            TheService.DeleteReportBatch(idList);
+
+            UpdateView();
+
+        }
         catch (Exception ex)
         {
             this.lblText.Visible = true;

@@ -98,6 +98,8 @@ namespace Dndp.Service.Dui
 
         IList<string> FindAllDataSourceType(User user);
 
+        void CopyUserPermission(int fromUserId, IList<int> toUserId);
+
         #endregion Customized Methods
 
     }

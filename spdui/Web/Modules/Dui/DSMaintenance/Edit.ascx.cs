@@ -110,6 +110,8 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
         txtDescription.Text = TheDataSource.Description;
         txtDataStructure.Text = TheDataSource.DataStructure;
         txtRuleContent.Text = TheDataSource.DWQuerySQL;
+        txtAfterWithdrawSQL.Text = TheDataSource.AfterWithdrawSQL;
+        txtAfterRowDelSQL.Text = TheDataSource.AfterRowDeleteSQL;
         txtType.Text = TheDataSource.DSType;
 
         this.lblFieldDef.Visible = false;
@@ -163,6 +165,8 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
         TheDataSource.Description = description;
         TheDataSource.DataStructure = dataStructure;
         TheDataSource.DWQuerySQL = txtRuleContent.Text.Trim();
+        TheDataSource.AfterWithdrawSQL = txtAfterWithdrawSQL.Text.Trim();
+        TheDataSource.AfterRowDeleteSQL = txtAfterRowDelSQL.Text.Trim();
         TheDataSource.DSType = txtType.Text.Trim();
         TheDataSource.LastUpdateBy = CurrentUser;
         TheDataSource.LastUpdateDate = DateTime.Now;
@@ -181,10 +185,18 @@ public partial class Modules_Dui_DSMaintenance_Edit : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteDataSource(TheDataSource.Id);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteDataSource(TheDataSource.Id);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 

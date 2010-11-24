@@ -664,6 +664,46 @@ namespace Dndp.Service.Dui.Impl
             }
         }
 
+        [Transaction(TransactionMode.Requires)]
+        public void CopyUserPermission(int fromUserId, IList<int> toUserId)
+        {
+            IList<DWDataSourceOperator> dsoList = this.DWDataSourceOperatorDao.FindAllByUserId(fromUserId);
+
+            foreach (DWDataSourceOperator dso in dsoList)
+            {
+                IList<DWDataSourceOperator> list = this.DWDataSourceOperatorDao.FindAllByDWDataSourceIdAndAllowType(dso.TheDWDataSource.Id, dso.AllowType);
+
+                foreach (int id in toUserId)
+                {
+                    if (fromUserId == id)
+                    {
+                        continue;
+                    }
+
+                    bool findMatch = false;
+                    foreach (DWDataSourceOperator d in list)
+                    {
+
+                        if (d.TheUser.Id == id)
+                        {
+                            findMatch = true;
+                            break;
+                        }
+                    }
+
+                    if (!findMatch)
+                    {
+                        DWDataSourceOperator dwDataSourceOperator = new DWDataSourceOperator();
+                        dwDataSourceOperator.AllowType = dso.AllowType;
+                        dwDataSourceOperator.TheDWDataSource = dso.TheDWDataSource;
+                        dwDataSourceOperator.TheUser = userDao.LoadUser(id);
+
+                        this.DWDataSourceOperatorDao.CreateDWDataSourceOperator(dwDataSourceOperator);
+                    }
+                }
+            }
+        }
+
         private string UpdateValidationSQLContent(string rule, string MergeFromId, string MergeToId, User actionUser)
         {
             rule = rule.Replace("<$MergeFromRecId$>", MergeFromId);

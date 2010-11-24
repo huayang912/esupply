@@ -144,11 +144,19 @@ public partial class Modules_Cube_CubeRole_Main : ModuleBase
 	//The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        IList<int> idList = GetSelectIdList(gvList);
+        try
+        {
+            IList<int> idList = GetSelectIdList(gvList);
 
-        TheService.DeleteCubeRole(idList);
+            TheService.DeleteCubeRole(idList);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)

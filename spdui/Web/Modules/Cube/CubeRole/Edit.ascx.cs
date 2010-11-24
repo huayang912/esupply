@@ -182,10 +182,18 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
     //The event handler when user click button "Delete".
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        TheService.DeleteCubeRole(TheCubeRole);
-        if (Back != null)
+        try
         {
-            Back(this, e);
+            TheService.DeleteCubeRole(TheCubeRole);
+            if (Back != null)
+            {
+                Back(this, e);
+            }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
 
@@ -208,12 +216,20 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
 
     protected void btnDeleteUser_Click(object sender, EventArgs e)
     {
-        TheService.DeleteCubeUserRole(TheCubeRole.Id, GetSelectIdList(gvUserList));
+        try
+        {
+            TheService.DeleteCubeUserRole(TheCubeRole.Id, GetSelectIdList(gvUserList));
 
-        //re-load the data source
-        TheCubeRole.CubeUserList = TheService.FindCubeUserByRoleId(TheCubeRole.Id);
+            //re-load the data source
+            TheCubeRole.CubeUserList = TheService.FindCubeUserByRoleId(TheCubeRole.Id);
 
-        UpdateView();
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void btnAssignMember_Click(object sender, EventArgs e)
@@ -293,16 +309,24 @@ public partial class Modules_Cube_CubeRole_Edit : ModuleBase
 
     private void InsertSetDimensionVisualTotal(int roleid, GridView gv)
     {
-        TheService.DeleteSetDimensionVisualTotal(roleid);        
-        foreach (GridViewRow gvr in gv.Rows)
+        try
         {
-            CheckBox cb = (CheckBox)gvr.FindControl("chkVisualTotal");
-            if (cb != null)
+            TheService.DeleteSetDimensionVisualTotal(roleid);
+            foreach (GridViewRow gvr in gv.Rows)
             {
-                string visualtotal = cb.Checked ? "1" : "0";
-                string setDimensionName = gvr.Cells[1].Text;
-                TheService.InsertSetDimensionVisualTotal(roleid, setDimensionName, visualtotal);
+                CheckBox cb = (CheckBox)gvr.FindControl("chkVisualTotal");
+                if (cb != null)
+                {
+                    string visualtotal = cb.Checked ? "1" : "0";
+                    string setDimensionName = gvr.Cells[1].Text;
+                    TheService.InsertSetDimensionVisualTotal(roleid, setDimensionName, visualtotal);
+                }
             }
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
         }
     }
      

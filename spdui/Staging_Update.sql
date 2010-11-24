@@ -1851,3 +1851,18 @@ alter table DW_Data_Source add Query_Merge_RULE_CONTENT varchar(max);
 
 -----------2010/10/27-----------------------
 alter table DW_Data_Source add Merge_RESULT_CONTENT varchar(max);
+
+
+-----------2010/11/13-----------------------
+alter table DATA_SOURCE add AFTER_WITHDRAW_SQL varchar(max);
+alter table DATA_SOURCE add AFTER_ROW_DEL_SQL varchar(max);
+
+set identity_insert MODULES on;
+insert into MODULES(MODULE_ID, MODULE_NAME, SOURCE_FILE, DESCRIPTION) values(25, 'User Permission Copy', 'Modules/Security/UserPermissionCopy/Main.ascx', 'User DataSource and DW DataSource Permission Copy.')
+set identity_insert MODULES off;
+
+set identity_insert MENUS on;
+insert into MENUS(MENU_ID, PARENT_MENU_ID, TITLE, PATH_CODE, DESCRIPTION, MODULE_ID) values (27, 5, 'User Permission Copy', '08.07', 'User DataSource and DW DataSource Permission Copy.', 25)
+set identity_insert MENUS off;
+
+insert into AUTHORIZATIONS(ROLE_ID, MODULE_ID, PERMISSION_VIEW, PERMISSION_UPDATE, PERMISSION_ADD, PERMISSION_DELETE, PERMISSION_FULL) values (3500, 25, 1, 1, 1, 1, 1);

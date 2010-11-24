@@ -151,9 +151,17 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
 
     protected void btnDelete_Click(object sender, EventArgs e)
     {
-        int dsUploadId = Int32.Parse(txtId.Value);
-        TheService.DeleteDataSourceUploadAndUploadedData(dsUploadId);
-        Back(this, e);
+        try
+        {
+            int dsUploadId = Int32.Parse(txtId.Value);
+            TheService.DeleteDataSourceUploadAndUploadedData(dsUploadId);
+            Back(this, e);
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void btnInValidation_Click(object sender, EventArgs e)

@@ -117,11 +117,19 @@ public partial class Modules_Dui_DSUpload_History : ModuleBase
 
     protected void lbtnDeleteHistory_Click(object sender, EventArgs e)
     {
-        int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
-        TheService.DeleteUploadRecordHistory(dsUploadId, this.CurrentUser);
-        lblMessage.Text = "Data Warehouse Data Deleted successful!";
-        lblMessage.Visible = true;
-        UpdateView();
+        try
+        {
+            int dsUploadId = Int32.Parse(((LinkButton)sender).CommandArgument);
+            TheService.DeleteUploadRecordHistory(dsUploadId, this.CurrentUser);
+            lblMessage.Text = "Data Warehouse Data Deleted successful!";
+            lblMessage.Visible = true;
+            UpdateView();
+        }
+        catch (Exception ex)
+        {
+            lblMessage.Text = ex.Message;
+            lblMessage.Visible = true;
+        }
     }
 
     protected void lbtnArchiveTable_Click(object sender, EventArgs e)

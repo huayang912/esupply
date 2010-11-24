@@ -61,3 +61,9 @@
 -----------2010/11/3-----------------------
 1. 解决2个用户同时在一个数据源下上传同一个Category的数据。
 2. Cube Process的时候，取最后一次Cube Process的时候设定的日期作为缺省值。
+
+-----------2010/11/14-----------------------
+1. 所有有删除都要检查是否是数据库依赖关系。
+2. after withdraw sql/after raw delete sql(low),可以传<$ActionUser$>作为参数
+3. 用户权限拷贝，可以选择DataSource和DW DataSource，在DW Administration菜单里增加新的菜单叫User Permission Copy
+ 

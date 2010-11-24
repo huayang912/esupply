@@ -37,6 +37,8 @@ namespace Dndp.Persistence.Dao.Dui
         
         void DeleteDataSourceOperatorByDSId(int dsId);
 
+        IList<DataSourceOperator> FindAllByUserId(int userId);
+
         #endregion Customized Methods
     }
 }
