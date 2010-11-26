@@ -564,7 +564,7 @@ namespace Dndp.Service.Dui.Impl
             string ruleContent = rule.RuleContent;            
 
             //Update Field Content in the SQL Rule
-            ruleContent = UpdateValidationSQLContent(ruleContent, MergeFromId, MergeToId, actionUser);
+            ruleContent = UpdateValidationSQLContent(ruleContent, MergeFromId, MergeToId, null, actionUser);
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(ruleContent);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -598,18 +598,18 @@ namespace Dndp.Service.Dui.Impl
             return result;
         }
 
-        public string MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, User actionUser)
+        public string MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, string itemNewName, User actionUser)
         {
             DWDataSource ds = this.DWDataSourceDao.LoadDWDataSource(DWDataSourceId);
             string rule = ds.MergeSQL;
 
             //Update Field Content in the SQL Rule
-            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
+            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, itemNewName, actionUser);
 
             sqlHelperDao.ExecuteNonQueryWithNoTransaction(rule);
             
             rule = ds.MergeResultSQL;
-            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
+            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, itemNewName, actionUser);
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             if (dataSet.Tables != null && dataSet.Tables.Count > 0 
                 && dataSet.Tables[0].Rows != null && dataSet.Tables[0].Rows.Count > 0)
@@ -628,7 +628,7 @@ namespace Dndp.Service.Dui.Impl
         public void DownloadMergeRuleErrorResult(DWDataSourceMergeRule mergeRule, string MergeFromId, string MergeToId, User actionUser, CSVWriter csvWriter)
         {
             string rule = mergeRule.ResultContent;
-            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, actionUser);
+            rule = UpdateValidationSQLContent(rule, MergeFromId, MergeToId, null, actionUser);
 
             DataSet dataSet = sqlHelperDao.ExecuteDataset(rule);
             DataTableReader dataReader = dataSet.CreateDataReader();
@@ -704,10 +704,14 @@ namespace Dndp.Service.Dui.Impl
             }
         }
 
-        private string UpdateValidationSQLContent(string rule, string MergeFromId, string MergeToId, User actionUser)
+        private string UpdateValidationSQLContent(string rule, string MergeFromId, string MergeToId, string itemNewName, User actionUser)
         {
             rule = rule.Replace("<$MergeFromRecId$>", MergeFromId);
             rule = rule.Replace("<$MergeToRecId$>", MergeToId);
+            if (itemNewName != null)
+            {
+                rule = rule.Replace("<$ItemNewName$>", itemNewName);
+            }
             if (actionUser != null)
             {
                 rule = rule.Replace("<$ActionUser$>", actionUser.Id.ToString());

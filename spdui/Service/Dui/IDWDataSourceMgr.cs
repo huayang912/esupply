@@ -95,7 +95,7 @@ namespace Dndp.Service.Dui
 
         string ValidateMergeRule(DWDataSourceMergeRule rule, string MergeFromId, string MergeToId, User actionUser);
 
-        string MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, User actionUser);
+        string MergeDWData(int DWDataSourceId, string MergeFromId, string MergeToId, string itemNewName, User actionUser);
 
         void DownloadMergeRuleErrorResult(DWDataSourceMergeRule mergeRule, string MergeFromId, string MergeToId, User actionUser, CSVWriter csvWriter);
 

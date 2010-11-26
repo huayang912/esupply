@@ -56,6 +56,18 @@ public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
         }
     }
 
+    protected string ItemNewName
+    {
+        get
+        {
+            return (string)ViewState["ItemNewName"];
+        }
+        set
+        {
+            ViewState["ItemNewName"] = value;
+        }
+    }
+
     private bool ValidationPass
     {
         get
@@ -142,6 +154,8 @@ public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
             this.MergeToId = this.txtMergeToId.Text.Trim();
         }
 
+        this.ItemNewName = this.txtNewName.Text.Trim();
+
         if (this.MergeFromId == this.MergeToId)
         {
             this.lblMessage.Text = "To-be merged Record ID can't equal Merged to Record ID";
@@ -172,7 +186,7 @@ public partial class Modules_Dui_DWDSUpdate_DWDSMerge : ModuleBase
 
         try
         {
-            string result = this.TheService.MergeDWData(this.DWDataSourceId, this.MergeFromId, this.MergeToId, this.CurrentUser);
+            string result = this.TheService.MergeDWData(this.DWDataSourceId, this.MergeFromId, this.MergeToId, this.ItemNewName, this.CurrentUser);
             if (result == null || result == string.Empty)
             {
                 this.lblMessage.Text = "Data successfully merged.";

@@ -49,14 +49,21 @@ function CopyValidationResult()
         <td class="TXTform" width="280">
             To-be merged (Delete after merge) Record ID:</td>
         <td>
-            <asp:TextBox ID="txtMergeFromId" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtMergeFromId" runat="server" Width="400px"></asp:TextBox>
         </td>
     </tr>
     <tr>
         <td class="TXTform" width="280">
             Merged to (Keep after merge) Record ID:</td>
         <td>
-            <asp:TextBox ID="txtMergeToId" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtMergeToId" runat="server" Width="400px"></asp:TextBox>
+        </td>
+    </tr>
+     <tr>
+        <td class="TXTform" width="280">
+            Item new name after merge:</td>
+        <td>
+            <asp:TextBox ID="txtNewName" runat="server" Width="400px"></asp:TextBox>
         </td>
     </tr>
 </table>
