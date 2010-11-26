@@ -92,6 +92,24 @@ public partial class Modules_Dui_DSAuthorization_Main : ModuleBase
         pnlMain.Visible = true;
     }
 
+    protected void btnLock_Click(object sender, EventArgs e)
+    {
+        IList<int> dsIdList = CollectSelectedDS();
+
+        this.TheService.LockDataSourceEtlConfirm(dsIdList);
+
+        UpdateView();
+    }
+
+    protected void btnUnlock_Click(object sender, EventArgs e)
+    {
+        IList<int> dsIdList = CollectSelectedDS();
+
+        this.TheService.UnLockDataSourceEtlConfirm(dsIdList);
+
+        UpdateView();
+    }
+
     protected void gvList_SelectedIndexChanged(object sender, EventArgs e)
     {
         int id = (int)(gvList.SelectedDataKey.Value);
@@ -105,5 +123,21 @@ public partial class Modules_Dui_DSAuthorization_Main : ModuleBase
     {
         gvList.PageIndex = e.NewPageIndex;
         UpdateView();
+    }
+
+    private IList<int> CollectSelectedDS()
+    {
+        IList<int> dsIdList = new List<int>();
+        foreach (GridViewRow row in gvList.Rows)
+        {
+            CheckBox cbSelect = (CheckBox)row.FindControl("cbSelect");
+            if (cbSelect.Checked)
+            {
+                HiddenField hfDSId = (HiddenField)row.FindControl("hfDSId");
+                dsIdList.Add(int.Parse(hfDSId.Value));
+            }
+        }
+
+        return dsIdList;
     }
 }

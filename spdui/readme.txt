@@ -67,3 +67,6 @@
 2. after withdraw sql/after raw delete sql(low),可以传<$ActionUser$>作为参数
 3. 用户权限拷贝，可以选择DataSource和DW DataSource，在DW Administration菜单里增加新的菜单叫User Permission Copy
  
+ 
+ -----------2010/11/26-----------------------
+ 1. lock data source 以禁止数据etl confirm

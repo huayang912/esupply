@@ -181,6 +181,19 @@ namespace Dndp.Persistence.Entity.Dui
             }
         }
 
+        private bool _isLockEtlConfirm;
+        public bool IsLockEtlConfirm
+        {
+            get
+            {
+                return _isLockEtlConfirm;
+            }
+            set
+            {
+                _isLockEtlConfirm = value;
+            }
+        }
+
         #endregion
 
         #region Non O/R Mapping Properties

@@ -25,12 +25,12 @@ using Dndp.Utility.CSV;
 public partial class Modules_Dui_DSUpload_Validate : ModuleBase
 {
     public event EventHandler Back;
-	
-	//Get the logger
+
+    //Get the logger
     private static ILog log = LogManager.GetLogger("DSUpload");
-	
-	//The entity service
-	protected IDataSourceUploadMgr TheService
+
+    //The entity service
+    protected IDataSourceUploadMgr TheService
     {
         get
         {
@@ -40,7 +40,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
 
     protected void Page_Load(object sender, EventArgs e)
     {
-		//TODO: Add code for Page_Load here.
+        //TODO: Add code for Page_Load here.
     }
 
     public DataSourceUpload TheDataSourceUpload
@@ -55,9 +55,9 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
         }
     }
 
-	//Update the view by the entity class stored in ViewState
+    //Update the view by the entity class stored in ViewState
     public void UpdateView()
-    {        
+    {
         txtName.Text = TheDataSourceUpload.TheDataSourceCategory.TheDataSource.Name;
         txtCategory.Text = TheDataSourceUpload.TheDataSourceCategory.Name;
         txtSubject.Text = TheDataSourceUpload.Name;
@@ -71,13 +71,13 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
             //btnValidateSelected.Visible = false;
             btnConfirm.Visible = false;
             btnBack.Visible = false;
-            lblMessage.Visible = true;                        
+            lblMessage.Visible = true;
         }
         else
         {
             if (TheDataSourceUpload.ProcessStatus.Equals(DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED))
             {
-                btnConfirm.Visible = true;
+                btnConfirm.Visible = !TheDataSourceUpload.TheDataSourceCategory.TheDataSource.IsLockEtlConfirm;
                 btnUnConfirm.Visible = false;
             }
             else
@@ -86,7 +86,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
                 btnUnConfirm.Visible = true;
             }
             btnBack.Visible = true;
-            lblMessage.Visible = false;            
+            lblMessage.Visible = false;
         }
 
         gvErrorValidationRule.DataSource = TheDataSourceUpload.ErrorValidationResultList;
@@ -156,13 +156,13 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
         UpdateView();
     }
     */
-	//Event handler when user click button "Back"
+    //Event handler when user click button "Back"
     protected void btnBack_Click(object sender, EventArgs e)
-    {        
+    {
         if (Back != null)
         {
             Back(this, e);
-        }          
+        }
     }
     /*
     protected void btnValidateAll_Click(object sender, EventArgs e)
@@ -371,7 +371,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
                     vr.Status = validationResult.Status;
                     vr.FaildRowCount = validationResult.FaildRowCount;
                 }
-                else if (nextValidationId == vr.Id) 
+                else if (nextValidationId == vr.Id)
                 {
                     vr.ValidationStatus = ValidationResult.VALIDATION_STATUS_IN_PROGRESS;
                 }
@@ -383,7 +383,7 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
         {
             TheDataSourceUpload.IsInValidation = false;
         }
-        
+
         UpdateView();
     }
     protected void gvErrorValidationRule_SelectedIndexChanged(object sender, EventArgs e)
@@ -411,9 +411,9 @@ public partial class Modules_Dui_DSUpload_Validate : ModuleBase
         fileName = fileName.Replace("+", "%20");
         Response.AddHeader("Content-Disposition", "attachment;FileName=" + fileName + "_result.csv");
         TextWriter txtWriter = new StreamWriter(Response.OutputStream);
-        CSVWriter csvWriter = new CSVWriter(txtWriter);;
+        CSVWriter csvWriter = new CSVWriter(txtWriter); ;
         TheService.DownloadValidateResult(vr, csvWriter);
-        txtWriter.Flush();   
+        txtWriter.Flush();
         Response.End();
 
         UpdateView();

@@ -100,6 +100,10 @@ namespace Dndp.Service.Dui
 
         void CopyUserPermission(int fromUserId, IList<int> toUserId);
 
+        void LockDataSourceEtlConfirm(IList<int> dsIdList);
+
+        void UnLockDataSourceEtlConfirm(IList<int> dsIdList);
+
         #endregion Customized Methods
 
     }

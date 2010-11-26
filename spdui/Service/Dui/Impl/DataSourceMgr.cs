@@ -527,6 +527,40 @@ namespace Dndp.Service.Dui.Impl
             #endregion
         }
 
+        [Transaction(TransactionMode.Requires)]
+        public void LockDataSourceEtlConfirm(IList<int> dsIdList)
+        {
+            if (dsIdList != null && dsIdList.Count > 0)
+            {
+                foreach (int dsId in dsIdList)
+                {
+                    DataSource ds = this.dataSourceDao.LoadDataSource(dsId);
+                    if (!ds.IsLockEtlConfirm)
+                    {
+                        ds.IsLockEtlConfirm = true;
+                        this.dataSourceDao.UpdateDataSource(ds);
+                    }
+                }
+            }
+        }
+
+        [Transaction(TransactionMode.Requires)]
+        public void UnLockDataSourceEtlConfirm(IList<int> dsIdList)
+        {
+            if (dsIdList != null && dsIdList.Count > 0)
+            {
+                foreach (int dsId in dsIdList)
+                {
+                    DataSource ds = this.dataSourceDao.LoadDataSource(dsId);
+                    if (ds.IsLockEtlConfirm)
+                    {
+                        ds.IsLockEtlConfirm = false;
+                        this.dataSourceDao.UpdateDataSource(ds);
+                    }
+                }
+            }
+        }
+
         private string GernateCreateTableSql(string dsName)
         {
             StringBuilder createTempTableSql = new StringBuilder();

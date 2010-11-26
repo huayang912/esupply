@@ -1866,3 +1866,9 @@ insert into MENUS(MENU_ID, PARENT_MENU_ID, TITLE, PATH_CODE, DESCRIPTION, MODULE
 set identity_insert MENUS off;
 
 insert into AUTHORIZATIONS(ROLE_ID, MODULE_ID, PERMISSION_VIEW, PERMISSION_UPDATE, PERMISSION_ADD, PERMISSION_DELETE, PERMISSION_FULL) values (3500, 25, 1, 1, 1, 1, 1);
+
+
+-----------2010/11/26-----------------------
+alter table DATA_SOURCE add IS_LOCK_CONFIRM bit;
+update DATA_SOURCE set IS_LOCK_CONFIRM = 0;
+alter table DATA_SOURCE alter column IS_LOCK_CONFIRM bit not null;

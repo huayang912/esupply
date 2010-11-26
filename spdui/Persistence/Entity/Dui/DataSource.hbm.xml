@@ -17,5 +17,6 @@
 		<property name="DWQuerySQL" column="DW_QUERY_SQL" type="StringClob" />
 		<property name="AfterWithdrawSQL" column="AFTER_WITHDRAW_SQL" type="StringClob" />
 		<property name="AfterRowDeleteSQL" column="AFTER_ROW_DEL_SQL" type="StringClob" />
+		<property name="IsLockEtlConfirm" column="IS_LOCK_CONFIRM" type="Boolean" />
 	</class>
 </hibernate-mapping>

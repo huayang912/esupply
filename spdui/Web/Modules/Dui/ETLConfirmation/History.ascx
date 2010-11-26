@@ -123,7 +123,7 @@ end function
                         CommandName="Select" Visible='<%# ((int)DataBinder.Eval(Container.DataItem, "IsHitoryDelete")) == 0 || ((int)DataBinder.Eval(Container.DataItem, "IsArchive")) == 1 %>'
                         OnClick="lbtnDownload_Click"></asp:LinkButton>
                     <asp:LinkButton ID="lbtnConfirm" runat="server" Text="[Confirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
-                        CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED) && ((int)DataBinder.Eval(Container.DataItem, "Errors")) == 0 %>'
+                        CommandName="Select" Visible='<%# DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_OWNER_CONFIRMED) && ((int)DataBinder.Eval(Container.DataItem, "Errors")) == 0 && !((bool)DataBinder.Eval(Container.DataItem, "TheDataSourceCategory.TheDataSource.IsLockEtlConfirm"))%>'
                         OnClick="lbtnConfirm_Click" OnClientClick="return ButtonWarning('Confirm')"></asp:LinkButton>
                     <asp:LinkButton ID="lbtnUnconfirm" runat="server" Text="[Unconfirm]" CommandArgument='<%# DataBinder.Eval(Container.DataItem, "Id") %>'
                         CommandName="Select" Visible='<%# (DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_CONFIRMED) || DataBinder.Eval(Container.DataItem, "ProcessStatus").Equals(Dndp.Persistence.Entity.Dui.DataSourceUpload.DataSourceUpload_ProcessStatus_ETL_FAILED)) %>'
