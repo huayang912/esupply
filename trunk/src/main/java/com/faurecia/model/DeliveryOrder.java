@@ -67,7 +67,7 @@ public class DeliveryOrder extends BaseObject {
 	private BigDecimal totalVolume;
 	private String unitVolume;
 	private BigDecimal totalNbPallets;
-	private String title;
+	private String title;	
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -387,6 +387,105 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setExportFlag(String exportFlag) {
 		this.exportFlag = exportFlag;
+	}
+
+	@Column(name = "murn", length=20)
+	public String getMurn() {
+		return murn;
+	}
+
+	public void setMurn(String murn) {
+		this.murn = murn;
+	}
+
+	@Column(name = "order_group", length=20)
+	public String getOrderGroup() {
+		return OrderGroup;
+	}
+
+	public void setOrderGroup(String orderGroup) {
+		OrderGroup = orderGroup;
+	}
+
+	@Column(name = "delivery_order_group", length=20)
+	public String getDeliveryOrderGroup() {
+		return deliveryOrderGroup;
+	}
+
+	public void setDeliveryOrderGroup(String deliveryOrderGroup) {
+		this.deliveryOrderGroup = deliveryOrderGroup;
+	}
+
+	@Column(name = "dock", length=20)
+	public String getDock() {
+		return dock;
+	}
+
+	public void setDock(String dock) {
+		this.dock = dock;
+	}
+
+	@Column(name = "route", length=20)
+	public String getRoute() {
+		return route;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
+	}
+
+	@Column(name = "main_route", length=20)
+	public String getMainRoute() {
+		return mainRoute;
+	}
+
+	public void setMainRoute(String mainRoute) {
+		this.mainRoute = mainRoute;
+	}
+
+	@Column(name = "total_weight", precision = 18, scale = 4)
+	public BigDecimal getTotalWeight() {
+		return totalWeight;
+	}
+
+	public void setTotalWeight(BigDecimal totalWeight) {
+		this.totalWeight = totalWeight;
+	}
+
+	@Column(name = "unit_weight", precision = 18, scale = 4)
+	public String getUnitWeight() {
+		return unitWeight;
+	}
+
+	public void setUnitWeight(String unitWeight) {
+		this.unitWeight = unitWeight;
+	}
+
+	@Column(name = "total_volume", precision = 18, scale = 4)
+	public BigDecimal getTotalVolume() {
+		return totalVolume;
+	}
+
+	public void setTotalVolume(BigDecimal totalVolume) {
+		this.totalVolume = totalVolume;
+	}
+
+	@Column(name = "total_nb_pallets", precision = 18, scale = 4)
+	public BigDecimal getTotalNbPallets() {
+		return totalNbPallets;
+	}
+
+	public void setTotalNbPallets(BigDecimal totalNbPallets) {
+		this.totalNbPallets = totalNbPallets;
+	}
+
+	@Column(name = "title", length=50)
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	/**
