@@ -11,7 +11,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,10 +23,16 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.orm.ObjectRetrievalFailureException;
 
+import com.faurecia.Constants;
 import com.faurecia.dao.GenericDao;
 import com.faurecia.lisa.kmp58.ManifestFile;
 import com.faurecia.model.DeliveryOrder;
@@ -30,10 +40,14 @@ import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Item;
 import com.faurecia.model.Plant;
+import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
+import com.faurecia.model.Role;
 import com.faurecia.model.ScheduleItemDetail;
+import com.faurecia.model.Supplier;
+import com.faurecia.model.User;
 import com.faurecia.model.delvry.DELVRY03;
 import com.faurecia.model.delvry.DELVRY03E1ADRM1;
 import com.faurecia.model.delvry.DELVRY03E1EDL20;
@@ -42,14 +56,20 @@ import com.faurecia.model.delvry.DELVRY03E1EDL41;
 import com.faurecia.model.delvry.DELVRY03E1EDT13;
 import com.faurecia.model.delvry.DESADVDELVRY03;
 import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
-import com.faurecia.model.order.ORDERS02;
 import com.faurecia.service.DataConvertException;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.ItemManager;
+import com.faurecia.service.MailEngine;
 import com.faurecia.service.NumberControlManager;
+import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.RoleManager;
+import com.faurecia.service.SupplierManager;
+import com.faurecia.service.UserExistsException;
+import com.faurecia.service.UserManager;
 
 import freemarker.template.utility.StringUtil;
 
@@ -62,8 +82,19 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private Unmarshaller unmarshaller;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
+	private GenericManager<Plant, String> plantManager;
+	private SupplierManager supplierManager;
+	private RoleManager roleManager;
+	private UserManager userManager;
+	private PlantScheduleGroupManager plantScheduleGroupManager;
+	private InboundLogManager inboundLogManager;
+
 	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
 	private GenericManager<DeliveryOrderDetail, Integer> deliveryOrderDetailManager;
+
+	protected MailEngine mailEngine;
+	protected SimpleMailMessage mailMessage;
+	protected String supplierCreatedTemplateName;
 
 	public DeliveryOrderManagerImpl(GenericDao<DeliveryOrder, String> genericDao) throws JAXBException {
 		super(genericDao);
@@ -71,7 +102,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		marshaller = jc.createMarshaller();
 
 		JAXBContext jc2 = JAXBContext.newInstance("com.faurecia.lisa.kmp58");
-		Unmarshaller unmarshaller = jc.createUnmarshaller();
+		unmarshaller = jc2.createUnmarshaller();
 	}
 
 	public void setNumberControlManager(NumberControlManager numberControlManager) {
@@ -100,6 +131,42 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	public void setDeliveryOrderDetailManager(GenericManager<DeliveryOrderDetail, Integer> deliveryOrderDetailManager) {
 		this.deliveryOrderDetailManager = deliveryOrderDetailManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
+	}
+
+	public void setPlantManager(GenericManager<Plant, String> plantManager) {
+		this.plantManager = plantManager;
+	}
+
+	public void setRoleManager(RoleManager roleManager) {
+		this.roleManager = roleManager;
+	}
+
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
+	}
+
+	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
+		this.plantScheduleGroupManager = plantScheduleGroupManager;
+	}
+
+	public void setInboundLogManager(InboundLogManager inboundLogManager) {
+		this.inboundLogManager = inboundLogManager;
+	}
+
+	public void setMailEngine(MailEngine mailEngine) {
+		this.mailEngine = mailEngine;
+	}
+
+	public void setMailMessage(SimpleMailMessage mailMessage) {
+		this.mailMessage = mailMessage;
+	}
+
+	public void setSupplierCreatedTemplateName(String supplierCreatedTemplateName) {
+		this.supplierCreatedTemplateName = supplierCreatedTemplateName;
 	}
 
 	public DeliveryOrder createDeliveryOrder(List<PurchaseOrderDetail> purchaseOrderDetailList) throws IllegalAccessException,
@@ -233,6 +300,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return deliveryOrder;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
 		criteria.createAlias("plantSupplier", "ps");
@@ -294,92 +362,241 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return marshalOrder(DELVRY, filePath, filePrefix, fileSuffix);
 	}
 
-	public List<DeliveryOrder> saveMultiFile(InputStream inputStream) {
-//		try {
-//			ManifestFile order = unmarshalOrder(inputStream);
-//			List<DeliveryOrder> doList = ManifestFileToDo(order);
-//
-//			if (inboundLog.getPlantSupplier() == null) {
-//				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
-//			}
-//
-//			// 如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
-//			if (this.exists(purchaseOrder.getPoNo())) {
-//				PurchaseOrder oldPurchaseOrder = this.get(purchaseOrder.getPoNo(), true);
-//
-//				for (int i = 0; i < purchaseOrder.getPurchaseOrderDetailList().size(); i++) {
-//					PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(i);
-//					boolean findMatch = false;
-//					
-//					for (int k = 0; k < oldPurchaseOrder.getPurchaseOrderDetailList().size(); k++) {
-//						PurchaseOrderDetail oldPurchaseOrderDetail = oldPurchaseOrder.getPurchaseOrderDetailList().get(k);
-//						if (purchaseOrderDetail.getSequence().equals(oldPurchaseOrderDetail.getSequence())) {
-//							oldPurchaseOrderDetail.setQty(purchaseOrderDetail.getQty());
-//							oldPurchaseOrderDetail.setDeliveryDate(purchaseOrderDetail.getDeliveryDate());
-//							findMatch = true;
-//							break;
-//						}
-//					}
-//					
-//					if (!findMatch) {
-//						oldPurchaseOrder.addPurchaseOrderDetail(purchaseOrderDetail);
-//					}
-//				}
-//
-//				this.save(oldPurchaseOrder);
-//			} else {
-//				// 保存采购单
-//				this.save(purchaseOrder);
-//			}
-//			
-//			this.flushSession();
-//
-//			inboundLog.setInboundResult("success");
-//
-//			return purchaseOrder;
-//
-//		} catch (JAXBException jaxbException) {
-//			log.error("Error occur when unmarshal ORDERS.", jaxbException);
-//			inboundLog.setInboundResult("fail");
-//			inboundLog.setMemo(jaxbException.getMessage());
-//		} catch (DataConvertException dataConvertException) {
-//			log.error("Error occur when convert ORDERS to PO.", dataConvertException);
-//			inboundLog.setInboundResult("fail");
-//
-//			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
-//			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null) {
-//				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
-//			}
-//			inboundLog.setMemo(dataConvertException.getMessage());
-//		} catch (Exception exception) {
-//			log.error("Error occur.", exception);
-//			inboundLog.setInboundResult("fail");
-//			inboundLog.setMemo(exception.getMessage());
-//		}
+	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog) {
+		try {
+			ManifestFile order = unmarshalOrder(inputStream);
+			List<DeliveryOrder> doList = ManifestFileToDo(order);
+
+			if (inboundLog.getPlantSupplier() == null) {
+				inboundLog.setPlantSupplier(doList.get(0).getPlantSupplier());
+			}
+
+			inboundLog.setInboundResult("success");
+
+			return doList;
+
+		} catch (JAXBException jaxbException) {
+			log.error("Error occur when unmarshal ORDERS.", jaxbException);
+			inboundLog.setInboundResult("fail");
+			inboundLog.setMemo(jaxbException.getMessage());
+		} catch (DataConvertException dataConvertException) {
+			log.error("Error occur when convert ORDERS to PO.", dataConvertException);
+			inboundLog.setInboundResult("fail");
+
+			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
+			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null) {
+				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
+			}
+			inboundLog.setMemo(dataConvertException.getMessage());
+		} catch (Exception exception) {
+			log.error("Error occur.", exception);
+			inboundLog.setInboundResult("fail");
+			inboundLog.setMemo(exception.getMessage());
+		}
 
 		return null;
 	}
-	
-	private DeliveryOrder ManifestFileToDo(final ManifestFile order) throws DataConvertException {
+
+	public void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder) {
+		try {
+			File file = new File(inboundLog.getFullFilePath());
+			FileInputStream stream = new FileInputStream(file);
+
+			this.saveMultiFile(stream, inboundLog);
+
+			FileUtils.forceMkdir(new File(archiveFolder));
+			File backupFile = new File(archiveFolder + File.separator + file.getName());
+
+			FileUtils.copyFile(file, backupFile);
+			inboundLog.setFullFilePath(backupFile.getAbsolutePath());
+			inboundLog.setInboundResult("success");
+
+			FileUtils.forceDelete(file);
+		} catch (Exception ex) {
+			inboundLog.setMemo(ex.getMessage());
+		} finally {
+			inboundLog.setLastModifyDate(new Date());
+			inboundLog.setLastModifyUser(userCode);
+			this.inboundLogManager.save(inboundLog);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private List<DeliveryOrder> ManifestFileToDo(final ManifestFile order) throws DataConvertException, UserExistsException {
 		List<DeliveryOrder> deliveryOrderList = new ArrayList<DeliveryOrder>();
-		
-		if (order != null && order.getFileHeaderOrDeliveryOrFileEnd() != null 
-				&& order.getFileHeaderOrDeliveryOrFileEnd().size() > 0) {
-			
-			ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader)order.getFileHeaderOrDeliveryOrFileEnd().get(0);
-			//Plant plant = fileHeader.getPCODE()
-			
-			for(Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
+
+		if (order != null && order.getFileHeaderOrDeliveryOrFileEnd() != null && order.getFileHeaderOrDeliveryOrFileEnd().size() > 0) {
+
+			ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader) order.getFileHeaderOrDeliveryOrFileEnd().get(0);
+			String plantCode = fileHeader.getPCODE();
+			Plant plant = plantManager.get(plantCode);
+
+			for (Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
 				if (obj instanceof ManifestFile.Delivery) {
-					ManifestFile.Delivery delivery = (ManifestFile.Delivery)obj;
-					ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);
+					ManifestFile.Delivery delivery = (ManifestFile.Delivery) obj;
+					DeliveryOrder deliveryOrder = parseDelivery(delivery, plant);
+
+					DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
+					criteria.add(Restrictions.eq("externalDoNo", deliveryOrder.getExternalDoNo()));
+
+					List<DeliveryOrder> doList = this.findByCriteria(criteria);
+					if (doList != null && doList.size() > 0) {
+						String doNo = doList.get(0).getDoNo();
+						this.genericDao.remove(doNo);
+
+						deliveryOrder.setDoNo(doNo);
+					}
+					
+					this.save(deliveryOrder);
 				}
 			}
 		}
-		
-		return null;
+
+		return deliveryOrderList;
 	}
-	
+
+	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant) throws DataConvertException, UserExistsException {
+		DateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+		ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);
+		DeliveryOrder deliveryOrder = new DeliveryOrder();
+
+		try {
+			String supplierCode = header.getSUCODE();
+			Supplier supplier = null;
+
+			try {
+				// 供应商号如果是全数字，则要把前置0去掉
+				supplierCode = Long.toString((Long.parseLong(supplierCode)));
+			} catch (NumberFormatException ex) {
+			}
+
+			try {
+				supplier = this.supplierManager.get(supplierCode); // supplier
+			} catch (ObjectRetrievalFailureException ex) {
+				log.info("Supplier not found with the given supplier code: " + supplierCode + ", try to create a new one.");
+
+				supplier = new Supplier();
+				supplier.setCode(supplierCode);
+				supplier.setName(header.getSUNAME());
+
+				supplier = this.supplierManager.save(supplier);
+
+				log.info("Creating supplier user account.");
+				// 生成供应商帐号
+				User supplierUser = new User();
+				supplierUser.setUsername(supplier.getCode()); // 使用供应商编码作为用户名称
+				supplierUser.setEnabled(true);
+				supplierUser.setAccountExpired(false);
+				supplierUser.setAccountLocked(false);
+				supplierUser.setEmail(plant.getSupplierNotifyEmail());
+				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
+				supplierUser.setConfirmPassword(supplierUser.getPassword());
+				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				// supplierUser.setLastName(supplier.getName() != null ?
+				// supplier.getName() : supplier.getCode());
+				supplierUser.setLastName("");
+				supplierUser.setUserSupplier(supplier);
+				// supplierUser.setUserPlant(plant);
+				Set<Role> roles = new HashSet<Role>();
+				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
+				supplierUser.setRoles(roles);
+				this.userManager.saveUser(supplierUser);
+
+				try {
+					// Email通知
+					log.info("Send supplier created email to " + plant.getSupplierNotifyEmail());
+					mailMessage.setTo(plant.getSupplierNotifyEmail());
+					Map<String, Object> model = new HashMap<String, Object>();
+					model.put("supplier", supplier);
+					model.put("user", supplierUser);
+					mailMessage.setSubject("Supplier " + supplier.getCode() + " Created");
+					mailEngine.sendMessage(mailMessage, supplierCreatedTemplateName, model);
+					log.info("Send supplier created email successful.");
+				} catch (MailException mailEx) {
+					log.error("Error when send supplier create mail.", mailEx);
+				}
+			}
+
+			PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, supplier);
+
+			if (plantSupplier == null) {
+				log.info("The relationship between Plant: " + plant.getCode() + " and Supplier: " + supplier.getCode()
+						+ " not found, try to create a new one.");
+
+				plantSupplier = new PlantSupplier();
+				plantSupplier.setSupplierName(header.getSUNAME());
+				plantSupplier.setSupplierAddress1(header.getSUPADDR1());
+				plantSupplier.setSupplierAddress2(header.getSUPADDR2());
+				plantSupplier.setSupplierContactPerson(header.getSUCONTACT());
+				plantSupplier.setSupplierPhone(header.getSUPTEL());
+				plantSupplier.setSupplierFax(header.getSUFAX());
+				plantSupplier.setPlant(plant);
+				plantSupplier.setSupplier(supplier);
+				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
+
+				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager
+						.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
+				if (defaultPlantScheduleGroup != null) {
+					plantSupplier.setPlantScheduleGroup(defaultPlantScheduleGroup);
+				}
+
+				plantSupplier = this.plantSupplierManager.save(plantSupplier);
+			}
+
+			deliveryOrder.setPlantSupplier(plantSupplier);
+			deliveryOrder.setDoNo(this.numberControlManager.generateNumber(plantSupplier.getDoNoPrefix(), 10));
+			deliveryOrder.setExternalDoNo(header.getMANCODE());
+			deliveryOrder.setPlantName(plant.getName());
+			deliveryOrder.setPlantAddress1(header.getFAUADDR1());
+			deliveryOrder.setPlantAddress2(header.getFAUADDR2());
+			deliveryOrder.setPlantContactPerson(header.getFAUCONTACT());
+			deliveryOrder.setPlantPhone(header.getFAUTEL());
+			deliveryOrder.setPlantFax(header.getFAUFAX());
+			deliveryOrder.setSupplierName(header.getSUNAME());
+			deliveryOrder.setSupplierAddress1(header.getSUPADDR1());
+			deliveryOrder.setSupplierAddress2(header.getSUPADDR2());
+			deliveryOrder.setSupplierContactPerson(header.getSUCONTACT());
+			deliveryOrder.setSupplierPhone(header.getSUPTEL());
+			deliveryOrder.setSupplierFax(header.getSUFAX());
+			deliveryOrder.setCreateDate(new Date());
+			if (header.getPICKUP() != null && header.getPICKUP().trim().length() > 0) {
+				deliveryOrder.setStartDate(dtFormat.parse(header.getPICKUP()));
+			}
+			if (header.getRECEPT() != null && header.getRECEPT().trim().length() > 0) {
+				deliveryOrder.setEndDate(dtFormat.parse(header.getRECEPT()));
+			}
+			deliveryOrder.setIsExport(false);
+			deliveryOrder.setStatus("Create");
+			deliveryOrder.setMurn(header.getMURN());
+			deliveryOrder.setOrderGroup(header.getORDERG());
+			deliveryOrder.setDeliveryOrderGroup(header.getDELORDGR());
+			deliveryOrder.setDock(header.getFDCODE());
+			deliveryOrder.setRoute(header.getROUTE());
+			deliveryOrder.setMainRoute(header.getMROUTE());
+			if (header.getTOTWEIGHT() != null && header.getTOTWEIGHT().trim().length() != 0) {
+				deliveryOrder.setTotalWeight(new BigDecimal(header.getTOTWEIGHT()));
+			}
+			if (header.getUNITWEIGHT() != null && header.getUNITWEIGHT().trim().length() != 0) {
+				deliveryOrder.setUnitWeight(new BigDecimal(header.getUNITWEIGHT()));
+			}
+			if (header.getTOTVOL() != null && header.getTOTVOL().trim().length() != 0) {
+				deliveryOrder.setTotalVolume(new BigDecimal(header.getTOTVOL()));
+			}
+			if (header.getUNITVOL() != null && header.getUNITVOL().trim().length() != 0) {
+				deliveryOrder.setUnitVolume(new BigDecimal(header.getUNITVOL()));
+			}
+			if (header.getTOTPAL() != null && header.getTOTPAL().trim().length() != 0) {
+				deliveryOrder.setTotalNbPallets(new BigDecimal(header.getTOTPAL()));
+			}
+			deliveryOrder.setTitle(header.getMANTITLE());
+
+			return deliveryOrder;
+		} catch (Exception e) {
+			throw new DataConvertException(e, deliveryOrder);
+		}
+	}
+
 	private ManifestFile unmarshalOrder(InputStream stream) throws JAXBException {
 		ManifestFile o = (ManifestFile) unmarshaller.unmarshal(stream);
 		return o;
@@ -476,15 +693,5 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		output.flush();
 		output.close();
 		return tempFile;
-	}
-
-	public void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

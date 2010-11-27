@@ -329,6 +329,15 @@
 		<property name="itemManager" ref="itemManager" />
 		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager" />
 		<property name="deliveryOrderDetailManager" ref="deliveryOrderDetailManager" />
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+		<property name="inboundLogManager" ref="inboundLogManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 
 	<bean id="deliveryOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -43,6 +44,7 @@ public class Plant extends BaseObject implements Serializable {
 	private String errorLogEmail2;
 	private String supplierNotifyEmail;
 	private String doTemplateName;
+	private int version;
 
 	@Id
 	@Column(length = 20)
@@ -277,6 +279,16 @@ public class Plant extends BaseObject implements Serializable {
 
 	public void setDoTemplateName(String doTemplateName) {
 		this.doTemplateName = doTemplateName;
+	}
+
+	@Version
+	@Column(name="version")
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public int getVersion() {
+		return version;
 	}
 
 	/**
