@@ -470,6 +470,15 @@ public class DeliveryOrder extends BaseObject {
 		this.totalVolume = totalVolume;
 	}
 
+	@Column(name = "unit_volume", precision = 18, scale = 4)
+	public String getUnitVolume() {
+		return unitVolume;
+	}
+
+	public void setUnitVolume(String unitVolume) {
+		this.unitVolume = unitVolume;
+	}
+
 	@Column(name = "total_nb_pallets", precision = 18, scale = 4)
 	public BigDecimal getTotalNbPallets() {
 		return totalNbPallets;
