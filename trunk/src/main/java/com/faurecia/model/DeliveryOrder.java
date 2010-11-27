@@ -1,5 +1,6 @@
 package com.faurecia.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public class DeliveryOrder extends BaseObject {
 	 */
 	private static final long serialVersionUID = -7456872599350319130L;
 	
-	private String doNo;
+	private String doNo;    //MANIFEST CODE
 	private String externalDoNo;
 	private PlantSupplier plantSupplier;
 	private String plantName;
@@ -46,14 +47,27 @@ public class DeliveryOrder extends BaseObject {
 	private Date createDate;
 	private Date createDateFrom;
 	private Date createDateTo;
-	private Date startDate;
-	private Date endDate;
+	private Date startDate;    //DATETIME_PICKUP       
+	private Date endDate;      //DATETIME_RECEPTION
 	private Boolean isExport;
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
 	private Boolean isPrint;
+	
+	private String murn;  //code + bar code
+	private String OrderGroup; //MANIFEST ORDER GROUP
+	private String deliveryOrderGroup;  //DELIVERY ORDER GROUPk
+	private String dock;
+	private String route;
+	private String mainRoute;
+	private BigDecimal totalWeight;
+	private String unitWeight;
+	private BigDecimal totalVolume;
+	private String unitVolume;
+	private BigDecimal totalNbPallets;
+	private String title;
 	
 	@Id
 	@Column(name = "do_no", length = 10)

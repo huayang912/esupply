@@ -169,7 +169,7 @@ public class SupplierItemAction extends BaseAction {
 		newSupplierItem.setSupplierItemCode(supplierItem.getSupplierItemCode());
 		supplierItem = this.supplierItemManager.save(newSupplierItem);
 		saveMessage(getText("supplierItem.updated"));
-	
+		this.supplierItemManager.flushSession();
 		return SUCCESS;
 	}
 }

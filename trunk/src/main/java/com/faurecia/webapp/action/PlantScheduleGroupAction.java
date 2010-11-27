@@ -77,7 +77,7 @@ public class PlantScheduleGroupAction extends BaseAction {
 		} catch (Exception ex) {
 			saveMessage(getText("plantScheduleGroup.deletefail"));
 		}
-
+		this.plantScheduleGroupManager.flushSession();
 		return SUCCESS;
 	}
 
@@ -136,7 +136,7 @@ public class PlantScheduleGroupAction extends BaseAction {
 
 		String key = (isNew) ? "plantScheduleGroup.added" : "plantScheduleGroup.updated";
 		saveMessage(getText(key));
-
+		this.plantScheduleGroupManager.flushSession();
 		if (!isNew) {
 			prepare();
 			return INPUT;

@@ -80,7 +80,7 @@ public class PlantAction extends BaseAction {
 	public String delete() {
 		this.plantManager.remove(plant.getCode());
 		saveMessage(getText("plant.deleted"));
-
+		this.plantManager.flushSession();
 		return SUCCESS;
 	}
 
@@ -114,7 +114,7 @@ public class PlantAction extends BaseAction {
 		
 		String key = (isNew) ? "plant.added" : "plant.updated";
 		saveMessage(getText(key));
-
+		this.plantManager.flushSession();
 		if (!isNew) {
 			return INPUT;
 		} else {

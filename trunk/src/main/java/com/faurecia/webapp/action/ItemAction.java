@@ -69,6 +69,7 @@ public class ItemAction extends BaseAction {
 
 	public String delete() {
 		this.itemManager.remove(item.getId());
+		this.itemManager.flushSession();
 		saveMessage(getText("item.deleted"));
 
 		return SUCCESS;
@@ -96,7 +97,7 @@ public class ItemAction extends BaseAction {
 
 		String key = (isNew) ? "item.added" : "item.updated";
 		saveMessage(getText(key));
-
+		this.itemManager.flushSession();
 		if (!isNew) {
 			return INPUT;
 		} else {

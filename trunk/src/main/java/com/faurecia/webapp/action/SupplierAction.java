@@ -126,7 +126,7 @@ public class SupplierAction extends BaseAction {
 	public String delete() {
 		this.plantSupplierManager.remove(plantSupplier.getId());
 		saveMessage(getText("plantSupplier.deleted"));
-
+		this.plantSupplierManager.flushSession();
 		return SUCCESS;
 	}
 
@@ -177,7 +177,7 @@ public class SupplierAction extends BaseAction {
 
 		String key = (isNew) ? "plantSupplier.added" : "plantSupplier.updated";
 		saveMessage(getText(key));
-
+		this.plantSupplierManager.flushSession();
 		if (!isNew) {
 			return INPUT;
 		} else {
