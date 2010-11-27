@@ -30,7 +30,8 @@
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.code" theme="xhtml"
-		required="true" cssClass="text medium" /></div>
+		required="true" cssClass="text medium" />
+		<s:hidden key="plant.version" /></div>
 	<div><s:textfield key="plant.name" theme="xhtml" required="true"
 		cssClass="text medium" /></div>
 	</div>

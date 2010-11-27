@@ -24,3 +24,9 @@ alter table do add total_volume numeric(18, 4);
 alter table do add unit_volume numeric(18, 4);
 alter table do add total_nb_pallets numeric(18, 4);
 alter table do add title varchar(20);
+
+alter table do_detail add label int;
+
+alter table plant add version int;
+update plant set version = 1;
+alter table plant add version int;

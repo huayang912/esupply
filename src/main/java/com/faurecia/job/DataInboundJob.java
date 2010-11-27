@@ -18,11 +18,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 
+import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.Receipt;
 import com.faurecia.model.Schedule;
+import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.InboundLogManager;
 import com.faurecia.service.MailEngine;
@@ -40,11 +42,12 @@ public class DataInboundJob {
 	private PurchaseOrderManager purchaseOrderManager;
 	private ScheduleManager scheduleManager;
 	private ReceiptManager receiptManager;
+	private DeliveryOrderManager deliveryOrderManager;
 	
 	protected MailEngine mailEngine;
 	protected SimpleMailMessage mailMessage;
 	protected String errorInboundTemplateName;
-	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR" };
+	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR", "DESADV" };
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -64,6 +67,10 @@ public class DataInboundJob {
 
 	public void setReceiptManager(ReceiptManager receiptManager) {
 		this.receiptManager = receiptManager;
+	}
+	
+	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
+		this.deliveryOrderManager = deliveryOrderManager;
 	}
 	
 	public void setMailEngine(MailEngine mailEngine) {
@@ -186,6 +193,7 @@ public class DataInboundJob {
 					PurchaseOrder po = null;
 					Schedule schedule = null;
 					Receipt receipt = null;
+					List<DeliveryOrder> doList = null;
 					try {
 						if (dataType.equals("ORDERS")) {
 							po = this.purchaseOrderManager.saveSingleFile(inputStream, inboundLog);
@@ -193,6 +201,8 @@ public class DataInboundJob {
 							schedule = this.scheduleManager.saveSingleFile(inputStream, inboundLog);
 						} else if (dataType.equals("MBGMCR")) {
 							receipt = this.receiptManager.saveSingleFile(inputStream, inboundLog);
+						} else if (dataType.equals("DESADV")) {
+							doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog);
 						}
 					} catch (Exception ex) {
 						log.error("Error when save file to database.", ex);
@@ -253,6 +263,13 @@ public class DataInboundJob {
 						if (receipt != null && receipt.getReceiptNo() != null) {
 							// 手工回滚
 							this.receiptManager.remove(receipt.getReceiptNo());
+						}
+						
+						if (doList != null && doList.size() > 0) {
+							// 手工回滚
+							for(DeliveryOrder deliveryOrder : doList) {								
+								this.deliveryOrderManager.remove(deliveryOrder.getDoNo());
+							}
 						}
 
 						if (backupFile != null) {

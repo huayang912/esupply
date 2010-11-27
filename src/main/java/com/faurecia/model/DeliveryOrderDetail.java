@@ -32,7 +32,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String itemDescription;
 	private String supplierItemCode;
 	private String uom;
-	private BigDecimal unitCount;
+	private BigDecimal unitCount;   //ORDER_LOT
 	private BigDecimal qty;
 	private BigDecimal orderedQty;
 	private BigDecimal receivedQty;
@@ -40,6 +40,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String referenceSequence;
 	private ScheduleItemDetail scheduleItemDetail;
 	private PurchaseOrderDetail purchaseOrderDetail;
+	private Integer label; 
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -206,6 +207,15 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
 		this.purchaseOrderDetail = purchaseOrderDetail;
+	}
+	
+	@Column(name = "label")
+	public Integer getLabel() {
+		return label;
+	}
+
+	public void setLabel(Integer label) {
+		this.label = label;
 	}
 
 	/**

@@ -63,9 +63,9 @@ public class DeliveryOrder extends BaseObject {
 	private String route;
 	private String mainRoute;
 	private BigDecimal totalWeight;
-	private String unitWeight;
+	private BigDecimal unitWeight;
 	private BigDecimal totalVolume;
-	private String unitVolume;
+	private BigDecimal unitVolume;
 	private BigDecimal totalNbPallets;
 	private String title;	
 	
@@ -453,11 +453,11 @@ public class DeliveryOrder extends BaseObject {
 	}
 
 	@Column(name = "unit_weight", precision = 18, scale = 4)
-	public String getUnitWeight() {
+	public BigDecimal getUnitWeight() {
 		return unitWeight;
 	}
 
-	public void setUnitWeight(String unitWeight) {
+	public void setUnitWeight(BigDecimal unitWeight) {
 		this.unitWeight = unitWeight;
 	}
 
@@ -471,11 +471,11 @@ public class DeliveryOrder extends BaseObject {
 	}
 
 	@Column(name = "unit_volume", precision = 18, scale = 4)
-	public String getUnitVolume() {
+	public BigDecimal getUnitVolume() {
 		return unitVolume;
 	}
 
-	public void setUnitVolume(String unitVolume) {
+	public void setUnitVolume(BigDecimal unitVolume) {
 		this.unitVolume = unitVolume;
 	}
 
