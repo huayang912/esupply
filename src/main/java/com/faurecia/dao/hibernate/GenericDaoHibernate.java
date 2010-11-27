@@ -52,7 +52,7 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List<T> getAll() {
+    public List<T> getAll() {  
         return super.getHibernateTemplate().loadAll(this.persistentClass);
     }
     
@@ -139,5 +139,13 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
    @SuppressWarnings("unchecked")
    public List<T> findByExample(T exampleEntity) {
 	   return getHibernateTemplate().findByExample(exampleEntity);
+   }
+   
+   public void clear() {
+	   getHibernateTemplate().clear();
+   }
+   
+   public void flush() {
+	   getHibernateTemplate().flush();
    }
 }

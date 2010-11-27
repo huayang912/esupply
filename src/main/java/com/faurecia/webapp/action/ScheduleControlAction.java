@@ -80,7 +80,7 @@ public class ScheduleControlAction extends BaseAction {
 				this.scheduleControlManager.save(scheduleControl);
 			}
 		}
-
+		this.scheduleControlManager.flushSession();
 		prepare();
 		saveMessage(getText("scheduleControl.updated"));
 		return SUCCESS;

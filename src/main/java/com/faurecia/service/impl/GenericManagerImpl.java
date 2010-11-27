@@ -88,7 +88,7 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
      * {@inheritDoc}
      */
     public T save(T object) {
-        return genericDao.save(object);
+        return genericDao.save(object);     
     }
 
     /**
@@ -108,5 +108,13 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
     
     public List<T> findByExample(T exampleEntity) {
     	return this.genericDao.findByExample(exampleEntity);
-    }    
+    } 
+    
+    public void clearSession() {
+    	this.genericDao.clear();
+    }
+    
+    public void flushSession() {
+    	this.genericDao.flush();
+    }
 }

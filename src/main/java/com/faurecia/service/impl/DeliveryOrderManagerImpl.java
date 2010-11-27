@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -26,6 +27,7 @@ import com.faurecia.dao.GenericDao;
 import com.faurecia.lisa.kmp58.ManifestFile;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
+import com.faurecia.model.InboundLog;
 import com.faurecia.model.Item;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
@@ -40,6 +42,8 @@ import com.faurecia.model.delvry.DELVRY03E1EDL41;
 import com.faurecia.model.delvry.DELVRY03E1EDT13;
 import com.faurecia.model.delvry.DESADVDELVRY03;
 import com.faurecia.model.delvry.EDIDC40DESADVDELVRY03;
+import com.faurecia.model.order.ORDERS02;
+import com.faurecia.service.DataConvertException;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.ItemManager;
@@ -65,7 +69,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		super(genericDao);
 		JAXBContext jc = JAXBContext.newInstance("com.faurecia.model.delvry");
 		marshaller = jc.createMarshaller();
-		
+
 		JAXBContext jc2 = JAXBContext.newInstance("com.faurecia.lisa.kmp58");
 		Unmarshaller unmarshaller = jc.createUnmarshaller();
 	}
@@ -85,11 +89,11 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
-	
+
 	public void setItemManager(ItemManager itemManager) {
 		this.itemManager = itemManager;
 	}
-	
+
 	public void setScheduleItemDetailManager(GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager) {
 		this.scheduleItemDetailManager = scheduleItemDetailManager;
 	}
@@ -110,7 +114,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				purchaseOrder = purchaseOrderDetail.getPurchaseOrder();
 				deliveryOrder = new DeliveryOrder();
 				BeanUtils.copyProperties(deliveryOrder, purchaseOrder);
-				
+
 				deliveryOrder.setDoNo(this.numberControlManager.generateNumber(purchaseOrder.getPlantSupplier().getDoNoPrefix(), 10));
 				deliveryOrder.setExternalDoNo(deliveryOrder.getDoNo());
 				deliveryOrder.setCreateDate(new Date());
@@ -121,38 +125,38 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 			DeliveryOrderDetail deliveryOrderDetail = new DeliveryOrderDetail();
 			BeanUtils.copyProperties(deliveryOrderDetail, purchaseOrderDetail);
-			
+
 			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
 			deliveryOrderDetail.setUnitCount(purchaseOrderDetail.getItem().getUnitCount());
 			deliveryOrderDetail.setQty(purchaseOrderDetail.getCurrentShipQty());
-			//deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
+			// deliveryOrderDetail.setOrderQty(purchaseOrderDetail.getQty());
 			deliveryOrderDetail.setReferenceOrderNo(purchaseOrderDetail.getPurchaseOrder().getPoNo());
 			deliveryOrderDetail.setReferenceSequence(purchaseOrderDetail.getSequence());
 			deliveryOrderDetail.setPurchaseOrderDetail(purchaseOrderDetail);
 			deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
 
-//			if (purchaseOrderDetail.getShipQty() == null) {
-//				purchaseOrderDetail.setShipQty(BigDecimal.ZERO);
-//			}
-//
-//			purchaseOrderDetail.setShipQty(purchaseOrderDetail.getShipQty().add(purchaseOrderDetail.getCurrentShipQty()));
+			// if (purchaseOrderDetail.getShipQty() == null) {
+			// purchaseOrderDetail.setShipQty(BigDecimal.ZERO);
+			// }
+			//
+			// purchaseOrderDetail.setShipQty(purchaseOrderDetail.getShipQty().add(purchaseOrderDetail.getCurrentShipQty()));
 
 			this.purchaseOrderDetailManager.save(purchaseOrderDetail);
 		}
 
-		//this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrder.getPoNo());
+		// this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrder.getPoNo());
 		this.save(deliveryOrder);
 
 		return deliveryOrder;
 	}
 
 	public DeliveryOrder createScheduleDeliveryOrder(DeliveryOrder deliveryOrder) {
-		
+
 		PlantSupplier plantSupplier = this.plantSupplierManager.get(deliveryOrder.getPlantSupplier().getId());
 		deliveryOrder.setPlantSupplier(plantSupplier);
 		deliveryOrder.setDoNo(this.numberControlManager.generateNumber(plantSupplier.getDoNoPrefix(), 10));
 		deliveryOrder.setExternalDoNo(deliveryOrder.getDoNo());
-		
+
 		List<DeliveryOrderDetail> deliveryOrderDetailList = deliveryOrder.getDeliveryOrderDetailList();
 
 		for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
@@ -162,84 +166,77 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrderDetail.setDeliveryOrder(deliveryOrder);
 			deliveryOrderDetail.setItem(item);
 			deliveryOrderDetail.setPurchaseOrderDetail(null);
-			//deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
-			
-//			ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();
-			
-//			BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
-//			if (deliverQty == null) {
-//				deliverQty = deliveryOrderDetail.getCurrentQty();
-//			} else {
-//				deliverQty = deliverQty.add(deliveryOrderDetail.getCurrentQty());
-//			}
-//			scheduleItemDetail.setDeliverQty(deliverQty);
-			
-//			this.scheduleItemDetailManager.save(scheduleItemDetail);
+			// deliveryOrderDetail.setQty(deliveryOrderDetail.getCurrentQty());
+
+			// ScheduleItemDetail scheduleItemDetail =
+			// deliveryOrderDetail.getScheduleItemDetail();
+
+			// BigDecimal deliverQty = scheduleItemDetail.getDeliverQty();
+			// if (deliverQty == null) {
+			// deliverQty = deliveryOrderDetail.getCurrentQty();
+			// } else {
+			// deliverQty = deliverQty.add(deliveryOrderDetail.getCurrentQty());
+			// }
+			// scheduleItemDetail.setDeliverQty(deliverQty);
+
+			// this.scheduleItemDetailManager.save(scheduleItemDetail);
 		}
 		deliveryOrder.setStatus("Create");
 		this.save(deliveryOrder);
-		
+
 		return this.get(deliveryOrder.getDoNo(), true);
 	}
-	
+
 	public DeliveryOrder confirm(DeliveryOrder deliveryOrder) {
 		deliveryOrder.setStatus("Confirm");
-		
+
 		List<DeliveryOrderDetail> deliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
-		for(int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
+		for (int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
 			DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
-			if (deliveryOrderDetail.getQty() != null && 
-					deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
+			if (deliveryOrderDetail.getQty() != null && deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
 				deliveryOrderDetailList.add(deliveryOrderDetail);
-				
+
 				if (deliveryOrderDetail.getPurchaseOrderDetail() != null) {
 					PurchaseOrderDetail purchaseOrderDetail = deliveryOrderDetail.getPurchaseOrderDetail();
-					if (purchaseOrderDetail.getShipQty() == null)
-					{
+					if (purchaseOrderDetail.getShipQty() == null) {
 						purchaseOrderDetail.setShipQty(deliveryOrderDetail.getQty());
-					}
-					else 
-					{
+					} else {
 						BigDecimal deliverQty = purchaseOrderDetail.getShipQty().add(deliveryOrderDetail.getQty());
 						purchaseOrderDetail.setShipQty(deliverQty);
 					}
-					
+
 					purchaseOrderDetail = this.purchaseOrderDetailManager.save(purchaseOrderDetail);
-					
+
 					if (purchaseOrderDetail.getQty().compareTo(purchaseOrderDetail.getShipQty()) == 0) {
 						this.purchaseOrderManager.tryClosePurchaseOrder(purchaseOrderDetail.getPurchaseOrder().getPoNo(), purchaseOrderDetail);
 					}
-					
+
 				} else if (deliveryOrderDetail.getScheduleItemDetail() != null) {
 					ScheduleItemDetail scheduleItemDetail = deliveryOrderDetail.getScheduleItemDetail();
-					if (scheduleItemDetail.getDeliverQty() == null)
-					{
+					if (scheduleItemDetail.getDeliverQty() == null) {
 						scheduleItemDetail.setDeliverQty(deliveryOrderDetail.getQty());
-					}
-					else 
-					{
+					} else {
 						BigDecimal deliverQty = scheduleItemDetail.getDeliverQty().add(deliveryOrderDetail.getQty());
 						scheduleItemDetail.setDeliverQty(deliverQty);
 					}
-					
+
 					this.scheduleItemDetailManager.save(scheduleItemDetail);
 				}
-			}
-			else {
+			} else {
 				this.deliveryOrderDetailManager.remove(deliveryOrderDetail.getId());
 			}
 		}
-		
+
 		deliveryOrder.setDeliveryOrderDetailList(deliveryOrderDetailList);
 		this.genericDao.save(deliveryOrder);
-		
+
 		return deliveryOrder;
 	}
 
 	public List<DeliveryOrder> getUnexportDeliveryOrderByPlant(Plant plant) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
 		criteria.createAlias("plantSupplier", "ps");
-		
+
 		criteria.add(Restrictions.eq("ps.plant", plant));
 		criteria.add(Restrictions.eq("isPrint", true));
 		criteria.add(Restrictions.eq("isExport", false));
@@ -247,18 +244,17 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		criteria.addOrder(Order.asc("createDate"));
 
 		List<DeliveryOrder> deliveryOrderList = this.findByCriteria(criteria);
-	
+
 		if (deliveryOrderList != null && deliveryOrderList.size() > 0) {
 			for (int i = 0; i < deliveryOrderList.size(); i++) {
 				DeliveryOrder deliveryOrder = deliveryOrderList.get(i);
-				
-				if (deliveryOrder.getDeliveryOrderDetailList() != null
-						&& deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
-					
+
+				if (deliveryOrder.getDeliveryOrderDetailList() != null && deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
+
 				}
 			}
 		}
-		
+
 		return deliveryOrderList;
 	}
 
@@ -296,6 +292,97 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		DELVRY.setIDOC(DESADVDELVRY);
 
 		return marshalOrder(DELVRY, filePath, filePrefix, fileSuffix);
+	}
+
+	public List<DeliveryOrder> saveMultiFile(InputStream inputStream) {
+//		try {
+//			ManifestFile order = unmarshalOrder(inputStream);
+//			List<DeliveryOrder> doList = ManifestFileToDo(order);
+//
+//			if (inboundLog.getPlantSupplier() == null) {
+//				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
+//			}
+//
+//			// 如果采购单发送错误，同一个定单号，新定单直接覆盖旧定单
+//			if (this.exists(purchaseOrder.getPoNo())) {
+//				PurchaseOrder oldPurchaseOrder = this.get(purchaseOrder.getPoNo(), true);
+//
+//				for (int i = 0; i < purchaseOrder.getPurchaseOrderDetailList().size(); i++) {
+//					PurchaseOrderDetail purchaseOrderDetail = purchaseOrder.getPurchaseOrderDetailList().get(i);
+//					boolean findMatch = false;
+//					
+//					for (int k = 0; k < oldPurchaseOrder.getPurchaseOrderDetailList().size(); k++) {
+//						PurchaseOrderDetail oldPurchaseOrderDetail = oldPurchaseOrder.getPurchaseOrderDetailList().get(k);
+//						if (purchaseOrderDetail.getSequence().equals(oldPurchaseOrderDetail.getSequence())) {
+//							oldPurchaseOrderDetail.setQty(purchaseOrderDetail.getQty());
+//							oldPurchaseOrderDetail.setDeliveryDate(purchaseOrderDetail.getDeliveryDate());
+//							findMatch = true;
+//							break;
+//						}
+//					}
+//					
+//					if (!findMatch) {
+//						oldPurchaseOrder.addPurchaseOrderDetail(purchaseOrderDetail);
+//					}
+//				}
+//
+//				this.save(oldPurchaseOrder);
+//			} else {
+//				// 保存采购单
+//				this.save(purchaseOrder);
+//			}
+//			
+//			this.flushSession();
+//
+//			inboundLog.setInboundResult("success");
+//
+//			return purchaseOrder;
+//
+//		} catch (JAXBException jaxbException) {
+//			log.error("Error occur when unmarshal ORDERS.", jaxbException);
+//			inboundLog.setInboundResult("fail");
+//			inboundLog.setMemo(jaxbException.getMessage());
+//		} catch (DataConvertException dataConvertException) {
+//			log.error("Error occur when convert ORDERS to PO.", dataConvertException);
+//			inboundLog.setInboundResult("fail");
+//
+//			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
+//			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null) {
+//				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
+//			}
+//			inboundLog.setMemo(dataConvertException.getMessage());
+//		} catch (Exception exception) {
+//			log.error("Error occur.", exception);
+//			inboundLog.setInboundResult("fail");
+//			inboundLog.setMemo(exception.getMessage());
+//		}
+
+		return null;
+	}
+	
+	private DeliveryOrder ManifestFileToDo(final ManifestFile order) throws DataConvertException {
+		List<DeliveryOrder> deliveryOrderList = new ArrayList<DeliveryOrder>();
+		
+		if (order != null && order.getFileHeaderOrDeliveryOrFileEnd() != null 
+				&& order.getFileHeaderOrDeliveryOrFileEnd().size() > 0) {
+			
+			ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader)order.getFileHeaderOrDeliveryOrFileEnd().get(0);
+			//Plant plant = fileHeader.getPCODE()
+			
+			for(Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
+				if (obj instanceof ManifestFile.Delivery) {
+					ManifestFile.Delivery delivery = (ManifestFile.Delivery)obj;
+					ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private ManifestFile unmarshalOrder(InputStream stream) throws JAXBException {
+		ManifestFile o = (ManifestFile) unmarshaller.unmarshal(stream);
+		return o;
 	}
 
 	private void AddE1EDL20List(List<DELVRY03E1EDL20> E1EDL20List, DeliveryOrder deliveryOrder) {
@@ -343,8 +430,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		E1EDT13.setQUALF("007");
 		E1EDT13.setNTANF(format.format(new Date()));
 		E1EDT13.setNTEND(format.format(new Date()));
-		//E1EDT13.setNTANF(format.format(deliveryOrder.getStartDate()));
-		//E1EDT13.setNTEND(format.format(deliveryOrder.getEndDate()));
+		// E1EDT13.setNTANF(format.format(deliveryOrder.getStartDate()));
+		// E1EDT13.setNTEND(format.format(deliveryOrder.getEndDate()));
 
 		E1EDT13List.add(E1EDT13);
 	}
@@ -389,5 +476,15 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		output.flush();
 		output.close();
 		return tempFile;
+	}
+
+	public void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -128,7 +128,7 @@ public class NoticeAction extends BaseAction {
 	public String delete() {
 		this.noticeManager.remove(notice.getId());
 		saveMessage(getText("notice.deleted"));
-
+		this.noticeManager.flushSession();
 		return SUCCESS;
 	}
 
@@ -191,7 +191,7 @@ public class NoticeAction extends BaseAction {
 		notice.setPlant(user.getUserPlant());
 		
 		this.noticeManager.save(notice);
-		
+		this.noticeManager.flushSession();
 		String key = (isNew) ? "notice.added" : "notice.updated";
 		saveMessage(getText(key));
 

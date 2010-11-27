@@ -149,6 +149,8 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 
 			// ±£´æ²É¹ºµ¥
 			this.save(receipt);
+			
+			this.flushSession();
 
 			inboundLog.setInboundResult("success");
 

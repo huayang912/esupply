@@ -462,13 +462,16 @@ public class DeliveryOrderAction extends BaseAction {
 				saveMessage(getText("deliveryOrder.added"));
 			}
 		}
-
+		
+		this.deliveryOrderManager.flushSession();
+		
 		return SUCCESS;
 	}
 
 	public String save() {
 		if (!collectDevlieryOrder()) {
 			this.deliveryOrderManager.save(deliveryOrder);
+			this.deliveryOrderManager.flushSession();
 			saveMessage(getText("deliveryOrder.updated"));
 		}
 
@@ -494,7 +497,7 @@ public class DeliveryOrderAction extends BaseAction {
 				saveMessage(getText("deliveryOrder.confirmed"));
 			}
 		}
-
+		this.deliveryOrderManager.flushSession();
 		return SUCCESS;
 	}
 
