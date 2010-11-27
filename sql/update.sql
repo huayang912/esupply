@@ -10,3 +10,17 @@ CREATE UNIQUE NONCLUSTERED INDEX [DO_INDEX] ON [dbo].[do]
 --add orderedqty and receivedqty
 alter table do_detail add order_Qty numeric(18, 4);
 alter table do_detail add receive_Qty numeric(18, 4);
+
+--add some fields for print label
+alter table do add murn varchar(20);
+alter table do add order_group varchar(20);
+alter table do add delivery_order_group varchar(20);
+alter table do add dock varchar(20);
+alter table do add route varchar(20);
+alter table do add main_route varchar(20);
+alter table do add total_weight numeric(18, 4);
+alter table do add unit_weight numeric(18, 4);
+alter table do add total_volume numeric(18, 4);
+alter table do add unit_volume numeric(18, 4);
+alter table do add total_nb_pallets numeric(18, 4);
+alter table do add title varchar(20);
