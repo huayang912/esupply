@@ -36,7 +36,16 @@
 					<td><s:submit key="button.print" action="printDeliveryOrder" />
 					</td>
 				</c:if>
-
+				<c:if
+					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
+					<td><s:submit key="button.printPalletLabel"
+						action="printPalletLabel" /></td>
+				</c:if>
+				<c:if
+					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
+					<td><s:submit key="button.printBoxLabel"
+						action="printBoxLabel" /></td>
+				</c:if>
 				<td><input type="button"
 					value="<fmt:message key="button.cancel"/>"
 					onclick="window.location.href='cancelDeliveryOrder.html'" /></td>
@@ -46,7 +55,8 @@
 
 	<table width="100%">
 		<tr>
-			<td><s:label key="deliveryOrder.externalDoNo" cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.externalDoNo"
+				cssClass="text medium" /></td>
 			<td><s:hidden name="deliveryOrder.doNo" key="deliveryOrder.doNo" />
 			<s:hidden name="deliveryOrder.plantCode"
 				key="deliveryOrder.plantCode" /> <s:hidden
@@ -126,6 +136,10 @@
 	<display:table name="deliveryOrder.deliveryOrderDetailList"
 		cellspacing="0" cellpadding="0" requestURI="" id="deliveryOrderDetail"
 		class="table">
+		<display:column >
+			<input type="checkbox"
+				name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].isChoosen" />
+		</display:column>
 		<display:column property="sequence"
 			titleKey="deliveryOrderDetail.sequence" />
 		<display:column property="item.code"
@@ -190,9 +204,6 @@
 					value="<c:out value="${deliveryOrderDetail.item.id}"/>" />
 			</display:column>
 		</c:if>
-
-
-
 	</display:table>
 
 	<div class="buttonBar bottom">
