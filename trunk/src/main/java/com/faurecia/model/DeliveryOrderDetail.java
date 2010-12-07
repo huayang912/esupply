@@ -41,6 +41,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	private ScheduleItemDetail scheduleItemDetail;
 	private PurchaseOrderDetail purchaseOrderDetail;
 	private Integer label; 
+	private Boolean isChoosen;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -216,6 +217,11 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setLabel(Integer label) {
 		this.label = label;
+	}
+	
+	@Transient
+	public Boolean getIsChoosen() {
+		return isChoosen;
 	}
 
 	/**
