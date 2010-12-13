@@ -535,9 +535,8 @@ public class DeliveryOrderAction extends BaseAction {
 	public String printPalletLabel() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		inputStream = DeliveryOrderExportUtil.printPalletLabel(localAbsolutPath, "Pallet.png",
-				deliveryOrder);
-		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";
+		inputStream = DeliveryOrderExportUtil.printPalletLabel(localAbsolutPath, "Pallet.png", deliveryOrder);
+		fileName = "PalletLabel_" + deliveryOrder.getDoNo() + ".pdf";
 
 		return SUCCESS;
 	}
@@ -546,22 +545,21 @@ public class DeliveryOrderAction extends BaseAction {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 		List<DeliveryOrderDetail> selectedDeliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
-		if(deliveryOrderDetailList== null)
-		{
+		if (deliveryOrderDetailList == null) {
 			return ERROR;
-		}else
-		{
-			for(int i=0;i<deliveryOrderDetailList.size();i++)
-			{
-				if(deliveryOrderDetailList.get(i) != null)
-				{
-					selectedDeliveryOrderDetailList.add(deliveryOrder.getDeliveryOrderDetailList().get(i-1));
+		} else {
+			for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
+				if (deliveryOrderDetailList.get(i) != null) {
+					selectedDeliveryOrderDetailList.add(deliveryOrder.getDeliveryOrderDetailList().get(i - 1));
 				}
 			}
 		}
-	
-		inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, "Box.png", deliveryOrder, selectedDeliveryOrderDetailList);
-		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";
+		if (true) {
+			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, "Box.png", deliveryOrder, selectedDeliveryOrderDetailList);
+		} else {
+			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, "Box1.png", deliveryOrder, selectedDeliveryOrderDetailList);
+		}
+		fileName = "BoxLabel_" + deliveryOrder.getDoNo() + ".pdf";
 		return SUCCESS;
 	}
 
