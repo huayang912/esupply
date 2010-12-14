@@ -590,6 +590,43 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				deliveryOrder.setTotalNbPallets(new BigDecimal(header.getTOTPAL()));
 			}
 			deliveryOrder.setTitle(header.getMANTITLE());
+			
+			int i = 0;
+			for (ManifestFile.Delivery.Recpos recpos : delivery.getRecpos()) {
+				i++;
+				
+				String itemCode = recpos.getPNUMBER();
+				try {
+					// 零件号如果是全数字，则要把前置0去掉
+					itemCode = Long.toString((Long.parseLong(itemCode)));
+				} catch (NumberFormatException ex) {
+				}
+
+				Item item = this.itemManager.getItemByPlantAndItem(plant, itemCode);
+				String itemDescription = recpos.getDESC();
+
+				if (item == null) {
+					log.info("Item not found with the given item code: " + itemCode + ", try to create a new one.");
+
+					item = new Item();
+					item.setCode(itemCode);
+					item.setDescription(itemDescription);
+					item.setPlant(plant);
+					item.setUom("");			
+
+					item = this.itemManager.save(item);
+				}								
+				
+				DeliveryOrderDetail detail = new DeliveryOrderDetail();
+				detail.setDeliveryOrder(deliveryOrder);										
+				detail.setItem(item);
+				detail.setItemDescription(itemDescription);
+				detail.setLabel(Integer.parseInt(recpos.getLABELID()));
+				detail.setOrderLot(new BigDecimal(recpos.getOLOT()));
+				detail.setSequence(String.valueOf(i));
+				detail.setUnitCount(new BigDecimal(recpos.getPCSPU()));
+				
+			}
 
 			return deliveryOrder;
 		} catch (Exception e) {

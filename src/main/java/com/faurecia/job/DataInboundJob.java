@@ -99,15 +99,15 @@ public class DataInboundJob {
 							.getTempFileDirectory(), plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), nowDate, "service", plant);
 
 					// 设置下次运行时间
-					if (plant.getNextInboundDate() == null) {
-						plant.setNextInboundDate(nowDate);
+					Plant newPlant = this.plantManager.get(plant.getCode());
+					if (newPlant.getNextInboundDate() == null) {
+						newPlant.setNextInboundDate(nowDate);
 					}
-					plant
-							.setNextInboundDate(DateUtil.AddTime(plant.getNextInboundDate(), plant.getInboundIntervalType(), plant
+					newPlant.setNextInboundDate(DateUtil.AddTime(newPlant.getNextInboundDate(), newPlant.getInboundIntervalType(), newPlant
 									.getInboundInterval()));
-					log.info("Set next inbound date: " + DateUtil.getDateTime("MM/dd/yyyy HH:mm:ss.SSS", plant.getNextInboundDate()) + ".");
-					this.plantManager.save(plant);
-					log.info("End inbound data for plant: " + plant.getName() + ".");
+					log.info("Set next inbound date: " + DateUtil.getDateTime("MM/dd/yyyy HH:mm:ss.SSS", newPlant.getNextInboundDate()) + ".");
+					this.plantManager.save(newPlant);
+					log.info("End inbound data for plant: " + newPlant.getName() + ".");
 				}
 			}
 		} else {

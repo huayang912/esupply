@@ -109,7 +109,7 @@ public class PlantAction extends BaseAction {
 
 		boolean isNew = (plant.getCode() == null);
 
-		plant = this.plantManager.save(plant);
+		this.plantManager.save(plant);
 		plant.setConfirmFtpPassword(plant.getFtpPassword());
 		
 		String key = (isNew) ? "plant.added" : "plant.updated";

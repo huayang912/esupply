@@ -32,9 +32,11 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String itemDescription;
 	private String supplierItemCode;
 	private String uom;
-	private BigDecimal unitCount;   //ORDER_LOT
-	private BigDecimal qty;
-	private BigDecimal orderedQty;
+	private BigDecimal orderLot;    //ORDER_LOT
+	private BigDecimal unitCount;   //Pcs / box
+	private BigDecimal qty;         //Total quantity    Calculated -> PCS/PU * NB_PU
+	private BigDecimal boxCount;    //Nb of box or cont.
+	private BigDecimal orderedQty;  //	
 	private BigDecimal receivedQty;
 	private String referenceOrderNo;
 	private String referenceSequence;
@@ -114,6 +116,15 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.uom = uom;
 	}
 	
+	@Column(name="order_lot", nullable = true, precision = 9, scale = 2)
+	public BigDecimal getOrderLot() {
+		return orderLot;
+	}
+
+	public void setOrderLot(BigDecimal orderLot) {
+		this.orderLot = orderLot;
+	}
+	
 	@Column(name="unit_count", nullable = true, precision = 9, scale = 2)
 	public BigDecimal getUnitCount() {
 		return unitCount;
@@ -130,6 +141,15 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setQty(BigDecimal qty) {
 		this.qty = qty;
+	}
+	
+	@Column(name="box_count", nullable = true, precision = 9, scale = 2)
+	public BigDecimal getBoxCount() {
+		return boxCount;
+	}
+
+	public void setBoxCount(BigDecimal boxCount) {
+		this.boxCount = boxCount;
 	}
 	
 	@Column(name="order_Qty", precision = 18, scale = 4)
