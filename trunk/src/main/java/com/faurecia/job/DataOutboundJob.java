@@ -74,14 +74,15 @@ public class DataOutboundJob {
 					UploadFiles(plant, "service", new Date());
 
 					// 设置下次运行时间
-					if (plant.getNextOutboundDate() == null) {
-						plant.setNextOutboundDate(nowDate);
+					Plant newPlant = this.plantManager.get(plant.getCode());
+					if (newPlant.getNextOutboundDate() == null) {
+						newPlant.setNextOutboundDate(nowDate);
 					}
-					plant.setNextOutboundDate(DateUtil.AddTime(plant.getNextOutboundDate(), plant.getOutboundIntervalType(), plant
+					newPlant.setNextOutboundDate(DateUtil.AddTime(newPlant.getNextOutboundDate(), newPlant.getOutboundIntervalType(), newPlant
 									.getOutboundInterval()));
-					log.info("Set next outbound date: " + DateUtil.getDateTime("MM/dd/yyyy HH:mm:ss.SSS", plant.getNextOutboundDate()) + ".");
-					this.plantManager.save(plant);
-					log.info("End outbound data for plant: " + plant.getName() + ".");
+					log.info("Set next outbound date: " + DateUtil.getDateTime("MM/dd/yyyy HH:mm:ss.SSS", newPlant.getNextOutboundDate()) + ".");
+					this.plantManager.save(newPlant);
+					log.info("End outbound data for plant: " + newPlant.getName() + ".");
 				}
 			}
 		} else {

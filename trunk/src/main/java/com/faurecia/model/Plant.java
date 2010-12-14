@@ -44,7 +44,7 @@ public class Plant extends BaseObject implements Serializable {
 	private String errorLogEmail2;
 	private String supplierNotifyEmail;
 	private String doTemplateName;
-	private int version;
+	private Integer version;
 
 	@Id
 	@Column(length = 20)
@@ -280,14 +280,13 @@ public class Plant extends BaseObject implements Serializable {
 	public void setDoTemplateName(String doTemplateName) {
 		this.doTemplateName = doTemplateName;
 	}
-
-	@Version
-	@Column(name="version")
-	public void setVersion(int version) {
+	
+	public void setVersion(Integer version) {
 		this.version = version;
 	}
 
-	public int getVersion() {
+	@Version
+	public Integer getVersion() {
 		return version;
 	}
 
