@@ -1,7 +1,5 @@
 package com.faurecia.webapp.action;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;

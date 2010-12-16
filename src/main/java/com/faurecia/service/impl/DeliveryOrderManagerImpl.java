@@ -442,12 +442,15 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					List<DeliveryOrder> doList = this.findByCriteria(criteria);
 					if (doList != null && doList.size() > 0) {
 						String doNo = doList.get(0).getDoNo();
-						this.genericDao.remove(doNo);
+						this.remove(doNo);
 
 						deliveryOrder.setDoNo(doNo);
 					}
 
 					this.save(deliveryOrder);
+					deliveryOrderList.add(deliveryOrder);
+					
+					this.flushSession();
 				}
 			}
 		}
@@ -663,6 +666,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				}
 				if (detail.getUnitCount() != null && detail.getBoxCount() != null) {
 					detail.setOrderedQty(detail.getUnitCount().multiply(detail.getBoxCount()));
+					detail.setQty(detail.getOrderedQty());
 				}
 				detail.setUom("");
 				

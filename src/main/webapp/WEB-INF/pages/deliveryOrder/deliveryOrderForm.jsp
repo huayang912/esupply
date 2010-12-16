@@ -136,10 +136,13 @@
 	<display:table name="deliveryOrder.deliveryOrderDetailList"
 		cellspacing="0" cellpadding="0" requestURI="" id="deliveryOrderDetail"
 		class="table">
-		<display:column >
-			<input type="checkbox"
-				name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].isChoosen" />
-		</display:column>
+		<c:if
+			test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
+			<display:column>
+				<input type="checkbox"
+					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].isChoosen" />
+			</display:column>
+		</c:if>
 		<display:column property="sequence"
 			titleKey="deliveryOrderDetail.sequence" />
 		<display:column property="item.code"
@@ -150,19 +153,22 @@
 			titleKey="deliveryOrderDetail.supplierItemCode" />
 		<display:column property="uom" titleKey="deliveryOrderDetail.uom" />
 		<display:column property="orderQty"
-			titleKey="deliveryOrderDetail.orderQty" />
+			titleKey="deliveryOrderDetail.orderQty" format="{0,number,#,###.##}" />
 		<display:column property="deliverQty"
-			titleKey="deliveryOrderDetail.deliverQty" />
+			titleKey="deliveryOrderDetail.deliverQty"
+			format="{0,number,#,###.##}" />
 		<c:if
 			test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
-			<display:column property="qty" titleKey="deliveryOrderDetail.qty" />
+			<display:column property="qty" titleKey="deliveryOrderDetail.qty"
+				format="{0,number,#,###.##}" />
 		</c:if>
 		<c:if
 			test="${empty deliveryOrder.doNo or deliveryOrder.status == 'Create'}">
 			<display:column titleKey="deliveryOrderDetail.qty">
 				<input type="text"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].qty"
-					value="${deliveryOrderDetail.qty}" class="text medium" />
+					value="<fmt:formatNumber value="${deliveryOrderDetail.qty}" pattern="#,###.##" />"
+					class="text medium" />
 				<input type="hidden"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].id"
 					value="<c:out value="${deliveryOrderDetail.id}"/>" />
