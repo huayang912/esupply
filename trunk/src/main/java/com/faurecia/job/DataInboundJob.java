@@ -123,7 +123,7 @@ public class DataInboundJob {
 		String errorFileName = "";
 		try {
 			log.info("Connect to ftp server: " + ftpServer + ".");
-			//ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser, ftpPassword, ftpPath);
+			ftpClientUtil.connectServer(ftpServer, ftpPort, ftpUser, ftpPassword, ftpPath);
 		} catch (Exception e) {
 			log.error("Error logon to ftp server.", e);
 			return;

@@ -177,9 +177,11 @@ public class DeliveryOrderDetail extends BaseObject {
 			return scheduleItemDetail.getReleaseQty();
 		} else if (purchaseOrderDetail != null) {
 			return purchaseOrderDetail.getQty();
+		} else {
+			return orderedQty;
 		}
 		
-		return BigDecimal.ZERO;
+		//return BigDecimal.ZERO;
 	}
 	
 	@Transient
@@ -193,7 +195,7 @@ public class DeliveryOrderDetail extends BaseObject {
 		return BigDecimal.ZERO;
 	}
 
-	@Column(name = "reference_order_no", nullable=false, length = 20)
+	@Column(name = "reference_order_no", length = 20)
 	public String getReferenceOrderNo() {
 		return referenceOrderNo;
 	}
@@ -202,7 +204,7 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.referenceOrderNo = referenceOrderNo;
 	}
 
-	@Column(name = "reference_sequence", nullable=false, length = 10)
+	@Column(name = "reference_sequence", length = 10)
 	public String getReferenceSequence() {
 		return referenceSequence;
 	}
