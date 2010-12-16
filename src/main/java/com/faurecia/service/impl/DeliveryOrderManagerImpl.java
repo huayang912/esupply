@@ -446,7 +446,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 						deliveryOrder.setDoNo(doNo);
 					}
-					
+
 					this.save(deliveryOrder);
 				}
 			}
@@ -560,11 +560,15 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setSupplierPhone(header.getSUPTEL());
 			deliveryOrder.setSupplierFax(header.getSUFAX());
 			deliveryOrder.setCreateDate(new Date());
-			if (header.getPICKUP() != null && header.getPICKUP().trim().length() > 0) {
+			try {
 				deliveryOrder.setStartDate(dtFormat.parse(header.getPICKUP()));
+			} catch(Exception ex) {
+				log.warn("Error when convert PICKUP into datetime.", ex);
 			}
-			if (header.getRECEPT() != null && header.getRECEPT().trim().length() > 0) {
+			try {
 				deliveryOrder.setEndDate(dtFormat.parse(header.getRECEPT()));
+			} catch(Exception ex) {
+				log.warn("Error when convert RECEPT into datetime.", ex);
 			}
 			deliveryOrder.setIsExport(false);
 			deliveryOrder.setStatus("Create");
@@ -574,27 +578,37 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setDock(header.getFDCODE());
 			deliveryOrder.setRoute(header.getROUTE());
 			deliveryOrder.setMainRoute(header.getMROUTE());
-			if (header.getTOTWEIGHT() != null && header.getTOTWEIGHT().trim().length() != 0) {
+			try {
 				deliveryOrder.setTotalWeight(new BigDecimal(header.getTOTWEIGHT()));
+			} catch(Exception ex) {
+				log.warn("Error when convert TOTWEIGHT into decimal.", ex);
 			}
-			if (header.getUNITWEIGHT() != null && header.getUNITWEIGHT().trim().length() != 0) {
+			try {
 				deliveryOrder.setUnitWeight(new BigDecimal(header.getUNITWEIGHT()));
+			} catch(Exception ex) {
+				log.warn("Error when convert UNITWEIGHT into decimal.", ex);
 			}
-			if (header.getTOTVOL() != null && header.getTOTVOL().trim().length() != 0) {
+			try {
 				deliveryOrder.setTotalVolume(new BigDecimal(header.getTOTVOL()));
+			} catch(Exception ex) {
+				log.warn("Error when convert TOTVOL into decimal.", ex);
 			}
-			if (header.getUNITVOL() != null && header.getUNITVOL().trim().length() != 0) {
+			try {
 				deliveryOrder.setUnitVolume(new BigDecimal(header.getUNITVOL()));
+			} catch(Exception ex) {
+				log.warn("Error when convert UNITVOL into decimal.", ex);
 			}
-			if (header.getTOTPAL() != null && header.getTOTPAL().trim().length() != 0) {
+			try {
 				deliveryOrder.setTotalNbPallets(new BigDecimal(header.getTOTPAL()));
+			} catch(Exception ex) {
+				log.warn("Error when convert TOTPAL into decimal.", ex);
 			}
 			deliveryOrder.setTitle(header.getMANTITLE());
-			
+
 			int i = 0;
 			for (ManifestFile.Delivery.Recpos recpos : delivery.getRecpos()) {
 				i++;
-				
+
 				String itemCode = recpos.getPNUMBER();
 				try {
 					// 零件号如果是全数字，则要把前置0去掉
@@ -612,20 +626,47 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					item.setCode(itemCode);
 					item.setDescription(itemDescription);
 					item.setPlant(plant);
-					item.setUom("");			
+					item.setUom("");
 
 					item = this.itemManager.save(item);
-				}								
-				
+				}
+
 				DeliveryOrderDetail detail = new DeliveryOrderDetail();
-				detail.setDeliveryOrder(deliveryOrder);										
+				detail.setDeliveryOrder(deliveryOrder);
 				detail.setItem(item);
 				detail.setItemDescription(itemDescription);
-				detail.setLabel(Integer.parseInt(recpos.getLABELID()));
-				detail.setOrderLot(new BigDecimal(recpos.getOLOT()));
+				try {
+					detail.setLabel(Integer.parseInt(recpos.getLABELID()));
+				} catch(Exception ex) {
+					log.warn("Error when convert LABELID into int.", ex);
+				}
+				try {
+					detail.setOrderLot(new BigDecimal(recpos.getOLOT()));
+				} catch(Exception ex) {
+					log.warn("Error when convert OLOT into decimal.", ex);
+				}
 				detail.setSequence(String.valueOf(i));
-				detail.setUnitCount(new BigDecimal(recpos.getPCSPU()));
+				try {
+					detail.setUnitCount(new BigDecimal(recpos.getPCSPU()));
+				} catch (Exception ex) {
+					log.warn("Error when convert PCSPU into decimal.", ex);
+				}
+				try {
+					detail.setIndice(Integer.parseInt(recpos.getPNUMIND()));
+				} catch (Exception ex) {
+					log.warn("Error when convert PNUMIND into int.", ex);
+				}
+				try {
+					detail.setBoxCount(new BigDecimal(recpos.getNBPU()));
+				} catch (Exception ex) {
+					log.warn("Error when convert NBPU into decimal.", ex);
+				}
+				if (detail.getUnitCount() != null && detail.getBoxCount() != null) {
+					detail.setOrderedQty(detail.getUnitCount().multiply(detail.getBoxCount()));
+				}
+				detail.setUom("");
 				
+				deliveryOrder.addDeliveryOrderDetail(detail);
 			}
 
 			return deliveryOrder;

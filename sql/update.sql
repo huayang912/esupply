@@ -31,4 +31,8 @@ alter table do_detail add label int;
 
 alter table plant add version int;
 update plant set version = 1;
-alter table plant add version int;
+alter table plant alter column version int not null;
+
+alter table do_detail add indice int;
+alter table do_detail alter column reference_order_no varchar(20);
+alter table do_detail alter column reference_sequence varchar(10);

@@ -44,6 +44,7 @@ public class DeliveryOrderDetail extends BaseObject {
 	private PurchaseOrderDetail purchaseOrderDetail;
 	private Integer label; 
 	private Boolean isChoosen;
+	private Integer indice;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -237,6 +238,15 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setLabel(Integer label) {
 		this.label = label;
+	}
+	
+	@Column(name = "indice")
+	public Integer getIndice() {
+		return indice;
+	}
+
+	public void setIndice(Integer indice) {
+		this.indice = indice;
 	}
 	
 	@Transient
