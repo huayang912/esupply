@@ -200,10 +200,9 @@ public class DeliveryOrderExportUtil {
 		backGroupImage.setAbsolutePosition(0, 0);
 		backGroupImage.scaleAbsolute(600, 847);
 
-		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-		BaseFont dinBBf = BaseFont.createFont("c:\\windows\\fonts\\ariblk.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);	
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code39r.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code128.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		NumberFormat numberFormat = new DecimalFormat("#.#");
 
 		try {
