@@ -200,7 +200,7 @@ public class DeliveryOrderExportUtil {
 		backGroupImage.setAbsolutePosition(0, 0);
 		backGroupImage.scaleAbsolute(600, 847);
 
-		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);	
+		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code128.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		NumberFormat numberFormat = new DecimalFormat("#.#");
@@ -233,10 +233,10 @@ public class DeliveryOrderExportUtil {
 			}
 
 			// Route Number
-			if (true) {
+			if (deliveryOrder.getRoute() != null) {
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 50);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999", 230, 450, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getRoute(), 230, 450, 0);
 				cb.endText();
 			}
 
@@ -266,13 +266,13 @@ public class DeliveryOrderExportUtil {
 			}
 
 			// Dock
-			if (deliveryOrder.getDock() != null)
+			if (deliveryOrder.getDock() != null) {
 				cb.beginText();
-			cb.setFontAndSize(dinBf, 100);
-			cb.setColorFill(BaseColor.BLACK);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDock(), 300, 150, 0);
-			cb.endText();
-
+				cb.setFontAndSize(dinBf, 100);
+				cb.setColorFill(BaseColor.BLACK);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDock(), 300, 150, 0);
+				cb.endText();
+			}
 		} finally {
 			document.close();
 			return new ByteArrayInputStream(outputStream.toByteArray());
@@ -377,8 +377,7 @@ public class DeliveryOrderExportUtil {
 					cb.setFontAndSize(dinBf, 12);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*0000000000*", 240, 759 - labelHeight, 0);
 					cb.endText();
-				}
-				if (true) {
+				
 					cb.beginText();
 					cb.setFontAndSize(barCodeBf, 18);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "00000000000000000000", 350, 755 - labelHeight, 0);
@@ -446,7 +445,7 @@ public class DeliveryOrderExportUtil {
 				if (true) {
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 30);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "AAAA-A", 330, 605 - labelHeight, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "K17O-2", 330, 605 - labelHeight, 0);
 					cb.endText();
 				}
 
