@@ -375,7 +375,7 @@ public class DeliveryOrderExportUtil {
 				if (true) {
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*0000000000*", 240, 759 - labelHeight, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER,  "*0000000000*", 240, 759 - labelHeight, 0);
 					cb.endText();
 				
 					cb.beginText();
@@ -415,18 +415,18 @@ public class DeliveryOrderExportUtil {
 				}
 
 				// Supplier data + barcode #2
-				if (true) {
-					cb.beginText();
-					cb.setFontAndSize(dinBf, 14);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999999999", 120, 675 - labelHeight, 0);
-					cb.endText();
-				}
-				if (true) {
-					cb.beginText();
-					cb.setFontAndSize(barCodeBf, 20);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999999999999999999", 120, 652 - labelHeight, 0);
-					cb.endText();
-				}
+//				if (true) {
+//					cb.beginText();
+//					cb.setFontAndSize(dinBf, 14);
+//					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999999999", 120, 675 - labelHeight, 0);
+//					cb.endText();
+//				}
+//				if (true) {
+//					cb.beginText();
+//					cb.setFontAndSize(barCodeBf, 20);
+//					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999999999999999999", 120, 652 - labelHeight, 0);
+//					cb.endText();
+//				}
 
 				if (deliveryOrderDetail.getQty() != null) {
 					// Quantity (per box) + barcode #3
