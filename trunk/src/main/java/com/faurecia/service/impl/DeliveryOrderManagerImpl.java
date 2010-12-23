@@ -669,7 +669,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					detail.setQty(detail.getOrderedQty());
 				}
 				detail.setUom("");
-				
+				detail.setPackageType(recpos.getPACKTYPE());
+				detail.setSebango(recpos.getSEBANGO());
+				detail.setStorageCode(recpos.getSCODE());
 				deliveryOrder.addDeliveryOrderDetail(detail);
 			}
 

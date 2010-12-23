@@ -45,6 +45,9 @@ public class DeliveryOrderDetail extends BaseObject {
 	private Integer label; 
 	private Boolean isChoosen;
 	private Integer indice;
+	private String packageType;
+	private String sebango;
+	private String storageCode;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -249,6 +252,33 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setIndice(Integer indice) {
 		this.indice = indice;
+	}
+	
+	@Column(name = "package_type", length = 20)
+	public String getPackageType() {
+		return packageType;
+	}
+
+	public void setPackageType(String packageType) {
+		this.packageType = packageType;
+	}
+	
+	@Column(name = "sebango", length = 20)
+	public String getSebango() {
+		return sebango;
+	}
+
+	public void setSebango(String sebango) {
+		this.sebango = sebango;
+	}
+	
+	@Column(name = "storage_code", length = 20)
+	public String getStorageCode() {
+		return storageCode;
+	}
+
+	public void setStorageCode(String storageCode) {
+		this.storageCode = storageCode;
 	}
 	
 	@Transient
