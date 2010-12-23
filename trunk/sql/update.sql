@@ -36,3 +36,8 @@ alter table do_detail add label int;
 alter table do_detail add indice int;
 alter table do_detail alter column reference_order_no varchar(20);
 alter table do_detail alter column reference_sequence varchar(10);
+
+
+alter table do_detail add package_type varchar(20);
+alter table do_detail add storage_code varchar(20);
+alter table do_detail add sebango varchar(20);
