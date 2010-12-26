@@ -552,7 +552,7 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 		}
-		if (true) {
+		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName() == "Box.png") {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, "Box.png", deliveryOrder, selectedDeliveryOrderDetailList);
 		} else {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, "Box1.png", deliveryOrder, selectedDeliveryOrderDetailList);
