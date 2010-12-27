@@ -151,6 +151,13 @@
 		required="true" cssClass="text large" /></div>
 	</div>
 	</li>
+	
+	<li>
+	<div>
+	<div><s:textfield key="plant.boxTemplateName" theme="xhtml"
+		required="true" cssClass="text large" /></div>
+	</div>
+	</li>
 
 	<li class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></li>
