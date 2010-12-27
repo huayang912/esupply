@@ -519,9 +519,13 @@ public class DeliveryOrderAction extends BaseAction {
 	public String print() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		inputStream = DeliveryOrderExportUtil
-				.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(), deliveryOrder);
-
+		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equals("Do.png")) {
+			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
+					deliveryOrder);
+		} else {
+			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
+					deliveryOrder);
+		}
 		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";
 		if (deliveryOrder.getIsPrint() == null || !deliveryOrder.getIsPrint()) {
 			deliveryOrder.setIsPrint(true);
@@ -552,10 +556,10 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 		}
-		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName() == "Box.png") {
-			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, "Box.png", deliveryOrder, selectedDeliveryOrderDetailList);
+		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equals("Box.png")) {
+			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
 		} else {
-			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, "Box1.png", deliveryOrder, selectedDeliveryOrderDetailList);
+			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
 		}
 		fileName = "BoxLabel_" + deliveryOrder.getDoNo() + ".pdf";
 		return SUCCESS;
