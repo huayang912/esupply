@@ -207,6 +207,16 @@
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
+		
+		<action name="exportItem" class="itemAction"
+			method="export">
+			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
+			<result name="success" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
 
 		<!-- Supplier Item -->
 		<action name="supplierItems" class="supplierItemAction" method="list">
@@ -250,6 +260,16 @@
 			<result name="cancel" type="redirect-action">suppliers</result>
 			<result name="delete" type="redirect-action">suppliers</result>
 			<result name="success" type="redirect-action">suppliers</result>
+		</action>
+		
+		<action name="exportSupplier" class="supplierAction"
+			method="export">
+			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="success" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
 		</action>
 
 		<!-- Purchase Order -->
