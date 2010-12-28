@@ -458,7 +458,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return deliveryOrderList;
 	}
 
-	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant) throws DataConvertException, UserExistsException {
+	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant) throws DataConvertException {
 		DateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
 		ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);

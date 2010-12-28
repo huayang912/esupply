@@ -11,7 +11,6 @@ import javax.xml.bind.JAXBException;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.InboundLog;
 import com.faurecia.model.Plant;
-import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
 
 public interface DeliveryOrderManager extends GenericManager<DeliveryOrder, String> {
@@ -32,4 +31,5 @@ public interface DeliveryOrderManager extends GenericManager<DeliveryOrder, Stri
 			InboundLog inboundLog);
 	
 	void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder);
+	
 }

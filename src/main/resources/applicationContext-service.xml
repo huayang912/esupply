@@ -29,6 +29,8 @@
 			pointcut="execution(* *..service.ScheduleManager.*(..))" order="4" />
 		<aop:advisor id="receiptManagerTx" advice-ref="notSupportTXAdvice"
 			pointcut="execution(* *..service.ReceiptManager.*(..))" order="5" />
+		<aop:advisor id="deliveryOrderManagerTx" advice-ref="notSupportTXAdvice"
+			pointcut="execution(* *..service.DeliveryOrderManager.saveMultiFile(..))" order="5" />
 	</aop:config>
 
 	<!-- Enable @Transactional support -->
@@ -53,7 +55,7 @@
 		<tx:attributes>
 			<tx:method name="*" propagation="NOT_SUPPORTED" />
 		</tx:attributes>
-	</tx:advice>
+	</tx:advice>	
 
 	<tx:advice id="userManagerTxAdvice">
 		<tx:attributes>
