@@ -43,3 +43,71 @@ alter table do_detail add storage_code varchar(20);
 alter table do_detail add sebango varchar(20);
 
 alter table plant add box_template_name varchar(20);
+
+USE [esupply]
+GO
+/****** 对象:  Table [dbo].[resource]    脚本日期: 12/25/2010 20:30:19 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[resource](
+	[id] [numeric](19, 0) IDENTITY(1,1) NOT NULL,
+	[code] [varchar](50) NOT NULL,
+	[type] [varchar](20) NOT NULL,
+ CONSTRAINT [PK_resource] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+
+USE [esupply]
+GO
+/****** 对象:  Table [dbo].[role_resource]    脚本日期: 12/25/2010 20:29:57 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[role_resource](
+	[role_id] [numeric](19, 0) NOT NULL,
+	[resource_id] [numeric](19, 0) NOT NULL
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[role_resource]  WITH CHECK ADD  CONSTRAINT [FK_role_resource_resource] FOREIGN KEY([resource_id])
+REFERENCES [dbo].[resource] ([id])
+GO
+ALTER TABLE [dbo].[role_resource] CHECK CONSTRAINT [FK_role_resource_resource]
+GO
+ALTER TABLE [dbo].[role_resource]  WITH CHECK ADD  CONSTRAINT [FK_role_resource_role] FOREIGN KEY([role_id])
+REFERENCES [dbo].[role] ([id])
+GO
+ALTER TABLE [dbo].[role_resource] CHECK CONSTRAINT [FK_role_resource_role]
+
+USE [esupply]
+GO
+/****** 对象:  Table [dbo].[user_resource]    脚本日期: 12/25/2010 20:32:17 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_resource](
+	[user_id] [numeric](19, 0) NOT NULL,
+	[resource_id] [numeric](19, 0) NOT NULL
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[user_resource]  WITH CHECK ADD  CONSTRAINT [FK_user_resource_app_user] FOREIGN KEY([user_id])
+REFERENCES [dbo].[app_user] ([id])
+GO
+ALTER TABLE [dbo].[user_resource] CHECK CONSTRAINT [FK_user_resource_app_user]
+GO
+ALTER TABLE [dbo].[user_resource]  WITH CHECK ADD  CONSTRAINT [FK_user_resource_resource] FOREIGN KEY([resource_id])
+REFERENCES [dbo].[resource] ([id])
+GO
+ALTER TABLE [dbo].[user_resource] CHECK CONSTRAINT [FK_user_resource_resource]

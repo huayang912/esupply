@@ -6,6 +6,7 @@
 		<property name="hibernate.show.sql">true</property>
 		<mapping class="com.faurecia.model.User" />
 		<mapping class="com.faurecia.model.Role" />
+		<mapping class="com.faurecia.model.Resource" />
 		<mapping class="com.faurecia.model.NumberControl" />
 		<mapping class="com.faurecia.model.Plant" />
 		<mapping class="com.faurecia.model.Item" />
