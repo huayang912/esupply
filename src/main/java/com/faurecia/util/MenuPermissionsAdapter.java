@@ -27,7 +27,7 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 			}
 		}
 
-		return false;
+		return true;
 	}
 
 	public MenuPermissionsAdapter(GrantedAuthority[] authorities) {

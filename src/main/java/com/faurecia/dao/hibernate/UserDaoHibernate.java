@@ -1,17 +1,18 @@
 package com.faurecia.dao.hibernate;
 
+import java.util.List;
+
+import javax.persistence.Table;
+
+import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.security.userdetails.UserDetails;
 import org.springframework.security.userdetails.UserDetailsService;
 import org.springframework.security.userdetails.UsernameNotFoundException;
+
 import com.faurecia.dao.UserDao;
 import com.faurecia.model.User;
-import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
-
-import javax.persistence.Table;
-import java.util.List;
 
 /**
  * This class interacts with Spring's HibernateTemplate to save/delete and

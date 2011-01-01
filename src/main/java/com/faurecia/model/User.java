@@ -24,12 +24,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "app_user")
-@NamedQueries( {
-		@NamedQuery(name = "findUsersByRole", query = " select u from User u where :role in elements(u.roles) "),
+@NamedQueries( { @NamedQuery(name = "findUsersByRole", query = " select u from User u where :role in elements(u.roles) "),
 
-		@NamedQuery(name = "findPlantUsers", query = " select u from User u where userPlant = :plant and :role in elements(u.roles)"),
+@NamedQuery(name = "findPlantUsers", query = " select u from User u where userPlant = :plant and :role in elements(u.roles)"),
 
-		@NamedQuery(name = "findSuppliers", query = " select u from User u where userPlant = :plant and :role in elements(u.roles)") })
+@NamedQuery(name = "findSuppliers", query = " select u from User u where userPlant = :plant and :role in elements(u.roles)") })
 public class User extends BaseObject implements Serializable, UserDetails {
 	private static final long serialVersionUID = 3832626162173359411L;
 
@@ -52,6 +51,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
 	private boolean credentialsExpired;
 	private Plant userPlant;
 	private Supplier userSupplier;
+	private Set<Resource> resources = new HashSet<Resource>();
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
@@ -175,7 +175,29 @@ public class User extends BaseObject implements Serializable, UserDetails {
 	 */
 	@Transient
 	public GrantedAuthority[] getAuthorities() {
-		return roles.toArray(new GrantedAuthority[0]);
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (!authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (!authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+
+		return authorities.toArray(new GrantedAuthority[0]);
 	}
 
 	@Version
@@ -308,8 +330,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
 
 		final User user = (User) o;
 
-		return !(username != null ? !username.equals(user.getUsername()) : user
-				.getUsername() != null);
+		return !(username != null ? !username.equals(user.getUsername()) : user.getUsername() != null);
 
 	}
 
@@ -324,11 +345,8 @@ public class User extends BaseObject implements Serializable, UserDetails {
 	 * {@inheritDoc}
 	 */
 	public String toString() {
-		ToStringBuilder sb = new ToStringBuilder(this,
-				ToStringStyle.DEFAULT_STYLE).append("username", this.username)
-				.append("enabled", this.enabled).append("accountExpired",
-						this.accountExpired).append("credentialsExpired",
-						this.credentialsExpired).append("accountLocked",
+		ToStringBuilder sb = new ToStringBuilder(this, ToStringStyle.DEFAULT_STYLE).append("username", this.username).append("enabled", this.enabled)
+				.append("accountExpired", this.accountExpired).append("credentialsExpired", this.credentialsExpired).append("accountLocked",
 						this.accountLocked);
 
 		GrantedAuthority[] auths = this.getAuthorities();
@@ -365,5 +383,19 @@ public class User extends BaseObject implements Serializable, UserDetails {
 
 	public void setUserSupplier(Supplier userSupplier) {
 		this.userSupplier = userSupplier;
+	}
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_resource", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = @JoinColumn(name = "resource_id"))
+	public Set<Resource> getResources() {
+		return resources;
+	}
+
+	public void setResources(Set<Resource> resources) {
+		this.resources = resources;
+	}
+
+	public void addResource(Resource resource) {
+		getResources().add(resource);
 	}
 }

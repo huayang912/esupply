@@ -1,12 +1,18 @@
 package com.faurecia.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -32,11 +38,12 @@ import org.apache.commons.lang.builder.ToStringStyle;
         query = "select r from Role r where r.name = :name "
         )
 })
-public class Role extends BaseObject implements Serializable, GrantedAuthority {
+public class Role extends BaseObject implements Serializable {
     private static final long serialVersionUID = 3690197650654049848L;
     private Long id;
     private String name;
     private String description;
+    private Set<Resource> resources = new HashSet<Resource>();
 
     /**
      * Default constructor - creates a new instance with no values set.
@@ -56,15 +63,12 @@ public class Role extends BaseObject implements Serializable, GrantedAuthority {
     public Long getId() {
         return id;
     }
-
-    /**
-     * @see org.springframework.security.GrantedAuthority#getAuthority()
-     * @return the name property (getAuthority required by Acegi's GrantedAuthority interface)
-     */
-    @Transient
-    public String getAuthority() {
-        return getName();
-    }
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "role_resource", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = @JoinColumn(name = "resource_id"))
+	public Set<Resource> getResources() {
+		return resources;
+	}    
 
     @Column(length=20)
     public String getName() {
@@ -88,6 +92,13 @@ public class Role extends BaseObject implements Serializable, GrantedAuthority {
         this.description = description;
     }
 
+    public void setResources(Set<Resource> resources) {
+		this.resources = resources;
+	}
+    
+    public void addResource(Resource resource) {
+		getResources().add(resource);
+	}
     /**
      * {@inheritDoc}
      */
