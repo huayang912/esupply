@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- Constants -->
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.action.extension" value="html" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources,errors" />
+	<constant name="struts.multipart.maxSize" value="50000000" />
+	<constant name="struts.ui.theme" value="css_xhtml" />
+	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/pages/" />
+	<constant name="struts.enable.SlashesInActionNames" value="true" />
+
+	<!-- Configuration for the default package. -->
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<!-- Interceptor to handle allowing only admins to certain actions -->
+			<interceptor name="adminOnly" class="adminInterceptor" />
+			<interceptor name="plantAdminOnly" class="plantAdminInterceptor" />
+			<!--
+				Copied from struts-default.xml and changed validation exclude
+				methods
+			-->
+			<interceptor-stack name="defaultStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servlet-config" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scoped-model-driven" />
+				<interceptor-ref name="model-driven" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="static-params" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">cancel,execute,delete,edit,list</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="adminCheck">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="adminOnly" />
+			</interceptor-stack>
+			<interceptor-stack name="plantAdminCheck">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="plantAdminOnly" />
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="mainMenu" type="redirect-action">mainMenu</result>
+			<result name="dataAccessFailure">/WEB-INF/pages/dataAccessFailure.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="org.springframework.dao.DataAccessException"
+				result="dataAccessFailure" />
+		</global-exception-mappings>
+
+		<action name="mainMenu" class="mainAction" method="main">
+			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="setSupplierPlant" class="mainAction" method="setSupplierPlant">
+			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="signup" class="signupAction">
+			<result name="cancel" type="redirect">/</result>
+			<result name="input">/WEB-INF/pages/signup.jsp</result>
+			<result name="success" type="chain">saveSignup</result>
+		</action>
+
+		<action name="saveSignup" class="signupAction" method="save">
+			<result name="input">/WEB-INF/pages/signup.jsp</result>
+			<result name="success" type="redirect-action">/mainMenu</result>
+		</action>
+
+		<action name="editAdmin" class="userAction" method="edit">
+			<interceptor-ref name="adminCheck" />
+			<result name="success">/WEB-INF/pages/userForm.jsp</result>
+			<result name="input">/WEB-INF/pages/admin/userList.jsp</result>
+		</action>
+
+		<action name="editUser" class="userAction" method="edit">
+			<interceptor-ref name="plantAdminCheck" />
+			<result name="success">/WEB-INF/pages/userForm.jsp</result>
+			<result name="input">/WEB-INF/pages/admin/userList.jsp</result>
+		</action>
+
+		<action name="editProfile" class="userAction" method="edit">
+			<result name="success">/WEB-INF/pages/userForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="saveAdmin" class="userAction" method="save">
+			<result name="cancel" type="redirect-action">admin/admins</result>
+			<result name="input">/WEB-INF/pages/userForm.jsp</result>
+			<result name="success" type="redirect-action">admin/admins</result>
+		</action>
+
+		<action name="saveUser" class="userAction" method="save">
+			<result name="input">/WEB-INF/pages/userForm.jsp</result>
+			<result name="adminCancel" type="redirect-action">
+				<param name="actionName">admin/admins</param>
+				<param name="roleType">${roleType}</param>
+			</result>
+			<result name="userCancel" type="redirect-action">
+				<param name="actionName">admin/users</param>
+				<param name="roleType">${roleType}</param>
+			</result>
+			<result name="adminSuccess" type="redirect-action">
+				<param name="actionName">admin/admins</param>
+				<param name="roleType">${roleType}</param>
+			</result>
+			<result name="userSuccess" type="redirect-action">
+				<param name="actionName">admin/users</param>
+				<param name="roleType">${roleType}</param>
+			</result>
+		</action>
+
+		<action name="uploadFile" class="com.faurecia.webapp.action.FileUploadAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result name="input">/WEB-INF/pages/uploadForm.jsp</result>
+			<result name="success">/WEB-INF/pages/uploadDisplay.jsp</result>
+			<result name="cancel" type="redirect-action">mainMenu</result>
+		</action>
+
+		<action name="passwordHint" class="passwordHintAction">
+			<result name="input">/</result>
+			<result name="success">/</result>
+		</action>
+
+		<!-- Add additional actions here -->
+		<!-- Plant -->
+		<action name="editPlant" class="plantAction" method="edit">
+			<interceptor-ref name="adminCheck" />
+			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
+			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
+		</action>
+
+		<action name="editPlantProfile" class="plantAction" method="edit">
+			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="savePlant" class="plantAction" method="save">
+			<result name="input">/WEB-INF/pages/plant/plantForm.jsp</result>
+			<result name="cancel" type="redirect-action">admin/plants</result>
+			<result name="delete" type="redirect-action">admin/plants</result>
+			<result name="success" type="redirect-action">admin/plants</result>
+		</action>
+
+		<!-- Plant Schedule Group -->
+		<action name="plantScheduleGroups" class="plantScheduleGroupAction"
+			method="list">
+			<result>/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp
+			</result>
+		</action>
+
+		<action name="editPlantScheduleGroup" class="plantScheduleGroupAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupList.jsp
+			</result>
+		</action>
+
+		<action name="savePlantScheduleGroup" class="plantScheduleGroupAction"
+			method="save">
+			<result name="input">/WEB-INF/pages/plantScheduleGroup/plantScheduleGroupForm.jsp
+			</result>
+			<result name="cancel" type="redirect-action">plantScheduleGroups</result>
+			<result name="delete" type="redirect-action">plantScheduleGroups</result>
+			<result name="success" type="redirect-action">plantScheduleGroups</result>
+		</action>
+
+		<!-- Item -->
+		<action name="items" class="itemAction" method="list">
+			<result>/WEB-INF/pages/item/itemList.jsp</result>
+		</action>
+
+		<action name="editItem" class="itemAction" method="edit">
+			<result name="success">/WEB-INF/pages/item/itemForm.jsp</result>
+			<result name="error">/WEB-INF/pages/item/itemList.jsp</result>
+		</action>
+
+		<action name="saveItem" class="itemAction" method="save">
+			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
+			<result name="cancel" type="redirect-action">items</result>
+			<result name="delete" type="redirect-action">items</result>
+			<result name="success" type="redirect-action">items</result>
+		</action>
+
+		<!-- Supplier Item -->
+		<action name="supplierItems" class="supplierItemAction" method="list">
+			<result>/WEB-INF/pages/supplierItem/supplierItemList.jsp</result>
+		</action>
+
+		<action name="editSupplierItem" class="supplierItemAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/supplierItem/supplierItemForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/supplierItem/supplierItemList.jsp
+			</result>
+		</action>
+
+		<action name="saveSupplierItem" class="supplierItemAction"
+			method="save">
+			<result name="input">/WEB-INF/pages/supplierItem/supplierItemForm.jsp
+			</result>
+			<result name="cancel" type="redirect-action">supplierItems</result>
+			<result name="success" type="redirect-action">supplierItems</result>
+		</action>
+
+		<!-- Supplier -->
+		<action name="suppliers" class="supplierAction" method="list">
+			<result>/WEB-INF/pages/supplier/supplierList.jsp</result>
+		</action>
+
+		<action name="editSupplierProfile" class="supplierAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="editSupplier" class="supplierAction" method="edit">
+			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="error">/WEB-INF/pages/supplier/supplierList.jsp</result>
+		</action>
+
+		<action name="saveSupplier" class="supplierAction" method="save">
+			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
+			<result name="cancel" type="redirect-action">suppliers</result>
+			<result name="delete" type="redirect-action">suppliers</result>
+			<result name="success" type="redirect-action">suppliers</result>
+		</action>
+
+		<!-- Purchase Order -->
+		<action name="purchaseOrders" class="purchaseOrderAction"
+			method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderList.jsp
+			</result>
+		</action>
+
+		<action name="editPurchaseOrder" class="purchaseOrderAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/purchaseOrder/purchaseOrderForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/purchaseOrder/purchaseOrderForm.jsp
+			</result>
+		</action>
+
+		<action name="savePurchaseOrder" class="purchaseOrderAction"
+			method="save">
+			<result name="cancel" type="redirect-action">purchaseOrders</result>
+		</action>
+
+		<action name="cancelPurchaseOrder" class="purchaseOrderAction"
+			method="cancel">
+			<result name="cancel" type="redirect-action">purchaseOrders</result>
+		</action>
+
+		<!-- Schedule -->
+		<action name="schedules" class="scheduleAction" method="list">
+			<result name="success">/WEB-INF/pages/schedule/scheduleList.jsp</result>
+		</action>
+
+		<action name="editSchedule" class="scheduleAction" method="edit">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">edit</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/schedule/scheduleList.jsp</result>
+			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/schedule/scheduleList.jsp
+			</result>
+		</action>
+
+		<action name="editScheduleProfile" class="scheduleAction"
+			method="edit">
+			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
+			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+		
+		<action name="listScheduleAudit" class="scheduleAction"
+			method="listAudit">
+			<result name="success">/WEB-INF/pages/schedule/listScheduleAudit.jsp</result>
+		</action>
+		
+		<action name="scheduleAudit" class="scheduleAction"
+			method="audit">
+			<result name="success">/WEB-INF/pages/schedule/scheduleAuditForm.jsp</result>
+		</action>		
+
+		<action name="saveSchedule" class="scheduleAction" method="save">
+			<result name="cancel" type="redirect-action">schedules</result>
+		</action>
+		
+		<action name="enterScheduleControl" class="scheduleControlAction"
+			method="enter">
+			<result name="success">/WEB-INF/pages/scheduleControl/enterScheduleControl.jsp</result>
+		</action>
+		
+		<action name="listScheduleControl" class="scheduleControlAction"
+			method="list">
+			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp</result>
+		</action>
+		
+		<action name="saveScheduleControl" class="scheduleAction" method="save">
+			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp</result>
+		</action>
+
+		<!-- Deliver Order -->
+		<action name="deliveryOrders" class="deliveryOrderAction"
+			method="list">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
+		</action>
+
+		<action name="editDeliveryOrder" class="deliveryOrderAction"
+			method="edit">
+			<result name="poInput" type="redirect-action">
+				<param name="actionName">editPurchaseOrder</param>
+				<param name="poNo">${poNo}</param>
+			</result>
+			<result name="doInput">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
+			</result>
+		</action>
+
+		<action name="saveDeliveryOrder" class="deliveryOrderAction"
+			method="save">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+		</action>
+		
+		<action name="confirmDeliveryOrder" class="deliveryOrderAction"
+			method="confirm">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
+			</result>
+		</action>
+
+		<action name="cancelDeliveryOrder" class="deliveryOrderAction"
+			method="cancel">
+			<result name="cancel" type="redirect-action">deliveryOrders</result>
+		</action>
+
+		<action name="deleteDeliveryOrder" class="deliveryOrderAction"
+			method="delete">
+			<result type="redirect-action">deliveryOrders</result>
+		</action>
+
+		<action name="printDeliveryOrder" class="deliveryOrderAction"
+	method="print">
+			<result name="success" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+
+		<!-- Receipt -->
+		<action name="receipts" class="receiptAction" method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/receipt/receiptList.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/receipt/receiptList.jsp
+			</result>
+		</action>
+
+		<action name="editReceipt" class="receiptAction" method="edit">
+			<result name="success">/WEB-INF/pages/receipt/receiptForm.jsp
+			</result>
+		</action>
+
+		<action name="saveReceipt" class="receiptAction" method="save">
+			<result name="cancel" type="redirect-action">receipts</result>
+		</action>
+		
+		<!-- Receipt Detail -->
+		<action name="receiptDetails" class="receiptDetailAction"
+			method="enter">
+			<result name="success">/WEB-INF/pages/receiptDetail/listReceiptDetail.jsp</result>
+		</action>
+		
+		<action name="searchReceiptDetail" class="receiptDetailAction"
+			method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp</result>
+		</action>	
+
+		<action name="exportReceiptDetail" class="receiptDetailAction"
+			method="export">
+			<result name="success" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+		<!-- Log -->
+		<action name="inboundLogs" class="inboundLogAction" method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
+			<result name="success">/WEB-INF/pages/inboundLog/inboundLog.jsp</result>
+		</action>
+
+		<action name="importInboundLog" class="inboundLogAction"
+			method="reimport">
+			<result name="success" type="redirect-action">inboundLogs</result>
+		</action>
+
+		<action name="outboundLogs" class="outboundLogAction" method="list">
+			<interceptor-ref name="defaultStack">
+				<param name="validation.includeMethods">list</param>
+			</interceptor-ref>
+			<result name="input">/WEB-INF/pages/outboundLog/outboundLog.jsp
+			</result>
+			<result name="success">/WEB-INF/pages/outboundLog/outboundLog.jsp
+			</result>
+		</action>
+
+		<action name="exportOutboundLog" class="outboundLogAction"
+			method="export">
+			<result name="success" type="redirect-action">outboundLogs</result>
+		</action>
+
+		<!-- Notice -->
+		<action name="notices" class="noticeAction" method="list">
+			<result name="success">/WEB-INF/pages/notice/noticeList.jsp</result>
+		</action>
+
+		<action name="editNotice" class="noticeAction" method="edit">
+			<result name="success">/WEB-INF/pages/notice/noticeForm.jsp
+			</result>
+		</action>
+
+		<action name="saveNotice" class="noticeAction" method="save">
+			<result name="input">/WEB-INF/pages/notice/noticeForm.jsp</result>
+			<result name="cancel" type="redirect-action">notices</result>
+			<result name="delete" type="redirect-action">notices</result>
+			<result name="success" type="redirect-action">notices</result>
+		</action>
+
+		<!-- Notice Reader -->
+		<action name="noticeReaders" class="noticeReaderAction" method="list">
+			<result name="success">/WEB-INF/pages/noticeReader/noticeReaderList.jsp</result>
+		</action>
+
+		<action name="editNoticeReader" class="noticeReaderAction" method="edit">
+			<result name="success">/WEB-INF/pages/noticeReader/noticeReaderForm.jsp</result>
+			<result name="cancel" type="redirect-action">noticeReaders</result>
+		</action>
+		
+		<action name="downloadAttachement" class="noticeReaderAction"
+	method="download">
+			<result name="success" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+	</package>
+
+	<!-- Actions in this package will be prefixed with /admin/ -->
+	<package name="admin" extends="default" namespace="/admin">
+		<action name="activeUsers" class="com.opensymphony.xwork2.ActionSupport">
+			<result name="success">/WEB-INF/pages/admin/activeUsers.jsp</result>
+		</action>
+
+		<action name="flushCache" class="com.opensymphony.xwork2.ActionSupport">
+			<interceptor-ref name="adminCheck" />
+			<result name="success">/WEB-INF/pages/admin/flushCache.jsp</result>
+		</action>
+
+		<action name="reload" class="com.faurecia.webapp.action.ReloadAction">
+			<interceptor-ref name="adminCheck" />
+			<!-- this should never be used, it's here to prevent warnings -->
+			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="admins" class="userAction" method="list">
+			<interceptor-ref name="adminCheck" />
+			<result name="success">/WEB-INF/pages/admin/userList.jsp</result>
+		</action>
+
+		<action name="users" class="userAction" method="list">
+			<interceptor-ref name="plantAdminCheck" />
+			<result name="success">/WEB-INF/pages/admin/userList.jsp</result>
+		</action>
+
+		<action name="plants" class="plantAction" method="list">
+			<interceptor-ref name="adminCheck" />
+			<result>/WEB-INF/pages/plant/plantList.jsp</result>
+		</action>
+	</package>
+</struts>

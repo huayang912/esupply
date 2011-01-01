@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+	
+	<bean id="dataInboundJob" class="com.faurecia.job.DataInboundJob">
+		<property name="plantManager" ref="plantManager"/>
+		<property name="inboundLogManager" ref="inboundLogManager"/>
+		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
+		<property name="scheduleManager" ref="scheduleManager"/>
+		<property name="receiptManager" ref="receiptManager"/>
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorInboundTemplateName" value="errorInboundTemplate.vm" />
+	</bean>
+	
+	<bean id="dataInboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="dataInboundJob"/>
+	  <property name="targetMethod" value="run"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	
+	<bean id="dataInboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	  <property name="jobDetail" ref="dataInboundJobDetail"/>
+		<!-- 10 seconds delay -->
+	  <property name="startDelay" value="10000"/>
+		<!-- repeat every 1 mins -->
+	  <property name="repeatInterval" value="60000"/>
+	</bean>
+	
+	<bean id="dataOutboundJob" class="com.faurecia.job.DataOutboundJob">
+		<property name="plantManager" ref="plantManager"/>
+		<property name="outboundLogManager" ref="outboundLogManager"/>
+		<property name="deliveryOrderManager" ref="deliveryOrderManager"/>
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="errorOutboundTemplateName" value="errorOutboundTemplate.vm" />
+	</bean>
+	
+	<bean id="dataOutboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+	  <property name="targetObject" ref="dataOutboundJob"/>
+	  <property name="targetMethod" value="run"/>
+	  <property name="concurrent" value="false"/>
+	</bean>
+	
+	<bean id="dataOutboundJobTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+	  <property name="jobDetail" ref="dataOutboundJobDetail"/>
+		<!-- 10 seconds delay -->
+	  <property name="startDelay" value="10000"/>
+		<!-- repeat every 1 mins -->
+	  <property name="repeatInterval" value="60000"/>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="dataInboundJobTrigger" />
+				<ref bean="dataOutboundJobTrigger" />
+			</list>
+		</property>
+	</bean>
+</beans>

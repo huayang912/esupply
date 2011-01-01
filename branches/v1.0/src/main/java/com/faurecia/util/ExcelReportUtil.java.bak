@@ -1,0 +1,5 @@
+package com.faurecia.util;
+
+public class ExcelReportUtil {
+
+}
