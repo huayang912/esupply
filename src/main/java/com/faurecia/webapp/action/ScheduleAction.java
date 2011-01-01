@@ -294,7 +294,7 @@ public class ScheduleAction extends BaseAction {
 		HttpServletRequest request = getRequest();
 		User user = this.userManager.getUserByUsername(request.getRemoteUser());
 		schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), supplier.getCode(), new Date(), false);
-		this.scheduleManager.flushSession();
+		
 		return SUCCESS;
 	}
 }

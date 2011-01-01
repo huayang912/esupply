@@ -91,9 +91,4 @@
             <message key="errors.required"/>
         </field-validator>
     </field>
-     <field name="plant.boxTemplateName">
-        <field-validator type="requiredstring">
-            <message key="errors.required"/>
-        </field-validator>
-    </field>
 </validators>

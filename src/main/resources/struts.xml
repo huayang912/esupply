@@ -207,16 +207,6 @@
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
-		
-		<action name="exportItem" class="itemAction"
-			method="export">
-			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
-			<result name="success" type="stream">
-				<param name="inputName">inputStream</param>
-				<param name="contentDisposition">attachment;filename="${fileName}"</param>
-				<param name="bufferSize">4096</param>
-			</result>
-		</action>
 
 		<!-- Supplier Item -->
 		<action name="supplierItems" class="supplierItemAction" method="list">
@@ -260,16 +250,6 @@
 			<result name="cancel" type="redirect-action">suppliers</result>
 			<result name="delete" type="redirect-action">suppliers</result>
 			<result name="success" type="redirect-action">suppliers</result>
-		</action>
-		
-		<action name="exportSupplier" class="supplierAction"
-			method="export">
-			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
-			<result name="success" type="stream">
-				<param name="inputName">inputStream</param>
-				<param name="contentDisposition">attachment;filename="${fileName}"</param>
-				<param name="bufferSize">4096</param>
-			</result>
 		</action>
 
 		<!-- Purchase Order -->
@@ -323,37 +303,33 @@
 			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
-
-		<action name="listScheduleAudit" class="scheduleAction" method="listAudit">
-			<result name="success">/WEB-INF/pages/schedule/listScheduleAudit.jsp
-			</result>
+		
+		<action name="listScheduleAudit" class="scheduleAction"
+			method="listAudit">
+			<result name="success">/WEB-INF/pages/schedule/listScheduleAudit.jsp</result>
 		</action>
-
-		<action name="scheduleAudit" class="scheduleAction" method="audit">
-			<result name="success">/WEB-INF/pages/schedule/scheduleAuditForm.jsp
-			</result>
-		</action>
+		
+		<action name="scheduleAudit" class="scheduleAction"
+			method="audit">
+			<result name="success">/WEB-INF/pages/schedule/scheduleAuditForm.jsp</result>
+		</action>		
 
 		<action name="saveSchedule" class="scheduleAction" method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
-
+		
 		<action name="enterScheduleControl" class="scheduleControlAction"
 			method="enter">
-			<result name="success">/WEB-INF/pages/scheduleControl/enterScheduleControl.jsp
-			</result>
+			<result name="success">/WEB-INF/pages/scheduleControl/enterScheduleControl.jsp</result>
 		</action>
-
+		
 		<action name="listScheduleControl" class="scheduleControlAction"
 			method="list">
-			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp
-			</result>
+			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp</result>
 		</action>
-
-		<action name="saveScheduleControl" class="scheduleAction"
-			method="save">
-			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp
-			</result>
+		
+		<action name="saveScheduleControl" class="scheduleAction" method="save">
+			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp</result>
 		</action>
 
 		<!-- Deliver Order -->
@@ -382,7 +358,7 @@
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
 			</result>
 		</action>
-
+		
 		<action name="confirmDeliveryOrder" class="deliveryOrderAction"
 			method="confirm">
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
@@ -400,7 +376,7 @@
 		</action>
 
 		<action name="printDeliveryOrder" class="deliveryOrderAction"
-			method="print">
+	method="print">
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
@@ -408,24 +384,6 @@
 			</result>
 		</action>
 
-		<action name="printPalletLabel" class="deliveryOrderAction" method="printPalletLabel">
-			<result name="success" type="stream">
-				<param name="inputName">inputStream</param>
-				<param name="contentDisposition">attachment;filename="${fileName}"</param>
-				<param name="bufferSize">4096</param>
-			</result>
-		</action>
-		
-		<action name="printBoxLabel" class="deliveryOrderAction" method="printBoxLabel">
-			<result name="success" type="stream">
-				<param name="inputName">inputStream</param>
-				<param name="contentDisposition">attachment;filename="${fileName}"</param>
-				<param name="bufferSize">4096</param>
-			</result>
-			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
-			</result>
-		</action>
-		
 		<!-- Receipt -->
 		<action name="receipts" class="receiptAction" method="list">
 			<interceptor-ref name="defaultStack">
@@ -445,14 +403,13 @@
 		<action name="saveReceipt" class="receiptAction" method="save">
 			<result name="cancel" type="redirect-action">receipts</result>
 		</action>
-
+		
 		<!-- Receipt Detail -->
 		<action name="receiptDetails" class="receiptDetailAction"
 			method="enter">
-			<result name="success">/WEB-INF/pages/receiptDetail/listReceiptDetail.jsp
-			</result>
+			<result name="success">/WEB-INF/pages/receiptDetail/listReceiptDetail.jsp</result>
 		</action>
-
+		
 		<action name="searchReceiptDetail" class="receiptDetailAction"
 			method="list">
 			<interceptor-ref name="defaultStack">
@@ -460,9 +417,8 @@
 			</interceptor-ref>
 			<result name="input">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp
 			</result>
-			<result name="success">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp
-			</result>
-		</action>
+			<result name="success">/WEB-INF/pages/receiptDetail/receiptDetailForm.jsp</result>
+		</action>	
 
 		<action name="exportReceiptDetail" class="receiptDetailAction"
 			method="export">
@@ -520,19 +476,16 @@
 
 		<!-- Notice Reader -->
 		<action name="noticeReaders" class="noticeReaderAction" method="list">
-			<result name="success">/WEB-INF/pages/noticeReader/noticeReaderList.jsp
-			</result>
+			<result name="success">/WEB-INF/pages/noticeReader/noticeReaderList.jsp</result>
 		</action>
 
-		<action name="editNoticeReader" class="noticeReaderAction"
-			method="edit">
-			<result name="success">/WEB-INF/pages/noticeReader/noticeReaderForm.jsp
-			</result>
+		<action name="editNoticeReader" class="noticeReaderAction" method="edit">
+			<result name="success">/WEB-INF/pages/noticeReader/noticeReaderForm.jsp</result>
 			<result name="cancel" type="redirect-action">noticeReaders</result>
 		</action>
-
+		
 		<action name="downloadAttachement" class="noticeReaderAction"
-			method="download">
+	method="download">
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>

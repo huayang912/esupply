@@ -57,7 +57,6 @@ public class DeliveryOrderAction extends BaseAction {
 	private String dir;
 	private DeliveryOrder deliveryOrder;
 	private String doNo;
-	private Integer deliveryOrderDetailId;
 
 	private String poNo;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
@@ -137,7 +136,7 @@ public class DeliveryOrderAction extends BaseAction {
 		status.put("Confirm", "Confirm");
 		return status;
 	}
-
+	
 	public Map<String, String> getIsExport() {
 		Map<String, String> status = new HashMap<String, String>();
 		status.put("", "All");
@@ -145,11 +144,11 @@ public class DeliveryOrderAction extends BaseAction {
 		status.put("Yes", "true");
 		return status;
 	}
-
+	
 	public List<PlantSupplier> getSuppliers() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
-
+		
 		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
 	}
 
@@ -175,14 +174,6 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setPoNo(String poNo) {
 		this.poNo = poNo;
-	}
-
-	public int getDeliveryOrderDetailId() {
-		return deliveryOrderDetailId;
-	}
-
-	public void setDeliveryOrderDetailId(int deliveryOrderDetailId) {
-		this.deliveryOrderDetailId = deliveryOrderDetailId;
 	}
 
 	public Integer getPlantSupplierId() {
@@ -234,7 +225,7 @@ public class DeliveryOrderAction extends BaseAction {
 	public String list() {
 		if (deliveryOrder == null) {
 			deliveryOrder = new DeliveryOrder();
-
+			
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
 			calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -244,18 +235,18 @@ public class DeliveryOrderAction extends BaseAction {
 			Date dateNow = calendar.getTime();
 			calendar.add(Calendar.MONTH, -1);
 			Date lastWeek = calendar.getTime();
-
+			
 			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-
+			
 			deliveryOrder.setCreateDateFrom(lastWeek);
 			deliveryOrder.setCreateDateTo(dateNow);
-			// inboundLog.setInboundResult("fail");
-
+			//inboundLog.setInboundResult("fail");
+			
 			List<PlantSupplier> supplierList = getSuppliers();
 			if (supplierList != null && supplierList.size() > 0) {
 				deliveryOrder.setPlantSupplier(supplierList.get(0));
 			}
-
+			
 			sort = "doNo";
 			dir = SortOrderEnum.DESCENDING.toString();
 		}
@@ -295,15 +286,15 @@ public class DeliveryOrderAction extends BaseAction {
 			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
 		}
 
-		if (deliveryOrder.getExternalDoNo() != null && deliveryOrder.getExternalDoNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("externalDoNo", deliveryOrder.getExternalDoNo().trim()));
-			selectCountCriteria.add(Restrictions.like("externalDoNo", deliveryOrder.getExternalDoNo().trim()));
+		if (deliveryOrder.getDoNo() != null && deliveryOrder.getDoNo().trim().length() > 0) {
+			selectCriteria.add(Restrictions.like("doNo", deliveryOrder.getDoNo().trim()));
+			selectCountCriteria.add(Restrictions.like("doNo", deliveryOrder.getDoNo().trim()));
 		}
 
 		if (deliveryOrder.getCreateDateFrom() != null) {
 			selectCriteria.add(Restrictions.ge("createDate", deliveryOrder.getCreateDateFrom()));
 			selectCountCriteria.add(Restrictions.ge("createDate", deliveryOrder.getCreateDateFrom()));
-		}
+		}			
 
 		if (deliveryOrder.getCreateDateTo() != null) {
 			Calendar calendar = Calendar.getInstance();
@@ -317,7 +308,7 @@ public class DeliveryOrderAction extends BaseAction {
 			selectCriteria.add(Restrictions.eq("status", deliveryOrder.getStatus()));
 			selectCountCriteria.add(Restrictions.eq("status", deliveryOrder.getStatus()));
 		}
-
+		
 		if (deliveryOrder.getExportFlag() != null && deliveryOrder.getExportFlag().trim().length() > 0) {
 			if ("true".equalsIgnoreCase(deliveryOrder.getExportFlag())) {
 				selectCriteria.add(Restrictions.eq("isExport", true));
@@ -327,7 +318,7 @@ public class DeliveryOrderAction extends BaseAction {
 				selectCountCriteria.add(Restrictions.eq("isExport", false));
 			}
 		}
-
+		
 		if (deliveryOrder.getPlantSupplier() != null) {
 			selectCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
 			selectCountCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
@@ -465,13 +456,12 @@ public class DeliveryOrderAction extends BaseAction {
 					deliveryOrder.addDeliveryOrderDetail(deliveryOrderDetail);
 				}
 			}
+
 			if (!hasError) {
 				deliveryOrder = this.deliveryOrderManager.createScheduleDeliveryOrder(deliveryOrder);
 				saveMessage(getText("deliveryOrder.added"));
 			}
 		}
-
-		this.deliveryOrderManager.flushSession();
 
 		return SUCCESS;
 	}
@@ -479,7 +469,6 @@ public class DeliveryOrderAction extends BaseAction {
 	public String save() {
 		if (!collectDevlieryOrder()) {
 			this.deliveryOrderManager.save(deliveryOrder);
-			this.deliveryOrderManager.flushSession();
 			saveMessage(getText("deliveryOrder.updated"));
 		}
 
@@ -492,7 +481,8 @@ public class DeliveryOrderAction extends BaseAction {
 			boolean allZero = true;
 			for (int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
 				DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
-				if (deliveryOrderDetail.getQty() != null && deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
+				if (deliveryOrderDetail.getQty() != null && 
+						deliveryOrderDetail.getQty().compareTo(BigDecimal.ZERO) > 0) {
 					allZero = false;
 				}
 			}
@@ -504,7 +494,7 @@ public class DeliveryOrderAction extends BaseAction {
 				saveMessage(getText("deliveryOrder.confirmed"));
 			}
 		}
-		this.deliveryOrderManager.flushSession();
+
 		return SUCCESS;
 	}
 
@@ -519,49 +509,14 @@ public class DeliveryOrderAction extends BaseAction {
 	public String print() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equals("Do.png")) {
-			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder);
-		} else {
-			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder);
-		}
+		inputStream = DeliveryOrderExportUtil.export(localAbsolutPath,
+				deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(), deliveryOrder);
+
 		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";
 		if (deliveryOrder.getIsPrint() == null || !deliveryOrder.getIsPrint()) {
 			deliveryOrder.setIsPrint(true);
 			this.deliveryOrderManager.save(deliveryOrder);
 		}
-		return SUCCESS;
-	}
-
-	public String printPalletLabel() throws Exception {
-		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
-		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		inputStream = DeliveryOrderExportUtil.printPalletLabel(localAbsolutPath, "Pallet.png", deliveryOrder);
-		fileName = "PalletLabel_" + deliveryOrder.getDoNo() + ".pdf";
-
-		return SUCCESS;
-	}
-
-	public String printBoxLabel() throws Exception {
-		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
-		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		List<DeliveryOrderDetail> selectedDeliveryOrderDetailList = new ArrayList<DeliveryOrderDetail>();
-		if (deliveryOrderDetailList == null) {
-			return ERROR;
-		} else {
-			for (int i = 0; i < deliveryOrderDetailList.size(); i++) {
-				if (deliveryOrderDetailList.get(i) != null) {
-					selectedDeliveryOrderDetailList.add(deliveryOrder.getDeliveryOrderDetailList().get(i - 1));
-				}
-			}
-		}
-		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equals("Box.png")) {
-			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
-		} else {
-			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
-		}
-		fileName = "BoxLabel_" + deliveryOrder.getDoNo() + ".pdf";
 		return SUCCESS;
 	}
 

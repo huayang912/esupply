@@ -1,10 +1,5 @@
 package com.faurecia.webapp.action;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +16,6 @@ import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
-import com.faurecia.util.CSVWriter;
 
 public class SupplierAction extends BaseAction {
 	/**
@@ -38,8 +32,6 @@ public class SupplierAction extends BaseAction {
 	private PlantSupplier plantSupplier;
 	private int id;
 	private boolean editProfile;
-	private InputStream inputStream;
-	private String fileName;
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -98,20 +90,7 @@ public class SupplierAction extends BaseAction {
 		this.plantSupplierManager = plantSupplierManager;
 	}
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
-
-	public String getFileName() {
-		return fileName;
-	}
-	
 	public String list() {
-		query();
-		return SUCCESS;
-	}
-	
-	private void query() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
 
@@ -133,6 +112,7 @@ public class SupplierAction extends BaseAction {
 		}
 
 		plantSuppliers = this.plantSupplierManager.findByCriteria(criteria);
+		return SUCCESS;
 	}
 
 	public String cancel() {
@@ -146,7 +126,7 @@ public class SupplierAction extends BaseAction {
 	public String delete() {
 		this.plantSupplierManager.remove(plantSupplier.getId());
 		saveMessage(getText("plantSupplier.deleted"));
-		this.plantSupplierManager.flushSession();
+
 		return SUCCESS;
 	}
 
@@ -197,41 +177,11 @@ public class SupplierAction extends BaseAction {
 
 		String key = (isNew) ? "plantSupplier.added" : "plantSupplier.updated";
 		saveMessage(getText(key));
-		this.plantSupplierManager.flushSession();
+
 		if (!isNew) {
 			return INPUT;
 		} else {
 			return SUCCESS;
 		}
-	}
-	
-	public String export() throws IOException {
-		query();
-		
-		if (plantSuppliers != null && plantSuppliers.size() > 0) {
-			fileName = "supplier.csv";
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	
-			CSVWriter writer = new CSVWriter(outputStream, ',', Charset.forName("GBK"));
-			for(int i = 0; i < plantSuppliers.size(); i++) 
-			{
-				PlantSupplier plantSupplier = plantSuppliers.get(i);
-				String[] entries = new String[7];
-				
-				entries[0] =  plantSupplier.getSupplier().getCode();
-				entries[1] =  plantSupplier.getSupplierName();
-				entries[2] =  plantSupplier.getSupplierAddress1();
-				entries[3] =  plantSupplier.getSupplierAddress2();
-				entries[4] =  plantSupplier.getSupplierContactPerson();
-				entries[5] =  plantSupplier.getSupplierPhone();
-				entries[6] =  plantSupplier.getSupplierFax();
-			
-				writer.writeRecord(entries);
-			}
-			writer.close();
-			inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-		}
-		
-		return SUCCESS;
 	}
 }

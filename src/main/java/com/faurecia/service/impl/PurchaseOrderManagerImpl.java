@@ -238,8 +238,6 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				// ±£´æ²É¹ºµ¥
 				this.save(purchaseOrder);
 			}
-			
-			this.flushSession();
 
 			inboundLog.setInboundResult("success");
 

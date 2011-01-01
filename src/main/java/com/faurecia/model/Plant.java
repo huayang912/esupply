@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -44,7 +43,6 @@ public class Plant extends BaseObject implements Serializable {
 	private String errorLogEmail2;
 	private String supplierNotifyEmail;
 	private String doTemplateName;
-	private String boxTemplateName;
 
 	@Id
 	@Column(length = 20)
@@ -279,15 +277,6 @@ public class Plant extends BaseObject implements Serializable {
 
 	public void setDoTemplateName(String doTemplateName) {
 		this.doTemplateName = doTemplateName;
-	}
-	
-	@Column(name="box_template_name", nullable = true, length = 255)
-	public String getBoxTemplateName() {
-		return boxTemplateName;
-	}
-
-	public void setBoxTemplateName(String boxTemplateName) {
-		this.boxTemplateName = boxTemplateName;
 	}
 
 	/**

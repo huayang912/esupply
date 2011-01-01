@@ -79,8 +79,4 @@ public interface GenericDao <T, PK extends Serializable> {
     List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults);
     
     List<T> findByExample(T exampleEntity);
-    
-    void clear();
-    
-    void flush();
 }

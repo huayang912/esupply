@@ -188,8 +188,6 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			}
 			// ±£´æ²É¹ºµ¥
 			this.save(schedule);
-			
-			this.flushSession();
 
 			inboundLog.setInboundResult("success");
 

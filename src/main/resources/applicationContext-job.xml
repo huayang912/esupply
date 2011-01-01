@@ -10,7 +10,6 @@
 		<property name="purchaseOrderManager" ref="purchaseOrderManager"/>
 		<property name="scheduleManager" ref="scheduleManager"/>
 		<property name="receiptManager" ref="receiptManager"/>
-		<property name="deliveryOrderManager" ref="deliveryOrderManager"/>
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorInboundTemplateName" value="errorInboundTemplate.vm" />

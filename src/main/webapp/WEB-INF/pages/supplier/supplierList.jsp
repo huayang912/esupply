@@ -4,12 +4,12 @@
 <title><fmt:message key="plantSupplierList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='plantSupplierList.heading'/>" />
-<meta name="menu" content="PlantUserMenu" />
+	<meta name="menu" content="PlantUserMenu" />
 </head>
 <c:set var="buttons">
 	<input type="button"
-		onclick="location.href='<c:url value="/exportSupplier.html"/>'"
-		value="<fmt:message key="button.export"/>" />
+		onclick="location.href='<c:url value="/mainMenu.html"/>'"
+		value="<fmt:message key="button.done"/>" />
 </c:set>
 <s:form name="supplierForm" action="suppliers" method="post"
 	validate="true">
@@ -17,8 +17,7 @@
 		cssClass="text medium" /></div>
 	<div><s:textfield key="plantSupplier.supplierName"
 		cssClass="text medium" /></div>
-	<div><s:submit method="list" key="button.search" theme="simple" />
-	<c:out
+	<div><s:submit method="list" key="button.search" theme="simple" /><c:out
 		value="${buttons}" escapeXml="false" /></div>
 </s:form>
 

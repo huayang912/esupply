@@ -1,6 +1,5 @@
 package com.faurecia.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,8 +28,7 @@ public class DeliveryOrder extends BaseObject {
 	 */
 	private static final long serialVersionUID = -7456872599350319130L;
 	
-	private String doNo;    //MANIFEST CODE
-	private String externalDoNo;
+	private String doNo;
 	private PlantSupplier plantSupplier;
 	private String plantName;
 	private String plantAddress1;
@@ -47,27 +45,14 @@ public class DeliveryOrder extends BaseObject {
 	private Date createDate;
 	private Date createDateFrom;
 	private Date createDateTo;
-	private Date startDate;    //DATETIME_PICKUP       
-	private Date endDate;      //DATETIME_RECEPTION
+	private Date startDate;
+	private Date endDate;
 	private Boolean isExport;
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
 	private Boolean isPrint;
-	
-	private String murn;  //code + bar code
-	private String OrderGroup; //MANIFEST ORDER GROUP
-	private String deliveryOrderGroup;  //DELIVERY ORDER GROUPk
-	private String dock;
-	private String route;
-	private String mainRoute;
-	private BigDecimal totalWeight;
-	private BigDecimal unitWeight;
-	private BigDecimal totalVolume;
-	private BigDecimal unitVolume;
-	private BigDecimal totalNbPallets;
-	private String title;	
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -77,15 +62,6 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setDoNo(String doNo) {
 		this.doNo = doNo;
-	}
-	
-	@Column(name = "ext_do_no", nullable = false, length = 20, unique = true)
-	public String getExternalDoNo() {
-		return externalDoNo;
-	}
-
-	public void setExternalDoNo(String externalDoNo) {
-		this.externalDoNo = externalDoNo;
 	}
 
 	@ManyToOne
@@ -387,114 +363,6 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setExportFlag(String exportFlag) {
 		this.exportFlag = exportFlag;
-	}
-
-	@Column(name = "murn", length=20)
-	public String getMurn() {
-		return murn;
-	}
-
-	public void setMurn(String murn) {
-		this.murn = murn;
-	}
-
-	@Column(name = "order_group", length=20)
-	public String getOrderGroup() {
-		return OrderGroup;
-	}
-
-	public void setOrderGroup(String orderGroup) {
-		OrderGroup = orderGroup;
-	}
-
-	@Column(name = "delivery_order_group", length=20)
-	public String getDeliveryOrderGroup() {
-		return deliveryOrderGroup;
-	}
-
-	public void setDeliveryOrderGroup(String deliveryOrderGroup) {
-		this.deliveryOrderGroup = deliveryOrderGroup;
-	}
-
-	@Column(name = "dock", length=20)
-	public String getDock() {
-		return dock;
-	}
-
-	public void setDock(String dock) {
-		this.dock = dock;
-	}
-
-	@Column(name = "route", length=20)
-	public String getRoute() {
-		return route;
-	}
-
-	public void setRoute(String route) {
-		this.route = route;
-	}
-
-	@Column(name = "main_route", length=20)
-	public String getMainRoute() {
-		return mainRoute;
-	}
-
-	public void setMainRoute(String mainRoute) {
-		this.mainRoute = mainRoute;
-	}
-
-	@Column(name = "total_weight", precision = 18, scale = 4)
-	public BigDecimal getTotalWeight() {
-		return totalWeight;
-	}
-
-	public void setTotalWeight(BigDecimal totalWeight) {
-		this.totalWeight = totalWeight;
-	}
-
-	@Column(name = "unit_weight", precision = 18, scale = 4)
-	public BigDecimal getUnitWeight() {
-		return unitWeight;
-	}
-
-	public void setUnitWeight(BigDecimal unitWeight) {
-		this.unitWeight = unitWeight;
-	}
-
-	@Column(name = "total_volume", precision = 18, scale = 4)
-	public BigDecimal getTotalVolume() {
-		return totalVolume;
-	}
-
-	public void setTotalVolume(BigDecimal totalVolume) {
-		this.totalVolume = totalVolume;
-	}
-
-	@Column(name = "unit_volume", precision = 18, scale = 4)
-	public BigDecimal getUnitVolume() {
-		return unitVolume;
-	}
-
-	public void setUnitVolume(BigDecimal unitVolume) {
-		this.unitVolume = unitVolume;
-	}
-
-	@Column(name = "total_nb_pallets", precision = 18, scale = 4)
-	public BigDecimal getTotalNbPallets() {
-		return totalNbPallets;
-	}
-
-	public void setTotalNbPallets(BigDecimal totalNbPallets) {
-		this.totalNbPallets = totalNbPallets;
-	}
-
-	@Column(name = "title", length=50)
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	/**

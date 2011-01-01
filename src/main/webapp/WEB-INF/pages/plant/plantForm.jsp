@@ -30,8 +30,7 @@
 	<li>
 	<div>
 	<div class="left"><s:textfield key="plant.code" theme="xhtml"
-		required="true" cssClass="text medium" />
-		<s:hidden key="plant.version" /></div>
+		required="true" cssClass="text medium" /></div>
 	<div><s:textfield key="plant.name" theme="xhtml" required="true"
 		cssClass="text medium" /></div>
 	</div>
@@ -148,13 +147,6 @@
 	<li>
 	<div>
 	<div><s:textfield key="plant.doTemplateName" theme="xhtml"
-		required="true" cssClass="text large" /></div>
-	</div>
-	</li>
-	
-	<li>
-	<div>
-	<div><s:textfield key="plant.boxTemplateName" theme="xhtml"
 		required="true" cssClass="text large" /></div>
 	</div>
 	</li>

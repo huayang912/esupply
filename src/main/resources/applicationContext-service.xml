@@ -29,8 +29,6 @@
 			pointcut="execution(* *..service.ScheduleManager.*(..))" order="4" />
 		<aop:advisor id="receiptManagerTx" advice-ref="notSupportTXAdvice"
 			pointcut="execution(* *..service.ReceiptManager.*(..))" order="5" />
-		<aop:advisor id="deliveryOrderManagerTx" advice-ref="notSupportTXAdvice"
-			pointcut="execution(* *..service.DeliveryOrderManager.saveMultiFile(..))" order="5" />
 	</aop:config>
 
 	<!-- Enable @Transactional support -->
@@ -47,7 +45,7 @@
 			<!-- Read-only commented out to make things easier for end-users -->
 			<!-- http://issues.appfuse.org/browse/APF-556 -->
 			<!--tx:method name="get*" read-only="true"/-->
-			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
 
@@ -55,7 +53,7 @@
 		<tx:attributes>
 			<tx:method name="*" propagation="NOT_SUPPORTED" />
 		</tx:attributes>
-	</tx:advice>	
+	</tx:advice>
 
 	<tx:advice id="userManagerTxAdvice">
 		<tx:attributes>
@@ -331,15 +329,6 @@
 		<property name="itemManager" ref="itemManager" />
 		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager" />
 		<property name="deliveryOrderDetailManager" ref="deliveryOrderDetailManager" />
-		<property name="plantManager" ref="plantManager" />
-		<property name="supplierManager" ref="supplierManager" />
-		<property name="roleManager" ref="roleManager" />
-		<property name="userManager" ref="userManager" />
-		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
-		<property name="inboundLogManager" ref="inboundLogManager" />
-		<property name="mailEngine" ref="mailEngine" />
-		<property name="mailMessage" ref="mailMessage" />
-		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 	</bean>
 
 	<bean id="deliveryOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">

@@ -6,7 +6,7 @@
 <meta name="menu" content="PlantUserMenu" />
 </head>
 <c:set var="buttons">
-	<input type="button"
+	<input type="button" 
 		onclick="location.href='<c:url value="/editItem.html"/>'"
 		value="<fmt:message key="button.add"/>" />
 	<input type="button"
@@ -17,10 +17,8 @@
 	<div class="left"><s:textfield key="item.code"
 		cssClass="text medium" /></div>
 	<div><s:textfield key="item.description" cssClass="text medium" /></div>
-	<div class="formbotton"><s:submit method="list"
-		key="button.search" theme="simple" /> <input type="button"
-		onclick="location.href='<c:url value="/exportItem.html"/>'"
-		value="<fmt:message key="button.export"/>" /></div>
+	<div class="formbotton"><s:submit method="list" key="button.search" theme="simple" />
+	</div>
 </s:form>
 
 <display:table name="items" cellspacing="0" cellpadding="0"
@@ -30,8 +28,7 @@
 		paramId="id" paramProperty="id" titleKey="item.code" />
 	<display:column property="description" sortable="true"
 		titleKey="item.description" />
-	<display:column property="unitCount" sortable="true"
-		titleKey="item.unitCount" />
+	<display:column property="unitCount" sortable="true" titleKey="item.unitCount" />
 	<display:column property="uom" sortable="true" titleKey="item.uom" />
 
 	<display:setProperty name="paging.banner.item_name">

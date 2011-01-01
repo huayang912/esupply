@@ -32,22 +32,12 @@ public class DeliveryOrderDetail extends BaseObject {
 	private String itemDescription;
 	private String supplierItemCode;
 	private String uom;
-	private BigDecimal orderLot;    //ORDER_LOT
-	private BigDecimal unitCount;   //Pcs / box
-	private BigDecimal qty;         //Total quantity    Calculated -> PCS/PU * NB_PU
-	private BigDecimal boxCount;    //Nb of box or cont.
-	private BigDecimal orderedQty;  //	
-	private BigDecimal receivedQty;
+	private BigDecimal unitCount;
+	private BigDecimal qty;
 	private String referenceOrderNo;
 	private String referenceSequence;
 	private ScheduleItemDetail scheduleItemDetail;
 	private PurchaseOrderDetail purchaseOrderDetail;
-	private Integer label; 
-	private Boolean isChoosen;
-	private Integer indice;
-	private String packageType;
-	private String sebango;
-	private String storageCode;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -120,15 +110,6 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.uom = uom;
 	}
 	
-	@Column(name="order_lot", nullable = true, precision = 9, scale = 2)
-	public BigDecimal getOrderLot() {
-		return orderLot;
-	}
-
-	public void setOrderLot(BigDecimal orderLot) {
-		this.orderLot = orderLot;
-	}
-	
 	@Column(name="unit_count", nullable = true, precision = 9, scale = 2)
 	public BigDecimal getUnitCount() {
 		return unitCount;
@@ -147,44 +128,15 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.qty = qty;
 	}
 	
-	@Column(name="box_count", nullable = true, precision = 9, scale = 2)
-	public BigDecimal getBoxCount() {
-		return boxCount;
-	}
-
-	public void setBoxCount(BigDecimal boxCount) {
-		this.boxCount = boxCount;
-	}
-	
-	@Column(name="order_Qty", precision = 18, scale = 4)
-	public BigDecimal getOrderedQty() {
-		return orderedQty;
-	}
-
-	public void setOrderedQty(BigDecimal orderedQty) {
-		this.orderedQty = orderedQty;
-	}
-	
-	@Column(name="receive_Qty", precision = 18, scale = 4)
-	public BigDecimal getReceivedQty() {
-		return receivedQty;
-	}
-
-	public void setReceivedQty(BigDecimal receivedQty) {
-		this.receivedQty = receivedQty;
-	}
-	
 	@Transient
 	public BigDecimal getOrderQty() {
 		if (scheduleItemDetail != null) {
 			return scheduleItemDetail.getReleaseQty();
 		} else if (purchaseOrderDetail != null) {
 			return purchaseOrderDetail.getQty();
-		} else {
-			return orderedQty;
 		}
 		
-		//return BigDecimal.ZERO;
+		return BigDecimal.ZERO;
 	}
 	
 	@Transient
@@ -198,7 +150,7 @@ public class DeliveryOrderDetail extends BaseObject {
 		return BigDecimal.ZERO;
 	}
 
-	@Column(name = "reference_order_no", length = 20)
+	@Column(name = "reference_order_no", nullable=false, length = 20)
 	public String getReferenceOrderNo() {
 		return referenceOrderNo;
 	}
@@ -207,7 +159,7 @@ public class DeliveryOrderDetail extends BaseObject {
 		this.referenceOrderNo = referenceOrderNo;
 	}
 
-	@Column(name = "reference_sequence", length = 10)
+	@Column(name = "reference_sequence", nullable=false, length = 10)
 	public String getReferenceSequence() {
 		return referenceSequence;
 	}
@@ -234,56 +186,6 @@ public class DeliveryOrderDetail extends BaseObject {
 
 	public void setPurchaseOrderDetail(PurchaseOrderDetail purchaseOrderDetail) {
 		this.purchaseOrderDetail = purchaseOrderDetail;
-	}
-	
-	@Column(name = "label")
-	public Integer getLabel() {
-		return label;
-	}
-
-	public void setLabel(Integer label) {
-		this.label = label;
-	}
-	
-	@Column(name = "indice")
-	public Integer getIndice() {
-		return indice;
-	}
-
-	public void setIndice(Integer indice) {
-		this.indice = indice;
-	}
-	
-	@Column(name = "package_type", length = 20)
-	public String getPackageType() {
-		return packageType;
-	}
-
-	public void setPackageType(String packageType) {
-		this.packageType = packageType;
-	}
-	
-	@Column(name = "sebango", length = 20)
-	public String getSebango() {
-		return sebango;
-	}
-
-	public void setSebango(String sebango) {
-		this.sebango = sebango;
-	}
-	
-	@Column(name = "storage_code", length = 20)
-	public String getStorageCode() {
-		return storageCode;
-	}
-
-	public void setStorageCode(String storageCode) {
-		this.storageCode = storageCode;
-	}
-	
-	@Transient
-	public Boolean getIsChoosen() {
-		return isChoosen;
 	}
 
 	/**

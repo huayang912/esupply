@@ -36,7 +36,7 @@
 		<tr>
 			<td><label class="desc"><fmt:message
 				key="deliveryOrder.doNo" /></label></td>
-			<td colspan="2"><s:textfield key="deliveryOrder.externalDoNo"
+			<td colspan="2"><s:textfield key="deliveryOrder.doNo"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if
 				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
@@ -83,7 +83,7 @@
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
-	<display:column property="externalDoNo" sortable="true" sortProperty="externalDoNo"
+	<display:column property="doNo" sortable="true"
 		url="/editDeliveryOrder.html" paramId="doNo" paramProperty="doNo"
 		titleKey="deliveryOrder.doNo" />
 	<display:column property="plantCode" sortable="true"
