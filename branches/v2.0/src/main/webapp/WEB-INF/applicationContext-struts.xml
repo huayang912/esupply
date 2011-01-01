@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
+	default-lazy-init="true">
+
+	<bean id="adminInterceptor"
+		class="com.faurecia.webapp.interceptor.UserRoleAuthorizationInterceptor">
+		<property name="authorizedRoles" value="ROLE_ADMIN" />
+	</bean>
+
+	<bean id="plantAdminInterceptor"
+		class="com.faurecia.webapp.interceptor.UserRoleAuthorizationInterceptor">
+		<property name="authorizedRoles" value="ROLE_PLANT_ADMIN" />
+	</bean>
+
+	<bean id="mainAction" class="com.faurecia.webapp.action.MainAction"
+		scope="prototype">
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="signupAction" class="com.faurecia.webapp.action.SignupAction"
+		scope="prototype">
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="templateName" value="accountCreated.vm" />
+	</bean>
+
+	<bean id="userAction" class="com.faurecia.webapp.action.UserAction"
+		scope="prototype">
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="plantManager" ref="plantManager" />
+		<property name="supplierManager" ref="supplierManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+		<property name="templateName" value="accountCreated.vm" />
+	</bean>
+
+	<bean id="passwordHintAction" class="com.faurecia.webapp.action.PasswordHintAction"
+		scope="prototype">
+		<property name="userManager" ref="userManager" />
+		<property name="mailEngine" ref="mailEngine" />
+		<property name="mailMessage" ref="mailMessage" />
+	</bean>
+
+	<bean id="plantAction" class="com.faurecia.webapp.action.PlantAction"
+		scope="prototype">
+		<property name="plantManager" ref="plantManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+	
+	<bean id="plantScheduleGroupAction" class="com.faurecia.webapp.action.PlantScheduleGroupAction"
+		scope="prototype">
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="itemAction" class="com.faurecia.webapp.action.ItemAction"
+		scope="prototype">
+		<property name="itemManager" ref="itemManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+	
+	<bean id="supplierItemAction" class="com.faurecia.webapp.action.SupplierItemAction"
+		scope="prototype">
+		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="supplierAction" class="com.faurecia.webapp.action.SupplierAction"
+		scope="prototype">
+		<property name="plantManager" ref="plantManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+	</bean>
+
+	<bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction"
+		scope="prototype">
+		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="scheduleAction" class="com.faurecia.webapp.action.ScheduleAction"
+		scope="prototype">
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="scheduleManager" ref="scheduleManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+	
+	<bean id="scheduleControlAction" class="com.faurecia.webapp.action.ScheduleControlAction"
+		scope="prototype">
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="scheduleControlManager" ref="scheduleControlManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="deliveryOrderAction" class="com.faurecia.webapp.action.DeliveryOrderAction"
+		scope="prototype">
+		<property name="deliveryOrderManager" ref="deliveryOrderManager" />
+		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager" />
+		<property name="scheduleManager" ref="scheduleManager" />
+		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="receiptAction" class="com.faurecia.webapp.action.ReceiptAction"
+		scope="prototype">
+		<property name="receiptManager" ref="receiptManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+	
+	<bean id="receiptDetailAction" class="com.faurecia.webapp.action.ReceiptDetailAction"
+		scope="prototype">
+		<property name="receiptManager" ref="receiptManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+
+	<bean id="inboundLogAction" class="com.faurecia.webapp.action.InboundLogAction"
+		scope="prototype">
+		<property name="inboundLogManager" ref="inboundLogManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
+		<property name="scheduleManager" ref="scheduleManager" />
+		<property name="receiptManager" ref="receiptManager" />
+	</bean>
+	
+	<bean id="outboundLogAction" class="com.faurecia.webapp.action.OutboundLogAction"
+		scope="prototype">
+		<property name="outboundLogManager" ref="outboundLogManager" />
+		<property name="deliveryOrderManager" ref="deliveryOrderManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
+	
+	<bean id="noticeAction" class="com.faurecia.webapp.action.NoticeAction"
+		scope="prototype">
+		<property name="noticeManager" ref="noticeManager" />
+		<property name="noticeReaderManager" ref="noticeReaderManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="uploadFileDirectory" value="D:\sconitInboundTest" />
+	</bean>
+	
+	<bean id="noticeReaderAction" class="com.faurecia.webapp.action.NoticeReaderAction"
+		scope="prototype">
+		<property name="noticeManager" ref="noticeManager" />
+		<property name="plantManager" ref="plantManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+		<property name="noticeReaderManager" ref="noticeReaderManager" />
+	</bean>
+</beans>
