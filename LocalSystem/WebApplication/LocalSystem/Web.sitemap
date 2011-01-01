@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" enableLocalization="true">
+  <siteMapNode url="" title="LocalSystem Home"  description="Home">
+
+    <!--基础数据-->
+    <siteMapNode url="" title="$Resources:SiteMap,MasterData"  description="MasterData" >
+      <siteMapNode url="~/Main.aspx?mid=MasterData.GeneralCode" title="$Resources:SiteMap,GeneralCode"  description="GeneralCode"  />
+      <siteMapNode url="~/Main.aspx?mid=MasterData.AppUser" title="$Resources:SiteMap,AppUser"  description="AppUser"  />
+      <siteMapNode url="~/Main.aspx?mid=MasterData.Item" title="$Resources:SiteMap,Item"  description="Item"  />
+      <siteMapNode url="~/Main.aspx?mid=MasterData.Supplier" title="$Resources:SiteMap,Supplier"  description="Supplier"  />
+    </siteMapNode>
+
+    <!--订单管理-->
+    <siteMapNode url="" title="$Resources:SiteMap,Opration" description="Opration">
+      <siteMapNode url="~/Main.aspx?mid=Operation.BarCode" title="$Resources:SiteMap,BarCode" description="BarCode" />
+      <siteMapNode url="~/Main.aspx?mid=Operation.Po" title="$Resources:SiteMap,Po" description="Po" />
+      <siteMapNode url="~/Main.aspx?mid=Operation.OutboundLog" title="$Resources:SiteMap,OutboundLog" description="OutboundLog" />
+    </siteMapNode>
+
+  </siteMapNode>
+</siteMap>

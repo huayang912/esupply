@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.LocalSystem.Entity.MasterData.AppUserPermission, com.LocalSystem.Entity" table="AppUserPermission" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="AppUser" column="AppUser" type="String" length="50" />	
+		<property name="AppPermission" column="AppPermission" type="String" length="255" />	
+  	</class>
+</hibernate-mapping>

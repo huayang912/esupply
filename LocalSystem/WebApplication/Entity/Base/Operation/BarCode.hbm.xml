@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+ 	<class name="com.LocalSystem.Entity.Operation.BarCode, com.LocalSystem.Entity" table="BarCode" lazy="false">
+		<id name="Id" column="Id" type="Int32" unsaved-value="0" >
+      		<generator class="identity" />
+        </id>
+		<property name="Seq" column="Seq" type="Int32"  />	
+		<property name="BarCode" column="BarCode" type="String" length="50" />	
+		<property name="LotNo" column="LotNo" type="String" length="50"  />	
+		<property name="ItemCode" column="ItemCode" type="String" length="20" />	
+		<property name="ItemDescription" column="ItemDescription" type="String" length="50" />	
+		<property name="Uom" column="Uom" type="String" length="5" />	
+		<property name="UC" column="UC" type="Decimal"  />	
+		<property name="Qty" column="Qty" type="Decimal"  />
+    <property name="Status" column="Status" type="String" length="20" />
+		<property name="SupplierCode" column="SupplierCode" type="String" length="20" />	
+    <property name="CreateUser" column="CreateUser" type="String" length="50" />
+    <property name="CreateDate" column="CreateDate" type="DateTime"  />
+    <property name="Memo" column="Memo" type="String" length="50" />
+		<property name="PoDetailId" column="PoDetailId" type="Int32"  />	
+  </class>
+</hibernate-mapping>

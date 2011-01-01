@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C8D4D3DC-F7B1-4AC8-B123-5B319E99C2D3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.LocalSystem.Persistence</RootNamespace>
+    <AssemblyName>com.LocalSystem.Persistence</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Facilities.NHibernateIntegration, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DllLib\Castle.Facilities.NHibernateIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=1.2.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DllLib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\Criteria\ICriteriaDao.cs" />
+    <Compile Include="Base\Criteria\NH\NHCriteriaDao.cs" />
+    <Compile Include="Base\IDao.cs" />
+    <Compile Include="Base\INHDao.cs" />
+    <Compile Include="Base\ISqlDao.cs" />
+    <Compile Include="Base\ISqlHelperDao.cs" />
+    <Compile Include="Base\MasterData\IAppPermissionBaseDao.cs" />
+    <Compile Include="Base\MasterData\IAppUserBaseDao.cs" />
+    <Compile Include="Base\MasterData\IAppUserPermissionBaseDao.cs" />
+    <Compile Include="Base\Operation\IBarCodeBaseDao.cs" />
+    <Compile Include="Base\MasterData\ICodeMasterBaseDao.cs" />
+    <Compile Include="Base\MasterData\IEntityPreferenceBaseDao.cs" />
+    <Compile Include="Base\MasterData\IItemBaseDao.cs" />
+    <Compile Include="Base\MasterData\ISupplierBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHAppPermissionBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHAppUserBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHAppUserPermissionBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHCodeMasterBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHEntityPreferenceBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHItemBaseDao.cs" />
+    <Compile Include="Base\MasterData\NH\NHSupplierBaseDao.cs" />
+    <Compile Include="Base\NHDaoBase.cs" />
+    <Compile Include="Base\Operation\IOutboundLogBaseDao.cs" />
+    <Compile Include="Base\Operation\IPoBaseDao.cs" />
+    <Compile Include="Base\Operation\IPoDetailBaseDao.cs" />
+    <Compile Include="Base\Operation\NH\NHBarCodeBaseDao.cs" />
+    <Compile Include="Base\Operation\NH\NHOutboundLogBaseDao.cs" />
+    <Compile Include="Base\Operation\NH\NHPoBaseDao.cs" />
+    <Compile Include="Base\Operation\NH\NHPoDetailBaseDao.cs" />
+    <Compile Include="Base\SqlDaoBase.cs" />
+    <Compile Include="Base\SQLHelper.cs" />
+    <Compile Include="Base\SqlHelperDao.cs" />
+    <Compile Include="MasterData\IAppPermissionDao.cs" />
+    <Compile Include="MasterData\IAppUserDao.cs" />
+    <Compile Include="MasterData\IAppUserPermissionDao.cs" />
+    <Compile Include="Operation\IBarCodeDao.cs" />
+    <Compile Include="MasterData\ICodeMasterDao.cs" />
+    <Compile Include="MasterData\IEntityPreferenceDao.cs" />
+    <Compile Include="MasterData\IItemDao.cs" />
+    <Compile Include="MasterData\ISupplierDao.cs" />
+    <Compile Include="MasterData\NH\NHAppPermissionDao.cs" />
+    <Compile Include="MasterData\NH\NHAppUserDao.cs" />
+    <Compile Include="MasterData\NH\NHAppUserPermissionDao.cs" />
+    <Compile Include="Operation\NH\NHBarCodeDao.cs" />
+    <Compile Include="MasterData\NH\NHCodeMasterDao.cs" />
+    <Compile Include="MasterData\NH\NHEntityPreferenceDao.cs" />
+    <Compile Include="MasterData\NH\NHItemDao.cs" />
+    <Compile Include="MasterData\NH\NHSupplierDao.cs" />
+    <Compile Include="Operation\IOutboundLogDao.cs" />
+    <Compile Include="Operation\IPoDao.cs" />
+    <Compile Include="Operation\IPoDetailDao.cs" />
+    <Compile Include="Operation\NH\NHOutboundLogDao.cs" />
+    <Compile Include="Operation\NH\NHPoDao.cs" />
+    <Compile Include="Operation\NH\NHPoDetailDao.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entity\Entity.csproj">
+      <Project>{CADA5382-5233-4D03-9F4F-655382538AB1}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)$(SolutionName)\bin</PostBuildEvent>
+  </PropertyGroup>
+</Project>

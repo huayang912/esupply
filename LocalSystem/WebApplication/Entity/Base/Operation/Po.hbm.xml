@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2">
+  <class name="com.LocalSystem.Entity.Operation.Po, com.LocalSystem.Entity" table="Po" lazy="false">
+    <id name="Code" column="Code" type="String" unsaved-value="null" >
+      <generator class="assigned" />
+    </id>
+    <property name="Status" column="Status" type="String" length="20" />
+    <property name="Supplier" column="Supplier" type="String" length="20" />
+    <property name="CreateUser" column="CreateUser" type="String" length="50" />
+    <property name="CreateDate" column="CreateDate" type="DateTime"  />
+    <property name="OutboundDate" column="OutboundDate" type="DateTime"  />
+    <property name="IsOutbound" column="IsOutbound" type="Boolean"  />
+    <property name="RefPo" column="RefPo" type="String" length="50" />
+    <property name="PlantCode" column="PlantCode" type="String" length="50" />
+    <property name="PlantName" column="PlantName" type="String" length="50" />
+    <property name="PlantContact" column="PlantContact" type="String" length="50" />
+    <property name="PlantAddress" column="PlantAddress" type="String" length="255" />
+    <property name="PlantFax" column="PlantFax" type="String" length="50" />
+    <property name="PlantPhone" column="PlantPhone" type="String" length="50" />
+    <property name="PlantDock" column="PlantDock" type="String" length="50" />
+    <property name="SupplierName" column="SupplierName" type="String" length="50" />
+    <property name="SupplierContact" column="SupplierContact" type="String" length="50" />
+    <property name="SupplierFax" column="SupplierFax" type="String" length="50" />
+    <property name="SupplierPhone" column="SupplierPhone" type="String" length="50" />
+    <property name="SupplierAddress" column="SupplierAddress" type="String" length="255" />
+    <property name="LotNo" column="LotNo" type="String" length="50" />
+    <property name="WinTime" column="WinTime" type="DateTime"  />
+    <property name="LastmodifyUser" column="LastmodifyUser" type="String" length="50" />
+    <property name="LastmodifyDate" column="LastmodifyDate" type="DateTime"  />
+    <property name="IsExport" column="IsExport" type="Boolean"  />
+    <property name="murn" column="murn" type="String" length="100" />
+    <property name="orderg" column="orderg" type="String" length="100" />
+    <property name="delordgr" column="delordgr" type="String" length="100" />
+    <property name="fdcode" column="fdcode" type="String" length="100" />
+    <property name="route" column="route" type="String" length="100" />
+    <property name="mroute" column="mroute" type="String" length="100" />
+    <property name="mantitle" column="mantitle" type="String" length="100" />
+    <bag name="PoDetails" table="PoDetail" inverse="true" lazy="true" order-by="Seq asc">
+      <key column="PoCode" />
+      <one-to-many class="com.LocalSystem.Entity.Operation.PoDetail, com.LocalSystem.Entity" />
+    </bag>
+  </class>
+</hibernate-mapping>

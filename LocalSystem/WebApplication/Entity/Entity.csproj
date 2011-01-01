@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CADA5382-5233-4D03-9F4F-655382538AB1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>com.LocalSystem.Entity</RootNamespace>
+    <AssemblyName>com.LocalSystem.Entity</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NHibernate, Version=1.2.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DllLib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\BusinessConstants.cs" />
+    <Compile Include="Base\EntityBase.cs" />
+    <Compile Include="Base\Exception\BusinessErrorException.cs" />
+    <Compile Include="Base\Exception\BusinessWarningException.cs" />
+    <Compile Include="Base\Exception\TechnicalException.cs" />
+    <Compile Include="Base\MasterData\AppPermissionBase.cs" />
+    <Compile Include="Base\MasterData\AppUserBase.cs" />
+    <Compile Include="Base\MasterData\AppUserPermissionBase.cs" />
+    <Compile Include="Base\MasterData\CodeMasterBase.cs" />
+    <Compile Include="Base\MasterData\EntityPreferenceBase.cs" />
+    <Compile Include="Base\MasterData\ItemBase.cs" />
+    <Compile Include="Base\MasterData\SupplierBase.cs" />
+    <Compile Include="Base\Operation\BarCodeBase.cs" />
+    <Compile Include="Base\Operation\OutboundLogBase.cs" />
+    <Compile Include="Base\Operation\PoBase.cs" />
+    <Compile Include="Base\Operation\PoDetailBase.cs" />
+    <Compile Include="Lisa\ManifestFile.cs" />
+    <Compile Include="MasterData\AppPermission.cs" />
+    <Compile Include="MasterData\AppUser.cs" />
+    <Compile Include="MasterData\AppUserPermission.cs" />
+    <Compile Include="Operation\BarCode.cs" />
+    <Compile Include="MasterData\CodeMaster.cs" />
+    <Compile Include="MasterData\EntityPreference.cs" />
+    <Compile Include="MasterData\Item.cs" />
+    <Compile Include="MasterData\Resolver.cs" />
+    <Compile Include="MasterData\Supplier.cs" />
+    <Compile Include="MasterData\Td.cs" />
+    <Compile Include="Operation\OutboundLog.cs" />
+    <Compile Include="Operation\Po.cs" />
+    <Compile Include="Operation\PoDetail.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Base\MasterData\AppPermission.hbm.xml" />
+    <EmbeddedResource Include="Base\MasterData\AppUser.hbm.xml" />
+    <EmbeddedResource Include="Base\MasterData\AppUserPermission.hbm.xml" />
+    <EmbeddedResource Include="Base\Operation\BarCode.hbm.xml" />
+    <EmbeddedResource Include="Base\MasterData\CodeMaster.hbm.xml" />
+    <EmbeddedResource Include="Base\MasterData\EntityPreference.hbm.xml" />
+    <EmbeddedResource Include="Base\MasterData\Item.hbm.xml" />
+    <EmbeddedResource Include="Base\MasterData\Supplier.hbm.xml" />
+    <EmbeddedResource Include="Base\Operation\OutboundLog.hbm.xml" />
+    <EmbeddedResource Include="Base\Operation\Po.hbm.xml" />
+    <EmbeddedResource Include="Base\Operation\PoDetail.hbm.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)$(SolutionName)\bin</PostBuildEvent>
+  </PropertyGroup>
+</Project>

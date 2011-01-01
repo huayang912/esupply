@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://com.LocalSystem.Webservice" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://com.LocalSystem.Webservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://com.LocalSystem.Webservice">
+      <s:element name="LoadAppUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="LoadAppUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoadAppUserResult" type="tns:AppUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="AppUser">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:AppUserBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AppUserBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Code" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityBase" abstract="true" />
+      <s:element name="CheckAndLoadBarCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="barCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="userCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckAndLoadBarCodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckAndLoadBarCodeResult" type="tns:BarCode" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="BarCode">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BarCodeBase" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BarCodeBase" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityBase">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Seq" nillable="true" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="BarCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LotNo" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ItemDescription" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Uom" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="UC" nillable="true" type="s:decimal" />
+              <s:element minOccurs="1" maxOccurs="1" name="Qty" type="s:decimal" />
+              <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SupplierCode" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CreateUser" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CreateDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="Memo" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="PoDetailId" nillable="true" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateBarCode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="barCodes" type="tns:ArrayOfBarCode" />
+            <s:element minOccurs="0" maxOccurs="1" name="createUser" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfBarCode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="BarCode" nillable="true" type="tns:BarCode" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateBarCodeResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoadAppUserSoapIn">
+    <wsdl:part name="parameters" element="tns:LoadAppUser" />
+  </wsdl:message>
+  <wsdl:message name="LoadAppUserSoapOut">
+    <wsdl:part name="parameters" element="tns:LoadAppUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckAndLoadBarCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckAndLoadBarCode" />
+  </wsdl:message>
+  <wsdl:message name="CheckAndLoadBarCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckAndLoadBarCodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateBarCodeSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateBarCode" />
+  </wsdl:message>
+  <wsdl:message name="CreateBarCodeSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateBarCodeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SmartDeviceMgrWSSoap">
+    <wsdl:operation name="LoadAppUser">
+      <wsdl:input message="tns:LoadAppUserSoapIn" />
+      <wsdl:output message="tns:LoadAppUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckAndLoadBarCode">
+      <wsdl:input message="tns:CheckAndLoadBarCodeSoapIn" />
+      <wsdl:output message="tns:CheckAndLoadBarCodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateBarCode">
+      <wsdl:input message="tns:CreateBarCodeSoapIn" />
+      <wsdl:output message="tns:CreateBarCodeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SmartDeviceMgrWSSoap" type="tns:SmartDeviceMgrWSSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LoadAppUser">
+      <soap:operation soapAction="http://com.LocalSystem.Webservice/LoadAppUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckAndLoadBarCode">
+      <soap:operation soapAction="http://com.LocalSystem.Webservice/CheckAndLoadBarCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBarCode">
+      <soap:operation soapAction="http://com.LocalSystem.Webservice/CreateBarCode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="SmartDeviceMgrWSSoap12" type="tns:SmartDeviceMgrWSSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LoadAppUser">
+      <soap12:operation soapAction="http://com.LocalSystem.Webservice/LoadAppUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckAndLoadBarCode">
+      <soap12:operation soapAction="http://com.LocalSystem.Webservice/CheckAndLoadBarCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBarCode">
+      <soap12:operation soapAction="http://com.LocalSystem.Webservice/CreateBarCode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmartDeviceMgrWS">
+    <wsdl:port name="SmartDeviceMgrWSSoap" binding="tns:SmartDeviceMgrWSSoap">
+      <soap:address location="http://localhost:2618/LocalSystem/Webservice/SmartDeviceMgrWS.asmx" />
+    </wsdl:port>
+    <wsdl:port name="SmartDeviceMgrWSSoap12" binding="tns:SmartDeviceMgrWSSoap12">
+      <soap12:address location="http://localhost:2618/LocalSystem/Webservice/SmartDeviceMgrWS.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
