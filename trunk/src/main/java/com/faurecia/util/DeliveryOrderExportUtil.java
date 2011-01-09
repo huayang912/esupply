@@ -74,8 +74,11 @@ public class DeliveryOrderExportUtil {
 				BigDecimal damandQty = BigDecimal.ZERO;
 				if (deliveryOrderDetail.getScheduleItemDetail() != null) {
 					damandQty = deliveryOrderDetail.getScheduleItemDetail().getReleaseQty();
-				} else {
+				} else if(deliveryOrderDetail.getPurchaseOrderDetail() != null) {
 					damandQty = deliveryOrderDetail.getPurchaseOrderDetail().getQty();
+				}else
+				{
+					damandQty = BigDecimal.ZERO;
 				}
 				// damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
 
@@ -382,10 +385,10 @@ public class DeliveryOrderExportUtil {
 		}
 
 		// Manifest Number
-		if (deliveryOrder.getDoNo() != null) {
+		if (deliveryOrder.getExternalDoNo() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 16);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDoNo(), 120, 705, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 120, 705, 0);
 			cb.endText();
 		}
 
@@ -510,25 +513,25 @@ public class DeliveryOrderExportUtil {
 
 		cb.beginText();
 		cb.setFontAndSize(dinBf, 8);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "01-Dec 99:99", 310, 595, 0);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "", 310, 595, 0);
 		cb.endText();
 
 		// Departure from 1st cross dock
 		cb.beginText();
 		cb.setFontAndSize(dinBf, 8);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "01-Dec 99:99", 380, 595, 0);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "", 380, 595, 0);
 		cb.endText();
 
 		// Arrival at 2nd cross dock
 		cb.beginText();
 		cb.setFontAndSize(dinBf, 11);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999", 445, 595, 0);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "", 445, 595, 0);
 		cb.endText();
 
 		// Departure from 2nd cross dock
 		cb.beginText();
 		cb.setFontAndSize(dinBf, 11);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "9999", 520, 595, 0);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "", 520, 595, 0);
 		cb.endText();
 
 	}
@@ -595,10 +598,10 @@ public class DeliveryOrderExportUtil {
 			}
 
 			// Manifest Number
-			if (deliveryOrder.getDoNo() != null) {
+			if (deliveryOrder.getExternalDoNo() != null) {
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 30);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDoNo(), 300, 430, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 300, 430, 0);
 				cb.endText();
 			}
 
@@ -728,11 +731,11 @@ public class DeliveryOrderExportUtil {
 				}
 
 				// Manifest number
-				if (deliveryOrder.getDoNo() != null) {
+				if (deliveryOrder.getExternalDoNo() != null) {
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 20);
 					cb.setColorFill(BaseColor.BLACK);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDoNo(), 490, 745 - labelHeight, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 490, 745 - labelHeight, 0);
 					cb.endText();
 				}
 
@@ -902,10 +905,10 @@ public class DeliveryOrderExportUtil {
 				}
 
 				// inbound number
-				if (deliveryOrder.getDoNo() != null) {
+				if (deliveryOrder.getExternalDoNo() != null) {
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 20);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDoNo(), 485, 742 - labelHeight, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 485, 742 - labelHeight, 0);
 					cb.endText();
 				}
 
