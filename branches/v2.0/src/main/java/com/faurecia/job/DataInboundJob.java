@@ -47,7 +47,7 @@ public class DataInboundJob {
 	protected MailEngine mailEngine;
 	protected SimpleMailMessage mailMessage;
 	protected String errorInboundTemplateName;
-	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR", "DESADV" };
+	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR", "SEQJIT" };
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
@@ -201,8 +201,8 @@ public class DataInboundJob {
 							schedule = this.scheduleManager.saveSingleFile(inputStream, inboundLog);
 						} else if (dataType.equals("MBGMCR")) {
 							receipt = this.receiptManager.saveSingleFile(inputStream, inboundLog);
-						} else if (dataType.equals("DESADV")) {
-							doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog);
+						} else if (dataType.equals("SEQJIT")) {
+							doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog, plant);
 						}
 					} catch (Exception ex) {
 						log.error("Error when save file to database.", ex);
