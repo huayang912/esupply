@@ -64,7 +64,7 @@ public class Role extends BaseObject implements Serializable {
         return id;
     }
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "role_resource", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = @JoinColumn(name = "resource_id"))
 	public Set<Resource> getResources() {
 		return resources;

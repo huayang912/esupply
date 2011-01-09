@@ -5,10 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -17,10 +20,13 @@ import com.faurecia.model.Plant;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Role;
+import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.NumberControlManager;
 import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
+import com.faurecia.service.SupplierManager;
 import com.faurecia.util.CSVWriter;
 
 public class SupplierAction extends BaseAction {
@@ -34,6 +40,8 @@ public class SupplierAction extends BaseAction {
 	private GenericManager<Plant, String> plantManager;
 	private PlantSupplierManager plantSupplierManager;
 	private PlantScheduleGroupManager plantScheduleGroupManager;
+	private SupplierManager supplierManager;
+	private NumberControlManager numberControlManager;
 	private List<PlantSupplier> plantSuppliers;
 	private PlantSupplier plantSupplier;
 	private int id;
@@ -47,6 +55,14 @@ public class SupplierAction extends BaseAction {
 
 	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
 		this.plantScheduleGroupManager = plantScheduleGroupManager;
+	}
+	
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
+	}
+	
+	public void setNumberControlManager(NumberControlManager numberControlManager) {
+		this.numberControlManager = numberControlManager;
 	}
 
 	public List<PlantSupplier> getPlantSuppliers() {
@@ -178,7 +194,47 @@ public class SupplierAction extends BaseAction {
 
 		boolean isNew = (plantSupplier.getId() == null);
 		
-		PlantSupplier oldPlantSupplier = this.plantSupplierManager.get(plantSupplier.getId());
+		PlantSupplier oldPlantSupplier = isNew ? new PlantSupplier() : this.plantSupplierManager.get(plantSupplier.getId());		
+		
+		if (isNew) {
+			Supplier supplier = null;
+			User user = userManager.getUserByUsername(getRequest().getRemoteUser());
+			Plant plant = user.getUserPlant();
+			//Plant plant = plantManager.get(plantSupplier.getPlant().getCode());
+			if (this.supplierManager.exists(plantSupplier.getSupplier().getCode())) {
+				supplier = this.supplierManager.get(plantSupplier.getSupplier().getCode());
+			} else {
+				supplier = new Supplier();
+				supplier.setCode(plantSupplier.getSupplier().getCode());
+				supplier.setName(plantSupplier.getSupplierName());
+				
+				this.supplierManager.save(supplier);
+				
+				User supplierUser = new User();
+				supplierUser.setUsername(supplier.getCode()); // 使用供应商编码作为用户名称
+				supplierUser.setEnabled(true);
+				supplierUser.setAccountExpired(false);
+				supplierUser.setAccountLocked(false);
+				supplierUser.setEmail(plant.getSupplierNotifyEmail());
+				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
+				supplierUser.setConfirmPassword(supplierUser.getPassword());
+				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				// supplierUser.setLastName(supplier.getName() != null ?
+				// supplier.getName() : supplier.getCode());
+				supplierUser.setLastName("");
+				supplierUser.setUserSupplier(supplier);
+				// supplierUser.setUserPlant(plant);
+				Set<Role> roles = new HashSet<Role>();
+				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
+				supplierUser.setRoles(roles);
+				this.userManager.saveUser(supplierUser);						
+			}
+			
+			oldPlantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
+			oldPlantSupplier.setPlant(plant);
+			oldPlantSupplier.setSupplier(supplier);
+		}
+		
 		oldPlantSupplier.setSupplierName(plantSupplier.getSupplierName());
 		oldPlantSupplier.setSupplierAddress1(plantSupplier.getSupplierAddress1());
 		oldPlantSupplier.setSupplierAddress2(plantSupplier.getSupplierAddress2());

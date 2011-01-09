@@ -8,16 +8,7 @@
 		<meta name="menu" content="UserMenu" />
 	</c:when>
 	<c:otherwise>
-		<c:choose>
-			<c:when
-				test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN' or roleType == 'ROLE_VENDOR'}">
-				<meta name="menu" content="AdminMenu" />
-			</c:when>
-			<c:when
-				test="${roleType == 'ROLE_PLANT_USER'}">
-				<meta name="menu" content="PlantAdminMenu" />
-			</c:when>
-		</c:choose>
+		<meta name="menu" content="AdminMenu" />
 	</c:otherwise>
 </c:choose>
 <script type="text/javascript"
@@ -27,8 +18,7 @@
 <s:form name="userForm" action="saveUser" method="post" validate="true">
 	<li style="display: none"><s:hidden key="user.id" /> <s:hidden
 		key="user.version" /> <input type="hidden" name="from"
-		value="${param.from}" /><input type="hidden" name="roleType"
-		value="${roleType}" /> <c:if test="${cookieLogin == 'true'}">
+		value="${param.from}" /><c:if test="${cookieLogin == 'true'}">
 		<s:hidden key="user.password" />
 		<s:hidden key="user.confirmPassword" />
 	</c:if> <s:if test="user.version == null">
@@ -55,10 +45,12 @@
 
 	<c:choose>
 		<c:when test="${not empty user.id}">
-			<s:textfield key="user.username" cssClass="text medium" readonly="true" required="true" />
+			<s:textfield key="user.username" cssClass="text medium"
+				readonly="true" required="true" />
 		</c:when>
 		<c:otherwise>
-			<s:textfield key="user.username" cssClass="text medium" required="true" />
+			<s:textfield key="user.username" cssClass="text medium"
+				required="true" />
 		</c:otherwise>
 	</c:choose>
 
@@ -96,22 +88,6 @@
 	</div>
 	</li>
 	<c:choose>
-		<c:when test="${roleType == 'ROLE_PLANT_ADMIN'}">
-			<li>
-			<div class="left"><s:select key="user.userPlant.code"
-				list="%{plants}" listKey="code" listValue="name" theme="xhtml"
-				required="true"></s:select></div>
-			</li>
-		</c:when>
-		<c:when test="${roleType == 'ROLE_VENDOR'}">
-			<li>
-			<div class="left"><s:select key="user.userSupplier.code"
-				list="%{suppliers}" listKey="code" listValue="name" theme="xhtml"
-				required="true"></s:select></div>
-			</li>
-		</c:when>
-	</c:choose>
-	<c:choose>
 		<c:when test="${param.from == 'list'}">
 			<li>
 			<fieldset><legend><fmt:message
@@ -132,10 +108,7 @@
 			</li>
 		</c:when>
 		<c:otherwise>
-			<li><strong><fmt:message key="user.roles" />:</strong> <s:iterator
-				value="user.roleList" status="status">
-				<s:property value="label" />
-				<s:if test="!#status.last">,</s:if>
+			<li><s:iterator value="user.roleList" status="status">
 				<input type="hidden" name="userRoles"
 					value="<s:property value="value"/>" />
 			</s:iterator> <s:hidden name="user.enabled" value="%{user.enabled}" /> <s:hidden

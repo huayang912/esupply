@@ -34,7 +34,7 @@
 
 	<li><s:textfield key="plantSupplier.supplier.code"
 		title="plantSupplier.supplierCode" cssClass="text large"
-		required="true" readonly="true"/></li>
+		required="true" /></li>
 
 	<li><s:textfield key="plantSupplier.supplierName"
 		cssClass="text large" required="true" /></li>

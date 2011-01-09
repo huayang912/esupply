@@ -134,7 +134,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
 		return address;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = @JoinColumn(name = "role_id"))
 	public Set<Role> getRoles() {
 		return roles;
@@ -192,6 +192,93 @@ public class User extends BaseObject implements Serializable, UserDetails {
 		if (resources != null && resources.size() > 0) {
 			for (Resource resource : resources) {
 				if (!authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+
+		return authorities.toArray(new GrantedAuthority[0]);
+	}
+	
+	@Transient
+	public GrantedAuthority[] getUrlAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_URL) 
+								&& !authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_URL) 
+						&& !authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+
+		return authorities.toArray(new GrantedAuthority[0]);
+	}
+	
+	@Transient
+	public GrantedAuthority[] getPlantAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_PLANT) 
+								&& !authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_PLANT) 
+						&& !authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+
+		return authorities.toArray(new GrantedAuthority[0]);
+	}
+	
+	@Transient
+	public GrantedAuthority[] getSupplierAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_SUPPLIER) 
+								&& !authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_SUPPLIER) 
+						&& !authorities.contains(resource)) {
 					authorities.add(resource);
 				}
 			}
@@ -385,7 +472,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
 		this.userSupplier = userSupplier;
 	}
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_resource", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = @JoinColumn(name = "resource_id"))
 	public Set<Resource> getResources() {
 		return resources;

@@ -54,9 +54,7 @@
 		class="org.springframework.security.vote.AffirmativeBased">
 		<beans:property name="decisionVoters">
 			<beans:list>
-				<beans:bean class="com.faurecia.util.AuthorityVoter">
-					<!--自定义的从数据库中去权限验证权限的投票器 -->
-				</beans:bean>
+				<beans:bean class="com.faurecia.util.AuthorityVoter" />
 			</beans:list>
 		</beans:property>
 	</beans:bean>

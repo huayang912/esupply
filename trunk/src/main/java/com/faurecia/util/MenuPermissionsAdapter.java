@@ -15,22 +15,27 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 	private static final long serialVersionUID = 1L;
 	private GrantedAuthority[] authorities;
 
+	public GrantedAuthority[] getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(GrantedAuthority[] authorities) {
+		this.authorities = authorities;
+	}
+
 	public boolean isAllowed(MenuComponent menu) {
 		if (authorities != null) {
 			for (GrantedAuthority authority : authorities) {
-//				if (menu.getName().equalsIgnoreCase(authority.getAuthority())) {
-//					return true;
-//				}
-				if (menu.getRoles() == null || menu.getRoles().indexOf(authority.getAuthority()) > -1) {
+				if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase()))) {
 					return true;
 				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	public MenuPermissionsAdapter(GrantedAuthority[] authorities) {
 		this.authorities = authorities;
-	}
+	}	
 }

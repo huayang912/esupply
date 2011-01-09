@@ -82,7 +82,6 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private Unmarshaller unmarshaller;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
-	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private RoleManager roleManager;
 	private UserManager userManager;
@@ -135,10 +134,6 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	public void setSupplierManager(SupplierManager supplierManager) {
 		this.supplierManager = supplierManager;
-	}
-
-	public void setPlantManager(GenericManager<Plant, String> plantManager) {
-		this.plantManager = plantManager;
 	}
 
 	public void setRoleManager(RoleManager roleManager) {
@@ -362,10 +357,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return marshalOrder(DELVRY, filePath, filePrefix, fileSuffix);
 	}
 
-	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog) {
+	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog, Plant plant) {
 		try {
 			ManifestFile order = unmarshalOrder(inputStream);
-			List<DeliveryOrder> doList = ManifestFileToDo(order);
+			List<DeliveryOrder> doList = ManifestFileToDo(order, plant);
 
 			if (inboundLog.getPlantSupplier() == null) {
 				inboundLog.setPlantSupplier(doList.get(0).getPlantSupplier());
@@ -402,16 +397,18 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			File file = new File(inboundLog.getFullFilePath());
 			FileInputStream stream = new FileInputStream(file);
 
-			this.saveMultiFile(stream, inboundLog);
-
-			FileUtils.forceMkdir(new File(archiveFolder));
-			File backupFile = new File(archiveFolder + File.separator + file.getName());
-
-			FileUtils.copyFile(file, backupFile);
-			inboundLog.setFullFilePath(backupFile.getAbsolutePath());
-			inboundLog.setInboundResult("success");
-
-			FileUtils.forceDelete(file);
+			if (inboundLog.getPlantSupplier() != null && inboundLog.getPlantSupplier().getPlant() != null) {
+				this.saveMultiFile(stream, inboundLog, inboundLog.getPlantSupplier().getPlant());
+	
+				FileUtils.forceMkdir(new File(archiveFolder));
+				File backupFile = new File(archiveFolder + File.separator + file.getName());
+	
+				FileUtils.copyFile(file, backupFile);
+				inboundLog.setFullFilePath(backupFile.getAbsolutePath());
+				inboundLog.setInboundResult("success");
+	
+				FileUtils.forceDelete(file);
+			}
 		} catch (Exception ex) {
 			inboundLog.setMemo(ex.getMessage());
 		} finally {
@@ -422,14 +419,14 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<DeliveryOrder> ManifestFileToDo(final ManifestFile order) throws DataConvertException, UserExistsException {
+	private List<DeliveryOrder> ManifestFileToDo(final ManifestFile order, Plant plant) throws DataConvertException, UserExistsException {
 		List<DeliveryOrder> deliveryOrderList = new ArrayList<DeliveryOrder>();
 
 		if (order != null && order.getFileHeaderOrDeliveryOrFileEnd() != null && order.getFileHeaderOrDeliveryOrFileEnd().size() > 0) {
 
-			ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader) order.getFileHeaderOrDeliveryOrFileEnd().get(0);
-			String plantCode = fileHeader.getPCODE();
-			Plant plant = plantManager.get(plantCode);
+			//ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader) order.getFileHeaderOrDeliveryOrFileEnd().get(0);
+			//String plantCode = fileHeader.getPCODE();
+			//Plant plant = plantManager.get(plantCode);
 
 			for (Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
 				if (obj instanceof ManifestFile.Delivery) {
