@@ -4,23 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"
 	default-lazy-init="true">
 
-	<bean id="adminInterceptor"
-		class="com.faurecia.webapp.interceptor.UserRoleAuthorizationInterceptor">
-		<property name="authorizedRoles" value="ROLE_ADMIN" />
-	</bean>
-
-	<bean id="plantAdminInterceptor"
-		class="com.faurecia.webapp.interceptor.UserRoleAuthorizationInterceptor">
-		<property name="authorizedRoles" value="ROLE_PLANT_ADMIN" />
-	</bean>
-
-	<bean id="mainAction" class="com.faurecia.webapp.action.MainAction"
-		scope="prototype">
-		<property name="plantSupplierManager" ref="plantSupplierManager" />
-		<property name="userManager" ref="userManager" />
-		<property name="roleManager" ref="roleManager" />
-	</bean>
-
 	<bean id="signupAction" class="com.faurecia.webapp.action.SignupAction"
 		scope="prototype">
 		<property name="userManager" ref="userManager" />
@@ -81,9 +64,11 @@
 		scope="prototype">
 		<property name="plantManager" ref="plantManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="supplierManager" ref="supplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
+		<property name="numberControlManager" ref="numberControlManager" />
 	</bean>
 
 	<bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction"

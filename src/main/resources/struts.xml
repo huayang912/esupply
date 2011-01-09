@@ -17,9 +17,6 @@
 	<!-- Configuration for the default package. -->
 	<package name="default" extends="struts-default">
 		<interceptors>
-			<!-- Interceptor to handle allowing only admins to certain actions -->
-			<interceptor name="adminOnly" class="adminInterceptor" />
-			<interceptor name="plantAdminOnly" class="plantAdminInterceptor" />
 			<!--
 				Copied from struts-default.xml and changed validation exclude
 				methods
@@ -53,14 +50,6 @@
 				<interceptor-ref name="fileUpload" />
 				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
-			<interceptor-stack name="adminCheck">
-				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="adminOnly" />
-			</interceptor-stack>
-			<interceptor-stack name="plantAdminCheck">
-				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="plantAdminOnly" />
-			</interceptor-stack>
 		</interceptors>
 
 		<global-results>
@@ -73,11 +62,7 @@
 				result="dataAccessFailure" />
 		</global-exception-mappings>
 
-		<action name="mainMenu" class="mainAction" method="main">
-			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
-		</action>
-
-		<action name="setSupplierPlant" class="mainAction" method="setSupplierPlant">
+		<action name="mainMenu">
 			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
@@ -91,15 +76,25 @@
 			<result name="input">/WEB-INF/pages/signup.jsp</result>
 			<result name="success" type="redirect-action">/mainMenu</result>
 		</action>
+		
+		<action name="activeUsers" class="com.opensymphony.xwork2.ActionSupport">
+			<result name="success">/WEB-INF/pages/admin/activeUsers.jsp</result>
+		</action>
 
-		<action name="editAdmin" class="userAction" method="edit">
-			<interceptor-ref name="adminCheck" />
-			<result name="success">/WEB-INF/pages/userForm.jsp</result>
-			<result name="input">/WEB-INF/pages/admin/userList.jsp</result>
+		<action name="flushCache" class="com.opensymphony.xwork2.ActionSupport">
+			<result name="success">/WEB-INF/pages/admin/flushCache.jsp</result>
+		</action>
+
+		<action name="reload" class="com.faurecia.webapp.action.ReloadAction">
+			<!-- this should never be used, it's here to prevent warnings -->
+			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
+		</action>
+
+		<action name="users" class="userAction" method="list">
+			<result name="success">/WEB-INF/pages/admin/userList.jsp</result>
 		</action>
 
 		<action name="editUser" class="userAction" method="edit">
-			<interceptor-ref name="plantAdminCheck" />
 			<result name="success">/WEB-INF/pages/userForm.jsp</result>
 			<result name="input">/WEB-INF/pages/admin/userList.jsp</result>
 		</action>
@@ -109,29 +104,13 @@
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
-		<action name="saveAdmin" class="userAction" method="save">
-			<result name="cancel" type="redirect-action">admin/admins</result>
-			<result name="input">/WEB-INF/pages/userForm.jsp</result>
-			<result name="success" type="redirect-action">admin/admins</result>
-		</action>
-
 		<action name="saveUser" class="userAction" method="save">
 			<result name="input">/WEB-INF/pages/userForm.jsp</result>
-			<result name="adminCancel" type="redirect-action">
-				<param name="actionName">admin/admins</param>
-				<param name="roleType">${roleType}</param>
-			</result>
 			<result name="userCancel" type="redirect-action">
-				<param name="actionName">admin/users</param>
-				<param name="roleType">${roleType}</param>
-			</result>
-			<result name="adminSuccess" type="redirect-action">
-				<param name="actionName">admin/admins</param>
-				<param name="roleType">${roleType}</param>
+				<param name="actionName">users</param>
 			</result>
 			<result name="userSuccess" type="redirect-action">
-				<param name="actionName">admin/users</param>
-				<param name="roleType">${roleType}</param>
+				<param name="actionName">users</param>
 			</result>
 		</action>
 
@@ -149,8 +128,11 @@
 
 		<!-- Add additional actions here -->
 		<!-- Plant -->
+		<action name="plants" class="plantAction" method="list">
+			<result>/WEB-INF/pages/plant/plantList.jsp</result>
+		</action>
+		
 		<action name="editPlant" class="plantAction" method="edit">
-			<interceptor-ref name="adminCheck" />
 			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
@@ -162,9 +144,9 @@
 
 		<action name="savePlant" class="plantAction" method="save">
 			<result name="input">/WEB-INF/pages/plant/plantForm.jsp</result>
-			<result name="cancel" type="redirect-action">admin/plants</result>
-			<result name="delete" type="redirect-action">admin/plants</result>
-			<result name="success" type="redirect-action">admin/plants</result>
+			<result name="cancel" type="redirect-action">plants</result>
+			<result name="delete" type="redirect-action">plants</result>
+			<result name="success" type="redirect-action">plants</result>
 		</action>
 
 		<!-- Plant Schedule Group -->
@@ -207,9 +189,8 @@
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
-		
-		<action name="exportItem" class="itemAction"
-			method="export">
+
+		<action name="exportItem" class="itemAction" method="export">
 			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
@@ -261,9 +242,8 @@
 			<result name="delete" type="redirect-action">suppliers</result>
 			<result name="success" type="redirect-action">suppliers</result>
 		</action>
-		
-		<action name="exportSupplier" class="supplierAction"
-			method="export">
+
+		<action name="exportSupplier" class="supplierAction" method="export">
 			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
@@ -408,15 +388,17 @@
 			</result>
 		</action>
 
-		<action name="printPalletLabel" class="deliveryOrderAction" method="printPalletLabel">
+		<action name="printPalletLabel" class="deliveryOrderAction"
+			method="printPalletLabel">
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
 				<param name="bufferSize">4096</param>
 			</result>
 		</action>
-		
-		<action name="printBoxLabel" class="deliveryOrderAction" method="printBoxLabel">
+
+		<action name="printBoxLabel" class="deliveryOrderAction"
+			method="printBoxLabel">
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
@@ -425,7 +407,7 @@
 			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
 			</result>
 		</action>
-		
+
 		<!-- Receipt -->
 		<action name="receipts" class="receiptAction" method="list">
 			<interceptor-ref name="defaultStack">
@@ -538,39 +520,6 @@
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
 				<param name="bufferSize">4096</param>
 			</result>
-		</action>
-	</package>
-
-	<!-- Actions in this package will be prefixed with /admin/ -->
-	<package name="admin" extends="default" namespace="/admin">
-		<action name="activeUsers" class="com.opensymphony.xwork2.ActionSupport">
-			<result name="success">/WEB-INF/pages/admin/activeUsers.jsp</result>
-		</action>
-
-		<action name="flushCache" class="com.opensymphony.xwork2.ActionSupport">
-			<interceptor-ref name="adminCheck" />
-			<result name="success">/WEB-INF/pages/admin/flushCache.jsp</result>
-		</action>
-
-		<action name="reload" class="com.faurecia.webapp.action.ReloadAction">
-			<interceptor-ref name="adminCheck" />
-			<!-- this should never be used, it's here to prevent warnings -->
-			<result name="success">/WEB-INF/pages/mainMenu.jsp</result>
-		</action>
-
-		<action name="admins" class="userAction" method="list">
-			<interceptor-ref name="adminCheck" />
-			<result name="success">/WEB-INF/pages/admin/userList.jsp</result>
-		</action>
-
-		<action name="users" class="userAction" method="list">
-			<interceptor-ref name="plantAdminCheck" />
-			<result name="success">/WEB-INF/pages/admin/userList.jsp</result>
-		</action>
-
-		<action name="plants" class="plantAction" method="list">
-			<interceptor-ref name="adminCheck" />
-			<result>/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
 	</package>
 </struts>

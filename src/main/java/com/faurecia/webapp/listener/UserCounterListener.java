@@ -1,7 +1,7 @@
 package com.faurecia.webapp.listener;
 
-import java.util.Set;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -12,16 +12,16 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import com.faurecia.model.User;
-import com.faurecia.util.MenuPermissionsAdapter;
-
+import org.springframework.security.Authentication;
+import org.springframework.security.AuthenticationTrustResolver;
+import org.springframework.security.AuthenticationTrustResolverImpl;
 import org.springframework.security.context.HttpSessionContextIntegrationFilter;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationTrustResolverImpl;
-import org.springframework.security.AuthenticationTrustResolver;
-import org.springframework.security.ui.webapp.AuthenticationProcessingFilter;
+
+import com.faurecia.model.User;
+import com.faurecia.util.AuthorityVoter;
+import com.faurecia.util.MenuPermissionsAdapter;
 
 
 /**
@@ -45,7 +45,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
      * The default event we're looking to trap.
      */
     public static final String EVENT_KEY = HttpSessionContextIntegrationFilter.SPRING_SECURITY_CONTEXT_KEY;
-    public static final String MENU_PERMISSION_ADAPTER = "menuPermissionsAdapter";
+   
     private transient ServletContext servletContext;
     private int counter;
     private Set<User> users;
@@ -126,7 +126,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
                 
                 HttpSession session = event.getSession();
                 MenuPermissionsAdapter menuPermissionsAdapter = new MenuPermissionsAdapter(user.getAuthorities());
-                session.setAttribute(MENU_PERMISSION_ADAPTER, menuPermissionsAdapter);
+                session.setAttribute(AuthorityVoter.MENU_PERMISSION_ADAPTER, menuPermissionsAdapter);
             }
         }
     }
@@ -177,7 +177,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
 
 	public void sessionCreated(HttpSessionEvent se) {
 		MenuPermissionsAdapter menuPermissionsAdapter = new MenuPermissionsAdapter(null);
-        se.getSession().setAttribute(MENU_PERMISSION_ADAPTER, menuPermissionsAdapter);
+        se.getSession().setAttribute(AuthorityVoter.MENU_PERMISSION_ADAPTER, menuPermissionsAdapter);
 	}
 
 	public void sessionDestroyed(HttpSessionEvent se) {

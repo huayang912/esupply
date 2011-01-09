@@ -7,6 +7,9 @@
 <meta name="menu" content="PlantUserMenu" />
 </head>
 <c:set var="buttons">
+	<input type="button" 
+        onclick="location.href='<c:url value="/editSupplier.html?from=list"/>'"
+        value="<fmt:message key="button.add"/>"/>  
 	<input type="button"
 		onclick="location.href='<c:url value="/exportSupplier.html"/>'"
 		value="<fmt:message key="button.export"/>" />

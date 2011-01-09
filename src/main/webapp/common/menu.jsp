@@ -11,11 +11,8 @@
 		<menu:displayMenu name="MainMenu" />
 		<menu:displayMenu name="UserMenu" />
 		<menu:displayMenu name="AdminMenu" />
-		<menu:displayMenu name="PlantAdminMenu" />
-		<menu:displayMenu name="PlantUserMenu" />
-		<menu:displayMenu name="PlantOrderMenu" />
-		<menu:displayMenu name="SupplierMenu" />
-		<menu:displayMenu name="SupplierOrderMenu" />
+		<menu:displayMenu name="OrderMenu" />
+		<menu:displayMenu name="InfoMenu" />
 		<menu:displayMenu name="Logout" />
 	</ul>
 </menu:useMenuDisplayer>
