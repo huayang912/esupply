@@ -28,7 +28,7 @@ public interface DeliveryOrderManager extends GenericManager<DeliveryOrder, Stri
 	File exportDeliveryOrder(DeliveryOrder deliveryOrder, File filePath, String filePrefix, String fileSuffix) throws JAXBException, IOException;
 	
 	List<DeliveryOrder> saveMultiFile(InputStream inputStream,
-			InboundLog inboundLog);
+			InboundLog inboundLog, Plant plant);
 	
 	void reloadFile(InboundLog inboundLog, String userCode, String archiveFolder);
 	
