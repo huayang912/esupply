@@ -331,7 +331,6 @@
 		<property name="itemManager" ref="itemManager" />
 		<property name="scheduleItemDetailManager" ref="scheduleItemDetailManager" />
 		<property name="deliveryOrderDetailManager" ref="deliveryOrderDetailManager" />
-		<property name="plantManager" ref="plantManager" />
 		<property name="supplierManager" ref="supplierManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="userManager" ref="userManager" />
