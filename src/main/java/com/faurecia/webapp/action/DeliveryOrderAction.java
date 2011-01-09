@@ -519,7 +519,7 @@ public class DeliveryOrderAction extends BaseAction {
 	public String print() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
-		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equals("Do.png")) {
+		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equalsIgnoreCase("Do.png")) {
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
 					deliveryOrder);
 		} else {
@@ -556,7 +556,7 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 		}
-		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equals("Box.png")) {
+		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box.png")) {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
 		} else {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
