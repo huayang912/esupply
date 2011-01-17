@@ -202,7 +202,7 @@ public class DataInboundJob {
 						} else if (dataType.equals("MBGMCR")) {
 							receipt = this.receiptManager.saveSingleFile(inputStream, inboundLog);
 						} else if (dataType.equals("SEQJIT")) {
-							doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog, plant);
+							doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog);
 						}
 					} catch (Exception ex) {
 						log.error("Error when save file to database.", ex);
