@@ -326,6 +326,7 @@
 		</constructor-arg>
 		<property name="numberControlManager" ref="numberControlManager" />
 		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager" />
+		<property name="plantManager" ref="plantManager" />
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="itemManager" ref="itemManager" />

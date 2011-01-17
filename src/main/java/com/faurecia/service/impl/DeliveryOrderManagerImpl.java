@@ -26,6 +26,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.mail.MailException;
@@ -81,6 +82,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private Marshaller marshaller;
 	private Unmarshaller unmarshaller;
 	private PlantSupplierManager plantSupplierManager;
+	private GenericManager<Plant, String> plantManager;
 	private ItemManager itemManager;
 	private SupplierManager supplierManager;
 	private RoleManager roleManager;
@@ -110,6 +112,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	public void setPurchaseOrderDetailManager(GenericManager<PurchaseOrderDetail, Integer> purchaseOrderDetailManager) {
 		this.purchaseOrderDetailManager = purchaseOrderDetailManager;
+	}
+
+	public void setPlantManager(GenericManager<Plant, String> plantManager) {
+		this.plantManager = plantManager;
 	}
 
 	public void setPurchaseOrderManager(PurchaseOrderManager purchaseOrderManager) {
@@ -357,10 +363,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return marshalOrder(DELVRY, filePath, filePrefix, fileSuffix);
 	}
 
-	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog, Plant plant) {
+	public List<DeliveryOrder> saveMultiFile(InputStream inputStream, InboundLog inboundLog) {
 		try {
 			ManifestFile order = unmarshalOrder(inputStream);
-			List<DeliveryOrder> doList = ManifestFileToDo(order, plant);
+			List<DeliveryOrder> doList = ManifestFileToDo(order);
 
 			if (inboundLog.getPlantSupplier() == null) {
 				inboundLog.setPlantSupplier(doList.get(0).getPlantSupplier());
@@ -378,9 +384,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			log.error("Error occur when convert ORDERS to PO.", dataConvertException);
 			inboundLog.setInboundResult("fail");
 
-			PurchaseOrder purchaseOrder = (PurchaseOrder) dataConvertException.getObject();
-			if (purchaseOrder != null && purchaseOrder.getPlantSupplier() != null) {
-				inboundLog.setPlantSupplier(purchaseOrder.getPlantSupplier());
+			DeliveryOrder deliveryOrder = (DeliveryOrder) dataConvertException.getObject();
+			if (deliveryOrder != null && deliveryOrder.getPlantSupplier() != null) {
+				inboundLog.setPlantSupplier(deliveryOrder.getPlantSupplier());
 			}
 			inboundLog.setMemo(dataConvertException.getMessage());
 		} catch (Exception exception) {
@@ -397,18 +403,17 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			File file = new File(inboundLog.getFullFilePath());
 			FileInputStream stream = new FileInputStream(file);
 
-			if (inboundLog.getPlantSupplier() != null && inboundLog.getPlantSupplier().getPlant() != null) {
-				this.saveMultiFile(stream, inboundLog, inboundLog.getPlantSupplier().getPlant());
-	
-				FileUtils.forceMkdir(new File(archiveFolder));
-				File backupFile = new File(archiveFolder + File.separator + file.getName());
-	
-				FileUtils.copyFile(file, backupFile);
-				inboundLog.setFullFilePath(backupFile.getAbsolutePath());
-				inboundLog.setInboundResult("success");
-	
-				FileUtils.forceDelete(file);
-			}
+			this.saveMultiFile(stream, inboundLog);
+
+			FileUtils.forceMkdir(new File(archiveFolder));
+			File backupFile = new File(archiveFolder + File.separator + file.getName());
+
+			FileUtils.copyFile(file, backupFile);
+			inboundLog.setFullFilePath(backupFile.getAbsolutePath());
+			inboundLog.setInboundResult("success");
+
+			FileUtils.forceDelete(file);
+
 		} catch (Exception ex) {
 			inboundLog.setMemo(ex.getMessage());
 		} finally {
@@ -419,14 +424,26 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<DeliveryOrder> ManifestFileToDo(final ManifestFile order, Plant plant) throws DataConvertException, UserExistsException {
+	private List<DeliveryOrder> ManifestFileToDo(final ManifestFile order) throws DataConvertException, UserExistsException {
 		List<DeliveryOrder> deliveryOrderList = new ArrayList<DeliveryOrder>();
 
 		if (order != null && order.getFileHeaderOrDeliveryOrFileEnd() != null && order.getFileHeaderOrDeliveryOrFileEnd().size() > 0) {
 
-			//ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader) order.getFileHeaderOrDeliveryOrFileEnd().get(0);
-			//String plantCode = fileHeader.getPCODE();
-			//Plant plant = plantManager.get(plantCode);
+			ManifestFile.FileHeader fileHeader = (ManifestFile.FileHeader) order.getFileHeaderOrDeliveryOrFileEnd().get(0);
+			String plantCode = fileHeader.getPCODE();
+			if (plantCode.trim().length() > 3) {
+				plantCode = plantCode.substring(plantCode.length() - 3);
+			}
+			DetachedCriteria criteria0 = DetachedCriteria.forClass(Plant.class);
+			criteria0.add(Restrictions.like("code", plantCode, MatchMode.END));
+			List<Plant> plantList = plantManager.findByCriteria(criteria0);
+			Plant plant = null;
+			if (plantList != null && plantList.size() > 0) {
+				plant = plantList.get(0);
+			} else {
+				log.error("Error find plant with code " + fileHeader.getPCODE());
+				return null;
+			}
 
 			for (Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
 				if (obj instanceof ManifestFile.Delivery) {
@@ -446,7 +463,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 					this.save(deliveryOrder);
 					deliveryOrderList.add(deliveryOrder);
-					
+
 					this.flushSession();
 				}
 			}
@@ -562,13 +579,15 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setCreateDate(new Date());
 			try {
 				deliveryOrder.setStartDate(dtFormat.parse(header.getPICKUP()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert PICKUP into datetime.", ex);
+				deliveryOrder.setStartDate(null);
 			}
 			try {
 				deliveryOrder.setEndDate(dtFormat.parse(header.getRECEPT()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert RECEPT into datetime.", ex);
+				deliveryOrder.setEndDate(null);
 			}
 			deliveryOrder.setIsExport(false);
 			deliveryOrder.setStatus("Create");
@@ -580,27 +599,27 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setMainRoute(header.getMROUTE());
 			try {
 				deliveryOrder.setTotalWeight(new BigDecimal(header.getTOTWEIGHT()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert TOTWEIGHT into decimal.", ex);
 			}
 			try {
 				deliveryOrder.setUnitWeight(new BigDecimal(header.getUNITWEIGHT()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert UNITWEIGHT into decimal.", ex);
 			}
 			try {
 				deliveryOrder.setTotalVolume(new BigDecimal(header.getTOTVOL()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert TOTVOL into decimal.", ex);
 			}
 			try {
 				deliveryOrder.setUnitVolume(new BigDecimal(header.getUNITVOL()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert UNITVOL into decimal.", ex);
 			}
 			try {
 				deliveryOrder.setTotalNbPallets(new BigDecimal(header.getTOTPAL()));
-			} catch(Exception ex) {
+			} catch (Exception ex) {
 				log.warn("Error when convert TOTPAL into decimal.", ex);
 			}
 			deliveryOrder.setTitle(header.getMANTITLE());
@@ -637,12 +656,12 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				detail.setItemDescription(itemDescription);
 				try {
 					detail.setLabel(Integer.parseInt(recpos.getLABELID()));
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					log.warn("Error when convert LABELID into int.", ex);
 				}
 				try {
 					detail.setOrderLot(new BigDecimal(recpos.getOLOT()));
-				} catch(Exception ex) {
+				} catch (Exception ex) {
 					log.warn("Error when convert OLOT into decimal.", ex);
 				}
 				detail.setSequence(String.valueOf(i));

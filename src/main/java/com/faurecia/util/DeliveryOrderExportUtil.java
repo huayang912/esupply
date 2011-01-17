@@ -3,7 +3,6 @@ package com.faurecia.util;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -11,7 +10,6 @@ import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import com.faurecia.model.DeliveryOrder;
@@ -382,7 +380,7 @@ public class DeliveryOrderExportUtil {
 		}
 
 		// Manifest Number
-		if (deliveryOrder.getExternalDoNo() != null) {
+		if (deliveryOrder.getExternalDoNo() != null) {			
 			cb.beginText();
 			cb.setFontAndSize(simBf, 16);
 			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 120, 705, 0);
@@ -476,7 +474,7 @@ public class DeliveryOrderExportUtil {
 
 			cb.beginText();
 			cb.setFontAndSize(dinBf, 11);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, startTimeToStr.format(deliveryOrder.getEndDate()), 100, 595, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, startTimeToStr.format(deliveryOrder.getStartDate()), 100, 595, 0);
 			cb.endText();
 		}
 
@@ -486,7 +484,7 @@ public class DeliveryOrderExportUtil {
 
 			cb.beginText();
 			cb.setFontAndSize(dinBf, 11);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, endDateToStr.format(deliveryOrder.getStartDate()), 155, 595, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, endDateToStr.format(deliveryOrder.getEndDate()), 155, 595, 0);
 			cb.endText();
 
 			// Delivery time
@@ -494,7 +492,7 @@ public class DeliveryOrderExportUtil {
 
 			cb.beginText();
 			cb.setFontAndSize(dinBf, 11);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, endTimeToStr.format(deliveryOrder.getStartDate()), 210, 595, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, endTimeToStr.format(deliveryOrder.getEndDate()), 210, 595, 0);
 			cb.endText();
 		}
 
