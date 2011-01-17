@@ -380,11 +380,33 @@ public class DeliveryOrderExportUtil {
 		}
 
 		// Manifest Number
-		if (deliveryOrder.getExternalDoNo() != null) {			
-			cb.beginText();
-			cb.setFontAndSize(simBf, 16);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 120, 705, 0);
-			cb.endText();
+		if (deliveryOrder.getExternalDoNo() != null) {
+			String manfest = deliveryOrder.getExternalDoNo();
+			if (manfest.length() == 13) {
+				String[] strArr = manfest.split("-");
+				String str1 = strArr[0].substring(0,strArr[0].length()-4);
+				String str2 = strArr[0].substring(strArr[0].length()-4);
+				
+				cb.beginText();
+				cb.setFontAndSize(simBf, 16);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1, 85, 705, 0);
+				cb.endText();
+
+				cb.beginText();
+				cb.setFontAndSize(simBf, 20);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 130, 705, 0);
+				cb.endText();
+
+				cb.beginText();
+				cb.setFontAndSize(simBf, 16);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 160, 705, 0);
+				cb.endText();
+			} else {
+				cb.beginText();
+				cb.setFontAndSize(simBf, 16);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 120, 705, 0);
+				cb.endText();
+			}
 		}
 
 		// Supplier Code
@@ -664,10 +686,9 @@ public class DeliveryOrderExportUtil {
 					backGroupImage.setAbsolutePosition(-50, 220 - labelHeight);
 					backGroupImage.scalePercent(52, 57);
 					underPdfContentByte.addImage(backGroupImage);
-					
+
 					BigDecimal qty = deliveryOrderDetail.getUnitCount();
-					if(j>0 && j == deliveryOrderDetail.getBoxCount().intValue() - 1)
-					{
+					if (j > 0 && j == deliveryOrderDetail.getBoxCount().intValue() - 1) {
 						qty = deliveryOrderDetail.getQty().subtract(deliveryOrderDetail.getUnitCount().multiply(new BigDecimal(j)));
 					}
 
@@ -874,8 +895,7 @@ public class DeliveryOrderExportUtil {
 			for (int i = 0; i < selectedDeliveryOrderDetailList.size(); i++) {
 				DeliveryOrderDetail deliveryOrderDetail = selectedDeliveryOrderDetailList.get(i);
 
-				for (int j = 0; j < deliveryOrderDetail.getBoxCount().intValue(); j++)
-				{
+				for (int j = 0; j < deliveryOrderDetail.getBoxCount().intValue(); j++) {
 					if (totalBoxCount % 4 == 0) {
 
 						if (totalBoxCount > 0) {
@@ -891,8 +911,7 @@ public class DeliveryOrderExportUtil {
 
 					String itemCode = deliveryOrderDetail.getItem().getCode();
 					BigDecimal qty = deliveryOrderDetail.getUnitCount();
-					if(j>0 && j == deliveryOrderDetail.getBoxCount().intValue() - 1)
-					{
+					if (j > 0 && j == deliveryOrderDetail.getBoxCount().intValue() - 1) {
 						qty = deliveryOrderDetail.getQty().subtract(deliveryOrderDetail.getUnitCount().multiply(new BigDecimal(j)));
 					}
 					// barcode
@@ -900,8 +919,7 @@ public class DeliveryOrderExportUtil {
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 16);
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "10" + deliveryOrder.getSupplierCode()
-								+ deliveryOrderDetail.getItem().getCode() + numberFormat.format(qty), 280,
-								754 - labelHeight, 0);
+								+ deliveryOrderDetail.getItem().getCode() + numberFormat.format(qty), 280, 754 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -936,8 +954,7 @@ public class DeliveryOrderExportUtil {
 						cb.setFontAndSize(dinBf, 10);
 						cb.setColorFill(BaseColor.BLACK);
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*10" + deliveryOrder.getSupplierCode()
-								+ deliveryOrderDetail.getItem().getCode() + numberFormat.format(qty) + "*", 280,
-								722 - labelHeight, 0);
+								+ deliveryOrderDetail.getItem().getCode() + numberFormat.format(qty) + "*", 280, 722 - labelHeight, 0);
 						cb.endText();
 					}
 
