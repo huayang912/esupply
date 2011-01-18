@@ -543,8 +543,11 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 				plantSupplier = new PlantSupplier();
 				plantSupplier.setSupplierName(header.getSUNAME());
-				plantSupplier.setSupplierAddress1(header.getSUPADDR1());
-				plantSupplier.setSupplierAddress2(header.getSUPADDR2());
+				String addr1 = header.getSUPADDR1() != null ? header.getSUPADDR1() : "";
+				String addr2 = header.getSUPADDR2() != null ? header.getSUPADDR2() : "";
+				String addr3 = header.getSUPADDR3() != null ? header.getSUPADDR3() : "";
+				plantSupplier.setSupplierAddress1(addr1 + addr2 + addr3);
+				plantSupplier.setSupplierAddress2(addr1 + addr2 + addr3);
 				plantSupplier.setSupplierContactPerson(header.getSUCONTACT());
 				plantSupplier.setSupplierPhone(header.getSUPTEL());
 				plantSupplier.setSupplierFax(header.getSUFAX());
@@ -589,8 +592,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				log.warn("Error when convert RECEPT into datetime.", ex);
 				deliveryOrder.setEndDate(null);
 			}
-			deliveryOrder.setIsExport(false);
-			deliveryOrder.setStatus("Create");
+			deliveryOrder.setIsExport(true);
+			deliveryOrder.setStatus("Confirm");
 			deliveryOrder.setMurn(header.getMURN());
 			deliveryOrder.setOrderGroup(header.getORDERG());
 			deliveryOrder.setDeliveryOrderGroup(header.getDELORDGR());
