@@ -47,8 +47,17 @@ public class DataInboundJob {
 	protected MailEngine mailEngine;
 	protected SimpleMailMessage mailMessage;
 	protected String errorInboundTemplateName;
-	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR", "SEQJIT" };
-
+	private final String[] dataTypeArray = new String[] { "ORDERS", "DELINS", "MBGMCR" };
+	private String mfFtpServer;
+	private int mfFtpPort;
+	private String mfFtpUser;
+	private String mfFtpPassword;
+	private String mfFtpPath;
+	private String mfTempFileDirectory;
+	private String mfArchiveFileDirectory;
+	private String mfErrorFileDirectory;
+	private String mfPlantCode;
+	
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
 	}
@@ -83,6 +92,78 @@ public class DataInboundJob {
 
 	public void setErrorInboundTemplateName(String errorInboundTemplateName) {
 		this.errorInboundTemplateName = errorInboundTemplateName;
+	}
+
+	public String getMfFtpServer() {
+		return mfFtpServer;
+	}
+
+	public void setMfFtpServer(String mfFtpServer) {
+		this.mfFtpServer = mfFtpServer;
+	}
+
+	public int getMfFtpPort() {
+		return mfFtpPort;
+	}
+
+	public void setMfFtpPort(int mfFtpPort) {
+		this.mfFtpPort = mfFtpPort;
+	}
+
+	public String getMfFtpUser() {
+		return mfFtpUser;
+	}
+
+	public void setMfFtpUser(String mfFtpUser) {
+		this.mfFtpUser = mfFtpUser;
+	}
+
+	public String getMfFtpPassword() {
+		return mfFtpPassword;
+	}
+
+	public void setMfFtpPassword(String mfFtpPassword) {
+		this.mfFtpPassword = mfFtpPassword;
+	}
+
+	public String getMfFtpPath() {
+		return mfFtpPath;
+	}
+
+	public void setMfFtpPath(String mfFtpPath) {
+		this.mfFtpPath = mfFtpPath;
+	}
+
+	public String getMfTempFileDirectory() {
+		return mfTempFileDirectory;
+	}
+
+	public void setMfTempFileDirectory(String mfTempFileDirectory) {
+		this.mfTempFileDirectory = mfTempFileDirectory;
+	}
+
+	public String getMfArchiveFileDirectory() {
+		return mfArchiveFileDirectory;
+	}
+
+	public void setMfArchiveFileDirectory(String mfArchiveFileDirectory) {
+		this.mfArchiveFileDirectory = mfArchiveFileDirectory;
+	}
+
+	public String getMfErrorFileDirectory() {
+		return mfErrorFileDirectory;
+	}
+
+	public void setMfErrorFileDirectory(String mfErrorFileDirectory) {
+		this.mfErrorFileDirectory = mfErrorFileDirectory;
+	}
+
+	public String getMfPlantCode() {
+		return mfPlantCode;
+	}
+
+	public void setMfPlantCode(String mfPlantCode) {
+		this.mfPlantCode = mfPlantCode;
 	}
 
 	public void run() {
@@ -130,7 +211,7 @@ public class DataInboundJob {
 		}
 
 		for (int i = 0; i < dataTypeArray.length; i++) {
-			String dataType = dataTypeArray[i];
+			String dataType = dataTypeArray[i];			
 			List<String> fileNameList = null;
 			try {
 				String ftpDirectory = ftpPath + FTPClientUtil.SEPERATE + dataType + FTPClientUtil.SEPERATE + "INP";
@@ -142,157 +223,9 @@ public class DataInboundJob {
 				continue;
 			}
 
-			if (fileNameList != null && fileNameList.size() > 0) {
-				Collections.sort(fileNameList);
-				for (int j = 0; j < fileNameList.size(); j++) {
-
-					String fileName = fileNameList.get(j); // 获取下载文件名
-					String filePrefix = fileName.substring(0, fileName.lastIndexOf('.'));
-					String fileSuffix = fileName.substring(fileName.lastIndexOf('.') - 1);
-					if (!"SEQJIT".equals(dataType) && !fileName.toLowerCase().endsWith(".xml")) {
-						continue;
-					}
-
-					// 查找是否已经记录过日志
-					InboundLog inboundLog = this.inboundLogManager.getInboundLogByDataTypeAndFileName(dataType, fileName);
-					if (inboundLog == null) {
-						inboundLog = new InboundLog();
-						inboundLog.setDataType(dataType);
-						inboundLog.setFileName(fileName);
-						inboundLog.setCreateDate(nowDate);
-						inboundLog.setCreateUser(user);
-					}
-					inboundLog.setLastModifyDate(nowDate);
-					inboundLog.setLastModifyUser(user);
-
-					File tempFile = null;
-					InputStream inputStream = null;
-					try {
-						// 下载文件至临时目录
-						String tempDirString = tempFileDirectory + File.separator + plant.getCode() + File.separator + dataType;
-						File tempDir = new File(tempDirString);
-						FileUtils.forceMkdir(tempDir);
-
-						log.info("Download file: " + fileName + " to temperary folder: " + tempDirString + ".");
-						tempFile = File.createTempFile(filePrefix, fileSuffix, tempDir);
-						ftpClientUtil.download(fileName, tempFile.getAbsolutePath());
-
-						inputStream = new FileInputStream(tempFile);
-					} catch (IOException ex) {
-						log.error("Error download file: " + fileName + ".", ex);
-						inboundLog.setInboundResult("fail");
-						inboundLog.setMemo(ex.getMessage());
-
-						this.inboundLogManager.save(inboundLog);
-
-						continue;
-					}
-
-					// 记录至数据库
-					log.info("Processing file: " + fileName);
-					PurchaseOrder po = null;
-					Schedule schedule = null;
-					Receipt receipt = null;
-					List<DeliveryOrder> doList = null;
-					try {
-						if (dataType.equals("ORDERS")) {
-							po = this.purchaseOrderManager.saveSingleFile(inputStream, inboundLog);
-						} else if (dataType.equals("DELINS")) {
-							schedule = this.scheduleManager.saveSingleFile(inputStream, inboundLog);
-						} else if (dataType.equals("MBGMCR")) {
-							receipt = this.receiptManager.saveSingleFile(inputStream, inboundLog);
-						} else if (dataType.equals("SEQJIT")) {
-							doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog);
-						}
-					} catch (Exception ex) {
-						log.error("Error when save file to database.", ex);
-						inboundLog.setInboundResult("fail");
-						inboundLog.setMemo(ex.getMessage());
-					}
-
-					String localBackupDirectory = null;
-					File backupFile = null;
-					try {
-						// 备份文件
-						if (inboundLog.getInboundResult() == "success") {
-							localBackupDirectory = archiveFileDirectory + File.separator + plant.getCode() + File.separator + dataType;
-							log.info("Processing file: " + fileName + " success, back up file to archive directory: " + localBackupDirectory);
-						} else {
-							localBackupDirectory = errorFileDirectory + File.separator + plant.getCode() + File.separator + dataType;
-							log.info("Processing file: " + fileName + " fail, back up file to error directory: " + localBackupDirectory);
-						}
-
-						FileUtils.forceMkdir(new File(localBackupDirectory));
-
-						backupFile = new File(localBackupDirectory + File.separator + fileName);
-
-						FileUtils.copyFile(tempFile, backupFile);
-						log.info("Backup file: " + fileName + " success.");
-
-						inboundLog.setFullFilePath(backupFile.getAbsolutePath());
-
-						// 删除Ftp文件
-						ftpClientUtil.deleteFile(fileName);
-						log.info("Delete file: " + fileName + " on ftp success.");
-
-						try {
-							if (inputStream != null) {
-								inputStream.close();
-							}
-							FileUtils.forceDelete(tempFile);
-						} catch (IOException ex) {
-							// 删除temp文件失败，不影响流程，所以单独捕获
-							log.warn("Fail to delete temp file", ex);
-						}
-					} catch (Exception ex) {
-						log.error("Error when backup file.", ex);
-						inboundLog.setInboundResult("fail");
-						inboundLog.setMemo(ex.getMessage());
-
-						// 本地文件备份失败
-						if (po != null && po.getPoNo() != null) {
-							// 手工回滚
-							this.purchaseOrderManager.remove(po.getPoNo());
-						}
-
-						if (schedule != null && schedule.getScheduleNo() != null) {
-							// 手工回滚
-							this.scheduleManager.remove(schedule.getScheduleNo());
-						}
-						
-						if (receipt != null && receipt.getReceiptNo() != null) {
-							// 手工回滚
-							this.receiptManager.remove(receipt.getReceiptNo());
-						}
-						
-						if (doList != null && doList.size() > 0) {
-							// 手工回滚
-							for(DeliveryOrder deliveryOrder : doList) {								
-								this.deliveryOrderManager.remove(deliveryOrder.getDoNo());
-							}
-						}
-
-						if (backupFile != null) {
-							try {
-								FileUtils.forceDelete(backupFile);
-							} catch (IOException e) {
-								log.error("Error delete backup file.", e);
-							}
-						}
-					} finally {
-						this.inboundLogManager.save(inboundLog);
-						
-						if ("fail".equals(inboundLog.getInboundResult())) {
-							if (errorFileName.trim().length() == 0) {
-								errorFileName = inboundLog.getFileName();
-							} else {
-								errorFileName += ", " + inboundLog.getFileName();
-							}
-						}
-					}
-				}
-			}
-		}
+			errorFileName = doDownloadFile(fileNameList, dataType, nowDate, user, plant, tempFileDirectory,
+					archiveFileDirectory, errorFileDirectory, ftpClientUtil, errorFileName);
+		}		
 
 		try {
 			if (ftpClientUtil != null) {
@@ -300,6 +233,37 @@ public class DataInboundJob {
 			}
 		} catch (IOException e) {
 			log.error("Error close ftp server.", e);
+		}
+		
+		if (plant.getCode().equalsIgnoreCase(mfPlantCode)) {
+			try {
+				log.info("Connect to ftp server: " + ftpServer + ".");
+				ftpClientUtil.connectServer(mfFtpServer, mfFtpPort, mfFtpUser, mfFtpPassword, mfFtpPath);
+			} catch (Exception e) {
+				log.error("Error logon to ftp server.", e);
+				return;
+			}
+			
+			List<String> fileNameList = null;
+			try {
+				//String ftpDirectory = mfFtpPath + FTPClientUtil.SEPERATE + "SEQJIT" + FTPClientUtil.SEPERATE + "INP";
+				//ftpClientUtil.changeDirectory(mfFtpDirectory);
+				//log.info("Fetching files in directory: " + mfFtpDirectory + ".");
+				fileNameList = ftpClientUtil.getFileList(".");
+			} catch (Exception e) {
+				log.error("Error fetching file on ftp server.", e);
+			}
+			
+			errorFileName = doDownloadFile(fileNameList, "SEQJIT", nowDate, user, plant, mfTempFileDirectory,
+					mfArchiveFileDirectory, mfErrorFileDirectory, ftpClientUtil, errorFileName);
+			
+			try {
+				if (ftpClientUtil != null) {
+					ftpClientUtil.closeServer();
+				}
+			} catch (IOException e) {
+				log.error("Error close ftp server.", e);
+			}
 		}
 		
 		if (errorFileName.trim().length() > 0) {
@@ -319,5 +283,161 @@ public class DataInboundJob {
 				log.error("Error when send error inbound mail.", mailEx);
 			}
 		}
+	}
+	
+	private String doDownloadFile(List<String> fileNameList, String dataType, Date nowDate, String user, Plant plant, String tempFileDirectory,
+			String archiveFileDirectory, String errorFileDirectory, FTPClientUtil ftpClientUtil, String errorFileName) {
+		if (fileNameList != null && fileNameList.size() > 0) {
+			Collections.sort(fileNameList);
+			for (int j = 0; j < fileNameList.size(); j++) {
+
+				String fileName = fileNameList.get(j); // 获取下载文件名
+				String filePrefix = fileName.substring(0, fileName.lastIndexOf('.'));
+				String fileSuffix = fileName.substring(fileName.lastIndexOf('.') - 1);
+				if (!"SEQJIT".equals(dataType) && !fileName.toLowerCase().endsWith(".xml")) {
+					continue;
+				}
+
+				// 查找是否已经记录过日志
+				InboundLog inboundLog = this.inboundLogManager.getInboundLogByDataTypeAndFileName(dataType, fileName);
+				if (inboundLog == null) {
+					inboundLog = new InboundLog();
+					inboundLog.setDataType(dataType);
+					inboundLog.setFileName(fileName);
+					inboundLog.setCreateDate(nowDate);
+					inboundLog.setCreateUser(user);
+				}
+				inboundLog.setLastModifyDate(nowDate);
+				inboundLog.setLastModifyUser(user);
+
+				File tempFile = null;
+				InputStream inputStream = null;
+				try {
+					// 下载文件至临时目录
+					String tempDirString = tempFileDirectory + File.separator + plant.getCode() + File.separator + dataType;
+					File tempDir = new File(tempDirString);
+					FileUtils.forceMkdir(tempDir);
+
+					log.info("Download file: " + fileName + " to temperary folder: " + tempDirString + ".");
+					tempFile = File.createTempFile(filePrefix, fileSuffix, tempDir);
+					ftpClientUtil.download(fileName, tempFile.getAbsolutePath());
+
+					inputStream = new FileInputStream(tempFile);
+				} catch (IOException ex) {
+					log.error("Error download file: " + fileName + ".", ex);
+					inboundLog.setInboundResult("fail");
+					inboundLog.setMemo(ex.getMessage());
+
+					this.inboundLogManager.save(inboundLog);
+
+					continue;
+				}
+
+				// 记录至数据库
+				log.info("Processing file: " + fileName);
+				PurchaseOrder po = null;
+				Schedule schedule = null;
+				Receipt receipt = null;
+				List<DeliveryOrder> doList = null;
+				try {
+					if (dataType.equals("ORDERS")) {
+						po = this.purchaseOrderManager.saveSingleFile(inputStream, inboundLog);
+					} else if (dataType.equals("DELINS")) {
+						schedule = this.scheduleManager.saveSingleFile(inputStream, inboundLog);
+					} else if (dataType.equals("MBGMCR")) {
+						receipt = this.receiptManager.saveSingleFile(inputStream, inboundLog);
+					} else if (dataType.equals("SEQJIT")) {
+						doList = this.deliveryOrderManager.saveMultiFile(inputStream, inboundLog);
+					}
+				} catch (Exception ex) {
+					log.error("Error when save file to database.", ex);
+					inboundLog.setInboundResult("fail");
+					inboundLog.setMemo(ex.getMessage());
+				}
+
+				String localBackupDirectory = null;
+				File backupFile = null;
+				try {
+					// 备份文件
+					if (inboundLog.getInboundResult() == "success") {
+						localBackupDirectory = archiveFileDirectory + File.separator + plant.getCode() + File.separator + dataType;
+						log.info("Processing file: " + fileName + " success, back up file to archive directory: " + localBackupDirectory);
+					} else {
+						localBackupDirectory = errorFileDirectory + File.separator + plant.getCode() + File.separator + dataType;
+						log.info("Processing file: " + fileName + " fail, back up file to error directory: " + localBackupDirectory);
+					}
+
+					FileUtils.forceMkdir(new File(localBackupDirectory));
+
+					backupFile = new File(localBackupDirectory + File.separator + fileName);
+
+					FileUtils.copyFile(tempFile, backupFile);
+					log.info("Backup file: " + fileName + " success.");
+
+					inboundLog.setFullFilePath(backupFile.getAbsolutePath());
+
+					// 删除Ftp文件
+					ftpClientUtil.deleteFile(fileName);
+					log.info("Delete file: " + fileName + " on ftp success.");
+
+					try {
+						if (inputStream != null) {
+							inputStream.close();
+						}
+						FileUtils.forceDelete(tempFile);
+					} catch (IOException ex) {
+						// 删除temp文件失败，不影响流程，所以单独捕获
+						log.warn("Fail to delete temp file", ex);
+					}
+				} catch (Exception ex) {
+					log.error("Error when backup file.", ex);
+					inboundLog.setInboundResult("fail");
+					inboundLog.setMemo(ex.getMessage());
+
+					// 本地文件备份失败
+					if (po != null && po.getPoNo() != null) {
+						// 手工回滚
+						this.purchaseOrderManager.remove(po.getPoNo());
+					}
+
+					if (schedule != null && schedule.getScheduleNo() != null) {
+						// 手工回滚
+						this.scheduleManager.remove(schedule.getScheduleNo());
+					}
+					
+					if (receipt != null && receipt.getReceiptNo() != null) {
+						// 手工回滚
+						this.receiptManager.remove(receipt.getReceiptNo());
+					}
+					
+					if (doList != null && doList.size() > 0) {
+						// 手工回滚
+						for(DeliveryOrder deliveryOrder : doList) {								
+							this.deliveryOrderManager.remove(deliveryOrder.getDoNo());
+						}
+					}
+
+					if (backupFile != null) {
+						try {
+							FileUtils.forceDelete(backupFile);
+						} catch (IOException e) {
+							log.error("Error delete backup file.", e);
+						}
+					}
+				} finally {
+					this.inboundLogManager.save(inboundLog);
+					
+					if ("fail".equals(inboundLog.getInboundResult())) {
+						if (errorFileName.trim().length() == 0) {
+							errorFileName = inboundLog.getFileName();
+						} else {
+							errorFileName += ", " + inboundLog.getFileName();
+						}
+					}
+				}
+			}		
+		}
+		
+		return errorFileName;
 	}
 }
