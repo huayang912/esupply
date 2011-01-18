@@ -384,26 +384,26 @@ public class DeliveryOrderExportUtil {
 			String manfest = deliveryOrder.getExternalDoNo();
 			if (manfest.length() == 13) {
 				String[] strArr = manfest.split("-");
-				String str1 = strArr[0].substring(0,strArr[0].length()-4);
-				String str2 = strArr[0].substring(strArr[0].length()-4);
-				
+				String str1 = strArr[0].substring(0, strArr[0].length() - 4);
+				String str2 = strArr[0].substring(strArr[0].length() - 4);
+
 				cb.beginText();
-				cb.setFontAndSize(simBf, 16);
+				cb.setFontAndSize(dinBf, 16);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1, 85, 705, 0);
 				cb.endText();
 
 				cb.beginText();
-				cb.setFontAndSize(simBf, 20);
+				cb.setFontAndSize(dinBf, 20);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 130, 705, 0);
 				cb.endText();
 
 				cb.beginText();
-				cb.setFontAndSize(simBf, 16);
+				cb.setFontAndSize(dinBf, 16);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 160, 705, 0);
 				cb.endText();
 			} else {
 				cb.beginText();
-				cb.setFontAndSize(simBf, 16);
+				cb.setFontAndSize(dinBf, 16);
 				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 120, 705, 0);
 				cb.endText();
 			}
@@ -756,11 +756,34 @@ public class DeliveryOrderExportUtil {
 
 					// Manifest number
 					if (deliveryOrder.getExternalDoNo() != null) {
-						cb.beginText();
-						cb.setFontAndSize(dinBf, 20);
-						cb.setColorFill(BaseColor.BLACK);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 490, 745 - labelHeight, 0);
-						cb.endText();
+						String manfest = deliveryOrder.getExternalDoNo();
+						if (manfest.length() == 13) {
+							String[] strArr = manfest.split("-");
+							String str1 = strArr[0].substring(0, strArr[0].length() - 4);
+							String str2 = strArr[0].substring(strArr[0].length() - 4);
+
+							cb.beginText();
+							cb.setFontAndSize(dinBf, 16);
+							cb.setColorFill(BaseColor.BLACK);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1,450, 745 - labelHeight, 0);
+							cb.endText();
+
+							cb.beginText();
+							cb.setFontAndSize(dinBf, 20);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 	500, 745 - labelHeight, 0);
+							cb.endText();
+
+							cb.beginText();
+							cb.setFontAndSize(dinBf, 16);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 535, 745 - labelHeight, 0);
+							cb.endText();
+						} else {
+							cb.beginText();
+							cb.setFontAndSize(dinBf, 20);
+							cb.setColorFill(BaseColor.BLACK);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getExternalDoNo(), 490, 745 - labelHeight, 0);
+							cb.endText();
+						}
 					}
 
 					// Package type
