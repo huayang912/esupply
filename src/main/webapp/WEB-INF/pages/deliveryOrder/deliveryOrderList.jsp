@@ -53,9 +53,9 @@
 			<td colspan="2"><s:select key="deliveryOrder.status"
 				list="%{status}" theme="simple" /></td>
 			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isExport" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.exportFlag"
-				list="%{isExport}" theme="simple" /></td>
+				key="deliveryOrder.isPrint" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.printFlag"
+				list="%{isPrint}" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
