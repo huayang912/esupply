@@ -389,17 +389,17 @@ public class DeliveryOrderExportUtil {
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 16);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1, 85, 705, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1 + " ", 75, 705, 0);
 				cb.endText();
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 20);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 130, 705, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2 + " ", 130, 705, 0);
 				cb.endText();
 
 				cb.beginText();
 				cb.setFontAndSize(dinBf, 16);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 160, 705, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 170, 705, 0);
 				cb.endText();
 			} else {
 				cb.beginText();
@@ -765,17 +765,18 @@ public class DeliveryOrderExportUtil {
 							cb.beginText();
 							cb.setFontAndSize(dinBf, 16);
 							cb.setColorFill(BaseColor.BLACK);
-							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1,450, 745 - labelHeight, 0);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1.substring(0, 4) + "  " + str1.substring(4), 440,
+									745 - labelHeight, 0);
 							cb.endText();
 
 							cb.beginText();
 							cb.setFontAndSize(dinBf, 20);
-							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 	500, 745 - labelHeight, 0);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 505, 745 - labelHeight, 0);
 							cb.endText();
 
 							cb.beginText();
 							cb.setFontAndSize(dinBf, 16);
-							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 535, 745 - labelHeight, 0);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 550, 745 - labelHeight, 0);
 							cb.endText();
 						} else {
 							cb.beginText();
