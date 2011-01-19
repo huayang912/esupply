@@ -54,6 +54,7 @@ public class DeliveryOrder extends BaseObject {
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
+	private String printFlag;
 	private Boolean isPrint;
 	
 	private String murn;  //code + bar code
@@ -387,6 +388,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setExportFlag(String exportFlag) {
 		this.exportFlag = exportFlag;
+	}
+	
+	@Transient
+	public String getPrintFlag() {
+		return printFlag;
+	}
+
+	public void setPrintFlag(String printFlag) {
+		this.printFlag = printFlag;
 	}
 
 	@Column(name = "murn", length=20)

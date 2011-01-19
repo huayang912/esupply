@@ -138,7 +138,7 @@ public class DeliveryOrderAction extends BaseAction {
 		return status;
 	}
 
-	public Map<String, String> getIsExport() {
+	public Map<String, String> getIsPrint() {
 		Map<String, String> status = new HashMap<String, String>();
 		status.put("", "All");
 		status.put("No", "false");
@@ -325,6 +325,16 @@ public class DeliveryOrderAction extends BaseAction {
 			} else {
 				selectCriteria.add(Restrictions.eq("isExport", false));
 				selectCountCriteria.add(Restrictions.eq("isExport", false));
+			}
+		}
+		
+		if (deliveryOrder.getPrintFlag() != null && deliveryOrder.getPrintFlag().trim().length() > 0) {
+			if ("true".equalsIgnoreCase(deliveryOrder.getPrintFlag())) {
+				selectCriteria.add(Restrictions.eq("isPrint", true));
+				selectCountCriteria.add(Restrictions.eq("isPrint", true));
+			} else {
+				selectCriteria.add(Restrictions.eq("isPrint", false));
+				selectCountCriteria.add(Restrictions.eq("isPrint", false));
 			}
 		}
 
