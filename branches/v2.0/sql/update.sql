@@ -25,7 +25,7 @@ alter table do add unit_weight numeric(18, 4);
 alter table do add total_volume numeric(18, 4);
 alter table do add unit_volume numeric(18, 4);
 alter table do add total_nb_pallets numeric(18, 4);
-alter table do add title varchar(20);
+alter table do add title varchar(50);
 
 alter table do_detail add label int;
 
