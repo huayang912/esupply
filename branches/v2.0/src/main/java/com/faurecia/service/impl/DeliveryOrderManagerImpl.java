@@ -543,11 +543,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 				plantSupplier = new PlantSupplier();
 				plantSupplier.setSupplierName(header.getSUNAME());
-				String addr1 = header.getSUPADDR1() != null ? header.getSUPADDR1() : "";
-				String addr2 = header.getSUPADDR2() != null ? header.getSUPADDR2() : "";
-				String addr3 = header.getSUPADDR3() != null ? header.getSUPADDR3() : "";
-				plantSupplier.setSupplierAddress1(addr1 + " " + addr2 + " " + addr3);
-				plantSupplier.setSupplierAddress2(addr1 + " " + addr2 + " " + addr3);
+				plantSupplier.setSupplierAddress1(header.getSUPADDR1());
+				plantSupplier.setSupplierAddress2(header.getSUPADDR2());
 				plantSupplier.setSupplierContactPerson(header.getSUCONTACT());
 				plantSupplier.setSupplierPhone(header.getSUPTEL());
 				plantSupplier.setSupplierFax(header.getSUFAX());
@@ -570,15 +567,14 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setPlantName(plant.getName());
 			deliveryOrder.setPlantAddress1(header.getFAUADDR1());
 			deliveryOrder.setPlantAddress2(header.getFAUADDR2());
+			deliveryOrder.setPlantAddress3(header.getFAUADDR3());
 			deliveryOrder.setPlantContactPerson(header.getFAUCONTACT());
 			deliveryOrder.setPlantPhone(header.getFAUTEL());
 			deliveryOrder.setPlantFax(header.getFAUFAX());
 			deliveryOrder.setSupplierName(header.getSUNAME());
-			String addr1 = header.getSUPADDR1() != null ? header.getSUPADDR1() : "";
-			String addr2 = header.getSUPADDR2() != null ? header.getSUPADDR2() : "";
-			String addr3 = header.getSUPADDR3() != null ? header.getSUPADDR3() : "";
-			deliveryOrder.setSupplierAddress1(addr1 + " " + addr2 + " " + addr3);
-			deliveryOrder.setSupplierAddress2(addr1 + " " + addr2 + " " + addr3);
+			deliveryOrder.setSupplierAddress1(header.getSUPADDR1());
+			deliveryOrder.setSupplierAddress2(header.getSUPADDR2());
+			deliveryOrder.setSupplierAddress3(header.getSUPADDR3());
 			deliveryOrder.setSupplierContactPerson(header.getSUCONTACT());
 			deliveryOrder.setSupplierPhone(header.getSUPTEL());
 			deliveryOrder.setSupplierFax(header.getSUFAX());
