@@ -341,13 +341,25 @@ public class DeliveryOrderExportUtil {
 		if (deliveryOrder.getPlantName() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 16);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 80, 780, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 80, 790, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress1() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 10);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantAddress1(), 80, 760, 0);
+			cb.setFontAndSize(simBf, 8);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress1(), 80, 777, 0);
+			cb.endText();
+		}
+		if (deliveryOrder.getPlantAddress2() != null) {
+			cb.beginText();
+			cb.setFontAndSize(simBf, 8);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress2(), 80, 764, 0);
+			cb.endText();
+		}
+		if (deliveryOrder.getPlantAddress3() != null) {
+			cb.beginText();
+			cb.setFontAndSize(simBf, 8);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress3(), 80, 751, 0);
 			cb.endText();
 		}
 
@@ -367,7 +379,7 @@ public class DeliveryOrderExportUtil {
 		// supplier name and address
 		if (deliveryOrder.getSupplierName() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 8);
+			cb.setFontAndSize(simBf, 10);
 			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierName(), 470, 790, 0);
 			cb.endText();
 		}
@@ -375,7 +387,19 @@ public class DeliveryOrderExportUtil {
 		if (deliveryOrder.getSupplierAddress1() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress1(), 470, 770, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress1(), 470, 777, 0);
+			cb.endText();
+		}
+		if (deliveryOrder.getSupplierAddress2() != null) {
+			cb.beginText();
+			cb.setFontAndSize(simBf, 8);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress2(), 470, 764, 0);
+			cb.endText();
+		}
+		if (deliveryOrder.getSupplierAddress3() != null) {
+			cb.beginText();
+			cb.setFontAndSize(simBf, 8);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress3(), 470, 751, 0);
 			cb.endText();
 		}
 
