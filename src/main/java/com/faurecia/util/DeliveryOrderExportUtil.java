@@ -341,25 +341,25 @@ public class DeliveryOrderExportUtil {
 		if (deliveryOrder.getPlantName() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 16);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 80, 790, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 20, 790, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress1() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress1(), 80, 777, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress1(), 20, 777, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress2() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress2(), 80, 764, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress2(), 20, 764, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress3() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress3(), 80, 751, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress3(), 20, 751, 0);
 			cb.endText();
 		}
 
