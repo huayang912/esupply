@@ -340,19 +340,19 @@ public class DeliveryOrderExportUtil {
 		// Faurecia plant name and address
 		if (deliveryOrder.getPlantAddress1() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 16);
+			cb.setFontAndSize(simBf, 8);
 			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress1(), 20, 790, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress2() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 10);
+			cb.setFontAndSize(simBf, 8);
 			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress2(), 20, 775, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress3() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 10);
+			cb.setFontAndSize(simBf, 8);
 			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress3(), 20, 760, 0);
 			cb.endText();
 		}
@@ -374,19 +374,19 @@ public class DeliveryOrderExportUtil {
 		
 		if (deliveryOrder.getSupplierAddress1() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 16);
+			cb.setFontAndSize(simBf, 8);
 			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress1(), 470, 790, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getSupplierAddress2() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 10);
+			cb.setFontAndSize(simBf, 8);
 			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress2(), 470, 775, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getSupplierAddress3() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 10);
+			cb.setFontAndSize(simBf, 8);
 			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress3(), 470, 760, 0);
 			cb.endText();
 		}
