@@ -520,8 +520,17 @@ public class DeliveryOrderAction extends BaseAction {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equalsIgnoreCase("Do.png")) {
+			Boolean isSupplier = false;
+			if (getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
+			//π©”¶…Ã£¨–¥À¿Title
+				isSupplier = true;
+			} else
+			{
+				isSupplier = false;
+			}
+			
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder);
+					deliveryOrder,isSupplier);
 		} else {
 			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
 					deliveryOrder);
