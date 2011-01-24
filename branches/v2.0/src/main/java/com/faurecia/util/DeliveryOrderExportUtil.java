@@ -147,8 +147,8 @@ public class DeliveryOrderExportUtil {
 	}
 
 	@SuppressWarnings("finally")
-	public static InputStream exportDo(String localAbsolutPath, String backGroupImageName, DeliveryOrder deliveryOrder) throws MalformedURLException,
-			IOException, DocumentException {
+	public static InputStream exportDo(String localAbsolutPath, String backGroupImageName, DeliveryOrder deliveryOrder, Boolean isSupplier)
+			throws MalformedURLException, IOException, DocumentException {
 
 		String backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template" + File.separator
 				+ backGroupImageName;
@@ -200,7 +200,7 @@ public class DeliveryOrderExportUtil {
 						backGroupImage.scaleAbsolute(600, 847);
 					}
 					rowPix = 520;
-					exportHead(underPdfContentByte, cb, deliveryOrder, backGroupImage, dinBf, simBf, barCodeBf, numberFormat);
+					exportHead(underPdfContentByte, cb, deliveryOrder, isSupplier, backGroupImage, dinBf, simBf, barCodeBf, numberFormat);
 				}
 
 				BigDecimal unitCount = deliveryOrderDetail.getUnitCount();
@@ -333,10 +333,21 @@ public class DeliveryOrderExportUtil {
 		cb.endText();
 	}
 
-	private static void exportHead(PdfContentByte underPdfContentByte, PdfContentByte cb, DeliveryOrder deliveryOrder, Image backGroupImage,
-			BaseFont dinBf, BaseFont simBf, BaseFont barCodeBf, NumberFormat numberFormat) throws DocumentException {
+	private static void exportHead(PdfContentByte underPdfContentByte, PdfContentByte cb, DeliveryOrder deliveryOrder, Boolean isSupplier,
+			Image backGroupImage, BaseFont dinBf, BaseFont simBf, BaseFont barCodeBf, NumberFormat numberFormat) throws DocumentException {
 		underPdfContentByte.addImage(backGroupImage);
 
+		// Title
+		String title = deliveryOrder.getTitle();
+		if (isSupplier) {
+			title = "LOGISTIC PARTNER MANIFEST";
+		}
+		if (title != null) {
+			cb.beginText();
+			cb.setFontAndSize(dinBf, 20);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, title, 360, 810, 0);
+			cb.endText();
+		}
 		// Faurecia plant name and address
 		if (deliveryOrder.getPlantAddress1() != null) {
 			cb.beginText();
@@ -371,7 +382,7 @@ public class DeliveryOrderExportUtil {
 		}
 
 		// supplier name and address
-		
+
 		if (deliveryOrder.getSupplierAddress1() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
@@ -777,8 +788,8 @@ public class DeliveryOrderExportUtil {
 							cb.beginText();
 							cb.setFontAndSize(dinBf, 16);
 							cb.setColorFill(BaseColor.BLACK);
-							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1.substring(0, 4) + "  " + str1.substring(4), 440,
-									745 - labelHeight, 0);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str1.substring(0, 4) + "  " + str1.substring(4), 440, 745 - labelHeight,
+									0);
 							cb.endText();
 
 							cb.beginText();
