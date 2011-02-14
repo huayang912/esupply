@@ -43,3 +43,6 @@ alter table do_detail add storage_code varchar(20);
 alter table do_detail add sebango varchar(20);
 
 alter table plant add box_template_name varchar(20);
+
+alter table do add plant_address3 varchar(255);
+alter table do add supplier_address3 varchar(255);
