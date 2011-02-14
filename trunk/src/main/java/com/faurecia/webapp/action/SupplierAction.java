@@ -5,11 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -19,7 +16,6 @@ import com.faurecia.Constants;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
-import com.faurecia.model.Role;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
@@ -56,11 +52,11 @@ public class SupplierAction extends BaseAction {
 	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
 		this.plantScheduleGroupManager = plantScheduleGroupManager;
 	}
-	
+
 	public void setSupplierManager(SupplierManager supplierManager) {
 		this.supplierManager = supplierManager;
 	}
-	
+
 	public void setNumberControlManager(NumberControlManager numberControlManager) {
 		this.numberControlManager = numberControlManager;
 	}
@@ -82,16 +78,19 @@ public class SupplierAction extends BaseAction {
 	}
 
 	public List<PlantScheduleGroup> getPlantScheduleGroupList() {
-		HttpServletRequest request = this.getRequest();
-		User user = userManager.getUserByUsername(request.getRemoteUser());
-		return plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(user.getUserPlant().getCode());
+		if (plantSupplier != null && plantSupplier.getPlant() != null) {
+			return plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(plantSupplier.getPlant().getCode());
+		} else {
+			return new ArrayList<PlantScheduleGroup>();
+		}
 	}
-	
-	public List<User> getResponsibleUserList() {
-		HttpServletRequest request = this.getRequest();
-		User user = userManager.getUserByUsername(request.getRemoteUser());
-		Role role = this.roleManager.getRole(Constants.PLANT_USER_ROLE);
-		return userManager.getPlantUsers(user.getUserPlant(), role);		
+
+	public List<Supplier> getSuppliers() {
+		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+	}
+
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
 	}
 
 	public int getId() {
@@ -121,34 +120,54 @@ public class SupplierAction extends BaseAction {
 	public String getFileName() {
 		return fileName;
 	}
-	
+
 	public String list() {
 		query();
 		return SUCCESS;
 	}
-	
+
 	private void query() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-
-		DetachedCriteria criteria = DetachedCriteria.forClass(PlantSupplier.class);
-		criteria.add(Restrictions.eq("plant", user.getUserPlant()));
-
 		if (plantSupplier != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(PlantSupplier.class);
+			criteria.createAlias("supplier", "s");
+			criteria.createAlias("plant", "p");
+
+			if (plantSupplier.getPlant() != null && plantSupplier.getPlant().getCode() != null
+					&& plantSupplier.getPlant().getCode().trim().length() != 0) {
+				if (plantSupplier.getPlant().getCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						criteria.add(Restrictions.in("plant", plants));
+					} else {
+						criteria.add(Restrictions.eq("p.code", "-1"));
+					}
+
+				} else {
+					criteria.add(Restrictions.eq("p.code", plantSupplier.getPlant().getCode().trim()));
+				}
+			}
 
 			if (plantSupplier.getSupplier() != null && plantSupplier.getSupplier().getCode() != null
 					&& plantSupplier.getSupplier().getCode().trim().length() != 0) {
-				criteria.createAlias("supplier", "s");
-				criteria.add(Restrictions.eq("s.code", plantSupplier.getSupplier().getCode().trim()));
+				if (plantSupplier.getSupplier().getCode().equals("-1")) {
+					List<Supplier> suppliers = getSuppliers();
+					if (suppliers != null && suppliers.size() > 0) {
+						criteria.add(Restrictions.in("supplier", suppliers));
+					} else {
+						criteria.add(Restrictions.eq("s.code", "-1"));
+					}
+				} else {
+					criteria.add(Restrictions.eq("s.code", plantSupplier.getSupplier().getCode().trim()));
+				}
 			}
 
 			if (plantSupplier.getSupplier() != null && plantSupplier.getSupplierName() != null
 					&& plantSupplier.getSupplierName().trim().length() != 0) {
 				criteria.add(Restrictions.eq("supplierName", plantSupplier.getSupplierName().trim()));
 			}
+			plantSuppliers = this.plantSupplierManager.findByCriteria(criteria);
 		}
 
-		plantSuppliers = this.plantSupplierManager.findByCriteria(criteria);
 	}
 
 	public String cancel() {
@@ -167,19 +186,8 @@ public class SupplierAction extends BaseAction {
 	}
 
 	public String edit() throws Exception {
-		HttpServletRequest request = getRequest();
-		boolean editProfile = (request.getRequestURI().indexOf("editSupplierProfile") > -1);
-
 		if (this.id != 0) {
 			plantSupplier = this.plantSupplierManager.get(id);
-		} else if (editProfile) {
-			if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
-				return "mainMenu";
-			}
-			
-			User user = userManager.getUserByUsername(request.getRemoteUser());
-			Plant plant = this.plantManager.get((String) this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
-			this.plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());
 		} else {
 			plantSupplier = new PlantSupplier();
 		}
@@ -193,23 +201,22 @@ public class SupplierAction extends BaseAction {
 		}
 
 		boolean isNew = (plantSupplier.getId() == null);
-		
-		PlantSupplier oldPlantSupplier = isNew ? new PlantSupplier() : this.plantSupplierManager.get(plantSupplier.getId());		
-		
+
+		PlantSupplier oldPlantSupplier = isNew ? new PlantSupplier() : this.plantSupplierManager.get(plantSupplier.getId());
+
 		if (isNew) {
 			Supplier supplier = null;
-			User user = userManager.getUserByUsername(getRequest().getRemoteUser());
-			Plant plant = user.getUserPlant();
-			//Plant plant = plantManager.get(plantSupplier.getPlant().getCode());
+			
+			Plant plant = plantManager.get(plantSupplier.getPlant().getCode());
 			if (this.supplierManager.exists(plantSupplier.getSupplier().getCode())) {
 				supplier = this.supplierManager.get(plantSupplier.getSupplier().getCode());
 			} else {
 				supplier = new Supplier();
 				supplier.setCode(plantSupplier.getSupplier().getCode());
 				supplier.setName(plantSupplier.getSupplierName());
-				
+
 				this.supplierManager.save(supplier);
-				
+
 				User supplierUser = new User();
 				supplierUser.setUsername(supplier.getCode()); // 使用供应商编码作为用户名称
 				supplierUser.setEnabled(true);
@@ -224,30 +231,27 @@ public class SupplierAction extends BaseAction {
 				supplierUser.setLastName("");
 				supplierUser.setUserSupplier(supplier);
 				// supplierUser.setUserPlant(plant);
-				Set<Role> roles = new HashSet<Role>();
-				roles.add(roleManager.getRole(Constants.VENDOR_ROLE));
-				supplierUser.setRoles(roles);
-				this.userManager.saveUser(supplierUser);						
+				this.userManager.saveUser(supplierUser);
 			}
-			
+
 			oldPlantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
 			oldPlantSupplier.setPlant(plant);
 			oldPlantSupplier.setSupplier(supplier);
 		}
-		
+
 		oldPlantSupplier.setSupplierName(plantSupplier.getSupplierName());
 		oldPlantSupplier.setSupplierAddress1(plantSupplier.getSupplierAddress1());
 		oldPlantSupplier.setSupplierAddress2(plantSupplier.getSupplierAddress2());
 		oldPlantSupplier.setSupplierContactPerson(plantSupplier.getSupplierContactPerson());
 		oldPlantSupplier.setSupplierPhone(plantSupplier.getSupplierPhone());
 		oldPlantSupplier.setSupplierFax(plantSupplier.getSupplierFax());
-		if (!this.getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
+		/*if (!this.getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
 			oldPlantSupplier.setPlantScheduleGroup(plantSupplier.getPlantScheduleGroup());
 			if (plantSupplier.getResponsibleUser() != null && plantSupplier.getResponsibleUser().getId() != null) {
 				User user = this.userManager.getUser(plantSupplier.getResponsibleUser().getId().toString());
 				oldPlantSupplier.setResponsibleUser(user);
 			}
-		}
+		}*/
 
 		plantSupplier = this.plantSupplierManager.save(oldPlantSupplier);
 
@@ -260,34 +264,43 @@ public class SupplierAction extends BaseAction {
 			return SUCCESS;
 		}
 	}
-	
+
 	public String export() throws IOException {
-		query();
+		DetachedCriteria criteria = DetachedCriteria.forClass(PlantSupplier.class);
 		
+		List<Plant> plants = getPlants();
+		criteria.add(Restrictions.in("plant", plants));
+		
+		List<Supplier> suppliers = getSuppliers();
+		criteria.add(Restrictions.in("supplier", suppliers));
+
+		plantSuppliers = this.plantSupplierManager.findByCriteria(criteria);
+
 		if (plantSuppliers != null && plantSuppliers.size() > 0) {
 			fileName = "supplier.csv";
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-	
+
 			CSVWriter writer = new CSVWriter(outputStream, ',', Charset.forName("GBK"));
-			for(int i = 0; i < plantSuppliers.size(); i++) 
-			{
+			for (int i = 0; i < plantSuppliers.size(); i++) {
 				PlantSupplier plantSupplier = plantSuppliers.get(i);
 				String[] entries = new String[7];
-				
-				entries[0] =  plantSupplier.getSupplier().getCode();
-				entries[1] =  plantSupplier.getSupplierName();
-				entries[2] =  plantSupplier.getSupplierAddress1();
-				entries[3] =  plantSupplier.getSupplierAddress2();
-				entries[4] =  plantSupplier.getSupplierContactPerson();
-				entries[5] =  plantSupplier.getSupplierPhone();
-				entries[6] =  plantSupplier.getSupplierFax();
-			
+
+				entries[0] = plantSupplier.getSupplier().getCode();
+				entries[1] = plantSupplier.getSupplierName();
+				entries[2] = plantSupplier.getSupplierAddress1();
+				entries[3] = plantSupplier.getSupplierAddress2();
+				entries[4] = plantSupplier.getSupplierContactPerson();
+				entries[5] = plantSupplier.getSupplierPhone();
+				entries[6] = plantSupplier.getSupplierFax();
+
 				writer.writeRecord(entries);
 			}
 			writer.close();
 			inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+			
+			return SUCCESS;
 		}
-		
-		return SUCCESS;
+
+		return INPUT;
 	}
 }

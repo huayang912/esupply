@@ -11,7 +11,9 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.model.Item;
+import com.faurecia.model.Plant;
 import com.faurecia.service.ItemManager;
+import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.util.CSVWriter;
 
 public class ItemAction extends BaseAction {
@@ -21,6 +23,7 @@ public class ItemAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = 6064722808180238396L;
 	private ItemManager itemManager;
+	private PlantSupplierManager plantSupplierManager;
 	private List<Item> items;
 	private Item item;
 	private int id;
@@ -31,6 +34,10 @@ public class ItemAction extends BaseAction {
 		this.itemManager = itemManager;
 	}
 
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
+		this.plantSupplierManager = plantSupplierManager;
+	}
+	
 	public List<Item> getItems() {
 		return items;
 	}
@@ -43,18 +50,35 @@ public class ItemAction extends BaseAction {
 		return fileName;
 	}
 	
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
+	}
+
 	public String list() {
 		query();
 		return SUCCESS;
 	}
 	
 	private void query() {
-		
-		
-		DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);
-		
-		
 		if (item != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);
+			criteria.createAlias("plant", "p");
+			
+			if (item.getPlant() != null && item.getPlant().getCode() != null
+					&& item.getPlant().getCode().trim().length() != 0) {
+				if (item.getPlant().getCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						criteria.add(Restrictions.in("plant", plants));
+					} else {
+						criteria.add(Restrictions.eq("p.code", "-1"));
+					}
+
+				} else {
+					criteria.add(Restrictions.eq("p.code", item.getPlant().getCode().trim()));
+				}
+			}
+			
 			if (item.getCode() != null && item.getCode().trim().length() != 0)
 			{
 				criteria.add(Restrictions.eq("code", item.getCode()));
@@ -65,14 +89,8 @@ public class ItemAction extends BaseAction {
 				criteria.add(Restrictions.eq("description", item.getDescription()));
 			}
 			
-			if (item.getPlant() != null)
-			{
-				criteria.add(Restrictions.eq("plant", item.getPlant()));
-			}
-			
+			items = itemManager.findByCriteria(criteria);
 		}
-		
-		items = itemManager.findByCriteria(criteria);
 	}
 
 	public void setId(int id) {
@@ -130,7 +148,13 @@ public class ItemAction extends BaseAction {
 	}
 	
 	public String export() throws IOException {
-		query();
+		DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);
+		criteria.createAlias("plant", "p");
+		
+		List<Plant> plants = getPlants();
+		criteria.add(Restrictions.in("plant", plants));
+		
+		items = itemManager.findByCriteria(criteria);
 		
 		if (items != null && items.size() > 0) {
 			fileName = "item.csv";
@@ -140,19 +164,23 @@ public class ItemAction extends BaseAction {
 			for(int i = 0; i < items.size(); i++) 
 			{
 				Item item = items.get(i);
-				String[] entries = new String[4];
+				String[] entries = new String[6];
 				
 				entries[0] =  item.getCode();
-				entries[1] =  item.getDescription();
-				entries[2] =  item.getUnitCount() != null ? item.getUnitCount().toPlainString() : "";
-				entries[3] =  item.getUom();
+				entries[1] =  item.getPlant().getCode();
+				entries[2] =  item.getPlant().getName();
+				entries[3] =  item.getDescription();
+				entries[4] =  item.getUnitCount() != null ? item.getUnitCount().toPlainString() : "";
+				entries[5] =  item.getUom();
 			
 				writer.writeRecord(entries);
 			}
 			writer.close();
 			inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+			
+			return SUCCESS;
 		}
 		
-		return SUCCESS;
+		return INPUT;
 	}
 }

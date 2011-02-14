@@ -25,12 +25,28 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 
 	public boolean isAllowed(MenuComponent menu) {
 		if (authorities != null) {
-			for (GrantedAuthority authority : authorities) {
-				if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase()))
-						|| menu.getName().equals("Logout")) {
-					return true;
+			if (menu.getPage() != null && menu.getPage().trim().length() != 0) {
+				for (GrantedAuthority authority : authorities) {
+					if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase())) || menu.getName().equals("Logout")) {
+						return true;
+					}
 				}
 			}
+
+			if (menu.getMenuComponents() != null && menu.getMenuComponents().length > 0) {
+				boolean isChildAllowed = false;
+				for (MenuComponent menuComponent : menu.getMenuComponents()) {
+					isChildAllowed = isAllowed(menuComponent);
+
+					if (isChildAllowed) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			return false;
 		}
 
 		return false;
@@ -38,5 +54,5 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 
 	public MenuPermissionsAdapter(GrantedAuthority[] authorities) {
 		this.authorities = authorities;
-	}	
+	}
 }

@@ -136,12 +136,7 @@
 			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
-
-		<action name="editPlantProfile" class="plantAction" method="edit">
-			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
-			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
-		</action>
-
+	
 		<action name="savePlant" class="plantAction" method="save">
 			<result name="input">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="cancel" type="redirect-action">plants</result>
@@ -191,7 +186,7 @@
 		</action>
 
 		<action name="exportItem" class="itemAction" method="export">
-			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
+			<result name="input">/WEB-INF/pages/item/itemList.jsp</result>
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
@@ -223,12 +218,6 @@
 		<!-- Supplier -->
 		<action name="suppliers" class="supplierAction" method="list">
 			<result>/WEB-INF/pages/supplier/supplierList.jsp</result>
-		</action>
-
-		<action name="editSupplierProfile" class="supplierAction"
-			method="edit">
-			<result name="success">/WEB-INF/pages/supplier/supplierForm.jsp</result>
-			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
 
 		<action name="editSupplier" class="supplierAction" method="edit">
@@ -297,13 +286,13 @@
 			<result name="error">/WEB-INF/pages/schedule/scheduleList.jsp
 			</result>
 		</action>
-
+<!--
 		<action name="editScheduleProfile" class="scheduleAction"
 			method="edit">
 			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
 			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
 		</action>
-
+-->
 		<action name="listScheduleAudit" class="scheduleAction" method="listAudit">
 			<result name="success">/WEB-INF/pages/schedule/listScheduleAudit.jsp
 			</result>
