@@ -6,7 +6,7 @@
     <Menus>
         <Menu name="MainMenu" title="mainMenu.title" page="/mainMenu.html"/>
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html"/>            
-        <Menu name="AdminMenu" title="menu.admin" description="Administrator Menu" width="120" page="/users.html">
+        <Menu name="AdminMenu" title="menu.admin" description="Administrator Menu" width="120">
             <Item name="ViewUser" title="menu.admin.users" description="Users Menu" page="/users.html"/>
             <Item name="PlantMenu" title="menu.admin.plants" description="Plants Menu" page="/plants.html" />
             <Item name="SupplierMenu" title="menu.admin.suppliers" description="Suppliers Menu" page="/suppliers.html" />
@@ -18,7 +18,7 @@
             <Item name="FlushCache" title="menu.flushCache" page="/flushCache.html"/>
             <Item name="Clickstream" title="menu.clickstream" page="/clickstreams.jsp"/ -->
         </Menu>
-        <Menu name="OrderMenu" title="menu.order" description="Order Menu" width="120" page="/purchaseOrders.html">
+        <Menu name="OrderMenu" title="menu.order" description="Order Menu" width="120">
         	<Item name="PurchaseOrderMenu" title="menu.order.purchaseOrders" description="Purchase Orders Menu" page="/purchaseOrders.html" />
         	<Item name="ScheduleAuditMenu" title="menu.order.scheduleAudit" description="Schedule Audit Menu" page="/listScheduleAudit.html" />
         	<Item name="ScheduleMenu" title="menu.order.schedules" description="Schedules Menu" page="/editScheduleProfile.html" />
@@ -27,7 +27,7 @@
 			<Item name="ReceiptMenu" title="menu.order.receipts" description="Receipts Menu" page="/receipts.html" />
 			<Item name="ReceiptDetailMenu" title="menu.order.receiptDetails" description="Receipt Details Menu" page="/receiptDetails.html" />
 		</Menu>
-		<Menu name="InfoMenu" title="menu.info" description="Information Menu" width="120" page="/notices.html">
+		<Menu name="InfoMenu" title="menu.info" description="Information Menu" width="120">
         	<Item name="NoticeMenu" title="menu.info.plantNotice" description="Notice Menu" page="/notices.html" />
         	<Item name="NoticeReaderMenu" title="menu.info.noticeReader" description="Notice Reader Menu" page="/noticeReaders.html" />
         	<Item name="InboundLogsMenu" title="menu.info.inboundLogs" description="Inbound Logs Menu" page="/inboundLogs.html"/>

@@ -7,22 +7,34 @@
 <meta name="menu" content="AdminMenu" />
 </head>
 <c:set var="buttons">
-	<input type="button" 
-        onclick="location.href='<c:url value="/editSupplier.html?from=list"/>'"
-        value="<fmt:message key="button.add"/>"/>  
+	<input type="button"
+		onclick="location.href='<c:url value="/editSupplier.html?from=list"/>'"
+		value="<fmt:message key="button.add"/>" />
 	<input type="button"
 		onclick="location.href='<c:url value="/exportSupplier.html"/>'"
 		value="<fmt:message key="button.export"/>" />
 </c:set>
 <s:form name="supplierForm" action="suppliers" method="post"
 	validate="true">
-	<div class="left"><s:textfield key="plantSupplier.supplier.code"
-		cssClass="text medium" /></div>
-	<div><s:textfield key="plantSupplier.supplierName"
-		cssClass="text medium" /></div>
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.plant" /></label></td>
+			<td colspan="2"><s:select key="plantSupplier.plant.code" list="%{plants}"
+				listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" /></td>
+
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.supplier" /></label></td>
+			<td colspan="2"><s:select key="plantSupplier.supplier.code"
+				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1"
+				headerValue="All" theme="simple" /></td>
+		</tr>
+	</table>
+	</li>
 	<div><s:submit method="list" key="button.search" theme="simple" />
-	<c:out
-		value="${buttons}" escapeXml="false" /></div>
+	<c:out value="${buttons}" escapeXml="false" /></div>
 </s:form>
 
 <display:table name="plantSuppliers" cellspacing="0" cellpadding="0"

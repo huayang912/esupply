@@ -9,14 +9,19 @@
 </head>
 
 <s:form name="itemForm" action="saveItem" method="post" validate="true">
-	<li style="display: none"><s:hidden key="item.id" /> <s:hidden
-		key="item.plant.code" /></li>
+	<li style="display: none"><s:hidden key="item.id" /> <s:if
+		test="item.plant != null">
+		<s:hidden key="item.plant.code" />
+	</s:if></li>
 	<c:set var="buttons">
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
 		<s:submit key="button.cancel" method="cancel" />
 	</c:set>
-
+	<s:if test="item.plant == null">
+		<li><s:select key="item.plant.code" list="%{plants}"
+			listKey="code" listValue="name" required="true" /></li>
+	</s:if>
 	<li><s:textfield key="item.code" cssClass="text medium"
 		required="true" /></li>
 

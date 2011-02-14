@@ -3,12 +3,19 @@ package com.faurecia.webapp.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
+import com.faurecia.model.Item;
 import com.faurecia.model.LabelValue;
+import com.faurecia.model.Plant;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
+import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.PlantScheduleGroupManager;
 import com.faurecia.service.PlantSupplierManager;
+import com.faurecia.service.SupplierManager;
 
 public class PlantScheduleGroupAction extends BaseAction {
 
@@ -22,7 +29,8 @@ public class PlantScheduleGroupAction extends BaseAction {
 	private PlantScheduleGroup plantScheduleGroup;
 	private int id;
 	private List<LabelValue> availableSuppliers;
-
+	private SupplierManager supplierManager;
+	
 	public List<PlantScheduleGroup> getPlantScheduleGroups() {
 		return plantScheduleGroups;
 	}
@@ -54,6 +62,10 @@ public class PlantScheduleGroupAction extends BaseAction {
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
+	
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
+	}
 
 	public List<LabelValue> getAvailableSuppliers() {
 		return availableSuppliers;
@@ -63,10 +75,39 @@ public class PlantScheduleGroupAction extends BaseAction {
 		this.availableSuppliers = availableSuppliers;
 	}
 
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
+	}
+	
+	public List<Supplier> getSuppliers() {
+		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+	}
+
 	public String list() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		plantScheduleGroups = this.plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(user.getUserPlant().getCode());
+		if (plantScheduleGroup != null) {
+			
+			DetachedCriteria criteria = DetachedCriteria.forClass(PlantScheduleGroup.class);
+			criteria.createAlias("plant", "p");
+			
+			if (plantScheduleGroup.getPlant() != null && plantScheduleGroup.getPlant().getCode() != null
+					&& plantScheduleGroup.getPlant().getCode().trim().length() != 0) {
+				if (plantScheduleGroup.getPlant().getCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						criteria.add(Restrictions.in("plant", plants));
+					} else {
+						criteria.add(Restrictions.eq("p.code", "-1"));
+					}
+
+				} else {
+					criteria.add(Restrictions.eq("p.code", plantScheduleGroup.getPlant().getCode().trim()));
+				}
+			}
+			
+			plantScheduleGroups = this.plantScheduleGroupManager.findByCriteria(criteria);
+		}
+		
+		
 		return SUCCESS;
 	}
 
@@ -85,15 +126,11 @@ public class PlantScheduleGroupAction extends BaseAction {
 
 		if (this.id != 0) {
 			plantScheduleGroup = this.plantScheduleGroupManager.get(id);
+			
+			prepare();
 		} else {
 			plantScheduleGroup = new PlantScheduleGroup();
-
-			String userCode = this.getRequest().getRemoteUser();
-			User user = this.userManager.getUserByUsername(userCode);
-			plantScheduleGroup.setPlant(user.getUserPlant());
 		}
-
-		prepare();
 
 		return SUCCESS;
 	}
@@ -122,9 +159,7 @@ public class PlantScheduleGroupAction extends BaseAction {
 		}
 
 		if (plantScheduleGroup.getIsDefault()) {
-			String userCode = this.getRequest().getRemoteUser();
-			User user = this.userManager.getUserByUsername(userCode);
-			plantScheduleGroups = this.plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(user.getUserPlant().getCode());
+			plantScheduleGroups = this.plantScheduleGroupManager.getPlantScheduleGroupByPlantCode(plantScheduleGroup.getPlant().getCode());
 
 			for (int i = 0; i < plantScheduleGroups.size(); i++) {
 				if (!plantScheduleGroups.get(i).getId().equals(plantScheduleGroup.getId()) && plantScheduleGroups.get(i).getIsDefault()) {
@@ -146,8 +181,6 @@ public class PlantScheduleGroupAction extends BaseAction {
 	}
 
 	private void prepare() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
 
 		List<PlantSupplier> plantSupplierList = new ArrayList<PlantSupplier>();
 		if (plantScheduleGroup != null && plantScheduleGroup.getId() != null && plantScheduleGroup.getId() > 0) {
@@ -161,7 +194,16 @@ public class PlantScheduleGroupAction extends BaseAction {
 			}
 		}
 
-		List<PlantSupplier> allPlantSupplierList = this.plantSupplierManager.getPlantSupplierByPlantCode(user.getUserPlant().getCode());
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(PlantSupplier.class);
+		criteria.add(Restrictions.eq("plant", plantScheduleGroup.getPlant()));
+		
+		List<Supplier> suppliers = getSuppliers();
+		if (suppliers != null && suppliers.size() > 0) {
+			criteria.add(Restrictions.in("supplier", suppliers));
+		}
+		
+		List<PlantSupplier> allPlantSupplierList = this.plantSupplierManager.findByCriteria(criteria);
 		if (allPlantSupplierList != null && allPlantSupplierList.size() > 0) {
 			this.availableSuppliers = new ArrayList<LabelValue>();
 			for (int i = 0; i < allPlantSupplierList.size(); i++) {

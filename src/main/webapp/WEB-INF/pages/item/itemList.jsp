@@ -14,7 +14,14 @@
 		value="<fmt:message key="button.done"/>" />
 </c:set>
 <s:form name="itemForm" action="items" method="post" validate="true">
-	<div class="left"><s:textfield key="item.code"
+	<table style="margin: 0px">
+		<tr>
+			<td><label class="desc"><fmt:message
+		key="item.plant.code" /></label> <s:select key="item.plant.code"
+		list="%{plants}" listKey="code" listValue="name" headerKey="-1"
+		headerValue="All" theme="simple" />
+		</td></tr></table>
+	<div align="left"><s:textfield key="item.code"
 		cssClass="text medium" /></div>
 	<div><s:textfield key="item.description" cssClass="text medium" /></div>
 	<div class="formbotton"><s:submit method="list"
