@@ -8,16 +8,7 @@
 <title><fmt:message key="deliveryOrderList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='deliveryOrderList.heading'/>" />
-<c:choose>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-		<meta name="menu" content="PlantOrderMenu" />
-	</c:when>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
-		<meta name="menu" content="SupplierOrderMenu" />
-	</c:when>
-</c:choose>
+		<meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
@@ -38,14 +29,19 @@
 				key="deliveryOrder.doNo" /></label></td>
 			<td colspan="2"><s:textfield key="deliveryOrder.externalDoNo"
 				cssClass="text medium" theme="simple" /></td>
-			<c:if
-				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-				<td><label class="desc"><fmt:message
-					key="deliveryOrder.supplierCode" /></label></td>
-				<td colspan="2"><s:select key="deliveryOrder.plantSupplier.id"
-					list="%{suppliers}" listKey="id"
-					listValue="supplierName" theme="simple" /></td>
-			</c:if>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.plantCode" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.pCode"
+				list="%{plants}" listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" /></td>
+				
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.supplierCode" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.sCode"
+				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -53,9 +49,9 @@
 			<td colspan="2"><s:select key="deliveryOrder.status"
 				list="%{status}" theme="simple" /></td>
 			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isExport" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.exportFlag"
-				list="%{isExport}" theme="simple" /></td>
+				key="deliveryOrder.isPrint" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.printFlag"
+				list="%{isPrint}" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -83,9 +79,9 @@
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
-	<display:column property="externalDoNo" sortable="true" sortProperty="externalDoNo"
-		url="/editDeliveryOrder.html" paramId="doNo" paramProperty="doNo"
-		titleKey="deliveryOrder.doNo" />
+	<display:column property="externalDoNo" sortable="true"
+		sortProperty="externalDoNo" url="/editDeliveryOrder.html"
+		paramId="doNo" paramProperty="doNo" titleKey="deliveryOrder.doNo" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
 	<display:column property="plantName" sortable="true"

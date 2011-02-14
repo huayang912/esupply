@@ -104,6 +104,7 @@
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 
 	<bean id="receiptAction" class="com.faurecia.webapp.action.ReceiptAction"

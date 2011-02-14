@@ -4,7 +4,7 @@
 <title><fmt:message key="scheduleAudit.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='scheduleAudit.heading'/>" />
-<meta name="menu" content="PlantOrderMenu" />
+<meta name="menu" content="OrderMenu" />
 <script type="text/javascript">
 function checkedAll (obj) {	
 	var aa= document.getElementsByName("scheduleItem");

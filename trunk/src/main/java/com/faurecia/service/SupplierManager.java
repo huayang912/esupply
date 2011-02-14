@@ -7,5 +7,5 @@ import com.faurecia.model.Supplier;
 
 public interface SupplierManager extends GenericManager<Supplier, String> {
 	List<Supplier> getSuppliersByPlant(Plant plant);
-	
+	List<Supplier> getAuthorizedSupplier(String userCode);
 }

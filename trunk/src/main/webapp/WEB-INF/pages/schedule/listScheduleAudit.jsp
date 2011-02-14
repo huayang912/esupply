@@ -4,7 +4,7 @@
 <title><fmt:message key="scheduleAudit.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='scheduleAudit.heading'/>" />
-<meta name="menu" content="PlantOrderMenu" />
+<meta name="menu" content="OrderMenu" />
 </head>
 
 <s:form name="scheduleForm" action="scheduleAudit" method="post"

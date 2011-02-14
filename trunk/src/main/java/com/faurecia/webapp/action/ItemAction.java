@@ -11,7 +11,6 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.model.Item;
-import com.faurecia.model.User;
 import com.faurecia.service.ItemManager;
 import com.faurecia.util.CSVWriter;
 
@@ -50,11 +49,10 @@ public class ItemAction extends BaseAction {
 	}
 	
 	private void query() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
+		
 		
 		DetachedCriteria criteria = DetachedCriteria.forClass(Item.class);
-		criteria.add(Restrictions.eq("plant", user.getUserPlant()));
+		
 		
 		if (item != null) {
 			if (item.getCode() != null && item.getCode().trim().length() != 0)
@@ -66,6 +64,12 @@ public class ItemAction extends BaseAction {
 			{
 				criteria.add(Restrictions.eq("description", item.getDescription()));
 			}
+			
+			if (item.getPlant() != null)
+			{
+				criteria.add(Restrictions.eq("plant", item.getPlant()));
+			}
+			
 		}
 		
 		items = itemManager.findByCriteria(criteria);

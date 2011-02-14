@@ -4,14 +4,7 @@
 <title><fmt:message key="scheduleDetail.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='scheduleDetail.heading'/>" />
-<c:choose>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-		<meta name="menu" content="PlantOrderMenu" />
-	</c:when>
-	<c:when test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
-		<meta name="menu" content="SupplierOrderMenu" />
-	</c:when>
-</c:choose>
+<meta name="menu" content="OrderMenu" />
 </head>
 
 <s:form name="scheduleForm" action="saveSchedule" method="post"
@@ -69,11 +62,16 @@
 				cellspacing="0">
 				<thead>
 					<tr>
-						<th nowrap="nowrap"><fmt:message key="scheduleDetail.createDate" /></th>
-						<th nowrap="nowrap"><fmt:message key="scheduleDetail.releaseNo" /></th>
-						<th nowrap="nowrap"><fmt:message key="scheduleDetail.itemCode" /></th>
-						<th nowrap="nowrap"><fmt:message key="scheduleDetail.itemDescription" /></th>
-						<th nowrap="nowrap"><fmt:message key="scheduleDetail.supplierItemCode" /></th>
+						<th nowrap="nowrap"><fmt:message
+							key="scheduleDetail.createDate" /></th>
+						<th nowrap="nowrap"><fmt:message
+							key="scheduleDetail.releaseNo" /></th>
+						<th nowrap="nowrap"><fmt:message
+							key="scheduleDetail.itemCode" /></th>
+						<th nowrap="nowrap"><fmt:message
+							key="scheduleDetail.itemDescription" /></th>
+						<th nowrap="nowrap"><fmt:message
+							key="scheduleDetail.supplierItemCode" /></th>
 						<s:iterator id="head"
 							value="%{scheduleView.scheduleHead.headList}">
 							<c:choose>

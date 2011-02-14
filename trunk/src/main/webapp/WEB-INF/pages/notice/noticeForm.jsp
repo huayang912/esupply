@@ -5,7 +5,7 @@
 <head>
 <title><fmt:message key="notice.title" /></title>
 <meta name="heading" content="<fmt:message key='notice.heading'/>" />
-<meta name="menu" content="PlantUserMenu" />
+<meta name="menu" content="InfoMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 <script type="text/javascript"

@@ -14,6 +14,15 @@
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorInboundTemplateName" value="errorInboundTemplate.vm" />
+		<property name="mfFtpServer" value="localhost"/>
+		<property name="mfFtpPort" value="22"/>
+		<property name="mfFtpUser" value="dx"/>
+		<property name="mfFtpPassword" value="dx"/>
+		<property name="mfFtpPath" value="/SEQJIT/INP"/>
+		<property name="mfTempFileDirectory" value="D:\\sconitInboundTest\\temp"/>
+		<property name="mfArchiveFileDirectory" value="D:\\sconitInboundTest\\archive"/>
+		<property name="mfErrorFileDirectory" value="D:\\sconitInboundTest\\error"/>
+		<property name="mfPlantCode" value="1033"/>
 	</bean>
 	
 	<bean id="dataInboundJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

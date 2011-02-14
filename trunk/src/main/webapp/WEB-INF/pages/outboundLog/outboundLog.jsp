@@ -11,7 +11,7 @@
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
-<meta name="menu" content="PlantAdminMenu" />
+<meta name="menu" content="InfoMenu" />
 <c:set var="buttons">
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"

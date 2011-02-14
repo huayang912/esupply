@@ -176,6 +176,7 @@
 				<constructor-arg value="com.faurecia.model.Supplier" />
 			</bean>
 		</constructor-arg>
+		<property name="userManager" ref="userManager" />
 	</bean>
 
 	<bean id="plantSupplierManager" class="com.faurecia.service.impl.PlantSupplierManagerImpl">
@@ -185,6 +186,7 @@
 				<constructor-arg value="com.faurecia.model.PlantSupplier" />
 			</bean>
 		</constructor-arg>
+		<property name="userManager" ref="userManager" />
 	</bean>
 
 	<bean id="itemManager" class="com.faurecia.service.impl.ItemManagerImpl">
@@ -326,6 +328,7 @@
 		</constructor-arg>
 		<property name="numberControlManager" ref="numberControlManager" />
 		<property name="purchaseOrderDetailManager" ref="purchaseOrderDetailManager" />
+		<property name="plantManager" ref="plantManager" />
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="itemManager" ref="itemManager" />

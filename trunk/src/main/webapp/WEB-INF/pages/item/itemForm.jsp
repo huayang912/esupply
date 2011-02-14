@@ -5,7 +5,7 @@
 <meta name="heading" content="<fmt:message key='itemDetail.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
-<meta name="menu" content="PlantUserMenu" />
+<meta name="menu" content="AdminMenu" />
 </head>
 
 <s:form name="itemForm" action="saveItem" method="post" validate="true">

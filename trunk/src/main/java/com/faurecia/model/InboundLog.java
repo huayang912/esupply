@@ -47,6 +47,8 @@ public class InboundLog extends BaseObject {
 	private String memo;
 	private Date createDateFrom;
 	private Date createDateTo;
+	private String plantCode;
+	private String supplierCode;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -177,6 +179,24 @@ public class InboundLog extends BaseObject {
 			return "Import";
 		}
 	}
+	
+	@Transient
+	public String getPlantCode() {
+		return plantCode;
+	}
+
+	public void setPlantCode(String plantCode) {
+		this.plantCode = plantCode;
+	}
+
+	@Transient
+	public String getSupplierCode() {
+		return supplierCode;
+	}
+
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
+	}
 
 	/**
 	 * @see java.lang.Object#hashCode()
@@ -184,7 +204,7 @@ public class InboundLog extends BaseObject {
 	public int hashCode() {
 		return new HashCodeBuilder(-1116344111, 627326659).append(this.id)
 				.toHashCode();
-	}
+	}	
 
 	/**
 	 * @see java.lang.Object#equals(Object)

@@ -7,16 +7,7 @@
 <head>
 <title><fmt:message key="receiptList.title" /></title>
 <meta name="heading" content="<fmt:message key='receiptList.heading'/>" />
-<c:choose>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-		<meta name="menu" content="PlantOrderMenu" />
-	</c:when>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
-		<meta name="menu" content="SupplierOrderMenu" />
-	</c:when>
-</c:choose>
+<meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
@@ -30,8 +21,9 @@
 		<tr>
 			<td><label class="desc"><fmt:message
 				key="receipt.referenceReceiptNoLong" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.referenceReceiptNoLong"
-				cssClass="text medium" theme="simple" /></td>
+			<td colspan="2"><s:textfield
+				key="receipt.referenceReceiptNoLong" cssClass="text medium"
+				theme="simple" /></td>
 			<c:if
 				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 				<td><label class="desc"><fmt:message
@@ -49,7 +41,7 @@
 			<td><label class="desc"><fmt:message
 				key="receipt.receiptNo" /></label></td>
 			<td colspan="2"><s:textfield key="receipt.receiptNo"
-				cssClass="text medium" theme="simple" /></td>			
+				cssClass="text medium" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -93,10 +85,12 @@
 	<display:table name="paginatedList" cellspacing="0" cellpadding="0"
 		requestURI="" id="receiptDetail" class="table" export="true">
 		<c:if test="${receipt.detailOrSummary == 'Detail'}">
-			<display:column property="receipt.referenceReceiptNoLong" sortable="true"
-				sortProperty="r.referenceReceiptNoLong" titleKey="receipt.referenceReceiptNoLong" />
+			<display:column property="receipt.referenceReceiptNoLong"
+				sortable="true" sortProperty="r.referenceReceiptNoLong"
+				titleKey="receipt.referenceReceiptNoLong" />
 			<display:column property="receipt.referenceReceiptNo" sortable="true"
-				sortProperty="r.referenceReceiptNo" titleKey="receipt.referenceReceiptNo" />
+				sortProperty="r.referenceReceiptNo"
+				titleKey="receipt.referenceReceiptNo" />
 			<display:column property="receipt.receiptNo" sortable="true"
 				sortProperty="r.receiptNo" titleKey="receipt.receiptNo" />
 		</c:if>
@@ -138,8 +132,8 @@
 	</display:table>
 
 	<c:if test="${paginatedList.fullListSize > 0}">
-		<div class="buttonBar bottom"><s:submit key="button.export" action="exportReceiptDetail"
-			theme="simple" /></div>
+		<div class="buttonBar bottom"><s:submit key="button.export"
+			action="exportReceiptDetail" theme="simple" /></div>
 	</c:if>
 	<ul style="border: 0px; padding: 0px; margin: 0px">
 </s:form>

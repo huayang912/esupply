@@ -3,7 +3,7 @@
 <head>
     <title><fmt:message key="plantScheduleGroupList.title"/></title>
     <meta name="heading" content="<fmt:message key='plantScheduleGroupList.heading'/>"/>
-    <meta name="menu" content="PlantUserMenu" />
+    <meta name="menu" content="AdminMenu" />
 </head>
 
 <c:set var="buttons">

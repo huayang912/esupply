@@ -4,7 +4,7 @@
 <title><fmt:message key="scheduleControl.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='scheduleControl.heading'/>" />
-<meta name="menu" content="PlantUserMenu" />
+<meta name="menu" content="AdminMenu" />
 </head>
 
 <s:form name="scheduleControlForm" action="listScheduleControl" method="post"

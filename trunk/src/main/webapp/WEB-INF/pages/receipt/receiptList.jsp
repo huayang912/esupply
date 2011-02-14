@@ -7,16 +7,7 @@
 <head>
 <title><fmt:message key="receiptList.title" /></title>
 <meta name="heading" content="<fmt:message key='receiptList.heading'/>" />
-<c:choose>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-		<meta name="menu" content="PlantOrderMenu" />
-	</c:when>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
-		<meta name="menu" content="SupplierOrderMenu" />
-	</c:when>
-</c:choose>
+<meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
@@ -34,14 +25,16 @@
 		<tr>
 			<td><label class="desc"><fmt:message
 				key="receipt.referenceReceiptNoLong" /></label></td>
-			<td colspan="2"><s:textfield key="receipt.referenceReceiptNoLong"
-				cssClass="text medium" theme="simple" /></td>
-			<c:if test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
+			<td colspan="2"><s:textfield
+				key="receipt.referenceReceiptNoLong" cssClass="text medium"
+				theme="simple" /></td>
+			<c:if
+				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
 				<td><label class="desc"><fmt:message
 					key="receipt.supplierCode" /></label></td>
 				<td colspan="2"><s:select key="receipt.plantSupplier.id"
-					list="%{suppliers}" listKey="id"
-					listValue="supplierName" theme="simple" /></td>
+					list="%{suppliers}" listKey="id" listValue="supplierName"
+					theme="simple" /></td>
 			</c:if>
 		</tr>
 		<tr>
@@ -52,7 +45,7 @@
 			<td><label class="desc"><fmt:message
 				key="receipt.receiptNo" /></label></td>
 			<td colspan="2"><s:textfield key="receipt.receiptNo"
-				cssClass="text medium" theme="simple" /></td>			
+				cssClass="text medium" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -79,13 +72,15 @@
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" id="receipts" class="table" export="true">
-	<display:column property="referenceReceiptNoLong" sortable="true" sortProperty="referenceReceiptNoLong"
-		url="/editReceipt.html" paramId="receiptNo" paramProperty="receiptNo"
+	<display:column property="referenceReceiptNoLong" sortable="true"
+		sortProperty="referenceReceiptNoLong" url="/editReceipt.html"
+		paramId="receiptNo" paramProperty="receiptNo"
 		titleKey="receipt.referenceReceiptNoLong" />
 	<display:column property="referenceReceiptNo" sortable="true"
-		sortProperty="referenceReceiptNo" titleKey="receipt.referenceReceiptNo" />
+		sortProperty="referenceReceiptNo"
+		titleKey="receipt.referenceReceiptNo" />
 	<display:column property="receiptNo" sortable="true"
-		sortProperty="receiptNo" titleKey="receipt.receiptNo" />	
+		sortProperty="receiptNo" titleKey="receipt.receiptNo" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="receipt.plantCode" />
 	<display:column property="plantName" sortable="true"
