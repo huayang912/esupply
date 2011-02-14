@@ -16,4 +16,6 @@ public interface PlantSupplierManager extends GenericManager<PlantSupplier, Inte
 	List<PlantSupplier> getPlantSupplierByPlantScheduleGroupId(Integer plantScheduleGroupId);	
 	
 	List<PlantSupplier> getPlantSupplierByUserId(Long userId);
+	
+	List<Plant> getAuthorizedPlant(String userCode);
 }

@@ -35,12 +35,14 @@ public class DeliveryOrder extends BaseObject {
 	private String plantName;
 	private String plantAddress1;
 	private String plantAddress2;
+	private String plantAddress3;
 	private String plantContactPerson;
 	private String plantPhone;
 	private String plantFax;
 	private String supplierName;
 	private String supplierAddress1;
 	private String supplierAddress2;
+	private String supplierAddress3;
 	private String supplierContactPerson;
 	private String supplierPhone;
 	private String supplierFax;
@@ -54,6 +56,7 @@ public class DeliveryOrder extends BaseObject {
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
+	private String printFlag;
 	private Boolean isPrint;
 	
 	private String murn;  //code + bar code
@@ -68,6 +71,9 @@ public class DeliveryOrder extends BaseObject {
 	private BigDecimal unitVolume;
 	private BigDecimal totalNbPallets;
 	private String title;	
+	
+	private String pCode;
+	private String sCode;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -146,6 +152,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setPlantAddress2(String plantAddress2) {
 		this.plantAddress2 = plantAddress2;
+	}
+	
+	@Column(name = "plant_address3", nullable = true, length = 255)
+	public String getPlantAddress3() {
+		return plantAddress3;
+	}
+
+	public void setPlantAddress3(String plantAddress3) {
+		this.plantAddress3 = plantAddress3;
 	}
 
 	@Column(name = "plant_contact_person", nullable = true, length = 50)
@@ -238,6 +253,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setSupplierAddress2(String supplierAddress2) {
 		this.supplierAddress2 = supplierAddress2;
+	}
+	
+	@Column(name = "supplier_address3", nullable = true, length = 255)
+	public String getSupplierAddress3() {
+		return supplierAddress3;
+	}
+
+	public void setSupplierAddress3(String supplierAddress3) {
+		this.supplierAddress3 = supplierAddress3;
 	}
 
 	@Column(name = "supplier_contact_person", nullable = true, length = 50)
@@ -388,6 +412,15 @@ public class DeliveryOrder extends BaseObject {
 	public void setExportFlag(String exportFlag) {
 		this.exportFlag = exportFlag;
 	}
+	
+	@Transient
+	public String getPrintFlag() {
+		return printFlag;
+	}
+
+	public void setPrintFlag(String printFlag) {
+		this.printFlag = printFlag;
+	}
 
 	@Column(name = "murn", length=20)
 	public String getMurn() {
@@ -530,6 +563,24 @@ public class DeliveryOrder extends BaseObject {
 		DeliveryOrder myClass = (DeliveryOrder) object;
 		return new CompareToBuilder().append(this.doNo, myClass.doNo)
 				.toComparison();
+	}
+
+	@Transient
+	public String getpCode() {
+		return pCode;
+	}
+
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
+	}
+
+	@Transient
+	public String getsCode() {
+		return sCode;
+	}
+
+	public void setsCode(String sCode) {
+		this.sCode = sCode;
 	}
 	
 }

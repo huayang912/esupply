@@ -8,7 +8,7 @@
 <title><fmt:message key="scheduleControl.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='scheduleControl.heading'/>" />
-<meta name="menu" content="PlantUserMenu" />
+<meta name="menu" content="AdminMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>

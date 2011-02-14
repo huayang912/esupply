@@ -8,16 +8,7 @@
 <title><fmt:message key="purchaseOrderList.title" /></title>
 <meta name="heading"
 	content="<fmt:message key='purchaseOrderList.heading'/>" />
-<c:choose>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-		<meta name="menu" content="PlantOrderMenu" />
-	</c:when>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
-		<meta name="menu" content="SupplierOrderMenu" />
-	</c:when>
-</c:choose>
+<meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
@@ -39,8 +30,8 @@
 				<td><label class="desc"><fmt:message
 					key="purchaseOrder.supplierCode" /></label></td>
 				<td colspan="2"><s:select key="purchaseOrder.plantSupplier.id"
-					list="%{suppliers}" listKey="id"
-					listValue="supplierName" theme="simple" /></td>
+					list="%{suppliers}" listKey="id" listValue="supplierName"
+					theme="simple" /></td>
 			</tr>
 		</c:if>
 		<tr>

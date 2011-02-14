@@ -3,16 +3,7 @@
 <head>
 <title><fmt:message key="userList.title" /></title>
 <meta name="heading" content="<fmt:message key='userList.heading'/>" />
-<c:choose>
-	<c:when
-		test="${roleType == 'ROLE_ADMIN' or roleType == 'ROLE_PLANT_ADMIN' or roleType == 'ROLE_VENDOR'}">
-		<meta name="menu" content="AdminMenu" />
-	</c:when>
-	<c:when
-		test="${roleType == 'ROLE_PLANT_USER'}">
-		<meta name="menu" content="PlantAdminMenu" />
-	</c:when>
-</c:choose>
+<meta name="menu" content="UserMenu" />
 </head>
 
 <c:set var="buttons">

@@ -7,16 +7,7 @@
 <head>
 <title><fmt:message key="scheduleList.title" /></title>
 <meta name="heading" content="<fmt:message key='scheduleList.heading'/>" />
-<c:choose>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-		<meta name="menu" content="PlantOrderMenu" />
-	</c:when>
-	<c:when
-		test="<%=request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
-		<meta name="menu" content="SupplierOrderMenu" />
-	</c:when>
-</c:choose>
+<meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>

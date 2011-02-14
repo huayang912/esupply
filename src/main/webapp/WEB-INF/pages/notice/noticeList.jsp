@@ -3,7 +3,7 @@
 <head>
 <title><fmt:message key="noticeList.title" /></title>
 <meta name="heading" content="<fmt:message key='noticeList.heading'/>" />
-<meta name="menu" content="PlantUserMenu" />
+<meta name="menu" content="InfoMenu" />
 </head>
 
 <c:set var="buttons">

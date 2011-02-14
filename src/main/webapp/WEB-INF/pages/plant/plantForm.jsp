@@ -3,15 +3,7 @@
 <head>
 <title><fmt:message key="plantDetail.title" /></title>
 <meta name="heading" content="<fmt:message key='plantDetail.heading'/>" />
-<c:choose>
-	<c:when
-		test="${editProfile}">
-		<meta name="menu" content="PlantAdminMenu" />
-	</c:when>
-	<c:otherwise>
 		<meta name="menu" content="AdminMenu" />
-	</c:otherwise>
-</c:choose>
 </head>
 
 <s:form id="plantForm" action="savePlant" method="post" validate="true">

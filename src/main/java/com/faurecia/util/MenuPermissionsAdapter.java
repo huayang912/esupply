@@ -26,7 +26,8 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 	public boolean isAllowed(MenuComponent menu) {
 		if (authorities != null) {
 			for (GrantedAuthority authority : authorities) {
-				if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase()))) {
+				if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase()))
+						|| menu.getName().equals("Logout")) {
 					return true;
 				}
 			}

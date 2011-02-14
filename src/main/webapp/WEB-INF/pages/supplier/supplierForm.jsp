@@ -7,25 +7,15 @@
 	content="<fmt:message key='plantSupplierDetail.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/selectbox.js'/>"></script>
-
-<c:choose>
-	<c:when test="${editProfile}">
-		<meta name="menu" content="SupplierMenu" />
-	</c:when>
-	<c:otherwise>
-		<meta name="menu" content="PlantUserMenu" />
-	</c:otherwise>
-</c:choose>
+<meta name="menu" content="AdminMenu" />
 </head>
 
 <s:form name="plantSupplierForm" action="saveSupplier" method="post"
 	validate="true">
-	<li style="display: none">
-		<s:hidden key="plantSupplier.id" /> 
-		<s:hidden key="plantSupplier.plant.code" />
-		<s:hidden key="plantSupplier.doNoPrefix" />
-		<input type="hidden" name="from" value="${param.from}" />
-	</li>
+	<li style="display: none"><s:hidden key="plantSupplier.id" /> <s:hidden
+		key="plantSupplier.plant.code" /> <s:hidden
+		key="plantSupplier.doNoPrefix" /> <input type="hidden" name="from"
+		value="${param.from}" /></li>
 	<c:set var="buttons">
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
@@ -52,15 +42,18 @@
 		cssClass="text large" required="true" /></li>
 
 	<li><s:textfield key="plantSupplier.supplierFax"
-		cssClass="text large" required="true" /></li>		
+		cssClass="text large" required="true" /></li>
 
 	<c:choose>
-		<c:when test="<%=!request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+		<c:when
+			test="<%=!request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 			<li><s:select key="plantSupplier.plantScheduleGroup.id"
-				list="%{plantScheduleGroupList}" listKey="id" listValue="name" theme="xhtml" /></li>
-				
+				list="%{plantScheduleGroupList}" listKey="id" listValue="name"
+				theme="xhtml" /></li>
+
 			<li><s:select key="plantSupplier.responsibleUser.id"
-				list="%{responsibleUserList}" listKey="id" listValue="fullName" theme="xhtml" /></li>
+				list="%{responsibleUserList}" listKey="id" listValue="fullName"
+				theme="xhtml" /></li>
 		</c:when>
 	</c:choose>
 
