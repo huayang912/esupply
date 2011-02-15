@@ -6,39 +6,69 @@
 <meta name="menu" content="SupplierMenu" />
 </head>
 
-<c:set var="buttons">	
+<c:set var="buttons">
+	<s:submit method="list" key="button.search" theme="simple" />
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
 
-<s:set name="notices" value="notices" scope="request" />
-<display:table name="notices" class="table" requestURI=""
-	id="noticeList" export="true" pagesize="25">
-	<display:column property="title" sortable="true"
-		url="/editNoticeReader.html?from=list" paramId="id" paramProperty="id"
-		titleKey="notice.title" />
-	<display:column property="displayDateFrom" sortable="true"
-		titleKey="notice.displayDateFrom" format="{0,date,MM/dd/yyyy}"/>
-	<display:column property="fileName" sortable="true"
-		url="/downloadAttachement.html" paramId="id" paramProperty="id"
-		titleKey="notice.fileName" />
+<s:form name="noticeReaderForm" action="noticeReaders" method="post">
+	<li style="padding: 0px">
+	<table style="margin: 0px">
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.plant" /></label></td>
+			<td colspan="2"><s:select key="plantSupplier.plant.code"
+				list="%{plants}" listKey="code" listValue="name" theme="simple" 
+				headerKey="-1" headerValue="All"/></td>
 
-	<display:setProperty name="paging.banner.item_name">
-		<fmt:message key="notice.notice" />
-	</display:setProperty>
-	<display:setProperty name="paging.banner.items_name">
-		<fmt:message key="notice.notices" />
-	</display:setProperty>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.supplier" /></label></td>
+			<td colspan="2"><s:select key="plantSupplier.supplier.code"
+				list="%{suppliers}" listKey="code" listValue="name" theme="simple" 
+				headerKey="-1" headerValue="All"/></td>
+		</tr>
+	</table>
+	</li>
+	<c:out value="${buttons}" escapeXml="false" />
+</s:form>
 
-	<display:setProperty name="export.excel.filename"
-		value="Notice List.xls" />
-	<display:setProperty name="export.csv.filename" value="Notice List.csv" />
-	<display:setProperty name="export.pdf.filename" value="Notice List.pdf" />
-</display:table>
+<c:if test="${plantSupplier != null}">
+	<s:set name="noticeReaders" value="noticeReaders" scope="request" />
+	<display:table name="noticeReaders" class="table" requestURI=""
+		id="noticeReaderList" export="true" pagesize="25">
+		<display:column property="notice.title" sortable="true"
+			url="/editNoticeReader.html?from=list&supplierCode=${plantSupplier.supplier.code}"
+			paramId="id" paramProperty="id" titleKey="notice.title" />
+			<display:column property="plantSupplier.plant.name" sortable="true"
+			titleKey="notice.plant" />
+			<display:column property="plantSupplier.supplier.name" sortable="true"
+			titleKey="notice.supplier" />
+			
+		<display:column property="notice.displayDateFrom" sortable="true"
+			titleKey="notice.displayDateFrom" format="{0,date,MM/dd/yyyy}" />
+		<display:column property="notice.fileName" sortable="true"
+			url="/downloadAttachement.html" paramId="id" paramProperty="id"
+			titleKey="notice.fileName" />
 
-<c:out value="${buttons}" escapeXml="false" />
+		<display:setProperty name="paging.banner.item_name">
+			<fmt:message key="notice.notice" />
+		</display:setProperty>
+		<display:setProperty name="paging.banner.items_name">
+			<fmt:message key="notice.notices" />
+		</display:setProperty>
 
-<script type="text/javascript">
-    highlightTableRows("plantList");
-</script>
+		<display:setProperty name="export.excel.filename"
+			value="Notice List.xls" />
+		<display:setProperty name="export.csv.filename"
+			value="Notice List.csv" />
+		<display:setProperty name="export.pdf.filename"
+			value="Notice List.pdf" />
+	</display:table>
+
+	<script type="text/javascript">
+    highlightTableRows("noticeReaderList");
+
+	</script>
+</c:if>

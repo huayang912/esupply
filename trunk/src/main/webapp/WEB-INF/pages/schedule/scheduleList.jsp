@@ -11,33 +11,52 @@
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
-<s:form name="scheduleForm" action="editSchedule" method="post"
+
+<c:set var="buttons">
+	<s:submit method="list" key="button.search" theme="simple" />
+	<input type="button"
+		onclick="location.href='<c:url value="/mainMenu.html"/>'"
+		value="<fmt:message key="button.done"/>" />
+</c:set>
+
+<s:form name="scheduleForm" action="schedules" method="post"
 	validate="true">
-
-
 	<s:hidden name="from" value="list" />
+	<s:hidden key="isHistory"/>
 	<li style="padding: 0px">
 	<table style="margin: 0px">
 		<tr>
-			<c:if
-				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-				<td><label class="desc"><fmt:message
-					key="schedule.supplierCode" /></label></td>
-				<td><s:select key="schedule.supplierCode" list="%{suppliers}"
-					listKey="supplier.code" listValue="supplierName" theme="simple"
-					required="true"></s:select></td>
-			</c:if>
-			<td><s:textfield key="schedule.createDate"
-				cssClass="text medium" required="true" /></td>
-			<td><A HREF="#"
-				onClick="cal.select(document.forms['scheduleForm'].editSchedule_schedule_createDate,'anchDateFrom','MM/dd/yyyy'); return false;"
-				NAME="anchDateFrom" ID="anchDateFrom"> <img
-				src="<c:url value="/images/calendar.png"/>" border="0" /> </A></td>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.plant" /></label></td>
+			<td colspan="2"><s:select key="plantSupplier.plant.Code"
+				list="%{plants}" listKey="code" listValue="name" theme="simple" /></td>
+
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.supplier" /></label></td>
+			<td colspan="2"><s:select key="plantSupplier.supplier.Code"
+				list="%{suppliers}" listKey="code" listValue="name" theme="simple" /></td>
 		</tr>
+		<c:if test="${isHistory}">
+			<tr>
+				<td><label class="desc"><fmt:message
+				key="schedule.createDate" /></label>
+				</td>
+				<td><s:textfield key="effectiveDate"
+					theme="simple" required="true" /></td>
+				<td><A HREF="#"
+					onClick="cal.select(document.forms['scheduleForm'].schedules_effectiveDate,'anchDateFrom','MM/dd/yyyy'); return false;"
+					NAME="anchDateFrom" ID="anchDateFrom"> <img
+					src="<c:url value="/images/calendar.png"/>" border="0" /> </A></td>
+			</tr>
+		</c:if>
 	</table>
 	</li>
-	<div><s:submit method="edit" key="button.search" theme="simple" /></div>
+	<c:out value="${buttons}" escapeXml="false" />
 </s:form>
+
+<c:if test="${plantSupplier != null}">
+<p><fmt:message key="schedule.notFound" /></p>
+</c:if>
 
 <script type="text/javascript">
 		Form.focusFirstElement(document.forms["scheduleForm"]);

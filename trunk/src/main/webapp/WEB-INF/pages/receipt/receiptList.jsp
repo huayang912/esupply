@@ -11,11 +11,14 @@
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 </head>
+
 <c:set var="buttons">
+	<s:submit method="list" key="button.search" theme="simple" />
 	<input type="button"
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
+
 <s:form name="receiptForm" action="receipts" method="post"
 	validate="true">
 	<div style="display: none;"><input type="hidden" name="page"
@@ -28,14 +31,19 @@
 			<td colspan="2"><s:textfield
 				key="receipt.referenceReceiptNoLong" cssClass="text medium"
 				theme="simple" /></td>
-			<c:if
-				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-				<td><label class="desc"><fmt:message
-					key="receipt.supplierCode" /></label></td>
-				<td colspan="2"><s:select key="receipt.plantSupplier.id"
-					list="%{suppliers}" listKey="id" listValue="supplierName"
-					theme="simple" /></td>
-			</c:if>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.plant" /></label></td>
+			<td colspan="2"><s:select key="receipt.pCode" list="%{plants}"
+				listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" /></td>
+
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.supplier" /></label></td>
+			<td colspan="2"><s:select key="receipt.sCode"
+				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1"
+				headerValue="All" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -67,9 +75,10 @@
 		</tr>
 	</table>
 	</li>
-	<div><s:submit method="list" key="button.search" theme="simple" /></div>
+	<c:out value="${buttons}" escapeXml="false" />
 </s:form>
 
+<c:if test="${receipt != null}">
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" id="receipts" class="table" export="true">
 	<display:column property="referenceReceiptNoLong" sortable="true"
@@ -107,8 +116,8 @@
 		value="receipt List.pdf" />
 </display:table>
 
-<c:out value="${buttons}" escapeXml="false" />
-
 <script type="text/javascript">
     highlightTableRows("receipts");    
 </script>
+
+</c:if>

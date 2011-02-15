@@ -47,6 +47,8 @@ public class PurchaseOrder extends BaseObject {
 	private String status;
 	private List<PurchaseOrderDetail> purchaseOrderDetailList;
 	//private Boolean isConfirm;
+	private String pCode;
+	private String sCode;
 
 	@Id
 	@Column(name = "po_no", length = 20)
@@ -345,5 +347,23 @@ public class PurchaseOrder extends BaseObject {
 	public int compareTo(Object object) {
 		PurchaseOrder myClass = (PurchaseOrder) object;
 		return new CompareToBuilder().append(this.poNo, myClass.poNo).toComparison();
+	}
+
+	@Transient
+	public String getpCode() {
+		return pCode;
+	}
+
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
+	}
+
+	@Transient
+	public String getsCode() {
+		return sCode;
+	}
+
+	public void setsCode(String sCode) {
+		this.sCode = sCode;
 	}
 }

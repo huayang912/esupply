@@ -76,7 +76,7 @@
 			<result name="input">/WEB-INF/pages/signup.jsp</result>
 			<result name="success" type="redirect-action">/mainMenu</result>
 		</action>
-		
+
 		<action name="activeUsers" class="com.opensymphony.xwork2.ActionSupport">
 			<result name="success">/WEB-INF/pages/admin/activeUsers.jsp</result>
 		</action>
@@ -131,12 +131,12 @@
 		<action name="plants" class="plantAction" method="list">
 			<result>/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
-		
+
 		<action name="editPlant" class="plantAction" method="edit">
 			<result name="success">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="error">/WEB-INF/pages/plant/plantList.jsp</result>
 		</action>
-	
+
 		<action name="savePlant" class="plantAction" method="save">
 			<result name="input">/WEB-INF/pages/plant/plantForm.jsp</result>
 			<result name="cancel" type="redirect-action">plants</result>
@@ -273,7 +273,8 @@
 
 		<!-- Schedule -->
 		<action name="schedules" class="scheduleAction" method="list">
-			<result name="success">/WEB-INF/pages/schedule/scheduleList.jsp</result>
+			<result name="input">/WEB-INF/pages/schedule/scheduleList.jsp</result>
+			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
 		</action>
 
 		<action name="editSchedule" class="scheduleAction" method="edit">
@@ -286,33 +287,31 @@
 			<result name="error">/WEB-INF/pages/schedule/scheduleList.jsp
 			</result>
 		</action>
-<!--
-		<action name="editScheduleProfile" class="scheduleAction"
-			method="edit">
-			<result name="success">/WEB-INF/pages/schedule/scheduleForm.jsp</result>
-			<result name="error">/WEB-INF/pages/mainMenu.jsp</result>
-		</action>
--->
-		<action name="listScheduleAudit" class="scheduleAction" method="listAudit">
-			<result name="success">/WEB-INF/pages/schedule/listScheduleAudit.jsp
-			</result>
+
+		<action name="scheduleHistory" class="scheduleAction"
+			method="listHistory">
+			<result name="success">/WEB-INF/pages/schedule/scheduleList.jsp</result>
 		</action>
 
-		<action name="scheduleAudit" class="scheduleAction" method="audit">
+		<action name="listScheduleAudit" class="scheduleAction" method="listAudit">
 			<result name="success">/WEB-INF/pages/schedule/scheduleAuditForm.jsp
 			</result>
 		</action>
-
+		<!--
+			<action name="scheduleAudit" class="scheduleAction" method="audit">
+			<result name="success">/WEB-INF/pages/schedule/scheduleAuditForm.jsp
+			</result> </action>
+		-->
 		<action name="saveSchedule" class="scheduleAction" method="save">
 			<result name="cancel" type="redirect-action">schedules</result>
 		</action>
 
-		<action name="enterScheduleControl" class="scheduleControlAction"
-			method="enter">
-			<result name="success">/WEB-INF/pages/scheduleControl/enterScheduleControl.jsp
-			</result>
-		</action>
-
+		<!--
+			<action name="enterScheduleControl" class="scheduleControlAction"
+			method="enter"> <result
+			name="success">/WEB-INF/pages/scheduleControl/enterScheduleControl.jsp
+			</result> </action>
+		-->
 		<action name="listScheduleControl" class="scheduleControlAction"
 			method="list">
 			<result name="success">/WEB-INF/pages/scheduleControl/listScheduleControl.jsp

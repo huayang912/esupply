@@ -24,14 +24,19 @@
 			<td colspan="2"><s:textfield
 				key="receipt.referenceReceiptNoLong" cssClass="text medium"
 				theme="simple" /></td>
-			<c:if
-				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-				<td><label class="desc"><fmt:message
-					key="receipt.supplierCode" /></label></td>
-				<td colspan="2"><s:select key="receipt.plantSupplier.id"
-					list="%{suppliers}" listKey="id" listValue="supplierName"
-					theme="simple" /></td>
-			</c:if>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.plant" /></label></td>
+			<td colspan="2"><s:select key="receipt.pCode"
+				list="%{plants}" listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" /></td>
+				
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.supplier" /></label></td>
+			<td colspan="2"><s:select key="receipt.sCode"
+				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message

@@ -1,14 +1,9 @@
 package com.faurecia.webapp.action;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
@@ -16,12 +11,12 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.faurecia.Constants;
-import com.faurecia.model.PlantSupplier;
+import com.faurecia.model.Plant;
 import com.faurecia.model.PurchaseOrder;
-import com.faurecia.model.User;
+import com.faurecia.model.Supplier;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.PurchaseOrderManager;
+import com.faurecia.service.SupplierManager;
 import com.faurecia.webapp.util.PaginatedListUtil;
 
 public class PurchaseOrderAction extends BaseAction {
@@ -31,6 +26,7 @@ public class PurchaseOrderAction extends BaseAction {
 	private static final long serialVersionUID = 3847028744873885262L;
 	private PurchaseOrderManager purchaseOrderManager;
 	private PlantSupplierManager plantSupplierManager;
+	private SupplierManager supplierManager;
 	private PaginatedListUtil<PurchaseOrder> paginatedList;
 	private int pageSize;
 	private int page;
@@ -45,6 +41,10 @@ public class PurchaseOrderAction extends BaseAction {
 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
 	}
 
 	public PaginatedListUtil<PurchaseOrder> getPaginatedList() {
@@ -111,119 +111,106 @@ public class PurchaseOrderAction extends BaseAction {
 		this.poNo = poNo;
 	}
 
-	public List<PlantSupplier> getSuppliers() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
+	public List<Supplier> getSuppliers() {
+		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+	}
 
-		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
 	}
 
 	public String list() {
-		if (purchaseOrder == null) {
-			purchaseOrder = new PurchaseOrder();
+		if (purchaseOrder != null) {
 
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(new Date());
-			calendar.set(Calendar.HOUR_OF_DAY, 0);
-			calendar.set(Calendar.MINUTE, 0);
-			calendar.set(Calendar.SECOND, 0);
-			calendar.set(Calendar.MILLISECOND, 0);
-			Date dateNow = calendar.getTime();
-			calendar.add(Calendar.MONTH, -1);
-			Date lastWeek = calendar.getTime();
+			pageSize = pageSize == 0 ? 25 : pageSize;
+			page = page == 0 ? 1 : page;
 
-			DateFormat d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+			paginatedList = new PaginatedListUtil<PurchaseOrder>();
+			paginatedList.setPageNumber(page);
+			paginatedList.setObjectsPerPage(pageSize);
 
-			purchaseOrder.setCreateDateFrom(lastWeek);
-			purchaseOrder.setCreateDateTo(dateNow);
+			DetachedCriteria selectCriteria = DetachedCriteria.forClass(PurchaseOrder.class);
+			DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(PurchaseOrder.class).setProjection(Projections.count("poNo"));
 
-			List<PlantSupplier> supplierList = getSuppliers();
-			if (supplierList != null && supplierList.size() > 0) {
-				purchaseOrder.setPlantSupplier(supplierList.get(0));
+			selectCriteria.createAlias("plantSupplier", "ps");
+			selectCriteria.createAlias("ps.plant", "p");
+			selectCriteria.createAlias("ps.supplier", "s");
+			selectCountCriteria.createAlias("plantSupplier", "ps");
+			selectCountCriteria.createAlias("ps.plant", "p");
+			selectCountCriteria.createAlias("ps.supplier", "s");
+
+			if (purchaseOrder.getpCode() != null && purchaseOrder.getpCode().trim().length() > 0) {
+
+				if (purchaseOrder.getpCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						selectCriteria.add(Restrictions.in("ps.plant", plants));
+						selectCountCriteria.add(Restrictions.in("ps.plant", plants));
+					} else {
+						selectCriteria.add(Restrictions.eq("p.code", "-1"));
+						selectCountCriteria.add(Restrictions.eq("p.code", "-1"));
+					}
+				} else {
+					selectCriteria.add(Restrictions.eq("p.code", purchaseOrder.getpCode().trim()));
+					selectCountCriteria.add(Restrictions.eq("p.code", purchaseOrder.getpCode().trim()));
+				}
 			}
 
-			sort = "poNo";
-			dir = SortOrderEnum.DESCENDING.toString();
-		}
-
-		pageSize = pageSize == 0 ? 25 : pageSize;
-		page = page == 0 ? 1 : page;
-
-		paginatedList = new PaginatedListUtil<PurchaseOrder>();
-		paginatedList.setPageNumber(page);
-		paginatedList.setObjectsPerPage(pageSize);
-
-		DetachedCriteria selectCriteria = DetachedCriteria.forClass(PurchaseOrder.class);
-		DetachedCriteria selectCountCriteria = DetachedCriteria.forClass(PurchaseOrder.class).setProjection(Projections.count("poNo"));
-
-		selectCriteria.createAlias("plantSupplier", "ps");
-		selectCriteria.createAlias("ps.plant", "p");
-		selectCriteria.createAlias("ps.supplier", "s");
-		selectCountCriteria.createAlias("plantSupplier", "ps");
-		selectCountCriteria.createAlias("ps.plant", "p");
-		selectCountCriteria.createAlias("ps.supplier", "s");
-
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-
-		HttpServletRequest request = this.getRequest();
-
-		if (request.isUserInRole(Constants.PLANT_USER_ROLE) || request.isUserInRole(Constants.PLANT_ADMIN_ROLE)) {
-			selectCriteria.add(Restrictions.eq("ps.responsibleUser", user));
-			selectCountCriteria.add(Restrictions.eq("ps.responsibleUser", user));
-		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
-			if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
-				return "mainMenu";
+			if (purchaseOrder.getsCode() != null && purchaseOrder.getsCode().trim().length() > 0) {
+				if (purchaseOrder.getsCode().equals("-1")) {
+					List<Supplier> suppliers = getSuppliers();
+					if (suppliers != null &&suppliers.size() > 0) {
+						selectCriteria.add(Restrictions.in("ps.supplier", suppliers));
+						selectCountCriteria.add(Restrictions.in("ps.supplier", suppliers));
+					} else {
+						selectCriteria.add(Restrictions.eq("s.code", "-1"));
+						selectCountCriteria.add(Restrictions.eq("s.code", "-1"));
+					}
+				} else {
+					selectCriteria.add(Restrictions.eq("s.code", purchaseOrder.getsCode().trim()));
+					selectCountCriteria.add(Restrictions.eq("s.code", purchaseOrder.getsCode().trim()));
+				}
 			}
 
-			selectCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
-			selectCountCriteria.add(Restrictions.eq("p.code", this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE)));
-			selectCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
-			selectCountCriteria.add(Restrictions.eq("ps.supplier", user.getUserSupplier()));
-		}
 
-		if (purchaseOrder.getPoNo() != null && purchaseOrder.getPoNo().trim().length() > 0) {
-			selectCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
-			selectCountCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
-		}
-
-		if (purchaseOrder.getStatus() != null && purchaseOrder.getStatus().trim().length() > 0) {
-			selectCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
-			selectCountCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
-		}
-
-		if (purchaseOrder.getCreateDateFrom() != null) {
-			selectCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
-			selectCountCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
-		}
-
-		if (purchaseOrder.getCreateDateTo() != null) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(purchaseOrder.getCreateDateTo());
-			calendar.add(Calendar.DATE, 1);
-			selectCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
-			selectCountCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
-		}
-
-		if (purchaseOrder.getPlantSupplier() != null) {
-			selectCriteria.add(Restrictions.eq("plantSupplier", purchaseOrder.getPlantSupplier()));
-			selectCountCriteria.add(Restrictions.eq("plantSupplier", purchaseOrder.getPlantSupplier()));
-		}
-
-		if (sort != null && sort.trim().length() > 0) {
-			paginatedList.setSortCriterion(sort);
-			if ("desc".equals(dir)) {
-				selectCriteria.addOrder(Order.desc(sort));
-				paginatedList.setSortDirection(SortOrderEnum.DESCENDING);
-			} else {
-				selectCriteria.addOrder(Order.asc(sort));
-				paginatedList.setSortDirection(SortOrderEnum.ASCENDING);
+			if (purchaseOrder.getPoNo() != null && purchaseOrder.getPoNo().trim().length() > 0) {
+				selectCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
+				selectCountCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
 			}
+
+			if (purchaseOrder.getStatus() != null && purchaseOrder.getStatus().trim().length() > 0) {
+				selectCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
+				selectCountCriteria.add(Restrictions.eq("status", purchaseOrder.getStatus()));
+			}
+
+			if (purchaseOrder.getCreateDateFrom() != null) {
+				selectCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
+				selectCountCriteria.add(Restrictions.ge("createDate", purchaseOrder.getCreateDateFrom()));
+			}
+
+			if (purchaseOrder.getCreateDateTo() != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(purchaseOrder.getCreateDateTo());
+				calendar.add(Calendar.DATE, 1);
+				selectCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
+				selectCountCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
+			}
+
+
+			if (sort != null && sort.trim().length() > 0) {
+				paginatedList.setSortCriterion(sort);
+				if ("desc".equals(dir)) {
+					selectCriteria.addOrder(Order.desc(sort));
+					paginatedList.setSortDirection(SortOrderEnum.DESCENDING);
+				} else {
+					selectCriteria.addOrder(Order.asc(sort));
+					paginatedList.setSortDirection(SortOrderEnum.ASCENDING);
+				}
+			}
+
+			paginatedList.setList(this.purchaseOrderManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
+			paginatedList.setFullListSize(Integer.parseInt(this.purchaseOrderManager.findByCriteria(selectCountCriteria).get(0).toString()));
 		}
-
-		paginatedList.setList(this.purchaseOrderManager.findByCriteria(selectCriteria, (page - 1) * pageSize, pageSize));
-		paginatedList.setFullListSize(Integer.parseInt(this.purchaseOrderManager.findByCriteria(selectCountCriteria).get(0).toString()));
-
 		return SUCCESS;
 	}
 

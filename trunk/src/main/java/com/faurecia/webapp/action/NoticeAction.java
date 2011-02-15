@@ -9,15 +9,19 @@ import javax.xml.bind.JAXBException;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.io.FileUtils;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import com.faurecia.model.LabelValue;
 import com.faurecia.model.Notice;
 import com.faurecia.model.NoticeReader;
+import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
-import com.faurecia.model.User;
+import com.faurecia.model.Supplier;
 import com.faurecia.service.NoticeManager;
 import com.faurecia.service.NoticeReaderManager;
 import com.faurecia.service.PlantSupplierManager;
+import com.faurecia.service.SupplierManager;
 
 public class NoticeAction extends BaseAction {
 
@@ -28,6 +32,7 @@ public class NoticeAction extends BaseAction {
 	private NoticeManager noticeManager;
 	private PlantSupplierManager plantSupplierManager;
 	private NoticeReaderManager noticeReaderManager;
+	private SupplierManager supplierManager;
 	private List<Notice> notices;
 	private Notice notice;
 	private Integer id;
@@ -35,7 +40,8 @@ public class NoticeAction extends BaseAction {
 	private String fileContentType;
 	private String fileFileName;
 	private String uploadFileDirectory;
-	
+	private PlantSupplier plantSupplier;
+
 	private List<LabelValue> availableSuppliers;
 
 	public List<Notice> getNotices() {
@@ -72,6 +78,10 @@ public class NoticeAction extends BaseAction {
 
 	public void setNoticeReaderManager(NoticeReaderManager noticeReaderManager) {
 		this.noticeReaderManager = noticeReaderManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
 	}
 
 	public File getFile() {
@@ -114,10 +124,43 @@ public class NoticeAction extends BaseAction {
 		this.uploadFileDirectory = uploadFileDirectory;
 	}
 
+	public PlantSupplier getPlantSupplier() {
+		return plantSupplier;
+	}
+
+	public void setPlantSupplier(PlantSupplier plantSupplier) {
+		this.plantSupplier = plantSupplier;
+	}
+
+	public List<Supplier> getSuppliers() {
+		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+	}
+
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
+	}
+
 	public String list() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		notices = this.noticeManager.getNoticeByPlant(user.getUserPlant());
+		if (plantSupplier != null && plantSupplier.getPlant() != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(Notice.class);
+
+			criteria.createAlias("plant", "p");
+		
+			if (plantSupplier.getPlant() != null && plantSupplier.getPlant().getCode().trim().length() > 0) {
+				if (plantSupplier.getPlant().getCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						criteria.add(Restrictions.in("plant", plants));
+					} else {
+						criteria.add(Restrictions.eq("p.code", "-1"));
+					}
+				} else {
+					criteria.add(Restrictions.eq("p.code", plantSupplier.getPlant().getCode()));
+				}
+			}
+
+			notices = this.noticeManager.findByCriteria(criteria);
+		}
 		return SUCCESS;
 	}
 
@@ -146,50 +189,46 @@ public class NoticeAction extends BaseAction {
 		if (delete != null) {
 			return delete();
 		}
-		
+
 		boolean isNew = (notice.getId() == null);
-		
+
 		if (!isNew) {
 			Notice oldNotice = this.noticeManager.get(notice.getId());
 			notice.setFileFullPath(oldNotice.getFileFullPath());
 			notice.setFileName(oldNotice.getFileName());
-			BeanUtils.copyProperties(oldNotice, notice);	
+			BeanUtils.copyProperties(oldNotice, notice);
 			notice = oldNotice;
 		}
-		
+
 		if (fileFileName != null) {
 			FileUtils.forceMkdir(new File(uploadFileDirectory));
-			
+
 			File destFile = new File(uploadFileDirectory + File.separator + file.getName());
 			FileUtils.copyFile(file, destFile);
-			
+
 			FileUtils.forceDelete(file);
-			
+
 			notice.setFileFullPath(destFile.getAbsolutePath());
 			notice.setFileName(fileFileName);
 		}
-		
+
 		String[] suppliers = getRequest().getParameterValues("suppliers");
-		
+
 		if (!isNew) {
 			this.noticeReaderManager.deleteNoticeReaderByNoticeId(notice.getId());
 		}
-		
+
 		for (int i = 0; suppliers != null && i < suppliers.length; i++) {
 			Integer plantSupplierId = Integer.parseInt(suppliers[i]);
 			PlantSupplier plantSupplier = this.plantSupplierManager.get(plantSupplierId);
-			
+
 			NoticeReader noticeReader = new NoticeReader();
 			noticeReader.setNotice(notice);
 			noticeReader.setPlantSupplier(plantSupplier);
-			
+
 			notice.addNoticeReader(noticeReader);
 		}
-		
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		notice.setPlant(user.getUserPlant());
-		
+
 		this.noticeManager.save(notice);
 		this.noticeManager.flushSession();
 		String key = (isNew) ? "notice.added" : "notice.updated";
@@ -197,31 +236,50 @@ public class NoticeAction extends BaseAction {
 
 		return SUCCESS;
 	}
-	
+
 	private void prepare() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		
-		if (notice != null 
-				&& notice.getId() != null && notice.getId() > 0) {
+
+		if (notice != null && notice.getId() != null && notice.getId() > 0) {
 			List<NoticeReader> noticeReaderList = this.noticeReaderManager.getNoticeReaderByNoticeId(notice.getId());
 			if (noticeReaderList != null && noticeReaderList.size() > 0) {
 				notice.setSupplierList(new ArrayList<LabelValue>());
 				for (int i = 0; i < noticeReaderList.size(); i++) {
-					notice.getSupplierList().add(new LabelValue(noticeReaderList.get(i).getPlantSupplier().getSupplierName(), noticeReaderList.get(i).getPlantSupplier().getId().toString()));
+					notice.getSupplierList().add(
+							new LabelValue(noticeReaderList.get(i).getPlantSupplier().getSupplierName(), noticeReaderList.get(i).getPlantSupplier()
+									.getId().toString()));
 				}
 			}
-			
+
 			List<NoticeReader> readNoticeReaderList = this.noticeReaderManager.getReadNoticeReaderByNoticeId(notice.getId());
 			if (readNoticeReaderList != null && readNoticeReaderList.size() > 0) {
 				notice.setReadList(new ArrayList<LabelValue>());
 				for (int i = 0; i < readNoticeReaderList.size(); i++) {
-					notice.getReadList().add(new LabelValue(readNoticeReaderList.get(i).getPlantSupplier().getSupplierName(), readNoticeReaderList.get(i).getPlantSupplier().getId().toString()));
+					notice.getReadList().add(
+							new LabelValue(readNoticeReaderList.get(i).getPlantSupplier().getSupplierName(), readNoticeReaderList.get(i)
+									.getPlantSupplier().getId().toString()));
 				}
 			}
 		}
-		
-		List<PlantSupplier> allPlantSupplierList = this.plantSupplierManager.getPlantSupplierByPlantCode(user.getUserPlant().getCode());
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(PlantSupplier.class);
+
+		List<Plant> plants = getPlants();
+		if (plants != null && plants.size() > 0) {
+			criteria.add(Restrictions.in("plant", plants));
+		} else {
+			criteria.createAlias("plant", "p");
+			criteria.add(Restrictions.eq("p.code", "-1"));
+		}
+
+		List<Supplier> suppliers = getSuppliers();
+		if (suppliers != null && suppliers.size() > 0) {
+			criteria.add(Restrictions.in("supplier", suppliers));
+		} else {
+			criteria.createAlias("supplier", "s");
+			criteria.add(Restrictions.eq("s.code", "-1"));
+		}
+
+		List<PlantSupplier> allPlantSupplierList = this.plantSupplierManager.findByCriteria(criteria);
 		if (allPlantSupplierList != null && allPlantSupplierList.size() > 0) {
 			this.availableSuppliers = new ArrayList<LabelValue>();
 			for (int i = 0; i < allPlantSupplierList.size(); i++) {
@@ -230,12 +288,13 @@ public class NoticeAction extends BaseAction {
 					for (int j = 0; j < notice.getSupplierList().size(); j++) {
 						if (allPlantSupplierList.get(i).getId().toString().equals(notice.getSupplierList().get(j).getValue())) {
 							notInSupplierList = false;
-						}					
+						}
 					}
 				}
-				
+
 				if (notInSupplierList) {
-					this.availableSuppliers.add(new LabelValue(allPlantSupplierList.get(i).getSupplierName(), allPlantSupplierList.get(i).getId().toString()));
+					this.availableSuppliers.add(new LabelValue(allPlantSupplierList.get(i).getSupplierName(), allPlantSupplierList.get(i).getId()
+							.toString()));
 				}
 			}
 		}

@@ -21,25 +21,25 @@
 	<li style="padding: 0px">
 	<table style="margin: 0px; width: 100%;">
 		<tr>
-			<td colspan="2"><s:label key="notice.title" theme="xhtml"
+			<td colspan="2"><s:label key="noticeReader.notice.title" theme="xhtml"
 				cssClass="text long" /></td>
 		</tr>
 		<tr>
-			<td colspan="2"><s:textarea key="notice.content" theme="xhtml"
+			<td colspan="2"><s:textarea key="noticeReader.notice.content" theme="xhtml"
 				cols="100" rows="8" readonly="true" /></td>
 		</tr>
 		<tr>
-			<td><s:label key="notice.displayDateFrom" theme="xhtml"
+			<td><s:label key="noticeReader.notice.displayDateFrom" theme="xhtml"
 				cssClass="text medium" /></td>
 
 			<td>
-			<label class="desc"><fmt:message key="notice.fileName"/></label>
+			<label class="desc"><fmt:message key="noticeReader.notice.fileName"/></label>
 			
 			<s:url id="url" action="downloadAttachement">
-				<s:param name="id">${notice.id}</s:param>
+				<s:param name="id">${noticeReader.notice.id}</s:param>
 			</s:url> 
 			
-			<s:a href='%{url}'>${notice.fileName}</s:a>
+			<s:a href='%{url}'>${noticeReader.notice.fileName}</s:a>
 			</td>
 	</table>
 	</li>
