@@ -80,6 +80,7 @@
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 
 	<bean id="scheduleAction" class="com.faurecia.webapp.action.ScheduleAction"
@@ -88,6 +89,7 @@
 		<property name="scheduleManager" ref="scheduleManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 	
 	<bean id="scheduleControlAction" class="com.faurecia.webapp.action.ScheduleControlAction"
@@ -96,6 +98,7 @@
 		<property name="scheduleControlManager" ref="scheduleControlManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 
 	<bean id="deliveryOrderAction" class="com.faurecia.webapp.action.DeliveryOrderAction"
@@ -116,6 +119,7 @@
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 	
 	<bean id="receiptDetailAction" class="com.faurecia.webapp.action.ReceiptDetailAction"
@@ -124,6 +128,7 @@
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 
 	<bean id="inboundLogAction" class="com.faurecia.webapp.action.InboundLogAction"
@@ -134,6 +139,8 @@
 		<property name="purchaseOrderManager" ref="purchaseOrderManager" />
 		<property name="scheduleManager" ref="scheduleManager" />
 		<property name="receiptManager" ref="receiptManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 	
 	<bean id="outboundLogAction" class="com.faurecia.webapp.action.OutboundLogAction"
@@ -142,6 +149,8 @@
 		<property name="deliveryOrderManager" ref="deliveryOrderManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 	
 	<bean id="noticeAction" class="com.faurecia.webapp.action.NoticeAction"
@@ -152,15 +161,16 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="uploadFileDirectory" value="D:\sconitInboundTest" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 	
 	<bean id="noticeReaderAction" class="com.faurecia.webapp.action.NoticeReaderAction"
 		scope="prototype">
 		<property name="noticeManager" ref="noticeManager" />
-		<property name="plantManager" ref="plantManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="noticeReaderManager" ref="noticeReaderManager" />
+		<property name="supplierManager" ref="supplierManager" />
 	</bean>
 </beans>

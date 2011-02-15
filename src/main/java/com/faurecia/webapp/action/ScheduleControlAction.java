@@ -6,11 +6,13 @@ import java.util.List;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
+import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.ScheduleControl;
-import com.faurecia.model.User;
+import com.faurecia.model.Supplier;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ScheduleControlManager;
+import com.faurecia.service.SupplierManager;
 
 public class ScheduleControlAction extends BaseAction {
 
@@ -18,18 +20,23 @@ public class ScheduleControlAction extends BaseAction {
 	 * 
 	 */
 	private static final long serialVersionUID = -1420877857501600197L;
-	
+
 	private PlantSupplierManager plantSupplierManager;
 	private ScheduleControlManager scheduleControlManager;
-	private PlantSupplier schedulePlantSupplier; 
+	private SupplierManager supplierManager;
+	private PlantSupplier schedulePlantSupplier;
 	private List<ScheduleControl> scheduleControlList;
 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
-	
+
 	public void setScheduleControlManager(ScheduleControlManager scheduleControlManager) {
 		this.scheduleControlManager = scheduleControlManager;
+	}
+
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
 	}
 
 	public List<ScheduleControl> getScheduleControlList() {
@@ -48,28 +55,27 @@ public class ScheduleControlAction extends BaseAction {
 		this.schedulePlantSupplier = schedulePlantSupplier;
 	}
 
-	public List<PlantSupplier> getSuppliers() {
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		
-		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
+	public List<Supplier> getSuppliers() {
+		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
 	}
-	
+
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
+	}
+
 	public String enter() {
 		return SUCCESS;
 	}
-	
+
 	public String cancel() {
 		return "mainMenu";
 	}
-	
-	@SuppressWarnings("unchecked")
+
 	public String list() {
-		
 		prepare();
 		return SUCCESS;
 	}
-	
+
 	public String save() {
 		if (scheduleControlList != null) {
 			for (int i = 1; i < scheduleControlList.size(); i++) {
@@ -85,14 +91,31 @@ public class ScheduleControlAction extends BaseAction {
 		saveMessage(getText("scheduleControl.updated"));
 		return SUCCESS;
 	}
-	
+
 	private void prepare() {
-		DetachedCriteria selectCriteria = DetachedCriteria.forClass(ScheduleControl.class);
-		
-		selectCriteria.createAlias("plantSupplier", "ps");
-		
-		selectCriteria.add(Restrictions.eq("plantSupplier", schedulePlantSupplier));
-		
-		scheduleControlList = this.scheduleControlManager.findByCriteria(selectCriteria);
+		if (schedulePlantSupplier != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleControl.class);
+
+			criteria.createAlias("plantSupplier", "ps");
+			criteria.createAlias("ps.plant", "p");
+			criteria.createAlias("ps.supplier", "s");
+
+			if (schedulePlantSupplier.getPlant() != null && schedulePlantSupplier.getPlant().getCode() != null
+					&& schedulePlantSupplier.getPlant().getCode().trim().length() != 0) {
+				criteria.add(Restrictions.eq("p.code", schedulePlantSupplier.getPlant().getCode().trim()));
+			} else {
+				criteria.add(Restrictions.eq("p.code", "-1"));
+
+			}
+
+			if (schedulePlantSupplier.getSupplier() != null && schedulePlantSupplier.getSupplier().getCode() != null
+					&& schedulePlantSupplier.getSupplier().getCode().trim().length() != 0) {
+				criteria.add(Restrictions.eq("s.code", schedulePlantSupplier.getSupplier().getCode().trim()));
+			} else {
+				criteria.add(Restrictions.eq("s.code", "-1"));
+			}
+
+			scheduleControlList = this.scheduleControlManager.findByCriteria(criteria);
+		}
 	}
 }

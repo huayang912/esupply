@@ -40,6 +40,8 @@ public class Receipt extends BaseObject {
 	private String referenceOrderNo;
 	private String referenceReceiptNoLong;
 	private String referenceReceiptNo;
+	private String pCode;
+	private String sCode;
 
 	@Id
 	@Column(name = "receipt_no", length = 20)
@@ -222,6 +224,24 @@ public class Receipt extends BaseObject {
 		Receipt myClass = (Receipt) object;
 		return new CompareToBuilder().append(this.receiptNo, myClass.receiptNo)
 				.toComparison();
+	}
+
+	@Transient
+	public String getpCode() {
+		return pCode;
+	}
+
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
+	}
+
+	@Transient
+	public String getsCode() {
+		return sCode;
+	}
+
+	public void setsCode(String sCode) {
+		this.sCode = sCode;
 	}
 
 }

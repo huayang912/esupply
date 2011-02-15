@@ -31,6 +31,11 @@
 	<li style="padding: 0px">
 	<table style="margin: 0px; width: 100%;">
 		<tr>
+			<td colspan="2"><s:select key="notice.plant.code" list="%{plants}"
+				listKey="code" listValue="name"
+				theme="xhtml" required="true" /></td>
+		</tr>
+		<tr>
 			<td colspan="2"><s:textfield key="notice.title" theme="xhtml"
 				required="true" cssClass="text long" /></td>
 		</tr>

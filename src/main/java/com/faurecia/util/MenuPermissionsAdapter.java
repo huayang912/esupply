@@ -27,7 +27,7 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 		if (authorities != null) {
 			if (menu.getPage() != null && menu.getPage().trim().length() != 0) {
 				for (GrantedAuthority authority : authorities) {
-					if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase())) || menu.getName().equals("Logout")) {
+					if (menu.getPage().toLowerCase().startsWith((authority.getAuthority().toLowerCase()))) {
 						return true;
 					}
 				}

@@ -37,6 +37,9 @@ public class OutboundLog extends BaseObject {
 	private String memo;
 	private Date createDateFrom;
 	private Date createDateTo;	
+	
+	private String plantCode;
+	private String supplierCode;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -178,6 +181,24 @@ public class OutboundLog extends BaseObject {
 	public int compareTo(Object object) {
 		OutboundLog myClass = (OutboundLog) object;
 		return new CompareToBuilder().append(this.id, myClass.id).toComparison();
+	}
+
+	@Transient
+	public String getPlantCode() {
+		return plantCode;
+	}
+
+	public void setPlantCode(String plantCode) {
+		this.plantCode = plantCode;
+	}
+
+	@Transient
+	public String getSupplierCode() {
+		return supplierCode;
+	}
+
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
 	}
 
 }

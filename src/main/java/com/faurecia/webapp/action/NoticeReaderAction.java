@@ -7,16 +7,17 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import com.faurecia.Constants;
-import com.faurecia.model.Notice;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
 import com.faurecia.model.NoticeReader;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantSupplier;
-import com.faurecia.model.User;
-import com.faurecia.service.GenericManager;
+import com.faurecia.model.Supplier;
 import com.faurecia.service.NoticeManager;
 import com.faurecia.service.NoticeReaderManager;
 import com.faurecia.service.PlantSupplierManager;
+import com.faurecia.service.SupplierManager;
 
 public class NoticeReaderAction extends BaseAction {
 
@@ -27,33 +28,39 @@ public class NoticeReaderAction extends BaseAction {
 
 	private NoticeManager noticeManager;
 	private PlantSupplierManager plantSupplierManager;
-	private GenericManager<Plant, String> plantManager;
-	private List<Notice> notices;
-	private Notice notice;
+	private SupplierManager supplierManager;
+	private List<NoticeReader> noticeReaders;
+	private NoticeReader noticeReader;
 	private int id;
 	private InputStream inputStream;
 	private String fileName;
 	private NoticeReaderManager noticeReaderManager;
-	
+	private PlantSupplier plantSupplier;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<Notice> getNotices() {
-		return notices;
-	}
-	public void setNotices(List<Notice> notices) {
-		this.notices = notices;
-	}
-	public Notice getNotice() {
-		return notice;
-	}
-	public void setNotice(Notice notice) {
-		this.notice = notice;
-	}
 	
+	public List<NoticeReader> getNoticeReaders() {
+		return noticeReaders;
+	}
+
+	public void setNoticeReaders(List<NoticeReader> noticeReaders) {
+		this.noticeReaders = noticeReaders;
+	}
+
+	public NoticeReader getNoticeReader() {
+		return noticeReader;
+	}
+
+	public void setNoticeReader(NoticeReader noticeReader) {
+		this.noticeReader = noticeReader;
+	}
+
 	public InputStream getInputStream() {
 		return inputStream;
 	}
@@ -61,64 +68,98 @@ public class NoticeReaderAction extends BaseAction {
 	public String getFileName() {
 		return fileName;
 	}
-	
+
+	public PlantSupplier getPlantSupplier() {
+		return plantSupplier;
+	}
+
+	public void setPlantSupplier(PlantSupplier plantSupplier) {
+		this.plantSupplier = plantSupplier;
+	}
+
 	public void setNoticeManager(NoticeManager noticeManager) {
 		this.noticeManager = noticeManager;
 	}
-	
+
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
-	
-	public void setPlantManager(GenericManager<Plant, String> plantManager) {
-		this.plantManager = plantManager;
-	}
-	
+
 	public void setNoticeReaderManager(NoticeReaderManager noticeReaderManager) {
 		this.noticeReaderManager = noticeReaderManager;
 	}
 
-	
+	public void setSupplierManager(SupplierManager supplierManager) {
+		this.supplierManager = supplierManager;
+	}
+
+	public List<Supplier> getSuppliers() {
+		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+	}
+
+	public List<Plant> getPlants() {
+		return this.plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
+	}
+
 	public String list() {
-		if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
-			return "mainMenu";
+		if (plantSupplier != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(NoticeReader.class);
+			
+			criteria.createAlias("plantSupplier", "ps");
+			criteria.createAlias("ps.plant", "p");
+			criteria.createAlias("ps.supplier", "s");
+			
+			if (plantSupplier.getPlant() != null && plantSupplier.getPlant().getCode().trim().length() > 0) {
+
+				if (plantSupplier.getPlant().getCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						criteria.add(Restrictions.in("ps.plant", plants));
+					} else {
+						criteria.add(Restrictions.eq("p.code", "-1"));
+					}
+				} else {
+					criteria.add(Restrictions.eq("p.code", plantSupplier.getPlant().getCode()));
+				}
+			}			
+
+			if (plantSupplier.getSupplier() != null && plantSupplier.getSupplier().getCode().trim().length() > 0) {
+				if (plantSupplier.getSupplier().getCode().equals("-1")) {
+					List<Supplier> suppliers = getSuppliers();
+					if (suppliers != null && suppliers.size() > 0) {
+						criteria.add(Restrictions.in("ps.supplier", suppliers));
+					} else {
+						criteria.add(Restrictions.eq("s.code", "-1"));
+					}
+				} else {
+					criteria.add(Restrictions.eq("s.code", plantSupplier.getSupplier().getCode()));
+				}
+			}
+
+			noticeReaders = this.noticeManager.findByCriteria(criteria);
 		}
-		
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		Plant plant = this.plantManager.get((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
-		PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());
-		notices = this.noticeManager.getNoticeByPlantSupplier(plantSupplier);
 		return SUCCESS;
 	}
-	
-	public String cancel() {		
+
+	public String cancel() {
 		return CANCEL;
 	}
-	
+
 	public String edit() throws JAXBException, MalformedURLException {
-		notice = this.noticeManager.get(id);
-		
-		String userCode = this.getRequest().getRemoteUser();
-		User user = this.userManager.getUserByUsername(userCode);
-		Plant plant = this.plantManager.get((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
-		PlantSupplier plantSupplier = this.plantSupplierManager.getPlantSupplier(plant, user.getUserSupplier());
-		
-		NoticeReader nr = this.noticeReaderManager.getNoticeReaderByNoticeIdAndPlantSupplierId(id, plantSupplier.getId());
-		
-		if (nr != null) {
-			nr.setIsRead(true);
-			this.noticeReaderManager.save(nr);
+		noticeReader = this.noticeReaderManager.get(id);
+		if (noticeReader != null) {
+			noticeReader.setIsRead(true);
+			this.noticeReaderManager.save(noticeReader);
 		}
-		
+
 		return SUCCESS;
 	}
-	
+
 	public String download() throws Exception {
-		notice = this.noticeManager.get(this.id);
-		fileName = notice.getFileName();
-		inputStream = new FileInputStream(notice.getFileFullPath());
-		
+		noticeReader = this.noticeReaderManager.get(this.id);
+		fileName = noticeReader.getNotice().getFileName();
+		inputStream = new FileInputStream(noticeReader.getNotice().getFileFullPath());
+
 		return SUCCESS;
 	}
 }

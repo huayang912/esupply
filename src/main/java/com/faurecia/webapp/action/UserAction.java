@@ -16,9 +16,7 @@ import org.springframework.security.AuthenticationTrustResolverImpl;
 import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 
-import com.faurecia.Constants;
 import com.faurecia.model.Plant;
-import com.faurecia.model.Role;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;

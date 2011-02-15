@@ -12,7 +12,7 @@
             <Item name="SupplierMenu" title="menu.admin.suppliers" description="Suppliers Menu" page="/suppliers.html" />
             <Item name="ItemMenu" title="menu.admin.items" description="Items Menu" page="/items.html" />
             <Item name="PlantScheudleGroupMenu" title="menu.admin.plantScheduleGroups" description="Schedule Groups Menu" page="/plantScheduleGroups.html" />
-        	<Item name="ScheudleControlMenu" title="menu.admin.scheduleControl" description="Schedule Control Menu" page="/enterScheduleControl.html" />
+        	<Item name="ScheudleControlMenu" title="menu.admin.scheduleControl" description="Schedule Control Menu" page="/listScheduleControl.html" />
             <Item name="ActiveUsers" title="mainMenu.activeUsers" description="Active Users Menu" page="/activeUsers.html"/>            
             <!-- Item name="ReloadContext" title="menu.admin.reload" page="/reload.html"/>
             <Item name="FlushCache" title="menu.flushCache" page="/flushCache.html"/>
@@ -21,8 +21,8 @@
         <Menu name="OrderMenu" title="menu.order" description="Order Menu" width="120">
         	<Item name="PurchaseOrderMenu" title="menu.order.purchaseOrders" description="Purchase Orders Menu" page="/purchaseOrders.html" />
         	<Item name="ScheduleAuditMenu" title="menu.order.scheduleAudit" description="Schedule Audit Menu" page="/listScheduleAudit.html" />
-        	<Item name="ScheduleMenu" title="menu.order.schedules" description="Schedules Menu" page="/editScheduleProfile.html" />
-        	<Item name="ScheduleHistoryMenu" title="menu.order.scheduleHistory" description="Schedule History Menu" page="/schedules.html" />
+        	<Item name="ScheduleMenu" title="menu.order.schedules" description="Schedules Menu" page="/schedules.html" />
+        	<Item name="ScheduleHistoryMenu" title="menu.order.scheduleHistory" description="Schedule History Menu" page="/scheduleHistory.html" />
 			<Item name="DeliveryOrderMenu" title="menu.order.deliveryOrders" description="Delivery Orders Menu" page="/deliveryOrders.html" />       
 			<Item name="ReceiptMenu" title="menu.order.receipts" description="Receipts Menu" page="/receipts.html" />
 			<Item name="ReceiptDetailMenu" title="menu.order.receiptDetails" description="Receipt Details Menu" page="/receiptDetails.html" />
