@@ -17,11 +17,13 @@ import org.springframework.security.context.SecurityContext;
 import org.springframework.security.context.SecurityContextHolder;
 
 import com.faurecia.model.Plant;
+import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.SupplierManager;
 import com.faurecia.service.UserExistsException;
+import com.faurecia.webapp.util.PaginatedListUtil;
 import com.faurecia.webapp.util.RequestUtil;
 import com.opensymphony.xwork2.Preparable;
 
@@ -36,6 +38,11 @@ public class UserAction extends BaseAction implements Preparable {
 	private GenericManager<Plant, String> plantManager;
 	private SupplierManager supplierManager;
 	private boolean editProfile;
+	private PaginatedListUtil<User> paginatedList;
+	private int pageSize;
+	private int page;
+	private String sort;
+	private String dir;
 
 	/**
 	 * Grab the entity from the database before populating with request
@@ -44,7 +51,8 @@ public class UserAction extends BaseAction implements Preparable {
 	public void prepare() {
 		if (getRequest().getMethod().equalsIgnoreCase("post")) {
 			// prevent failures on new
-			if (!"".equals(getRequest().getParameter("user.id"))) {
+			if (getRequest().getParameter("user.id") != null && 
+					!"".equals(getRequest().getParameter("user.id"))) {
 				user = userManager.getUser(getRequest().getParameter("user.id"));
 			}
 		}
@@ -93,6 +101,46 @@ public class UserAction extends BaseAction implements Preparable {
 
 	public void setEditProfile(boolean editProfile) {
 		this.editProfile = editProfile;
+	}
+
+	public PaginatedListUtil<User> getPaginatedList() {
+		return paginatedList;
+	}
+
+	public void setPaginatedList(PaginatedListUtil<User> paginatedList) {
+		this.paginatedList = paginatedList;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public String getDir() {
+		return dir;
+	}
+
+	public void setDir(String dir) {
+		this.dir = dir;
 	}
 
 	/**
@@ -281,28 +329,32 @@ public class UserAction extends BaseAction implements Preparable {
 	 */
 	public String list() throws IOException {
 
-//		if (Constants.ADMIN_ROLE.equals(roleType)) {
-//			Role role = this.roleManager.getRole(Constants.ADMIN_ROLE);
-//			users = userManager.getUsersByRole(role);
-//		} else if (Constants.PLANT_ADMIN_ROLE.equals(roleType)) {
-//			Role role = this.roleManager.getRole(Constants.PLANT_ADMIN_ROLE);
-//			users = userManager.getUsersByRole(role);
-//		} else if (Constants.PLANT_USER_ROLE.equals(roleType)) {
-//			String userCode = this.getRequest().getRemoteUser();
-//			User user = this.userManager.getUserByUsername(userCode);
-//			Role role = this.roleManager.getRole(Constants.PLANT_USER_ROLE);
-//			users = userManager.getPlantUsers(user.getUserPlant(), role);
-//		} else if (Constants.VENDOR_ROLE.equals(roleType)) {
-//			Role role = this.roleManager.getRole(Constants.VENDOR_ROLE);
-//			users = userManager.getUsersByRole(role);
-//		} else {
-//
-//			log.warn("Trying to list user with role not specified.");
-//
-//			ServletActionContext.getResponse().sendError(HttpServletResponse.SC_NOT_FOUND);
-//
-//		}
+		if (user != null) {
+			pageSize = pageSize == 0 ? 25 : pageSize;
+			page = page == 0 ? 1 : page;
 
+			paginatedList = new PaginatedListUtil<User>();
+			paginatedList.setPageNumber(page);
+			paginatedList.setObjectsPerPage(pageSize);
+			
+			users = this.userManager.getAuthorizedUser(getRequest().getRemoteUser()
+					, user.getUsername()
+					, user.getFirstName()
+					, user.getLastName()
+					, user.getEmail()
+					, sort
+					, dir);
+			
+			if ((page - 1) * pageSize > users.size()) {
+				paginatedList.setList(new ArrayList<User>());
+			} else if (page * pageSize > users.size()) {
+				paginatedList.setList(users.subList((page - 1) * pageSize, users.size()));
+			} else {
+				paginatedList.setList(users.subList((page - 1) * pageSize, page * pageSize));
+			}
+			paginatedList.setFullListSize(users.size());
+		}
+		
 		return SUCCESS;
 	}
 }
