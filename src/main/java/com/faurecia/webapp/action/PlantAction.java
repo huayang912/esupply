@@ -6,11 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 
 import com.faurecia.model.Plant;
-import com.faurecia.model.User;
+import com.faurecia.model.Resource;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantSupplierManager;
 
@@ -21,6 +20,7 @@ public class PlantAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = -33601379593125595L;
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<Resource, Long> resourceManager;
 	private PlantSupplierManager plantSupplierManager;
 	private List<Plant> plants;
 	private Plant plant;
@@ -33,6 +33,10 @@ public class PlantAction extends BaseAction {
 
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public List<Plant> getPlants() {
@@ -115,6 +119,12 @@ public class PlantAction extends BaseAction {
 		saveMessage(getText(key));
 		this.plantManager.flushSession();
 		if (!isNew) {
+			Resource resource = new Resource();
+			resource.setCode(plant.getCode());
+			resource.setDescription(plant.getName());
+			resource.setType("plant");
+			this.resourceManager.save(resource);
+			
 			return INPUT;
 		} else {
 			return SUCCESS;

@@ -169,6 +169,15 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	
+	<bean id="resourceManager" class="com.faurecia.service.impl.GenericManagerImpl">
+		<constructor-arg>
+			<bean class="com.faurecia.dao.hibernate.GenericDaoHibernate"
+				autowire="byType">
+				<constructor-arg value="com.faurecia.model.Resource" />
+			</bean>
+		</constructor-arg>
+	</bean>
 
 	<bean id="supplierManager" class="com.faurecia.service.impl.SupplierManagerImpl">
 		<constructor-arg>
@@ -266,6 +275,7 @@
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />		
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />		
+		<property name="resourceManager" ref="resourceManager" />
 	</bean>
 
 	<bean id="scheduleItemManager" class="com.faurecia.service.impl.ScheduleItemManagerImpl">
@@ -318,6 +328,7 @@
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
 		<property name="scheduleControlManager" ref="scheduleControlManager" />
+		<property name="resourceManager" ref="resourceManager" />
 	</bean>
 
 	<bean id="deliveryOrderManager" class="com.faurecia.service.impl.DeliveryOrderManagerImpl">
@@ -343,6 +354,7 @@
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+		<property name="resourceManager" ref="resourceManager" />
 	</bean>
 
 	<bean id="deliveryOrderDetailManager" class="com.faurecia.service.impl.GenericManagerImpl">
@@ -373,6 +385,7 @@
 		<property name="mailEngine" ref="mailEngine" />
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="supplierCreatedTemplateName" value="supplierCreated.vm" />
+		<property name="resourceManager" ref="resourceManager" />
 	</bean>
 
 	<bean id="noticeManager" class="com.faurecia.service.impl.NoticeManagerImpl">

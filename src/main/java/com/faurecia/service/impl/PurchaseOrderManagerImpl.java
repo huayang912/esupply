@@ -32,6 +32,7 @@ import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
+import com.faurecia.model.Resource;
 import com.faurecia.model.Role;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.SupplierItem;
@@ -58,6 +59,7 @@ import com.faurecia.service.UserManager;
 
 public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, String> implements PurchaseOrderManager {
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<Resource, Long> resourceManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
@@ -86,6 +88,10 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public void setSupplierManager(SupplierManager supplierManager) {
@@ -326,6 +332,12 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
+							
+							Resource resource = new Resource();
+							resource.setCode(supplier.getCode());
+							resource.setDescription(supplier.getName());
+							resource.setType("supplier");
+							this.resourceManager.save(resource);
 
 							isCreateSupplier = true;
 						}
