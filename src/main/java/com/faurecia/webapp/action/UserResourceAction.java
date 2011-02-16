@@ -203,7 +203,7 @@ public class UserResourceAction extends BaseAction implements Preparable {
 	public String edit() throws IOException {
 		if (id != null) {
 			// lookup the user using that id
-			user = userManager.getUser(id, true, false);
+			user = userManager.getUser(id);
 			// prepareResourceList();
 		}
 		return SUCCESS;

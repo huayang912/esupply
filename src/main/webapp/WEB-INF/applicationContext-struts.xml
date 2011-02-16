@@ -187,4 +187,10 @@
 		<property name="resourceManager" ref="resourceManager" />
 		<property name="userManager" ref="userManager" />
 	</bean>
+	
+	<bean id="roleResourceAction" class="com.faurecia.webapp.action.RoleResourceAction"
+		scope="prototype">
+		<property name="resourceManager" ref="resourceManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
 </beans>

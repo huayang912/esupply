@@ -20,6 +20,8 @@ public interface RoleManager extends UniversalManager {
      * {@inheritDoc}
      */
     Role getRole(String rolename);
+    
+    Role getRole(String rolename,boolean includeResources);
 
     /**
      * {@inheritDoc}
