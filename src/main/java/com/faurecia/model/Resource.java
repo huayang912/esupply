@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,6 +18,12 @@ import org.springframework.security.GrantedAuthority;
 
 @Entity
 @Table(name="resource")
+@NamedQueries ({
+    @NamedQuery(
+        name = "findReourceByType",
+        query = "select r from Resource r where r.type = :type "
+        )
+})
 public class Resource extends BaseObject implements Serializable, GrantedAuthority {
 
 	private static final long serialVersionUID = -3986416840733225877L;

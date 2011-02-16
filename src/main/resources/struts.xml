@@ -133,6 +133,17 @@
 			</result>
 		</action>
 
+		
+	    <!-- Resource -->
+		<action name="userResources" class="userResourceAction" method="list">
+			<result name="success">/WEB-INF/pages/resource/userResourceList.jsp</result>
+		</action>
+		
+		<action name="editUserResource" class="userResourceAction" method="edit">
+			<result name="success">/WEB-INF/pages/resource/userResourceForm.jsp</result>
+			<result name="cancel" type="redirect-action">userResources</result>
+		</action>
+		
 		<action name="uploadFile" class="com.faurecia.webapp.action.FileUploadAction">
 			<interceptor-ref name="fileUploadStack" />
 			<result name="input">/WEB-INF/pages/uploadForm.jsp</result>
@@ -528,5 +539,7 @@
 				<param name="bufferSize">4096</param>
 			</result>
 		</action>
+		
+	
 	</package>
 </struts>

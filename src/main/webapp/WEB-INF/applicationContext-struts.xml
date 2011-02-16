@@ -181,4 +181,10 @@
 		<property name="noticeReaderManager" ref="noticeReaderManager" />
 		<property name="supplierManager" ref="supplierManager" />
 	</bean>
+	
+	<bean id="userResourceAction" class="com.faurecia.webapp.action.UserResourceAction"
+		scope="prototype">
+		<property name="resourceManager" ref="resourceManager" />
+		<property name="userManager" ref="userManager" />
+	</bean>
 </beans>
