@@ -52,6 +52,7 @@ public class User extends BaseObject implements Serializable, UserDetails {
 	private Plant userPlant;
 	private Supplier userSupplier;
 	private Set<Resource> resources = new HashSet<Resource>();
+	private List<LabelValue> resourceList;
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
@@ -157,6 +158,15 @@ public class User extends BaseObject implements Serializable, UserDetails {
 		}
 
 		return userRoles;
+	}
+	
+	@Transient
+	public List<LabelValue> getResourceList() {
+		return resourceList;
+	}
+
+	public void setResourceList(List<LabelValue> resourceList) {
+		this.resourceList = resourceList;
 	}
 
 	/**

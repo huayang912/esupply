@@ -35,6 +35,8 @@ public interface UserManager extends UniversalManager {
 	 * @return User
 	 */
 	User getUser(String userId);
+	
+	User getUser(String userId,boolean includeResources,boolean includeRoles);
 
 	/**
 	 * Finds a user by their username.

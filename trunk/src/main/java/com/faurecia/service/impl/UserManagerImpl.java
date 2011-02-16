@@ -62,6 +62,17 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 	public User getUser(String userId) {
 		return dao.get(new Long(userId));
 	}
+	
+	public User getUser(String userId,boolean includeResources,boolean includeRoles) {
+		User user = dao.get(new Long(userId));
+		 if (includeResources && user.getResources() != null && user.getResources().size() > 0)
+		 {
+		 }
+		 if (includeRoles && user.getRoles() != null && user.getRoles().size() > 0)
+		 {
+		 }
+		return user;
+	}
 
 	/**
 	 * {@inheritDoc}
