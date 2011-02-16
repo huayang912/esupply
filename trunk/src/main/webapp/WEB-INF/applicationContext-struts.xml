@@ -37,6 +37,7 @@
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
 		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="resourceManager" ref="resourceManager" />		
 	</bean>
 	
 	<bean id="plantScheduleGroupAction" class="com.faurecia.webapp.action.PlantScheduleGroupAction"
@@ -72,6 +73,7 @@
 		<property name="roleManager" ref="roleManager" />
 		<property name="plantScheduleGroupManager" ref="plantScheduleGroupManager" />
 		<property name="numberControlManager" ref="numberControlManager" />
+		<property name="resourceManager" ref="resourceManager" />
 	</bean>
 
 	<bean id="purchaseOrderAction" class="com.faurecia.webapp.action.PurchaseOrderAction"

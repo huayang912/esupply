@@ -114,3 +114,6 @@ ALTER TABLE [dbo].[user_resource]  WITH CHECK ADD  CONSTRAINT [FK_user_resource_
 REFERENCES [dbo].[resource] ([id])
 GO
 ALTER TABLE [dbo].[user_resource] CHECK CONSTRAINT [FK_user_resource_resource]
+
+
+alter table resource add description varchar(50);

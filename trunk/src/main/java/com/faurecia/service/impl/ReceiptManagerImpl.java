@@ -28,6 +28,7 @@ import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Receipt;
 import com.faurecia.model.ReceiptDetail;
+import com.faurecia.model.Resource;
 import com.faurecia.model.Role;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.SupplierItem;
@@ -50,6 +51,7 @@ import com.faurecia.service.UserManager;
 public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> implements ReceiptManager {
 
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<Resource, Long> resourceManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
@@ -77,6 +79,10 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 	
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public void setSupplierManager(SupplierManager supplierManager) {
@@ -227,6 +233,12 @@ public class ReceiptManagerImpl extends GenericManagerImpl<Receipt, String> impl
 						supplier.setName(supplierCode);
 
 						supplier = this.supplierManager.save(supplier);
+						
+						Resource resource = new Resource();
+						resource.setCode(supplier.getCode());
+						resource.setDescription(supplier.getName());
+						resource.setType("supplier");
+						this.resourceManager.save(resource);
 						
 						log.info("Creating supplier user account.");
 						// 生成供应商帐号

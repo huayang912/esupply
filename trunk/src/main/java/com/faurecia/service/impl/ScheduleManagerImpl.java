@@ -33,6 +33,7 @@ import com.faurecia.model.Item;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
+import com.faurecia.model.Resource;
 import com.faurecia.model.Role;
 import com.faurecia.model.Schedule;
 import com.faurecia.model.ScheduleControl;
@@ -67,6 +68,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 	private ScheduleItemManager scheduleItemManager;
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<Resource, Long> resourceManager;
 	private SupplierManager supplierManager;
 	private PlantSupplierManager plantSupplierManager;
 	private ItemManager itemManager;
@@ -101,6 +103,10 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public void setSupplierManager(SupplierManager supplierManager) {
@@ -343,6 +349,13 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
+							
+							Resource resource = new Resource();
+							resource.setCode(supplier.getCode());
+							resource.setDescription(supplier.getName());
+							resource.setType("supplier");
+							this.resourceManager.save(resource);
+							
 							isCreateSupplier = true;
 						}
 					}

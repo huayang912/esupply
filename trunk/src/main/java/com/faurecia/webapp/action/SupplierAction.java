@@ -16,6 +16,7 @@ import com.faurecia.Constants;
 import com.faurecia.model.Plant;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
+import com.faurecia.model.Resource;
 import com.faurecia.model.Supplier;
 import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
@@ -34,6 +35,7 @@ public class SupplierAction extends BaseAction {
 	 * 
 	 */
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<Resource, Long> resourceManager;
 	private PlantSupplierManager plantSupplierManager;
 	private PlantScheduleGroupManager plantScheduleGroupManager;
 	private SupplierManager supplierManager;
@@ -47,6 +49,10 @@ public class SupplierAction extends BaseAction {
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
@@ -216,8 +222,14 @@ public class SupplierAction extends BaseAction {
 				supplier.setName(plantSupplier.getSupplierName());
 
 				this.supplierManager.save(supplier);
+				
+				Resource resource = new Resource();
+				resource.setCode(supplier.getCode());
+				resource.setDescription(supplier.getName());
+				resource.setType("supplier");
+				this.resourceManager.save(resource);
 
-				User supplierUser = new User();
+				/*User supplierUser = new User();
 				supplierUser.setUsername(supplier.getCode()); // 使用供应商编码作为用户名称
 				supplierUser.setEnabled(true);
 				supplierUser.setAccountExpired(false);
@@ -231,7 +243,7 @@ public class SupplierAction extends BaseAction {
 				supplierUser.setLastName("");
 				supplierUser.setUserSupplier(supplier);
 				// supplierUser.setUserPlant(plant);
-				this.userManager.saveUser(supplierUser);
+				this.userManager.saveUser(supplierUser);*/
 			}
 
 			oldPlantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));

@@ -22,6 +22,7 @@ public class Resource extends BaseObject implements Serializable, GrantedAuthori
 	private Long id;
 	private String code;
 	private String type;
+	private String description;
 	public static final String RESOURCE_TYPE_URL = "url";
 	public static final String RESOURCE_TYPE_PLANT = "plant";
 	public static final String RESOURCE_TYPE_SUPPLIER = "supplier";
@@ -52,6 +53,15 @@ public class Resource extends BaseObject implements Serializable, GrantedAuthori
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Column(name = "description", nullable = false, length = 50)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override

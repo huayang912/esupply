@@ -45,6 +45,7 @@ import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrder;
 import com.faurecia.model.PurchaseOrderDetail;
+import com.faurecia.model.Resource;
 import com.faurecia.model.Role;
 import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.Supplier;
@@ -89,7 +90,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	private UserManager userManager;
 	private PlantScheduleGroupManager plantScheduleGroupManager;
 	private InboundLogManager inboundLogManager;
-
+	private GenericManager<Resource, Long> resourceManager;
+	
 	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
 	private GenericManager<DeliveryOrderDetail, Integer> deliveryOrderDetailManager;
 
@@ -156,6 +158,10 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 	public void setInboundLogManager(InboundLogManager inboundLogManager) {
 		this.inboundLogManager = inboundLogManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public void setMailEngine(MailEngine mailEngine) {
@@ -498,6 +504,12 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				supplier.setName(header.getSUNAME());
 
 				supplier = this.supplierManager.save(supplier);
+				
+				Resource resource = new Resource();
+				resource.setCode(supplier.getCode());
+				resource.setDescription(supplier.getName());
+				resource.setType("supplier");
+				this.resourceManager.save(resource);
 
 				log.info("Creating supplier user account.");
 				// 生成供应商帐号
