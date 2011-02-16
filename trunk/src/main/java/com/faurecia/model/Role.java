@@ -2,6 +2,7 @@ package com.faurecia.model;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -18,7 +19,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.security.GrantedAuthority;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -44,6 +44,7 @@ public class Role extends BaseObject implements Serializable {
     private String name;
     private String description;
     private Set<Resource> resources = new HashSet<Resource>();
+	private List<LabelValue> resourceList;
 
     /**
      * Default constructor - creates a new instance with no values set.
@@ -98,6 +99,15 @@ public class Role extends BaseObject implements Serializable {
     
     public void addResource(Resource resource) {
 		getResources().add(resource);
+	}
+    
+    @Transient
+	public List<LabelValue> getResourceList() {
+		return resourceList;
+	}
+
+	public void setResourceList(List<LabelValue> resourceList) {
+		this.resourceList = resourceList;
 	}
     /**
      * {@inheritDoc}

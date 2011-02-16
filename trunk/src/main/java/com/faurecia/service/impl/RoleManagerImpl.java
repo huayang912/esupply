@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.faurecia.dao.RoleDao;
 import com.faurecia.model.Role;
+import com.faurecia.model.User;
 import com.faurecia.service.RoleManager;
 
 /**
@@ -31,7 +32,15 @@ public class RoleManagerImpl extends UniversalManagerImpl implements RoleManager
     public Role getRole(String rolename) {
         return dao.getRoleByName(rolename);
     }
-
+    
+    public Role getRole(String rolename,boolean includeResources) {
+		Role role = dao.getRoleByName(rolename);
+		 if (includeResources && role.getResources() != null && role.getResources().size() > 0)
+		 {
+		 }
+		return role;
+	}
+    
     /**
      * {@inheritDoc}
      */
