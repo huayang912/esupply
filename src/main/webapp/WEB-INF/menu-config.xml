@@ -8,6 +8,7 @@
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html"/>            
         <Menu name="AdminMenu" title="menu.admin" description="Administrator Menu" width="120">
             <Item name="ViewUser" title="menu.admin.users" description="Users Menu" page="/users.html"/>
+            <Item name="RoleMenu" title="menu.admin.roles" description="Roles Menu" page="/roles.html"/>
             <Item name="PlantMenu" title="menu.admin.plants" description="Plants Menu" page="/plants.html" />
             <Item name="SupplierMenu" title="menu.admin.suppliers" description="Suppliers Menu" page="/suppliers.html" />
             <Item name="ItemMenu" title="menu.admin.items" description="Items Menu" page="/items.html" />

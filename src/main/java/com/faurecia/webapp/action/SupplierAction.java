@@ -8,7 +8,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.RandomStringUtils;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
@@ -18,7 +17,6 @@ import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.Resource;
 import com.faurecia.model.Supplier;
-import com.faurecia.model.User;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.NumberControlManager;
 import com.faurecia.service.PlantScheduleGroupManager;
