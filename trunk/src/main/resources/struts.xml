@@ -113,6 +113,25 @@
 				<param name="actionName">users</param>
 			</result>
 		</action>
+		
+		<action name="roles" class="roleAction" method="list">
+			<result name="success">/WEB-INF/pages/role/roleList.jsp</result>
+		</action>
+		
+		<action name="editRole" class="roleAction" method="edit">
+			<result name="success">/WEB-INF/pages/role/roleForm.jsp</result>
+			<result name="input">/WEB-INF/pages/role/roleList.jsp</result>
+		</action>
+		
+		<action name="saveRole" class="roleAction" method="save">
+			<result name="input">/WEB-INF/pages/role/roleForm.jsp</result>
+			<result name="cancel" type="redirect-action">
+				<param name="actionName">roles</param>
+			</result>
+			<result name="success" type="redirect-action">
+				<param name="actionName">roles</param>
+			</result>
+		</action>
 
 		<action name="uploadFile" class="com.faurecia.webapp.action.FileUploadAction">
 			<interceptor-ref name="fileUploadStack" />

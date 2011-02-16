@@ -145,10 +145,12 @@
 		<property name="userDao" ref="userDao" />
 		<property name="passwordEncoder" ref="passwordEncoder" />
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
+		<property name="dao" ref="universalDao" />
 	</bean>
 
 	<bean id="roleManager" class="com.faurecia.service.impl.RoleManagerImpl">
 		<property name="roleDao" ref="roleDao" />
+		<property name="dao" ref="universalDao" />
 	</bean>
 
 	<!-- Add new Managers here -->

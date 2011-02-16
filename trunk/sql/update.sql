@@ -119,15 +119,18 @@ ALTER TABLE [dbo].[user_resource] CHECK CONSTRAINT [FK_user_resource_resource]
 alter table resource add description varchar(50);
 
 set identity_insert resource on;
-insert into resource(id, code, type, description) values(1001001 , '/mainMenu.html', 'url', 'Main Menu');
-insert into resource(id, code, type, description) values(1001002 , '/editProfile.html', 'url', 'Edit Profile');
-insert into resource(id, code, type, description) values(2001001 , '/users.html', 'url', 'List Users');
-insert into resource(id, code, type, description) values(2001002 , '/editUser.html', 'url', 'Edit Users');
-insert into resource(id, code, type, description) values(2001003 , '/saveUser.html', 'url', 'Save Users');
-insert into resource(id, code, type, description) values(2002001 , '/plants.html', 'url', 'List Plants');
-insert into resource(id, code, type, description) values(2002002 , '/editPlant.html', 'url', 'Edit Plants');
-insert into resource(id, code, type, description) values(2002003 , '/savePlant.html', 'url', 'Save Plants');
-insert into resource(id, code, type, description) values(2003001 , '/suppliers.html', 'url', 'List Suppliers');
+insert into resource(id, code, type, description) values(1001001, '/mainMenu.html', 'url', 'Main Menu');
+insert into resource(id, code, type, description) values(1001002, '/editProfile.html', 'url', 'Edit Profile');
+insert into resource(id, code, type, description) values(2001001, '/users.html', 'url', 'List Users');
+insert into resource(id, code, type, description) values(2001002, '/editUser.html', 'url', 'Edit Users');
+insert into resource(id, code, type, description) values(2001003, '/saveUser.html', 'url', 'Save Users');
+insert into resource(id, code, type, description) values(2001004, '/roles.html', 'url', 'List Roles');
+insert into resource(id, code, type, description) values(2001005, '/editRole.html', 'url', 'Edit Roles');
+insert into resource(id, code, type, description) values(2001006, '/saveRole.html', 'url', 'Save Roles');
+insert into resource(id, code, type, description) values(2002001, '/plants.html', 'url', 'List Plants');
+insert into resource(id, code, type, description) values(2002002, '/editPlant.html', 'url', 'Edit Plants');
+insert into resource(id, code, type, description) values(2002003, '/savePlant.html', 'url', 'Save Plants');
+insert into resource(id, code, type, description) values(2003001, '/suppliers.html', 'url', 'List Suppliers');
 insert into resource(id, code, type, description) values(2003002, '/editSupplier.html', 'url', 'Edit Suppliers');
 insert into resource(id, code, type, description) values(2003003, '/saveSupplier.html', 'url', 'Save Suppliers');
 insert into resource(id, code, type, description) values(2003004, '/exportSupplier.html', 'url', 'Export Suppliers');
