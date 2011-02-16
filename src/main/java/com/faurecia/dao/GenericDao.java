@@ -78,6 +78,12 @@ public interface GenericDao <T, PK extends Serializable> {
     
     List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults);
     
+    List find(String hql);
+    
+    List find(String hql, Object objectValue);
+    
+    List find(String hql, Object[] objectValues);    
+    
     List<T> findByExample(T exampleEntity);
     
     void clear();

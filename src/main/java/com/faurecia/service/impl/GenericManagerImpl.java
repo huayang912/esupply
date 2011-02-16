@@ -98,10 +98,12 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
         genericDao.remove(id);
     }
     
-    public List findByCriteria(DetachedCriteria criteria) {
+    @SuppressWarnings("unchecked")
+	public List findByCriteria(DetachedCriteria criteria) {
     	return this.genericDao.findByCriteria(criteria);
     }
     
+    @SuppressWarnings("unchecked")
     public List findByCriteria(DetachedCriteria criteria, int firstResult, int maxResults) {
     	return this.genericDao.findByCriteria(criteria, firstResult, maxResults);
     }
@@ -110,6 +112,21 @@ public class GenericManagerImpl<T, PK extends Serializable> implements GenericMa
     	return this.genericDao.findByExample(exampleEntity);
     } 
     
+    @SuppressWarnings("unchecked")
+	public List find(String hql) {
+		return this.genericDao.find(hql);
+	}
+
+    @SuppressWarnings("unchecked")
+	public List find(String hql, Object objectValue) {
+		return this.genericDao.find(hql, objectValue);
+	}
+
+    @SuppressWarnings("unchecked")
+	public List find(String hql, Object[] objectValues) {
+		return this.genericDao.find(hql, objectValues);
+	}
+	
     public void clearSession() {
     	this.genericDao.clear();
     }
