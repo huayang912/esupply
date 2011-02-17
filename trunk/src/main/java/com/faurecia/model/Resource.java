@@ -20,9 +20,13 @@ import org.springframework.security.GrantedAuthority;
 @Table(name="resource")
 @NamedQueries ({
     @NamedQuery(
-        name = "findReourceByType",
+        name = "findResourceByType",
         query = "select r from Resource r where r.type = :type "
-        )
+        ),
+        @NamedQuery(
+                name = "findResourceById",
+                query = "select r from Resource r where r.id = :id "
+                )
 })
 public class Resource extends BaseObject implements Serializable, GrantedAuthority {
 

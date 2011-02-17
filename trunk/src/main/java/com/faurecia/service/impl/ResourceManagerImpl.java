@@ -30,7 +30,7 @@ public class ResourceManagerImpl extends GenericManagerImpl<Resource, Integer> i
 	public List<Resource> getResourceByType(String type) {
 		Map<String, Object> queryParams = new HashMap<String, Object>();
 		queryParams.put("type", type);
-		return this.genericDao.findByNamedQuery("findReourceByType", queryParams);
+		return this.genericDao.findByNamedQuery("findResourceByType", queryParams);
 	}
 
 	public void deleteUserResource(Long userId, Long resourceId) {
@@ -49,5 +49,17 @@ public class ResourceManagerImpl extends GenericManagerImpl<Resource, Integer> i
 	public void addRoleResource(Long roleId, Long resourceId) {
 		this.jdbcTemplate
 				.execute("insert into  role_resource (role_id,resource_id) values ( " + roleId + "," + resourceId + ")");
+	}
+	
+	public Resource getResource(String resourceId)
+	{
+		Resource resource = null;
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+		queryParams.put("id", new Long(resourceId));
+		List<Resource> resourceList = this.genericDao.findByNamedQuery("findResourceById", queryParams);
+		if(resourceList != null && resourceList.size()>0){
+			resource = resourceList.get(0);
+		}
+		return resource;
 	}
 }

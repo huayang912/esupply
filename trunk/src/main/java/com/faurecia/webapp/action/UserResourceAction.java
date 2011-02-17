@@ -172,22 +172,27 @@ public class UserResourceAction extends BaseAction implements Preparable {
 		if (user != null && !user.getUsername().equalsIgnoreCase("admin")) {
 			user = this.userManager.getUserByUsername(user.getUsername());
 			String[] resources = getRequest().getParameterValues("resources");
-
+			List<Resource> removeList = new ArrayList();
 			// 删除权限
 			Iterator<Resource> ite = user.getResources().iterator();
 			while (ite.hasNext()) {
 				Resource userResource = (Resource) ite.next();
 				if (userResource.getType().equalsIgnoreCase(type)) {
 					resourceManager.deleteUserResource(user.getId(), userResource.getId());
+					removeList.add(userResource);
 				}
 			}
+			user.getResources().removeAll(removeList);
 
 			// 添加新权限
 			for (int i = 0; i < resources.length; i++) {
 				resourceManager.addUserResource(user.getId(), Long.parseLong(resources[i]));
+				user.getResources().add(resourceManager.getResource(resources[i]));
 			}
 		}
-
+		
+		prepareResourceList();
+		
 		return SUCCESS;
 	}
 

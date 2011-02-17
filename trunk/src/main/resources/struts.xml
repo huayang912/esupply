@@ -141,6 +141,7 @@
 		
 		<action name="editUserResource" class="userResourceAction" method="edit">
 			<result name="success">/WEB-INF/pages/resource/userResourceForm.jsp</result>
+			<result name="input">/WEB-INF/pages/resource/userResourceList.jsp</result>
 			<result name="cancel" type="redirect-action">userResources</result>
 		</action>
 		
@@ -150,6 +151,7 @@
 		
 		<action name="editRoleResource" class="roleResourceAction" method="edit">
 			<result name="success">/WEB-INF/pages/resource/roleResourceForm.jsp</result>
+			<result name="input">/WEB-INF/pages/resource/roleResourceList.jsp</result>
 			<result name="cancel" type="redirect-action">roleResources</result>
 		</action>
 		
