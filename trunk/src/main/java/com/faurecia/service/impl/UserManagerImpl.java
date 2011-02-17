@@ -155,6 +155,17 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 	public User getUserByUsername(String username) throws UsernameNotFoundException {
 		return (User) dao.loadUserByUsername(username);
 	}
+	
+	public User getUserByUsername(String username,boolean includeResources,boolean includeRoles) throws UsernameNotFoundException {
+		User user = (User) dao.loadUserByUsername(username);
+		 if (includeResources && user.getResources() != null && user.getResources().size() > 0)
+		 {
+		 }
+		 if (includeRoles && user.getRoles() != null && user.getRoles().size() > 0)
+		 {
+		 }
+		 return user;
+	}
 
 	public List<User> getUsersByRole(Role role) {
 		Map<String, Object> queryParam = new HashMap<String, Object>();
@@ -190,13 +201,13 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 				+ "inner join user_resource as ur on u.id = ur.user_id "
 				+ "inner join resource as r on ur.resource_id = r.id and r.type = 'plant' " 
 				+ "where u.username = ? " 
-				+ "union all "
+				+ "union "
 				+ "select distinct rr.resource_id from app_user as u " 
 				+ "inner join user_role as ur on u.id = ur.user_id "
 				+ "inner join role_resource as rr on ur.role_id = rr.role_id "
 				+ "inner join resource as r on rr.resource_id = r.id and r.type = 'plant' " 
 				+ "where u.username = ?) " 
-				+ "union all "
+				+ "union  "
 				+ "select distinct u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u " 
 				+ "inner join user_role as ur on u.id = ur.user_id "
 				+ "inner join role_resource as rr on ur.role_id = rr.role_id " 
@@ -205,7 +216,7 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 				+ "inner join user_resource as ur on u.id = ur.user_id "
 				+ "inner join resource as r on ur.resource_id = r.id and r.type = 'plant' " 
 				+ "where u.username = ? " 
-				+ "union all "
+				+ "union  "
 				+ "select distinct rr.resource_id from app_user as u " 
 				+ "inner join user_role as ur on u.id = ur.user_id "
 				+ "inner join role_resource as rr on ur.role_id = rr.role_id "

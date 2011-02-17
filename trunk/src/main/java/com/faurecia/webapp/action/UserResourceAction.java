@@ -156,11 +156,6 @@ public class UserResourceAction extends BaseAction implements Preparable {
 		return CANCEL;
 	}
 
-	public String delete() {
-
-		return SUCCESS;
-	}
-
 	public String save() throws Exception {
 		if (user != null && !user.getUsername().equalsIgnoreCase("admin")) {
 			user = this.userManager.getUserByUsername(user.getUsername());
@@ -227,7 +222,7 @@ public class UserResourceAction extends BaseAction implements Preparable {
 				}
 			}
 
-			User user2 = this.userManager.getUser(user.getId().toString(), true, false);
+			User user2 = this.userManager.getUser(user.getId().toString(), true, true);
 			
 			List<Resource> allResourceList = null;
 			if (type.equals(Resource.RESOURCE_TYPE_URL)) {

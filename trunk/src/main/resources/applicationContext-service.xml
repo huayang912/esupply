@@ -151,6 +151,7 @@
 	<bean id="roleManager" class="com.faurecia.service.impl.RoleManagerImpl">
 		<property name="roleDao" ref="roleDao" />
 		<property name="dao" ref="universalDao" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 
 	<!-- Add new Managers here -->

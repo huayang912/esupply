@@ -32,4 +32,8 @@ public interface RoleManager extends UniversalManager {
      * {@inheritDoc}
      */
     void removeRole(String rolename);
+    
+    void deleteRoleUser(Long userId,Long roleId);
+    
+	void addRoleUser(Long userId,Long roleId);
 }
