@@ -2,17 +2,10 @@ package com.faurecia.webapp.action;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.security.Authentication;
-import org.springframework.security.AuthenticationTrustResolver;
-import org.springframework.security.AuthenticationTrustResolverImpl;
-import org.springframework.security.context.SecurityContext;
-import org.springframework.security.context.SecurityContextHolder;
 
 import com.faurecia.model.LabelValue;
 import com.faurecia.model.Resource;
@@ -234,7 +227,16 @@ public class UserResourceAction extends BaseAction implements Preparable {
 				}
 			}
 
-			List<Resource> allResourceList = this.resourceManager.getResourceByType(type);
+			User user2 = this.userManager.getUser(user.getId().toString(), true, false);
+			
+			List<Resource> allResourceList = null;
+			if (type.equals(Resource.RESOURCE_TYPE_URL)) {
+				allResourceList = user2.getUrlResource();
+			} else if (type.equals(Resource.RESOURCE_TYPE_PLANT)) {
+				allResourceList = user2.getPlantResource();
+			} else if (type.equals(Resource.RESOURCE_TYPE_SUPPLIER)) {
+				allResourceList = user2.getSupplierResource();
+			}
 			if (allResourceList != null && allResourceList.size() > 0) {
 				this.availableResources = new ArrayList<LabelValue>();
 				for (int i = 0; i < allResourceList.size(); i++) {

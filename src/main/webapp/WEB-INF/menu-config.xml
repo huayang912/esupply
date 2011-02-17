@@ -9,7 +9,6 @@
         <Menu name="AdminMenu" title="menu.admin" description="Administrator Menu" width="120">
             <Item name="ViewUser" title="menu.admin.users" description="Users Menu" page="/users.html"/>
             <Item name="RoleMenu" title="menu.admin.roles" description="Roles Menu" page="/roles.html"/>
-
             <Item name="UserRole" title="menu.admin.userRoles" description="UserRoles Menu" page="/userRoles.html"/>
             <Item name="UserResource" title="menu.admin.userResources" description="User Resources Menu" page="/userResources.html"/>
             <Item name="RoleResource" title="menu.admin.roleResources" description="Role Resources Menu" page="/roleResources.html"/>
