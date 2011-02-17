@@ -142,7 +142,14 @@ public class RoleResourceAction extends BaseAction  {
 	}
 
 	private void prepareResourceList() {
-		
+		if (role.getName().equalsIgnoreCase("ROLE_ADMIN")) {
+			List<Resource> allResourceList = this.resourceManager.getResourceByType(type);
+			role.setResourceList(new ArrayList<LabelValue>());
+			for (Resource res : allResourceList) {
+				role.getResourceList().add(new LabelValue(res.getDescription(), res.getId().toString()));
+			}
+			this.availableResources = new ArrayList<LabelValue>();
+		} else {
 			if (role.getResources() != null && role.getResources().size() > 0) {
 				role.setResourceList(new ArrayList<LabelValue>());
 				Iterator<Resource> ite = role.getResources().iterator();
@@ -171,6 +178,6 @@ public class RoleResourceAction extends BaseAction  {
 					}
 				}
 			}
-		
+		}
 	}
 }
