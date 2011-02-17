@@ -240,6 +240,42 @@ public class User extends BaseObject implements Serializable, UserDetails {
 	}
 	
 	@Transient
+	public List<Resource> getUrlResource() {
+		Set<Resource> authorities = new HashSet<Resource>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_URL) 
+								&& !authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_URL) 
+						&& !authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+		
+		List<Resource> resources = new ArrayList<Resource>();
+		if (authorities != null) {
+			for (Resource resource : authorities) {
+				resources.add(resource);
+			}
+		}
+
+		return resources;
+	}
+	
+	@Transient
 	public GrantedAuthority[] getPlantAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		if (roles != null && roles.size() > 0) {
@@ -269,6 +305,42 @@ public class User extends BaseObject implements Serializable, UserDetails {
 	}
 	
 	@Transient
+	public List<Resource> getPlantResource() {
+		Set<Resource> authorities = new HashSet<Resource>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_PLANT) 
+								&& !authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_PLANT) 
+						&& !authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+		
+		List<Resource> resources = new ArrayList<Resource>();
+		if (authorities != null) {
+			for (Resource resource : authorities) {
+				resources.add(resource);
+			}
+		}
+
+		return resources;
+	}
+	
+	@Transient
 	public GrantedAuthority[] getSupplierAuthorities() {
 		Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 		if (roles != null && roles.size() > 0) {
@@ -295,6 +367,42 @@ public class User extends BaseObject implements Serializable, UserDetails {
 		}
 
 		return authorities.toArray(new GrantedAuthority[0]);
+	}
+	
+	@Transient
+	public List<Resource> getSupplierResource() {
+		Set<Resource> authorities = new HashSet<Resource>();
+		if (roles != null && roles.size() > 0) {
+			for (Role role : roles) {
+
+				if (role.getResources() != null && role.getResources().size() > 0) {
+					for (Resource resource : role.getResources()) {
+						if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_SUPPLIER) 
+								&& !authorities.contains(resource)) {
+							authorities.add(resource);
+						}
+					}
+				}
+			}
+		}
+
+		if (resources != null && resources.size() > 0) {
+			for (Resource resource : resources) {
+				if (resource.getType().equalsIgnoreCase(Resource.RESOURCE_TYPE_SUPPLIER) 
+						&& !authorities.contains(resource)) {
+					authorities.add(resource);
+				}
+			}
+		}
+		
+		List<Resource> resources = new ArrayList<Resource>();
+		if (authorities != null) {
+			for (Resource resource : authorities) {
+				resources.add(resource);
+			}
+		}
+
+		return resources;
 	}
 
 	@Version
