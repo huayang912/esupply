@@ -10,10 +10,11 @@ import java.util.Map;
 import com.faurecia.model.LabelValue;
 import com.faurecia.model.Resource;
 import com.faurecia.model.Role;
+import com.faurecia.model.User;
 import com.faurecia.service.ResourceManager;
 import com.faurecia.service.RoleManager;
 
-public class RoleResourceAction extends BaseAction  {
+public class RoleResourceAction extends BaseAction {
 
 	/**
 	 * 
@@ -77,12 +78,12 @@ public class RoleResourceAction extends BaseAction  {
 	}
 
 	public String list() {
-		if(role != null && type != null)
-		{
-			role = this.roleManager.getRole(role.getName(),true);
+		if (role != null && type != null) {
+			role = this.roleManager.getRole(role.getName(), true);
 			prepareResourceList();
-		}else{
-		roles = this.roleManager.getAll(Role.class);
+		} else {
+			User user = this.userManager.getUserByUsername(getRequest().getRemoteUser(), true, true);
+			roles = new ArrayList<Role>(user.getRoles());
 		}
 		return SUCCESS;
 	}
@@ -91,14 +92,9 @@ public class RoleResourceAction extends BaseAction  {
 		return CANCEL;
 	}
 
-	public String delete() {
-
-		return SUCCESS;
-	}
-
 	public String save() throws Exception {
 		if (role != null) {
-			role = this.roleManager.getRole(role.getName(),true);
+			role = this.roleManager.getRole(role.getName(), true);
 			String[] resources = getRequest().getParameterValues("resources");
 			List<Resource> removeList = new ArrayList();
 			// É¾³ýÈ¨ÏÞ
@@ -118,19 +114,20 @@ public class RoleResourceAction extends BaseAction  {
 				role.getResources().add(resourceManager.getResource(resources[i]));
 			}
 		}
-		
+
 		prepareResourceList();
 		return SUCCESS;
 	}
 
-//	public void prepare() {
-//		if (getRequest().getMethod().equalsIgnoreCase("post")) {
-//			// prevent failures on new
-//			if (getRequest().getParameter("role.name") != null && !"".equals(getRequest().getParameter("role.name"))) {
-//				role = roleManager.getRole(getRequest().getParameter("role.name"));
-//			}
-//		}
-//	}
+	// public void prepare() {
+	// if (getRequest().getMethod().equalsIgnoreCase("post")) {
+	// // prevent failures on new
+	// if (getRequest().getParameter("role.name") != null &&
+	// !"".equals(getRequest().getParameter("role.name"))) {
+	// role = roleManager.getRole(getRequest().getParameter("role.name"));
+	// }
+	// }
+	// }
 
 	public String edit() throws IOException {
 		if (name != null) {

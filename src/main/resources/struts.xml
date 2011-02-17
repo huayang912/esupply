@@ -155,6 +155,16 @@
 			<result name="cancel" type="redirect-action">roleResources</result>
 		</action>
 		
+		<action name="userRoles" class="userRoleAction" method="list">
+			<result name="success">/WEB-INF/pages/role/userRoleList.jsp</result>
+		</action>
+		
+		<action name="editUserRole" class="userRoleAction" method="edit">
+			<result name="success">/WEB-INF/pages/role/userRoleForm.jsp</result>
+			<result name="input">/WEB-INF/pages/role/userRoleList.jsp</result>
+			<result name="cancel" type="redirect-action">userRoles</result>
+		</action>
+		
 		<action name="uploadFile" class="com.faurecia.webapp.action.FileUploadAction">
 			<interceptor-ref name="fileUploadStack" />
 			<result name="input">/WEB-INF/pages/uploadForm.jsp</result>

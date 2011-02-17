@@ -86,4 +86,6 @@ public interface UserManager extends UniversalManager {
 	void keepSession();
 	
 	List<User> getAuthorizedUser(String userName, String userName2, String firstName, String lastName, String email, String orderBy, String orderSort);
+	
+	User getUserByUsername(String username,boolean includeResources,boolean includeRoles);
 }
