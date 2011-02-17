@@ -131,8 +131,8 @@ insert into resource(id, code, type, description) values(2001007, '/userResource
 insert into resource(id, code, type, description) values(2001008, '/editUserResource.html', 'url', 'Authorization To User');
 insert into resource(id, code, type, description) values(2001009, '/roleResources.html', 'url', 'List Roles To Authorization');
 insert into resource(id, code, type, description) values(2001010, '/editRoleResource.html', 'url', 'Authorization To Role');
-insert into resource(id, code, type, description) values(2001009, '/userRoles.html', 'url', 'List Roles To User');
-insert into resource(id, code, type, description) values(2001010, '/editUserRole.html', 'url', 'Edit Role Users');
+insert into resource(id, code, type, description) values(2001011, '/userRoles.html', 'url', 'List Roles To User');
+insert into resource(id, code, type, description) values(2001012, '/editUserRole.html', 'url', 'Edit Role Users');
 insert into resource(id, code, type, description) values(2002001, '/plants.html', 'url', 'List Plants');
 insert into resource(id, code, type, description) values(2002002, '/editPlant.html', 'url', 'Edit Plants');
 insert into resource(id, code, type, description) values(2002003, '/savePlant.html', 'url', 'Save Plants');
