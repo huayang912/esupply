@@ -66,10 +66,6 @@
 			<fmt:message key="user.users" />
 		</display:setProperty>
 
-		<display:setProperty name="export.excel.filename"
-			value="User List.xls" />
-		<display:setProperty name="export.csv.filename" value="User List.csv" />
-		<display:setProperty name="export.pdf.filename" value="User List.pdf" />
 	</display:table>
 
 	<script type="text/javascript">

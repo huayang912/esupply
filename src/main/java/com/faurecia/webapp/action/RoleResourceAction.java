@@ -100,22 +100,26 @@ public class RoleResourceAction extends BaseAction  {
 		if (role != null) {
 			role = this.roleManager.getRole(role.getName(),true);
 			String[] resources = getRequest().getParameterValues("resources");
-
+			List<Resource> removeList = new ArrayList();
 			// 删除权限
 			Iterator<Resource> ite = role.getResources().iterator();
 			while (ite.hasNext()) {
 				Resource roleResource = (Resource) ite.next();
 				if (roleResource.getType().equalsIgnoreCase(type)) {
 					resourceManager.deleteRoleResource(role.getId(), roleResource.getId());
+					removeList.add(roleResource);
 				}
 			}
+			role.getResources().removeAll(removeList);
 
 			// 添加新权限
 			for (int i = 0; i < resources.length; i++) {
 				resourceManager.addRoleResource(role.getId(), Long.parseLong(resources[i]));
+				role.getResources().add(resourceManager.getResource(resources[i]));
 			}
 		}
-
+		
+		prepareResourceList();
 		return SUCCESS;
 	}
 
