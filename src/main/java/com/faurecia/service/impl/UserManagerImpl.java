@@ -62,15 +62,13 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 	public User getUser(String userId) {
 		return dao.get(new Long(userId));
 	}
-	
-	public User getUser(String userId,boolean includeResources,boolean includeRoles) {
+
+	public User getUser(String userId, boolean includeResources, boolean includeRoles) {
 		User user = dao.get(new Long(userId));
-		 if (includeResources && user.getResources() != null && user.getResources().size() > 0)
-		 {
-		 }
-		 if (includeRoles && user.getRoles() != null && user.getRoles().size() > 0)
-		 {
-		 }
+		if (includeResources && user.getResources() != null && user.getResources().size() > 0) {
+		}
+		if (includeRoles && user.getRoles() != null && user.getRoles().size() > 0) {
+		}
 		return user;
 	}
 
@@ -155,16 +153,26 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 	public User getUserByUsername(String username) throws UsernameNotFoundException {
 		return (User) dao.loadUserByUsername(username);
 	}
-	
-	public User getUserByUsername(String username,boolean includeResources,boolean includeRoles) throws UsernameNotFoundException {
+
+	public User getUserByUsername(String username, boolean includeResources, boolean includeRoles) {
+		return getUserByUsername(username, includeResources, includeRoles, false);
+	}
+
+	public User getUserByUsername(String username, boolean includeResources, boolean includeRoles, boolean includeRoleResources)
+			throws UsernameNotFoundException {
 		User user = (User) dao.loadUserByUsername(username);
-		 if (includeResources && user.getResources() != null && user.getResources().size() > 0)
-		 {
-		 }
-		 if (includeRoles && user.getRoles() != null && user.getRoles().size() > 0)
-		 {
-		 }
-		 return user;
+		if (includeResources && user.getResources() != null && user.getResources().size() > 0) {
+		}
+		if (includeRoles && user.getRoles() != null && user.getRoles().size() > 0) {
+			if (includeRoleResources) {
+				for (Role role : user.getRoles()) {
+					if (role.getResources() != null && role.getResources().size() > 0) {
+
+					}
+				}
+			}
+		}
+		return user;
 	}
 
 	public List<User> getUsersByRole(Role role) {
@@ -192,98 +200,102 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 	public void keepSession() {
 	}
 
-	public List<User> getAuthorizedUser(String userName, String userName2, String firstName, String lastName, String email, String orderBy, String orderSort) {
-		String sql = "select u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from " 
-				+ "(select distinct u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u " 
-				+ "inner join user_resource as ur on u.id = ur.user_id " 
-				+ "where ur.resource_id in "
-				+ "(select distinct ur.resource_id from app_user as u " 
-				+ "inner join user_resource as ur on u.id = ur.user_id "
-				+ "inner join resource as r on ur.resource_id = r.id and r.type = 'plant' " 
-				+ "where u.username = ? " 
-				+ "union "
-				+ "select distinct rr.resource_id from app_user as u " 
-				+ "inner join user_role as ur on u.id = ur.user_id "
-				+ "inner join role_resource as rr on ur.role_id = rr.role_id "
-				+ "inner join resource as r on rr.resource_id = r.id and r.type = 'plant' " 
-				+ "where u.username = ?) " 
-				+ "union  "
-				+ "select distinct u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u " 
-				+ "inner join user_role as ur on u.id = ur.user_id "
-				+ "inner join role_resource as rr on ur.role_id = rr.role_id " 
-				+ "where rr.resource_id in "
-				+ "(select distinct ur.resource_id from app_user as u " 
-				+ "inner join user_resource as ur on u.id = ur.user_id "
-				+ "inner join resource as r on ur.resource_id = r.id and r.type = 'plant' " 
-				+ "where u.username = ? " 
-				+ "union  "
-				+ "select distinct rr.resource_id from app_user as u " 
-				+ "inner join user_role as ur on u.id = ur.user_id "
-				+ "inner join role_resource as rr on ur.role_id = rr.role_id "
-				+ "inner join resource as r on rr.resource_id = r.id and r.type = 'plant' " 
-				+ "where u.username = ?)) as u where 1= 1 ";
-		
-		List<Object > params = new ArrayList<Object>();
-		params.add(userName);
-		params.add(userName);
-		params.add(userName);
-		params.add(userName);
-		
-		if (userName2 != null && userName2.trim().length() > 0) {
-			sql += "and u.username like ? ";
-			params.add("%" + userName2 + "%");
-		}
-		
-		if (firstName != null && firstName.trim().length() > 0) {
-			sql += "and u.first_name like ? ";
-			params.add("%" + firstName + "%");
-		}
-		
-		if (lastName != null && lastName.trim().length() > 0) {
-			sql += "and u.last_name like ? ";
-			params.add("%" + lastName + "%");
-		}
-		
-		if (email != null && email.trim().length() > 0) {
-			sql += "and u.email like ? ";
-			params.add("%" + email + "%");
-		}
-		
-		if (orderBy != null && orderBy.trim().length() > 0) {
-			sql += "order by u." + orderBy;
-			if (orderSort != null && orderSort.trim().length() > 0) {
-				sql += " " + orderSort;
+	public List<User> getAuthorizedUser(String userName, String userName2, String firstName, String lastName, String email, String orderBy,
+			String orderSort) {
+		List<User> users = new ArrayList<User>();
+		if (userName.equalsIgnoreCase("admin")) {
+			users = this.getAll(User.class);
+		} else {
+			String sql = "select u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from "
+					+ "(select distinct u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u "
+					+ "inner join user_resource as ur on u.id = ur.user_id "
+					+ "where ur.resource_id in "
+					+ "(select distinct ur.resource_id from app_user as u "
+					+ "inner join user_resource as ur on u.id = ur.user_id "
+					+ "inner join resource as r on ur.resource_id = r.id and r.type = 'plant' "
+					+ "where u.username = ? "
+					+ "union "
+					+ "select distinct rr.resource_id from app_user as u "
+					+ "inner join user_role as ur on u.id = ur.user_id "
+					+ "inner join role_resource as rr on ur.role_id = rr.role_id "
+					+ "inner join resource as r on rr.resource_id = r.id and r.type = 'plant' "
+					+ "where u.username = ?) "
+					+ "union  "
+					+ "select distinct u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u "
+					+ "inner join user_role as ur on u.id = ur.user_id "
+					+ "inner join role_resource as rr on ur.role_id = rr.role_id "
+					+ "where rr.resource_id in "
+					+ "(select distinct ur.resource_id from app_user as u "
+					+ "inner join user_resource as ur on u.id = ur.user_id "
+					+ "inner join resource as r on ur.resource_id = r.id and r.type = 'plant' "
+					+ "where u.username = ? "
+					+ "union  "
+					+ "select distinct rr.resource_id from app_user as u "
+					+ "inner join user_role as ur on u.id = ur.user_id "
+					+ "inner join role_resource as rr on ur.role_id = rr.role_id "
+					+ "inner join resource as r on rr.resource_id = r.id and r.type = 'plant' " + "where u.username = ?)) as u where 1= 1 ";
+
+			List<Object> params = new ArrayList<Object>();
+			params.add(userName);
+			params.add(userName);
+			params.add(userName);
+			params.add(userName);
+
+			if (userName2 != null && userName2.trim().length() > 0) {
+				sql += "and u.username like ? ";
+				params.add("%" + userName2 + "%");
+			}
+
+			if (firstName != null && firstName.trim().length() > 0) {
+				sql += "and u.first_name like ? ";
+				params.add("%" + firstName + "%");
+			}
+
+			if (lastName != null && lastName.trim().length() > 0) {
+				sql += "and u.last_name like ? ";
+				params.add("%" + lastName + "%");
+			}
+
+			if (email != null && email.trim().length() > 0) {
+				sql += "and u.email like ? ";
+				params.add("%" + email + "%");
+			}
+
+			if (orderBy != null && orderBy.trim().length() > 0) {
+				sql += "order by u." + orderBy;
+				if (orderSort != null && orderSort.trim().length() > 0) {
+					sql += " " + orderSort;
+				}
+			}
+
+			SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, params.toArray());
+
+			while (resultSet.next()) {
+				User user = new User();
+				user.setId(resultSet.getLong("id"));
+				user.setAccountExpired(resultSet.getBoolean("account_expired"));
+				user.setAccountLocked(resultSet.getBoolean("account_locked"));
+				// user.setAddress(resultSet.getString(4));
+				// user.setCity(5);
+				// user.setCountry(6);
+				// user.setPostal_code(7);
+				// user.setProvince(8);
+				user.setCredentialsExpired(resultSet.getBoolean("credentials_expired"));
+				user.setEmail(resultSet.getString("email"));
+				user.setEnabled(resultSet.getBoolean("account_enabled"));
+				user.setFirstName(resultSet.getString("first_name"));
+				user.setLastName(resultSet.getString("last_name"));
+				user.setPassword(resultSet.getString("password"));
+				user.setPasswordHint(resultSet.getString("password_hint"));
+				user.setPhoneNumber(resultSet.getString("phone_number"));
+				user.setUsername(resultSet.getString("username"));
+				user.setVersion(resultSet.getInt("version"));
+				user.setWebsite(resultSet.getString("website"));
+
+				users.add(user);
 			}
 		}
-		
-		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, params.toArray());
-		
-		List<User> users = new ArrayList<User>();
-		while (resultSet.next()) {
-			User user = new User();
-			user.setId(resultSet.getLong("id"));
-			user.setAccountExpired(resultSet.getBoolean("account_expired"));
-			user.setAccountLocked(resultSet.getBoolean("account_locked"));
-			//user.setAddress(resultSet.getString(4));
-			//user.setCity(5);
-			//user.setCountry(6);
-			//user.setPostal_code(7);
-			//user.setProvince(8);
-			user.setCredentialsExpired(resultSet.getBoolean("credentials_expired"));
-			user.setEmail(resultSet.getString("email"));
-			user.setEnabled(resultSet.getBoolean("account_enabled"));
-			user.setFirstName(resultSet.getString("first_name"));
-			user.setLastName(resultSet.getString("last_name"));
-			user.setPassword(resultSet.getString("password"));
-			user.setPasswordHint(resultSet.getString("password_hint"));
-			user.setPhoneNumber(resultSet.getString("phone_number"));
-			user.setUsername(resultSet.getString("username"));
-			user.setVersion(resultSet.getInt("version"));
-			user.setWebsite(resultSet.getString("website"));
-			
-			users.add(user);
-		}
-		
+
 		return users;
 	}
 }
