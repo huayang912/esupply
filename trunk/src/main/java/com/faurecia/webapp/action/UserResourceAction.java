@@ -222,7 +222,7 @@ public class UserResourceAction extends BaseAction implements Preparable {
 				}
 			}
 
-			User user2 = this.userManager.getUser(user.getId().toString(), true, true);
+			User user2 = this.userManager.getUserByUsername(getRequest().getRemoteUser(), true, true,true);
 			
 			List<Resource> allResourceList = null;
 			if (type.equals(Resource.RESOURCE_TYPE_URL)) {

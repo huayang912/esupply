@@ -13,6 +13,7 @@ import com.faurecia.model.Role;
 import com.faurecia.model.User;
 import com.faurecia.service.ResourceManager;
 import com.faurecia.service.RoleManager;
+import com.faurecia.service.UserManager;
 
 public class RoleResourceAction extends BaseAction {
 
@@ -23,6 +24,7 @@ public class RoleResourceAction extends BaseAction {
 	private List<Role> roles;
 	private ResourceManager resourceManager;
 	private RoleManager roleManager;
+	private UserManager userManager;
 	private String type;
 	private Role role;
 	private String name;
@@ -59,6 +61,10 @@ public class RoleResourceAction extends BaseAction {
 
 	public void setRoleManager(RoleManager roleManager) {
 		this.roleManager = roleManager;
+	}
+	
+	public void setUserManager(UserManager userManager) {
+		this.userManager = userManager;
 	}
 
 	public List<LabelValue> getAvailableResources() {
