@@ -69,6 +69,8 @@ public class DeliveryOrderAction extends BaseAction {
 	private String scheduleType;
 	private InputStream inputStream;
 	private String fileName;
+	
+	private Boolean isLogisticPartner;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
 		this.deliveryOrderManager = deliveryOrderManager;
@@ -120,6 +122,14 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+	
+	public Boolean getIsLogisticPartner() {
+		return isLogisticPartner;
+	}
+
+	public void setSort(Boolean isLogisticPartner) {
+		this.isLogisticPartner = isLogisticPartner;
 	}
 
 	public String getDir() {
@@ -526,21 +536,14 @@ public class DeliveryOrderAction extends BaseAction {
 		return fileName;
 	}
 
-	public String print() throws Exception {
+	public String print(Boolean isLogistic) throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
+		deliveryOrder.setIsLogisticPartner(isLogistic);
 		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equalsIgnoreCase("Do.png")) {
-			Boolean isSupplier = false;
-			if (getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
-			//π©”¶…Ã£¨–¥À¿Title
-				isSupplier = true;
-			} else
-			{
-				isSupplier = false;
-			}
-
+			
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder,isSupplier);
+					deliveryOrder);
 		} else {
 			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
 					deliveryOrder);
@@ -552,7 +555,15 @@ public class DeliveryOrderAction extends BaseAction {
 		}
 		return SUCCESS;
 	}
-
+	
+	public String printLogistic() throws Exception {
+		return print(true);
+	}
+	
+	public String printSupplier() throws Exception {
+		return print(false);
+	}
+	
 	public String printPalletLabel() throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);

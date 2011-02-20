@@ -147,7 +147,7 @@ public class DeliveryOrderExportUtil {
 	}
 
 	@SuppressWarnings("finally")
-	public static InputStream exportDo(String localAbsolutPath, String backGroupImageName, DeliveryOrder deliveryOrder, Boolean isSupplier)
+	public static InputStream exportDo(String localAbsolutPath, String backGroupImageName, DeliveryOrder deliveryOrder)
 			throws MalformedURLException, IOException, DocumentException {
 
 		String backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template" + File.separator
@@ -200,7 +200,7 @@ public class DeliveryOrderExportUtil {
 						backGroupImage.scaleAbsolute(600, 847);
 					}
 					rowPix = 520;
-					exportHead(underPdfContentByte, cb, deliveryOrder, isSupplier, backGroupImage, dinBf, simBf, barCodeBf, numberFormat);
+					exportHead(underPdfContentByte, cb, deliveryOrder, backGroupImage, dinBf, simBf, barCodeBf, numberFormat);
 				}
 
 				BigDecimal unitCount = deliveryOrderDetail.getUnitCount();
@@ -333,13 +333,13 @@ public class DeliveryOrderExportUtil {
 		cb.endText();
 	}
 
-	private static void exportHead(PdfContentByte underPdfContentByte, PdfContentByte cb, DeliveryOrder deliveryOrder, Boolean isSupplier,
+	private static void exportHead(PdfContentByte underPdfContentByte, PdfContentByte cb, DeliveryOrder deliveryOrder,
 			Image backGroupImage, BaseFont dinBf, BaseFont simBf, BaseFont barCodeBf, NumberFormat numberFormat) throws DocumentException {
 		underPdfContentByte.addImage(backGroupImage);
 
 		// Title
 		String title = deliveryOrder.getTitle();
-		if (isSupplier) {
+		if (deliveryOrder.getIsLogisticPartner()) {
 			title = "LOGISTIC PARTNER MANIFEST";
 		}
 		if (title != null) {
@@ -604,6 +604,14 @@ public class DeliveryOrderExportUtil {
 			backGroupImage.setAbsolutePosition(20, 0);
 			backGroupImage.scaleAbsolute(600, 850);
 			underPdfContentByte.addImage(backGroupImage);
+
+			// customer code
+			if (deliveryOrder.getPlantName() != null) {
+				cb.beginText();
+				cb.setFontAndSize(dinBf, 30);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 300, 680, 0);
+				cb.endText();
+			}
 
 			// supplier code
 			if (deliveryOrder.getSupplierCode() != null) {
