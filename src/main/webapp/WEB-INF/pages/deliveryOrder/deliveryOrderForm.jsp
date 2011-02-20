@@ -127,11 +127,14 @@
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.status" cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.createDate"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="deliveryOrder.isRead" cssClass="text medium" /></td>
 			<td><s:label key="deliveryOrder.isPrint" cssClass="text medium" /></td>
 		</tr>
 		<tr>
-			<td><s:label key="deliveryOrder.createDate"
-				cssClass="text medium" /></td>
 			<td><s:label key="deliveryOrder.isExport" cssClass="text medium" /></td>
 		</tr>
 	</table>
@@ -141,7 +144,8 @@
 		class="table">
 		<c:if
 			test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
-			<display:column>
+			<display:column
+				title="<input type='checkbox' name='allbox' value='all' onclick='checkAll(this.form);' />">
 				<input type="checkbox"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].isChoosen" />
 			</display:column>
@@ -222,5 +226,5 @@
 
 <script type="text/javascript">
 		Form.focusFirstElement(document.forms["deliveryOrderForm"]);
-		highlightFormElements();
+		highlightFormElements();	
 </script>

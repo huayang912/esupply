@@ -188,6 +188,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				deliveryOrder.setCreateDate(new Date());
 				deliveryOrder.setIsExport(false);
 				deliveryOrder.setIsPrint(false);
+				deliveryOrder.setIsRead(false);
 				deliveryOrder.setStatus("Create");
 			}
 
@@ -593,6 +594,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			}
 			deliveryOrder.setIsExport(true);
 			deliveryOrder.setIsPrint(false);
+			deliveryOrder.setIsRead(false);
 			deliveryOrder.setStatus("Confirm");
 			deliveryOrder.setMurn(header.getMURN());
 			deliveryOrder.setOrderGroup(header.getORDERG());

@@ -43,8 +43,8 @@
 				<td><label class="desc"><fmt:message
 					key="deliveryOrder.supplierCode" /></label></td>
 				<td colspan="2"><s:select key="deliveryOrder.plantSupplier.id"
-					list="%{suppliers}" listKey="id"
-					listValue="supplierName" theme="simple" /></td>
+					list="%{suppliers}" listKey="id" listValue="supplierName"
+					theme="simple" /></td>
 			</c:if>
 		</tr>
 		<tr>
@@ -53,9 +53,20 @@
 			<td colspan="2"><s:select key="deliveryOrder.status"
 				list="%{status}" theme="simple" /></td>
 			<td><label class="desc"><fmt:message
+				key="deliveryOrder.isRead" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.readFlag"
+				list="%{isRead}" theme="simple" /></td>
+			
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
 				key="deliveryOrder.isPrint" /></label></td>
 			<td colspan="2"><s:select key="deliveryOrder.printFlag"
 				list="%{isPrint}" theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.isExport" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.ExportFlag"
+				list="%{isExport}" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -83,9 +94,9 @@
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
-	<display:column property="externalDoNo" sortable="true" sortProperty="externalDoNo"
-		url="/editDeliveryOrder.html" paramId="doNo" paramProperty="doNo"
-		titleKey="deliveryOrder.doNo" />
+	<display:column property="externalDoNo" sortable="true"
+		sortProperty="externalDoNo" url="/editDeliveryOrder.html"
+		paramId="doNo" paramProperty="doNo" titleKey="deliveryOrder.doNo" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
 	<display:column property="plantName" sortable="true"
@@ -98,6 +109,10 @@
 		sortable="true" titleKey="deliveryOrder.createDate" />
 	<display:column property="status" sortable="true"
 		titleKey="deliveryOrder.status" />
+	<display:column sortable="true" titleKey="deliveryOrder.isRead">
+		<input type="checkbox" disabled="disabled"
+			<c:if test="${deliveryOrders.isRead}">checked="checked"</c:if> />
+	</display:column>
 	<display:column sortable="true" titleKey="deliveryOrder.isPrint">
 		<input type="checkbox" disabled="disabled"
 			<c:if test="${deliveryOrders.isPrint}">checked="checked"</c:if> />

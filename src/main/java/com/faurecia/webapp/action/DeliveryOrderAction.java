@@ -155,6 +155,22 @@ public class DeliveryOrderAction extends BaseAction {
 		status.put("Yes", "true");
 		return status;
 	}
+	
+	public Map<String, String> getIsExport() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "All");
+		status.put("No", "false");
+		status.put("Yes", "true");
+		return status;
+	}
+	
+	public Map<String, String> getIsRead() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "All");
+		status.put("No", "false");
+		status.put("Yes", "true");
+		return status;
+	}
 
 	public List<PlantSupplier> getSuppliers() {
 		String userCode = this.getRequest().getRemoteUser();
@@ -347,6 +363,16 @@ public class DeliveryOrderAction extends BaseAction {
 				selectCountCriteria.add(Restrictions.eq("isPrint", false));
 			}
 		}
+		
+		if (deliveryOrder.getReadFlag() != null && deliveryOrder.getReadFlag().trim().length() > 0) {
+			if ("true".equalsIgnoreCase(deliveryOrder.getReadFlag())) {
+				selectCriteria.add(Restrictions.eq("isRead", true));
+				selectCountCriteria.add(Restrictions.eq("isRead", true));
+			} else {
+				selectCriteria.add(Restrictions.eq("isRead", false));
+				selectCountCriteria.add(Restrictions.eq("isRead", false));
+			}
+		}
 
 		if (deliveryOrder.getPlantSupplier() != null) {
 			selectCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
@@ -377,6 +403,8 @@ public class DeliveryOrderAction extends BaseAction {
 	public String edit() throws Exception {
 		if (this.doNo != null) {
 			deliveryOrder = this.deliveryOrderManager.get(doNo, true);
+			deliveryOrder.setIsRead(true);				
+			deliveryOrder = this.deliveryOrderManager.save(deliveryOrder);
 		} else if (purchaseOrderDetailList != null) {
 			// po ´´½¨ do
 			boolean hasError = false;
@@ -433,6 +461,7 @@ public class DeliveryOrderAction extends BaseAction {
 							deliveryOrder.setCreateDate(new Date());
 							deliveryOrder.setIsExport(false);
 							deliveryOrder.setIsPrint(false);
+							deliveryOrder.setIsRead(false);
 							deliveryOrder.setAllowOverQty(allowOverQty);
 						}
 
