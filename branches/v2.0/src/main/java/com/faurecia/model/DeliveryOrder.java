@@ -56,8 +56,10 @@ public class DeliveryOrder extends BaseObject {
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
+	private String readFlag;
 	private String printFlag;
 	private Boolean isPrint;
+	private Boolean isRead;
 	
 	private String murn;  //code + bar code
 	private String OrderGroup; //MANIFEST ORDER GROUP
@@ -357,6 +359,15 @@ public class DeliveryOrder extends BaseObject {
 		this.isPrint = isPrint;
 	}
 
+	@Column(name = "is_read", nullable = true)
+	public Boolean getIsRead() {
+		return isRead;
+	}
+
+	public void setIsRead(Boolean isRead) {
+		this.isRead = isRead;
+	}
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliveryOrder")
 	public List<DeliveryOrderDetail> getDeliveryOrderDetailList() {
 		return deliveryOrderDetailList;
@@ -426,6 +437,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setPrintFlag(String printFlag) {
 		this.printFlag = printFlag;
+	}
+	
+	@Transient
+	public String getReadFlag() {
+		return readFlag;
+	}
+
+	public void setReadFlag(String readFlag) {
+		this.readFlag = readFlag;
 	}
 
 	@Column(name = "murn", length=20)
