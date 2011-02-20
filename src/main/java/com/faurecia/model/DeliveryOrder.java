@@ -71,6 +71,7 @@ public class DeliveryOrder extends BaseObject {
 	private BigDecimal unitVolume;
 	private BigDecimal totalNbPallets;
 	private String title;	
+	private Boolean isLogisticPartner;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -109,6 +110,14 @@ public class DeliveryOrder extends BaseObject {
 		return null;
 	}
 	
+	@Transient
+	public Boolean getIsLogisticPartner() {
+		return isLogisticPartner;
+	}
+
+	public void setIsLogisticPartner(Boolean isLogisticPartner) {
+		this.isLogisticPartner = isLogisticPartner;
+	}
 	@Column(name = "plant_name", nullable = false, length = 50)
 	public String getPlantName() {
 		if (plantName != null && plantName.trim().length() > 0) {
