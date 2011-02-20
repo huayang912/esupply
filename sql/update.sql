@@ -48,3 +48,4 @@ alter table do add plant_address3 varchar(255);
 alter table do add supplier_address3 varchar(255);
 
 alter table do add is_read tinyint;
+update do set is_read = 1;
