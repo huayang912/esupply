@@ -71,9 +71,11 @@ public class DeliveryOrder extends BaseObject {
 	private BigDecimal unitVolume;
 	private BigDecimal totalNbPallets;
 	private String title;	
+	private Boolean isLogisticPartner;
 	
 	private String pCode;
 	private String sCode;
+	
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -349,6 +351,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setIsPrint(Boolean isPrint) {
 		this.isPrint = isPrint;
+	}
+	
+	@Transient
+	public Boolean getIsLogisticPartner() {
+		return isLogisticPartner;
+	}
+
+	public void setIsLogisticPartner(Boolean isLogisticPartner) {
+		this.isLogisticPartner = isLogisticPartner;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliveryOrder")
