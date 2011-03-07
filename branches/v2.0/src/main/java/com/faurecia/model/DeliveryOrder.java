@@ -60,6 +60,7 @@ public class DeliveryOrder extends BaseObject {
 	private String printFlag;
 	private Boolean isPrint;
 	private Boolean isRead;
+	private Date firstReadDate;
 	
 	private String murn;  //code + bar code
 	private String OrderGroup; //MANIFEST ORDER GROUP
@@ -366,6 +367,15 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setIsRead(Boolean isRead) {
 		this.isRead = isRead;
+	}
+	
+	@Column(name = "first_read_date", nullable = true)
+	public Date getFirstReadDate() {
+		return firstReadDate;
+	}
+
+	public void setFirstReadDate(Date firstReadDate) {
+		this.firstReadDate = firstReadDate;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliveryOrder")

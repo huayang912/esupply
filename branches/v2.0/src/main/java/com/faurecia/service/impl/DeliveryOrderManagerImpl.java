@@ -595,6 +595,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setIsExport(true);
 			deliveryOrder.setIsPrint(false);
 			deliveryOrder.setIsRead(false);
+			deliveryOrder.setFirstReadDate(null);
 			deliveryOrder.setStatus("Confirm");
 			deliveryOrder.setMurn(header.getMURN());
 			deliveryOrder.setOrderGroup(header.getORDERG());

@@ -33,11 +33,11 @@
 				</c:if>
 				<c:if
 					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
-					
-					<td><s:submit
-						key="button.printSupplier" action="printDeliveryOrder" /></td>
-					<td><s:submit
-						key="button.printLogistic" action="printLogisticDeliveryOrder" /></td>
+
+					<td><s:submit key="button.printSupplier"
+						action="printDeliveryOrder" /></td>
+					<td><s:submit key="button.printLogistic"
+						action="printLogisticDeliveryOrder" /></td>
 				</c:if>
 				<c:if
 					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
@@ -132,9 +132,11 @@
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.isRead" cssClass="text medium" /></td>
-			<td><s:label key="deliveryOrder.isPrint" cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.firstReadDate"
+				cssClass="text medium" /></td>
 		</tr>
 		<tr>
+			<td><s:label key="deliveryOrder.isPrint" cssClass="text medium" /></td>
 			<td><s:label key="deliveryOrder.isExport" cssClass="text medium" /></td>
 		</tr>
 	</table>

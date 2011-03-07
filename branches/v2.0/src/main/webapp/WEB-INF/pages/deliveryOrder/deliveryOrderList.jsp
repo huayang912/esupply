@@ -56,7 +56,7 @@
 				key="deliveryOrder.isRead" /></label></td>
 			<td colspan="2"><s:select key="deliveryOrder.readFlag"
 				list="%{isRead}" theme="simple" /></td>
-			
+
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -94,25 +94,26 @@
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
-	<display:column property="externalDoNo" sortable="true"
-		sortProperty="externalDoNo" url="/editDeliveryOrder.html"
-		paramId="doNo" paramProperty="doNo" titleKey="deliveryOrder.doNo" />
+	<display:column property="createDate" sortable="true"
+		sortProperty="createDate"  url="/editDeliveryOrder.html"
+		paramId="doNo" paramProperty="doNo" titleKey="deliveryOrder.createDate" format="{0, date, MM/dd/yyyy HH:mm:ss}" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
-	<display:column property="plantName" sortable="true"
-		sortProperty="p.name" titleKey="deliveryOrder.plantName" />
-	<display:column property="supplierCode" sortable="true"
-		sortProperty="s.code" titleKey="deliveryOrder.supplierCode" />
+	<display:column property="title" sortable="true" sortProperty="title"
+		titleKey="deliveryOrder.title" />
 	<display:column property="supplierName" sortable="true"
 		sortProperty="ps.supplierName" titleKey="deliveryOrder.supplierName" />
-	<display:column property="createDate" format="{0,date,MM/dd/yyyy}"
-		sortable="true" titleKey="deliveryOrder.createDate" />
+	<display:column property="plantContactPerson" sortable="true"
+		sortProperty="plantContactPerson"
+		titleKey="deliveryOrder.plantContactPerson" />
+	<display:column property="firstReadDate" sortable="true"
+		sortProperty="firstReadDate" titleKey="deliveryOrder.firstReadDate" format="{0, date, MM/dd/yyyy HH:mm:ss}"/>
+	<display:column property="externalDoNo" sortable="true"
+		sortProperty="externalDoNo" titleKey="deliveryOrder.doNo" />
+	<display:column property="murn" sortable="true"
+		titleKey="deliveryOrder.murn" />
 	<display:column property="status" sortable="true"
 		titleKey="deliveryOrder.status" />
-	<display:column sortable="true" titleKey="deliveryOrder.isRead">
-		<input type="checkbox" disabled="disabled"
-			<c:if test="${deliveryOrders.isRead}">checked="checked"</c:if> />
-	</display:column>
 	<display:column sortable="true" titleKey="deliveryOrder.isPrint">
 		<input type="checkbox" disabled="disabled"
 			<c:if test="${deliveryOrders.isPrint}">checked="checked"</c:if> />

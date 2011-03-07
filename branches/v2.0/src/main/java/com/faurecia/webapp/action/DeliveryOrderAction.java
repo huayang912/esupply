@@ -403,6 +403,7 @@ public class DeliveryOrderAction extends BaseAction {
 	public String edit() throws Exception {
 		if (this.doNo != null) {
 			deliveryOrder = this.deliveryOrderManager.get(doNo, true);
+			deliveryOrder.setFirstReadDate(new Date());
 			deliveryOrder.setIsRead(true);				
 			deliveryOrder = this.deliveryOrderManager.save(deliveryOrder);
 		} else if (purchaseOrderDetailList != null) {
