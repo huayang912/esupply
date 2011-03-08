@@ -161,7 +161,7 @@ public class DeliveryOrderExportUtil {
 
 		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code128.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\free3of9.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		NumberFormat numberFormat = new DecimalFormat("#.#");
 
 		try {
@@ -372,7 +372,7 @@ public class DeliveryOrderExportUtil {
 		if (deliveryOrder.getMurn() != null) {
 			cb.beginText();
 			cb.setFontAndSize(barCodeBf, 30);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getMurn(), 280, 770, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + deliveryOrder.getMurn() + "*", 280, 770, 0);
 			cb.endText();
 
 			cb.beginText();
@@ -591,7 +591,7 @@ public class DeliveryOrderExportUtil {
 
 		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code128.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\free3of9.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		NumberFormat numberFormat = new DecimalFormat("#.#");
 
 		try {
@@ -688,7 +688,7 @@ public class DeliveryOrderExportUtil {
 
 		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code128.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\free3of9.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		NumberFormat numberFormat = new DecimalFormat("#.#");
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
@@ -835,7 +835,7 @@ public class DeliveryOrderExportUtil {
 
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 18);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, Integer.toString(labelId), 350, 756 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + Integer.toString(labelId) + "*", 350, 756 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -865,7 +865,7 @@ public class DeliveryOrderExportUtil {
 					if (deliveryOrderDetail.getItem().getCode() != null) {
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 20);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "P" + deliveryOrderDetail.getItem().getCode(), 330, 645 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*P" + deliveryOrderDetail.getItem().getCode()+"*", 330, 645 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -895,7 +895,7 @@ public class DeliveryOrderExportUtil {
 
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 20);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 555, 636 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + numberFormat.format(qty) + "*", 550, 636 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -935,7 +935,7 @@ public class DeliveryOrderExportUtil {
 
 		BaseFont dinBf = BaseFont.createFont("c:\\windows\\fonts\\arial.ttf,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		BaseFont simBf = BaseFont.createFont("c:\\windows\\fonts\\simsun.ttc,1,Bold", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\Code128.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		BaseFont barCodeBf = BaseFont.createFont("c:\\windows\\fonts\\free3of9.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		NumberFormat numberFormat = new DecimalFormat("#.#");
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document, outputStream);
@@ -973,8 +973,8 @@ public class DeliveryOrderExportUtil {
 					if (deliveryOrder.getSupplierCode() != null && deliveryOrderDetail.getItem() != null && qty != BigDecimal.ZERO) {
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 16);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "10" + deliveryOrder.getSupplierCode()
-								+ deliveryOrderDetail.getItem().getCode() + numberFormat.format(qty), 280, 754 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*10" + deliveryOrder.getSupplierCode()
+								+ deliveryOrderDetail.getItem().getCode() + numberFormat.format(qty) + "*", 280, 754 - labelHeight, 0);
 						cb.endText();
 					}
 
