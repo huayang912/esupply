@@ -49,3 +49,6 @@ alter table do add supplier_address3 varchar(255);
 
 alter table do add is_read tinyint;
 update do set is_read = 1;
+
+alter table do add first_read_date datetime;
+update do set first_read_date = getdate() where is_read = 1;
