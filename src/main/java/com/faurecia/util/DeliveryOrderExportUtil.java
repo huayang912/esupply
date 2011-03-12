@@ -147,8 +147,8 @@ public class DeliveryOrderExportUtil {
 	}
 
 	@SuppressWarnings("finally")
-	public static InputStream exportDo(String localAbsolutPath, String backGroupImageName, DeliveryOrder deliveryOrder)
-			throws MalformedURLException, IOException, DocumentException {
+	public static InputStream exportDo(String localAbsolutPath, String backGroupImageName, DeliveryOrder deliveryOrder) throws MalformedURLException,
+			IOException, DocumentException {
 
 		String backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template" + File.separator
 				+ backGroupImageName;
@@ -173,12 +173,18 @@ public class DeliveryOrderExportUtil {
 
 			int rowPix = 520;
 			BigDecimal totalBoxQty = BigDecimal.ZERO;
-			int totalPage = deliveryOrder.getDeliveryOrderDetailList().size() / 15 + 1;
+			int totalPage = (int)Math.ceil(((double)deliveryOrder.getDeliveryOrderDetailList().size()) / 15 );
+			int currentPage = 0;
 			for (int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
 				DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
 
 				if (i % 15 == 0) {
-
+					
+					if (i > 0) {
+						document.newPage();
+					}
+					
+					currentPage++;
 					// Release Date and Time
 					SimpleDateFormat printDateToStr = new SimpleDateFormat("dd-MM-yy hh:mm");
 					cb.beginText();
@@ -188,17 +194,29 @@ public class DeliveryOrderExportUtil {
 
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 12);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, (i + 1) + "/" + totalPage, 480, 40, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, currentPage + "/" + totalPage, 480, 40, 0);
 					cb.endText();
 
-					if (i > 0) {
-						document.newPage();
-						backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template" + File.separator
-								+ "do1.png";
-						backGroupImage = Image.getInstance(backGroupImageUrl);
-						backGroupImage.setAbsolutePosition(0, 0);
-						backGroupImage.scaleAbsolute(600, 847);
+					if (totalPage > 1) {
+						if (currentPage < totalPage) {
+							if (currentPage == 1) {
+								backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template"
+										+ File.separator + "DoFirst.png";
+							} else {
+								backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template"
+										+ File.separator + "DoFirst1.png";
+							}
+						} else {
+							backGroupImageUrl = localAbsolutPath + "WEB-INF" + File.separator + "classes" + File.separator + "template"
+									+ File.separator + "Do1.png";
+						}
+
 					}
+					
+					
+					backGroupImage = Image.getInstance(backGroupImageUrl);
+					backGroupImage.setAbsolutePosition(0, 0);
+					backGroupImage.scaleAbsolute(600, 847);
 					rowPix = 520;
 					exportHead(underPdfContentByte, cb, deliveryOrder, backGroupImage, dinBf, simBf, barCodeBf, numberFormat);
 				}
@@ -333,8 +351,8 @@ public class DeliveryOrderExportUtil {
 		cb.endText();
 	}
 
-	private static void exportHead(PdfContentByte underPdfContentByte, PdfContentByte cb, DeliveryOrder deliveryOrder,
-			Image backGroupImage, BaseFont dinBf, BaseFont simBf, BaseFont barCodeBf, NumberFormat numberFormat) throws DocumentException {
+	private static void exportHead(PdfContentByte underPdfContentByte, PdfContentByte cb, DeliveryOrder deliveryOrder, Image backGroupImage,
+			BaseFont dinBf, BaseFont simBf, BaseFont barCodeBf, NumberFormat numberFormat) throws DocumentException {
 		underPdfContentByte.addImage(backGroupImage);
 
 		// Title
@@ -449,29 +467,34 @@ public class DeliveryOrderExportUtil {
 		}
 
 		// Total weight + Unit
+		String totalWeight = "";
 		if (deliveryOrder.getTotalWeight() != null && deliveryOrder.getUnitWeight() != null) {
-			String totalWeight = numberFormat.format(deliveryOrder.getTotalWeight()) + deliveryOrder.getUnitWeight();
-			if (deliveryOrder.getTotalWeight().intValue() == 0 || deliveryOrder.getTotalWeight().intValue() > 50) {
+			totalWeight = numberFormat.format(deliveryOrder.getTotalWeight()) + deliveryOrder.getUnitWeight();
+			if (deliveryOrder.getTotalWeight().intValue() == 0 || deliveryOrder.getTotalWeight().intValue() > 50000) {
 				totalWeight = "#####";
 			}
-			cb.beginText();
-			cb.setFontAndSize(dinBf, 11);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalWeight, 60, 655, 0);
-			cb.endText();
+		} else {
+			totalWeight = "#####";
 		}
+		cb.beginText();
+		cb.setFontAndSize(dinBf, 11);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalWeight, 60, 655, 0);
+		cb.endText();
 
 		// Volume + Unit
+		String totalVolume = "";
 		if (deliveryOrder.getTotalVolume() != null && deliveryOrder.getUnitVolume() != null) {
-			String totalWeight = numberFormat.format(deliveryOrder.getTotalVolume()) + deliveryOrder.getUnitVolume();
+			totalVolume = numberFormat.format(deliveryOrder.getTotalVolume()) + deliveryOrder.getUnitVolume();
 			if (deliveryOrder.getTotalVolume().intValue() == 0 || deliveryOrder.getTotalVolume().intValue() > 150) {
-				totalWeight = "#####";
+				totalVolume = "###";
 			}
-
-			cb.beginText();
-			cb.setFontAndSize(dinBf, 11);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalWeight, 135, 655, 0);
-			cb.endText();
+		} else {
+			totalVolume = "###";
 		}
+		cb.beginText();
+		cb.setFontAndSize(dinBf, 11);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalVolume, 135, 655, 0);
+		cb.endText();
 
 		// Nb Pallets or Cont
 		if (deliveryOrder.getTotalNbPallets() != null)
@@ -865,7 +888,8 @@ public class DeliveryOrderExportUtil {
 					if (deliveryOrderDetail.getItem().getCode() != null) {
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 20);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*P" + deliveryOrderDetail.getItem().getCode()+"*", 330, 645 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*P" + deliveryOrderDetail.getItem().getCode() + "*", 330, 645 - labelHeight,
+								0);
 						cb.endText();
 					}
 
