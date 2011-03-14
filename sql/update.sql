@@ -52,3 +52,5 @@ update do set is_read = 1;
 
 alter table do add first_read_date datetime;
 update do set first_read_date = getdate() where is_read = 1;
+
+alter table do add file_id varchar(35);

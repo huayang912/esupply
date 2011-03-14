@@ -75,6 +75,10 @@ public class DeliveryOrder extends BaseObject {
 	private BigDecimal totalNbPallets;
 	private String title;	
 	private Boolean isLogisticPartner;
+	private String fileIdentitfier;
+	
+	private String plantCode;
+	private String supplierCode;
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -110,7 +114,7 @@ public class DeliveryOrder extends BaseObject {
 		if (this.plantSupplier != null) {
 			return this.plantSupplier.getPlant().getCode();
 		}
-		return null;
+		return plantCode;
 	}
 	
 	@Transient
@@ -219,7 +223,7 @@ public class DeliveryOrder extends BaseObject {
 		if (this.plantSupplier != null) {
 			return this.plantSupplier.getSupplier().getCode();
 		}
-		return null;
+		return supplierCode;
 	}
 	
 	@Column(name = "supplier_name", nullable = true, length = 50)
@@ -564,6 +568,23 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Column(name = "file_id", length=50)
+	public String getFileIdentitfier() {
+		return fileIdentitfier;
+	}
+
+	public void setFileIdentitfier(String fileIdentitfier) {
+		this.fileIdentitfier = fileIdentitfier;
+	}
+
+	public void setPlantCode(String plantCode) {
+		this.plantCode = plantCode;
+	}
+
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
 	}
 
 	/**

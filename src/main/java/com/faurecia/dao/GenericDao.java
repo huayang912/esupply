@@ -80,6 +80,12 @@ public interface GenericDao <T, PK extends Serializable> {
     
     List<T> findByExample(T exampleEntity);
     
+    List findByHql(String hql);
+    
+    List findByHql(String hql, Object obj);
+    
+    List findByHql(String hql, Object[] objs);
+    
     void clear();
     
     void flush();
