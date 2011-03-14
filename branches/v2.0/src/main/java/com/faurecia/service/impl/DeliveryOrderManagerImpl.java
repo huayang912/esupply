@@ -435,6 +435,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			if (plantCode.trim().length() > 3) {
 				plantCode = plantCode.substring(plantCode.length() - 3);
 			}
+			String fileId = fileHeader.getFILID();
 			DetachedCriteria criteria0 = DetachedCriteria.forClass(Plant.class);
 			criteria0.add(Restrictions.like("code", plantCode, MatchMode.END));
 			List<Plant> plantList = plantManager.findByCriteria(criteria0);
@@ -449,7 +450,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			for (Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
 				if (obj instanceof ManifestFile.Delivery) {
 					ManifestFile.Delivery delivery = (ManifestFile.Delivery) obj;
-					DeliveryOrder deliveryOrder = parseDelivery(delivery, plant);
+					DeliveryOrder deliveryOrder = parseDelivery(delivery, plant, fileId);
 
 					DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
 					criteria.add(Restrictions.eq("externalDoNo", deliveryOrder.getExternalDoNo()));
@@ -473,12 +474,13 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return deliveryOrderList;
 	}
 
-	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant) throws DataConvertException {
+	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant, String fileId) throws DataConvertException {
 		DateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
 		ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);
 		DeliveryOrder deliveryOrder = new DeliveryOrder();
-
+		deliveryOrder.setFileIdentitfier(fileId);
+		
 		try {
 			String supplierCode = header.getSUCODE();
 			Supplier supplier = null;

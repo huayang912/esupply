@@ -33,7 +33,8 @@
         	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_PLANT_USER"/>
         	<Item name="ScheduleAuditMenu" title="menu.scheduleAudit" description="Schedule Audit Menu" page="/listScheduleAudit.html" roles="ROLE_PLANT_USER"/>
         	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_PLANT_USER"/>
-			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_PLANT_USER"/>       
+			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_PLANT_USER"/>
+			<Item name="DeliveryOrderMenu2" title="menu.deliveryOrder2" description="Delivery Order Menu" page="/deliveryOrders2.html" roles="ROLE_PLANT_USER"/>         
 			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_PLANT_USER"/>
 			<Item name="ReceiptDetailMenu" title="menu.receiptDetail" description="Receipt Detail Menu" page="/receiptDetails.html" roles="ROLE_PLANT_USER"/>
 		</Menu>
@@ -48,7 +49,8 @@
         	<Item name="PurchaseOrderMenu" title="menu.purchaseOrder" description="Purchase Order Menu" page="/purchaseOrders.html" roles="ROLE_VENDOR"/>
         	<Item name="ScheduleMenu" title="menu.schedule" description="Schedule Menu" page="/editScheduleProfile.html" roles="ROLE_VENDOR"/>
         	<Item name="ScheduleHistoryMenu" title="menu.scheduleHistory" description="Schedule History Menu" page="/schedules.html" roles="ROLE_VENDOR"/>
-			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_VENDOR"/>			
+			<Item name="DeliveryOrderMenu" title="menu.deliveryOrder" description="Delivery Order Menu" page="/deliveryOrders.html" roles="ROLE_VENDOR"/>
+			<Item name="DeliveryOrderMenu2" title="menu.deliveryOrder2" description="Delivery Order Menu" page="/deliveryOrders2.html" roles="ROLE_VENDOR"/>			
 			<Item name="ReceiptMenu" title="menu.receipt" description="Receipt Menu" page="/receipts.html" roles="ROLE_VENDOR"/>
 			<Item name="ReceiptDetailMenu" title="menu.receiptDetail" description="Receipt Detail Menu" page="/receiptDetails.html" roles="ROLE_VENDOR"/>
 		</Menu>

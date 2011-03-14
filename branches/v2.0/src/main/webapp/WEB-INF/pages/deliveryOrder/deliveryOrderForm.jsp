@@ -49,9 +49,14 @@
 					<td><s:submit key="button.printBoxLabel"
 						action="printBoxLabel" /></td>
 				</c:if>
-				<td><input type="button"
-					value="<fmt:message key="button.cancel"/>"
-					onclick="window.location.href='cancelDeliveryOrder.html'" /></td>
+				<td><c:if test="${param.from == 'list'}">
+					<input type="button" value="<fmt:message key="button.cancel"/>"
+						onclick="window.location.href='cancelDeliveryOrder.html'" />
+				</c:if>
+				<c:if test="${param.from == 'list2'}">
+					<input type="button" value="<fmt:message key="button.cancel"/>"
+						onclick="window.location.href='deliveryOrders3.html?fileIdentitfier=${deliveryOrder.fileIdentitfier}'" />
+				</c:if></td>
 			</tr>
 		</table>
 	</c:set>
@@ -60,9 +65,9 @@
 		<tr>
 			<td><s:label key="deliveryOrder.externalDoNo"
 				cssClass="text medium" /></td>
-			<td><s:hidden name="deliveryOrder.doNo" key="deliveryOrder.doNo" />
-			<s:hidden name="deliveryOrder.plantCode"
-				key="deliveryOrder.plantCode" /> <s:hidden
+			<td><input type="hidden" name="from" value="${param.from}" /> <s:hidden
+				name="deliveryOrder.doNo" key="deliveryOrder.doNo" /> <s:hidden
+				name="deliveryOrder.plantCode" key="deliveryOrder.plantCode" /> <s:hidden
 				name="deliveryOrder.supplierCode" key="deliveryOrder.supplierCode" />
 			<s:hidden name="deliveryOrder.plantName"
 				key="deliveryOrder.plantName" /> <s:hidden
@@ -85,7 +90,10 @@
 				name="deliveryOrder.plantSupplier.id"
 				key="deliveryOrder.plantSupplier.id" /> <s:hidden
 				name="deliveryOrder.isExport" key="deliveryOrder.isExport" /> <s:hidden
-				name="deliveryOrder.isPrint" key="deliveryOrder.isPrint" /> <s:hidden
+				name="deliveryOrder.isPrint" key="deliveryOrder.isPrint" /><s:hidden
+				name="deliveryOrder.isRead" key="deliveryOrder.isRead" /><s:hidden
+				name="deliveryOrder.firstReadDate" key="deliveryOrder.firstReadDate" /><s:hidden
+				name="deliveryOrder.fileIdentitfier" key="deliveryOrder.fileIdentitfier" /> <s:hidden
 				name="deliveryOrder.allowOverQty" key="deliveryOrder.allowOverQty" />
 			<s:hidden name="deliveryOrder.externalDoNo"
 				key="deliveryOrder.externalDoNo" /></td>

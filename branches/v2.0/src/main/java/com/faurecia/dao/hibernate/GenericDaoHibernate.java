@@ -141,6 +141,21 @@ public class GenericDaoHibernate<T, PK extends Serializable> extends HibernateDa
 	   return getHibernateTemplate().findByExample(exampleEntity);
    }
    
+   @SuppressWarnings("unchecked")
+   public List findByHql(String hql) {
+	   return getHibernateTemplate().find(hql);
+   }
+   
+   @SuppressWarnings("unchecked")
+   public List findByHql(String hql, Object obj) {
+	   return getHibernateTemplate().find(hql, obj);
+   }
+   
+   @SuppressWarnings("unchecked")
+   public List findByHql(String hql, Object[] objs) {
+	   return getHibernateTemplate().find(hql, objs);
+   }
+   
    public void clear() {
 	   getHibernateTemplate().clear();
    }

@@ -27,7 +27,7 @@
 		onclick="location.href='<c:url value="/mainMenu.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
-<s:form name="deliveryOrderForm" action="deliveryOrders" method="post"
+<s:form name="deliveryOrderForm" action="deliveryOrders2" method="post"
 	validate="true">
 	<div style="display: none;"><input type="hidden" name="page"
 		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
@@ -35,8 +35,8 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
-				key="deliveryOrder.doNo" /></label></td>
-			<td colspan="2"><s:textfield key="deliveryOrder.externalDoNo"
+				key="deliveryOrder.fileIdentitfier" /></label></td>
+			<td colspan="2"><s:textfield key="deliveryOrder.fileIdentitfier"
 				cssClass="text medium" theme="simple" /></td>
 			<c:if
 				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
@@ -46,27 +46,6 @@
 					list="%{suppliers}" listKey="id" listValue="supplierName"
 					theme="simple" /></td>
 			</c:if>
-		</tr>
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.status" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.status"
-				list="%{status}" theme="simple" /></td>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isRead" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.readFlag"
-				list="%{isRead}" theme="simple" /></td>
-
-		</tr>
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isPrint" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.printFlag"
-				list="%{isPrint}" theme="simple" /></td>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isExport" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.ExportFlag"
-				list="%{isExport}" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -86,43 +65,36 @@
 				NAME="anchDateTo" ID="anchDateTo"><img
 				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
 		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.isRead" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.readFlag"
+				list="%{isRead}" theme="simple" /></td>
+		</tr>
 	</table>
 	</li>
-	<div><s:submit method="list" key="button.search" theme="simple" /></div>
+	<div><s:submit method="list2" key="button.search" theme="simple" /></div>
 </s:form>
 
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
 	<display:column property="createDate" sortable="true"
-		sortProperty="createDate"  url="/editDeliveryOrder.html?from=list"
-		paramId="doNo" paramProperty="doNo" titleKey="deliveryOrder.createDate" format="{0, date, MM/dd/yyyy HH:mm:ss}" />
+		sortProperty="min(do.createDate)" url="/deliveryOrders3.html" paramId="fileIdentitfier"
+		paramProperty="fileIdentitfier" titleKey="deliveryOrder.createDate"
+		format="{0, date, MM/dd/yyyy HH:mm:ss}" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
-	<display:column property="title" sortable="true" sortProperty="title"
-		titleKey="deliveryOrder.title" />
+	<display:column property="fileIdentitfier" sortable="true" sortProperty="do.fileIdentitfier"
+		titleKey="deliveryOrder.fileIdentitfier" />
 	<display:column property="supplierName" sortable="true"
-		sortProperty="ps.supplierName" titleKey="deliveryOrder.supplierName" />
+		sortProperty="s.name" titleKey="deliveryOrder.supplierName" />
 	<display:column property="plantContactPerson" sortable="true"
-		sortProperty="plantContactPerson"
+		sortProperty="do.plantContactPerson"
 		titleKey="deliveryOrder.plantContactPerson" />
 	<display:column property="firstReadDate" sortable="true"
-		sortProperty="firstReadDate" titleKey="deliveryOrder.firstReadDate" format="{0, date, MM/dd/yyyy HH:mm:ss}"/>
-	<display:column property="externalDoNo" sortable="true"
-		sortProperty="externalDoNo" titleKey="deliveryOrder.doNo" />
-	<display:column property="murn" sortable="true"
-		titleKey="deliveryOrder.murn" />
-	<display:column property="status" sortable="true"
-		titleKey="deliveryOrder.status" />
-	<display:column sortable="true" titleKey="deliveryOrder.isPrint">
-		<input type="checkbox" disabled="disabled"
-			<c:if test="${deliveryOrders.isPrint}">checked="checked"</c:if> />
-	</display:column>
-	<display:column sortable="true" titleKey="deliveryOrder.isExport">
-		<input type="checkbox" disabled="disabled"
-			<c:if test="${deliveryOrders.isExport}">checked="checked"</c:if> />
-	</display:column>
-
+		sortProperty="min(do.firstReadDate)" titleKey="deliveryOrder.firstReadDate"
+		format="{0, date, MM/dd/yyyy HH:mm:ss}" />
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="deliveryOrder.deliveryOrder" />
 	</display:setProperty>

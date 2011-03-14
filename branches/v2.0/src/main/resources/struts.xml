@@ -362,6 +362,18 @@
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
 			</result>
 		</action>
+		
+		<action name="deliveryOrders2" class="deliveryOrderAction"
+			method="list2">
+			<result name="success">/WEB-INF/pages/deliveryOrder/goodsFileList.jsp
+			</result>
+		</action>
+		
+		<action name="deliveryOrders3" class="deliveryOrderAction"
+			method="list3">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList2.jsp
+			</result>
+		</action>
 
 		<action name="editDeliveryOrder" class="deliveryOrderAction"
 			method="edit">
@@ -392,6 +404,7 @@
 		<action name="cancelDeliveryOrder" class="deliveryOrderAction"
 			method="cancel">
 			<result name="cancel" type="redirect-action">deliveryOrders</result>
+			<result name="cancel2" type="redirect-action">deliveryOrders3</result>
 		</action>
 
 		<action name="deleteDeliveryOrder" class="deliveryOrderAction"

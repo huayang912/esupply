@@ -24,78 +24,15 @@
 
 <c:set var="buttons">
 	<input type="button"
-		onclick="location.href='<c:url value="/mainMenu.html"/>'"
+		onclick="location.href='<c:url value="/deliveryOrders2.html"/>'"
 		value="<fmt:message key="button.done"/>" />
 </c:set>
-<s:form name="deliveryOrderForm" action="deliveryOrders" method="post"
-	validate="true">
-	<div style="display: none;"><input type="hidden" name="page"
-		value="1" /> <input type="hidden" name="pageSize" value="25" /></div>
-	<li style="padding: 0px">
-	<table style="margin: 0px">
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.doNo" /></label></td>
-			<td colspan="2"><s:textfield key="deliveryOrder.externalDoNo"
-				cssClass="text medium" theme="simple" /></td>
-			<c:if
-				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-				<td><label class="desc"><fmt:message
-					key="deliveryOrder.supplierCode" /></label></td>
-				<td colspan="2"><s:select key="deliveryOrder.plantSupplier.id"
-					list="%{suppliers}" listKey="id" listValue="supplierName"
-					theme="simple" /></td>
-			</c:if>
-		</tr>
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.status" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.status"
-				list="%{status}" theme="simple" /></td>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isRead" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.readFlag"
-				list="%{isRead}" theme="simple" /></td>
 
-		</tr>
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isPrint" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.printFlag"
-				list="%{isPrint}" theme="simple" /></td>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isExport" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.ExportFlag"
-				list="%{isExport}" theme="simple" /></td>
-		</tr>
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.createDateFrom" /></label></td>
-			<td><s:textfield key="deliveryOrder.createDateFrom"
-				cssClass="text short" theme="simple" /></td>
-			<td><A HREF="#"
-				onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
-				NAME="anchDateFrom" ID="anchDateFrom"><img
-				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.createDateTo" /></label></td>
-			<td><s:textfield key="deliveryOrder.createDateTo"
-				cssClass="text short" theme="simple" /></td>
-			<td><A HREF="#"
-				onClick="cal.select(document.forms['deliveryOrderForm'].deliveryOrders_deliveryOrder_createDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
-				NAME="anchDateTo" ID="anchDateTo"><img
-				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
-		</tr>
-	</table>
-	</li>
-	<div><s:submit method="list" key="button.search" theme="simple" /></div>
-</s:form>
-
-<display:table name="paginatedList" cellspacing="0" cellpadding="0"
+<display:table name="deliveryOrderDetailList" cellspacing="0" cellpadding="0"
 	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
 	export="true">
 	<display:column property="createDate" sortable="true"
-		sortProperty="createDate"  url="/editDeliveryOrder.html?from=list"
+		sortProperty="createDate"  url="/editDeliveryOrder.html?from=list2"
 		paramId="doNo" paramProperty="doNo" titleKey="deliveryOrder.createDate" format="{0, date, MM/dd/yyyy HH:mm:ss}" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
