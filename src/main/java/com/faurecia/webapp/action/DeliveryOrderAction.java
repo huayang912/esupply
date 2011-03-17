@@ -780,7 +780,11 @@ public class DeliveryOrderAction extends BaseAction {
 		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box.png")) {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(),
 					deliveryOrder, selectedDeliveryOrderDetailList);
-		} else {
+		} 
+		else if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box_CN.png")) {
+			inputStream = DeliveryOrderExportUtil.printBoxLabel2(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
+		} 
+		else {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(),
 					deliveryOrder, selectedDeliveryOrderDetailList);
 		}
