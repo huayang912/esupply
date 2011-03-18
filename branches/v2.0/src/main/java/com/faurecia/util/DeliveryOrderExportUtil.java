@@ -187,7 +187,7 @@ public class DeliveryOrderExportUtil {
 					
 					currentPage++;
 					// Release Date and Time
-					SimpleDateFormat printDateToStr = new SimpleDateFormat("dd-MM-yy hh:mm");
+					SimpleDateFormat printDateToStr = new SimpleDateFormat("dd-MMM-yy hh:mm",Locale.ENGLISH);
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 12);
 					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, printDateToStr.format(new java.util.Date()), 80, 40, 0);
@@ -404,20 +404,49 @@ public class DeliveryOrderExportUtil {
 
 		if (deliveryOrder.getSupplierAddress1() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 8);
+			cb.setFontAndSize(simBf, 6);
 			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress1(), 470, 790, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getSupplierAddress2() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress2(), 470, 775, 0);
+			cb.setFontAndSize(simBf, 6);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress2(), 470, 780, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getSupplierAddress3() != null) {
 			cb.beginText();
-			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress3(), 470, 760, 0);
+			cb.setFontAndSize(simBf, 6);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierAddress3(), 470, 770, 0);
+			cb.endText();
+		}
+		
+		String infoStr = "";
+		if(deliveryOrder.getSupplierPostCode() != null)
+		{
+			infoStr += deliveryOrder.getSupplierPostCode();
+		}
+		if(deliveryOrder.getSupplierCity()!= null)
+		{
+			infoStr += " " + deliveryOrder.getSupplierCity();
+		}
+		if(deliveryOrder.getSupplierCountry()!= null)
+		{
+			infoStr += "-"+ deliveryOrder.getSupplierCountry();
+		}
+		
+		if (infoStr != "") {
+			cb.beginText();
+			cb.setFontAndSize(simBf, 6);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, infoStr, 470, 760, 0);
+			cb.endText();
+		}
+		
+		if(deliveryOrder.getSupplierPhone() != null)
+		{
+			cb.beginText();
+			cb.setFontAndSize(simBf, 6);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "TEL:" + deliveryOrder.getSupplierPhone(), 460, 750, 0);
 			cb.endText();
 		}
 
@@ -469,8 +498,11 @@ public class DeliveryOrderExportUtil {
 
 		// Total weight + Unit
 		String totalWeight = "";
-		if (deliveryOrder.getTotalWeight() != null && deliveryOrder.getUnitWeight() != null) {
-			totalWeight = numberFormat.format(deliveryOrder.getTotalWeight()) + deliveryOrder.getUnitWeight();
+		if (deliveryOrder.getTotalWeight() != null ) {
+			totalWeight = numberFormat.format(deliveryOrder.getTotalWeight());
+			if(deliveryOrder.getUnitWeight() != null){
+				totalWeight += deliveryOrder.getUnitWeight();
+			}
 			if (deliveryOrder.getTotalWeight().intValue() == 0 || deliveryOrder.getTotalWeight().intValue() > 50000) {
 				totalWeight = "#####";
 			}
@@ -479,13 +511,16 @@ public class DeliveryOrderExportUtil {
 		}
 		cb.beginText();
 		cb.setFontAndSize(dinBf, 11);
-		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalWeight, 60, 655, 0);
+		cb.showTextAligned(PdfContentByte.ALIGN_CENTER, totalWeight, 56, 655, 0);
 		cb.endText();
 
 		// Volume + Unit
 		String totalVolume = "";
-		if (deliveryOrder.getTotalVolume() != null && deliveryOrder.getUnitVolume() != null) {
-			totalVolume = numberFormat.format(deliveryOrder.getTotalVolume()) + deliveryOrder.getUnitVolume();
+		if (deliveryOrder.getTotalVolume() != null) {
+			totalVolume = numberFormat.format(deliveryOrder.getTotalVolume());
+			if(deliveryOrder.getUnitVolume() != null){
+				totalVolume += deliveryOrder.getUnitVolume();
+			}
 			if (deliveryOrder.getTotalVolume().intValue() == 0 || deliveryOrder.getTotalVolume().intValue() > 150) {
 				totalVolume = "###";
 			}
@@ -767,13 +802,13 @@ public class DeliveryOrderExportUtil {
 						}
 
 						cb.beginText();
-						cb.setFontAndSize(dinBf, 10);
+						cb.setFontAndSize(dinBf, 8);
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, supplier1, 110, 790 - labelHeight, 0);
 						cb.endText();
 
 						if (supplier2 != "") {
 							cb.beginText();
-							cb.setFontAndSize(dinBf, 10);
+							cb.setFontAndSize(dinBf, 8);
 							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, supplier2, 110, 780 - labelHeight, 0);
 							cb.endText();
 						}
@@ -782,7 +817,7 @@ public class DeliveryOrderExportUtil {
 					// Supplier Code
 					if (deliveryOrder.getSupplierCode() != null) {
 						cb.beginText();
-						cb.setFontAndSize(dinBf, 10);
+						cb.setFontAndSize(dinBf, 8);
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getSupplierCode(), 110, 768 - labelHeight, 0);
 						cb.endText();
 					}
@@ -826,12 +861,12 @@ public class DeliveryOrderExportUtil {
 
 							cb.beginText();
 							cb.setFontAndSize(dinBf, 20);
-							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 500, 772 - labelHeight, 0);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2, 505, 772 - labelHeight, 0);
 							cb.endText();
 
 							cb.beginText();
 							cb.setFontAndSize(dinBf, 14);
-							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 540, 772 - labelHeight, 0);
+							cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "-" + strArr[1], 545, 772 - labelHeight, 0);
 							cb.endText();
 						} else {
 							cb.beginText();
@@ -845,8 +880,8 @@ public class DeliveryOrderExportUtil {
 					// Package type
 					if (deliveryOrderDetail.getPackageType() != null) {
 						cb.beginText();
-						cb.setFontAndSize(dinBf, 14);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getPackageType(), 100, 738 - labelHeight, 0);
+						cb.setFontAndSize(dinBf, 10);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getPackageType(), 100, 730 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -915,19 +950,19 @@ public class DeliveryOrderExportUtil {
 						// Quantity (per box) + barcode #3
 						cb.beginText();
 						cb.setFontAndSize(dinBf, 18);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 500, 660 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 490, 660 - labelHeight, 0);
 						cb.endText();
 
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 20);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + numberFormat.format(qty) + "*", 545, 660 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + numberFormat.format(qty) + "*", 530, 660 - labelHeight, 0);
 						cb.endText();
 					}
 
 					// Storage Code
 					if (deliveryOrderDetail.getStorageCode() != null) {
 						cb.beginText();
-						cb.setFontAndSize(dinBf, 30);
+						cb.setFontAndSize(dinBf, 26);
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getStorageCode(), 320, 632 - labelHeight, 0);
 						cb.endText();
 					}
@@ -935,8 +970,8 @@ public class DeliveryOrderExportUtil {
 					// Dock
 					if (deliveryOrder.getDock() != null) {
 						cb.beginText();
-						cb.setFontAndSize(dinBf, 20);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDock(), 510, 635 - labelHeight, 0);
+						cb.setFontAndSize(dinBf, 18);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDock(), 505, 635 - labelHeight, 0);
 						cb.endText();
 					}
 					labelHeight += 200;
