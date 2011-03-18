@@ -58,3 +58,8 @@ alter table do add file_id varchar(35);
 alter table do add supplier_post_code varchar(50);
 alter table do add supplier_city varchar(50);
 alter table do add supplier_country varchar(50);
+
+alter table do drop column unit_weight;
+alter table do add unit_weight varchar(10);
+alter table do drop column unit_volume;
+alter table do add unit_volume varchar(10);

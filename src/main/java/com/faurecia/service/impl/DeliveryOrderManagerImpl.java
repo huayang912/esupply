@@ -480,7 +480,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);
 		DeliveryOrder deliveryOrder = new DeliveryOrder();
 		deliveryOrder.setFileIdentitfier(fileId);
-		
+
 		try {
 			String supplierCode = header.getSUCODE();
 			Supplier supplier = null;
@@ -613,21 +613,13 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			} catch (Exception ex) {
 				log.warn("Error when convert TOTWEIGHT into decimal.", ex);
 			}
-			try {
-				deliveryOrder.setUnitWeight(new BigDecimal(header.getUNITWEIGHT()));
-			} catch (Exception ex) {
-				log.warn("Error when convert UNITWEIGHT into decimal.", ex);
-			}
+			deliveryOrder.setUnitWeight(header.getUNITWEIGHT());
 			try {
 				deliveryOrder.setTotalVolume(new BigDecimal(header.getTOTVOL()));
 			} catch (Exception ex) {
 				log.warn("Error when convert TOTVOL into decimal.", ex);
 			}
-			try {
-				deliveryOrder.setUnitVolume(new BigDecimal(header.getUNITVOL()));
-			} catch (Exception ex) {
-				log.warn("Error when convert UNITVOL into decimal.", ex);
-			}
+			deliveryOrder.setUnitVolume(header.getUNITVOL());
 			try {
 				deliveryOrder.setTotalNbPallets(new BigDecimal(header.getTOTPAL()));
 			} catch (Exception ex) {
