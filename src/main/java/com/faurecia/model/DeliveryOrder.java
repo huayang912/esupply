@@ -80,6 +80,10 @@ public class DeliveryOrder extends BaseObject {
 	private String plantCode;
 	private String supplierCode;
 	
+	private String supplierPostCode;
+	private String supplierCity;
+	private String supplierCountry;
+	
 	@Id
 	@Column(name = "do_no", length = 10)
 	public String getDoNo() {
@@ -620,6 +624,33 @@ public class DeliveryOrder extends BaseObject {
 		DeliveryOrder myClass = (DeliveryOrder) object;
 		return new CompareToBuilder().append(this.doNo, myClass.doNo)
 				.toComparison();
+	}
+
+	@Column(name = "supplier_post_code", length=50)
+	public String getSupplierPostCode() {
+		return supplierPostCode;
+	}
+
+	public void setSupplierPostCode(String supplierPostCode) {
+		this.supplierPostCode = supplierPostCode;
+	}
+
+	@Column(name = "supplier_city", length=50)
+	public String getSupplierCity() {
+		return supplierCity;
+	}
+
+	public void setSupplierCity(String supplierCity) {
+		this.supplierCity = supplierCity;
+	}
+
+	@Column(name = "supplier_country", length=50)
+	public String getSupplierCountry() {
+		return supplierCountry;
+	}
+
+	public void setSupplierCountry(String supplierCountry) {
+		this.supplierCountry = supplierCountry;
 	}
 	
 }

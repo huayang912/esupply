@@ -581,6 +581,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setSupplierContactPerson(header.getSUCONTACT());
 			deliveryOrder.setSupplierPhone(header.getSUPTEL());
 			deliveryOrder.setSupplierFax(header.getSUFAX());
+			deliveryOrder.setSupplierPostCode(header.getSUPPCOD());
+			deliveryOrder.setSupplierCity(header.getSUPCITY());
+			deliveryOrder.setSupplierCountry(header.getSUPCTRY());
 			deliveryOrder.setCreateDate(new Date());
 			try {
 				deliveryOrder.setStartDate(dtFormat.parse(header.getPICKUP()));

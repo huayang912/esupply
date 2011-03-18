@@ -54,3 +54,7 @@ alter table do add first_read_date datetime;
 update do set first_read_date = getdate() where is_read = 1;
 
 alter table do add file_id varchar(35);
+
+alter table do add supplier_post_code varchar(50);
+alter table do add supplier_city varchar(50);
+alter table do add supplier_country varchar(50);
