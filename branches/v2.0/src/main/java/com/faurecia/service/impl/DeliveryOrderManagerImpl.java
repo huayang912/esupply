@@ -574,6 +574,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setPlantContactPerson(header.getFAUCONTACT());
 			deliveryOrder.setPlantPhone(header.getFAUTEL());
 			deliveryOrder.setPlantFax(header.getFAUFAX());
+			deliveryOrder.setSupplierPostCode(header.getPOSTCODE());
+			deliveryOrder.setSupplierCity(header.getCITY());
+			deliveryOrder.setSupplierCountry(header.getFAUCTRY());
 			deliveryOrder.setSupplierName(header.getSUNAME());
 			deliveryOrder.setSupplierAddress1(header.getSUPADDR1());
 			deliveryOrder.setSupplierAddress2(header.getSUPADDR2());

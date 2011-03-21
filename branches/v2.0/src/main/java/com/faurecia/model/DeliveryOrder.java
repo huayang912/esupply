@@ -83,6 +83,10 @@ public class DeliveryOrder extends BaseObject {
 	private String supplierPostCode;
 	private String supplierCity;
 	private String supplierCountry;
+	
+	private String plantPostCode;
+	private String plantCity;
+	private String plantCountry;
 
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -650,6 +654,33 @@ public class DeliveryOrder extends BaseObject {
 
 	public void setSupplierCountry(String supplierCountry) {
 		this.supplierCountry = supplierCountry;
+	}
+
+	@Column(name = "plant_post_code", length = 50)
+	public String getPlantPostCode() {
+		return plantPostCode;
+	}
+
+	public void setPlantPostCode(String plantPostCode) {
+		this.plantPostCode = plantPostCode;
+	}
+
+	@Column(name = "plant_city", length = 50)
+	public String getPlantCity() {
+		return plantCity;
+	}
+
+	public void setPlantCity(String plantCity) {
+		this.plantCity = plantCity;
+	}
+
+	@Column(name = "plant_country", length = 50)
+	public String getPlantCountry() {
+		return plantCountry;
+	}
+
+	public void setPlantCountry(String plantCountry) {
+		this.plantCountry = plantCountry;
 	}
 
 }
