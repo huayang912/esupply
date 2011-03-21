@@ -63,3 +63,7 @@ alter table do drop column unit_weight;
 alter table do add unit_weight varchar(10);
 alter table do drop column unit_volume;
 alter table do add unit_volume varchar(10);
+
+alter table do add plant_post_code varchar(50);
+alter table do add plant_city varchar(50);
+alter table do add plant_country varchar(50);
