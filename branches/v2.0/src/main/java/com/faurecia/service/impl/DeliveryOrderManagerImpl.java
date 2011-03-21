@@ -567,7 +567,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setPlantSupplier(plantSupplier);
 			deliveryOrder.setDoNo(this.numberControlManager.generateNumber(plantSupplier.getDoNoPrefix(), 10));
 			deliveryOrder.setExternalDoNo(header.getMANCODE());
-			deliveryOrder.setPlantName(plant.getName());
+			deliveryOrder.setPlantName(header.getFAUPLANT());
 			deliveryOrder.setPlantAddress1(header.getFAUADDR1());
 			deliveryOrder.setPlantAddress2(header.getFAUADDR2());
 			deliveryOrder.setPlantAddress3(header.getFAUADDR3());
