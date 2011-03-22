@@ -378,19 +378,19 @@ public class DeliveryOrderExportUtil {
 		if (deliveryOrder.getPlantAddress1() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress1(), 20, 783, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress1(), 20, 785, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress2() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress2(), 20, 771, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress2(), 20, 775, 0);
 			cb.endText();
 		}
 		if (deliveryOrder.getPlantAddress3() != null) {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 8);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress3(), 20, 760, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, deliveryOrder.getPlantAddress3(), 20, 765, 0);
 			cb.endText();
 		}
 		
@@ -419,7 +419,7 @@ public class DeliveryOrderExportUtil {
 		{
 			cb.beginText();
 			cb.setFontAndSize(simBf, 6);
-			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, "TEL:" + deliveryOrder.getPlantPhone(), 20, 750, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_LEFT, "TEL:" + deliveryOrder.getPlantPhone(), 20, 748, 0);
 			cb.endText();
 		}
 
@@ -481,7 +481,7 @@ public class DeliveryOrderExportUtil {
 		if (infoStr != "") {
 			cb.beginText();
 			cb.setFontAndSize(simBf, 6);
-			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, infoStr, 450, 758, 0);
+			cb.showTextAligned(PdfContentByte.ALIGN_CENTER, infoStr, 470, 758, 0);
 			cb.endText();
 		}
 		
@@ -879,11 +879,11 @@ public class DeliveryOrderExportUtil {
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 329, 768 - labelHeight, 0);
 						cb.endText();
 					}
-					if (deliveryOrder.getPlantAddress1() != null) {
+					if (deliveryOrder.getPlantPostCode() != null && deliveryOrder.getPlantCity() != null) {
 						cb.beginText();
 						cb.setFontAndSize(dinBf, 8);
 						cb.setColorFill(BaseColor.WHITE);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantAddress1(), 320, 757 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantPostCode() + "  " + deliveryOrder.getPlantCity(), 320, 757 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -943,9 +943,14 @@ public class DeliveryOrderExportUtil {
 
 					// Part Number
 					if (deliveryOrderDetail.getItem().getCode() != null) {
+						String partNubmer = deliveryOrderDetail.getItem().getCode();
+						if(deliveryOrderDetail.getIndice() != null)
+						{
+							partNubmer += "-"+ deliveryOrderDetail.getIndice().toString();
+						}
 						cb.beginText();
 						cb.setFontAndSize(dinBf, 10);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItem().getCode(), 513, 755 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER,partNubmer, 513, 755 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -1280,16 +1285,16 @@ public class DeliveryOrderExportUtil {
 					// Plantname + Address
 					if (deliveryOrder.getPlantName() != null) {
 						cb.beginText();
-						cb.setFontAndSize(simBf, 14);
+						cb.setFontAndSize(simBf, 12);
 						cb.setColorFill(BaseColor.WHITE);
 						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantName(), 329, 768 - labelHeight, 0);
 						cb.endText();
 					}
-					if (deliveryOrder.getPlantAddress1() != null) {
+					if (deliveryOrder.getPlantPostCode() != null && deliveryOrder.getPlantCity() != null) {
 						cb.beginText();
 						cb.setFontAndSize(simBf, 8);
 						cb.setColorFill(BaseColor.WHITE);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantAddress1(), 320, 757 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getPlantPostCode() + "  " + deliveryOrder.getPlantCity(), 320, 757 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -1343,15 +1348,20 @@ public class DeliveryOrderExportUtil {
 
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 24);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*00" + Integer.toString(labelId) + "*", 350, 785 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*00" + Integer.toString(labelId) + "*", 350, 784 - labelHeight, 0);
 						cb.endText();
 					}
 
 					// Part Number
 					if (deliveryOrderDetail.getItem().getCode() != null) {
+						String partNubmer = deliveryOrderDetail.getItem().getCode();
+						if(deliveryOrderDetail.getIndice() != null)
+						{
+							partNubmer += "-"+ deliveryOrderDetail.getIndice().toString();
+						}
 						cb.beginText();
 						cb.setFontAndSize(dinBf, 10);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItem().getCode(), 513, 755 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER,partNubmer, 513, 755 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -1382,12 +1392,12 @@ public class DeliveryOrderExportUtil {
 						// Quantity (per box) + barcode #3
 						cb.beginText();
 						cb.setFontAndSize(dinBf, 16);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 485, 672 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 495, 672 - labelHeight, 0);
 						cb.endText();
 
 						cb.beginText();
 						cb.setFontAndSize(barCodeBf, 22);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + numberFormat.format(qty) + "*", 530, 672 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, "*" + numberFormat.format(qty) + "*", 540, 672 - labelHeight, 0);
 						cb.endText();
 					}
 
@@ -1403,7 +1413,7 @@ public class DeliveryOrderExportUtil {
 					if (deliveryOrder.getDock() != null) {
 						cb.beginText();
 						cb.setFontAndSize(dinBf, 18);
-						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDock(), 500, 637 - labelHeight, 0);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrder.getDock(), 495, 639 - labelHeight, 0);
 						cb.endText();
 					}
 					labelHeight += 200;
