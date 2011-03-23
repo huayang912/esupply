@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -78,6 +80,24 @@ public class SupplierAction extends BaseAction {
 		return userManager.getPlantUsers(user.getUserPlant(), role);		
 	}
 
+	public Map<String, String> getMFTemplate() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "");
+		status.put("Do.png", "ELink Standard");
+		status.put("FWAS.png", "FWAS");
+		status.put("GSK.png", "GSK");
+		return status;
+	}
+	
+	public Map<String, String> getBoxTemplate() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "");
+		status.put("Box.png", "ELink Standard");
+		status.put("Box_CN.png", "China(Support Chinese Character)");
+		status.put("Box_WuXi.png", "WuXi");
+		return status;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -191,6 +211,8 @@ public class SupplierAction extends BaseAction {
 				User user = this.userManager.getUser(plantSupplier.getResponsibleUser().getId().toString());
 				oldPlantSupplier.setResponsibleUser(user);
 			}
+			oldPlantSupplier.setDoTemplateName(plantSupplier.getDoTemplateName());
+			oldPlantSupplier.setBoxTemplateName(plantSupplier.getBoxTemplateName());
 		}
 
 		plantSupplier = this.plantSupplierManager.save(oldPlantSupplier);

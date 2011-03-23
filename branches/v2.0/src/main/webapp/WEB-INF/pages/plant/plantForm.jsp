@@ -147,15 +147,15 @@
 	
 	<li>
 	<div>
-	<div><s:textfield key="plant.doTemplateName" theme="xhtml"
-		required="true" cssClass="text large" /></div>
+	<div><s:select key="plant.doTemplateName"
+				list="%{mFTemplate}" theme="xhtml" /></div>
 	</div>
 	</li>
 	
 	<li>
 	<div>
-	<div><s:textfield key="plant.boxTemplateName" theme="xhtml"
-		required="true" cssClass="text large" /></div>
+	<div><s:select key="plant.boxTemplateName"
+				list="%{boxTemplate}" theme="xhtml" /></div>
 	</div>
 	</li>
 

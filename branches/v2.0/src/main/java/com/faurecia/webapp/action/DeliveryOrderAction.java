@@ -731,8 +731,13 @@ public class DeliveryOrderAction extends BaseAction {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 		deliveryOrder.setIsLogisticPartner(isLogistic);
-		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equalsIgnoreCase("Do.png")) {
-
+		
+		String doTemplateName = deliveryOrder.getPlantSupplier().getDoTemplateName();
+		if (doTemplateName == null || doTemplateName.trim().length() == 0) {
+			doTemplateName = deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName();
+		}
+		
+		if (doTemplateName.equalsIgnoreCase("Do.png")) {
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
 					deliveryOrder);
 		} else {
@@ -777,11 +782,17 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 		}
-		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box.png")) {
+		
+		String boxTemplateName = deliveryOrder.getPlantSupplier().getBoxTemplateName();
+		if (boxTemplateName == null || boxTemplateName.trim().length() == 0) {
+			boxTemplateName = deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName();
+		}
+		
+		if (boxTemplateName.equalsIgnoreCase("Box.png")) {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(),
 					deliveryOrder, selectedDeliveryOrderDetailList);
 		} 
-		else if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box_CN.png")) {
+		else if (boxTemplateName.equalsIgnoreCase("Box_CN.png")) {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel2(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
 		} 
 		else {

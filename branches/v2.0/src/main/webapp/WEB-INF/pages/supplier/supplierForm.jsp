@@ -20,12 +20,10 @@
 
 <s:form name="plantSupplierForm" action="saveSupplier" method="post"
 	validate="true">
-	<li style="display: none">
-		<s:hidden key="plantSupplier.id" /> 
-		<s:hidden key="plantSupplier.plant.code" />
-		<s:hidden key="plantSupplier.doNoPrefix" />
-		<input type="hidden" name="from" value="${param.from}" />
-	</li>
+	<li style="display: none"><s:hidden key="plantSupplier.id" /> <s:hidden
+		key="plantSupplier.plant.code" /> <s:hidden
+		key="plantSupplier.doNoPrefix" /> <input type="hidden" name="from"
+		value="${param.from}" /></li>
 	<c:set var="buttons">
 		<s:submit key="button.save" method="save"
 			onclick="onFormSubmit(this.form)" />
@@ -34,7 +32,7 @@
 
 	<li><s:textfield key="plantSupplier.supplier.code"
 		title="plantSupplier.supplierCode" cssClass="text large"
-		required="true" readonly="true"/></li>
+		required="true" readonly="true" /></li>
 
 	<li><s:textfield key="plantSupplier.supplierName"
 		cssClass="text large" required="true" /></li>
@@ -52,15 +50,24 @@
 		cssClass="text large" required="true" /></li>
 
 	<li><s:textfield key="plantSupplier.supplierFax"
-		cssClass="text large" required="true" /></li>		
+		cssClass="text large" required="true" /></li>
 
 	<c:choose>
-		<c:when test="<%=!request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
+		<c:when
+			test="<%=!request.isUserInRole(com.faurecia.Constants.VENDOR_ROLE)%>">
 			<li><s:select key="plantSupplier.plantScheduleGroup.id"
-				list="%{plantScheduleGroupList}" listKey="id" listValue="name" theme="xhtml" /></li>
-				
+				list="%{plantScheduleGroupList}" listKey="id" listValue="name"
+				theme="xhtml" /></li>
+
 			<li><s:select key="plantSupplier.responsibleUser.id"
-				list="%{responsibleUserList}" listKey="id" listValue="fullName" theme="xhtml" /></li>
+				list="%{responsibleUserList}" listKey="id" listValue="fullName"
+				theme="xhtml" /></li>
+
+			<li><s:select key="plantSupplier.doTemplateName" list="%{mFTemplate}"
+				theme="xhtml" /></li>
+
+			<li><s:select key="plantSupplier.boxTemplateName" list="%{boxTemplate}"
+				theme="xhtml" /></li>
 		</c:when>
 	</c:choose>
 

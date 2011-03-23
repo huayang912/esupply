@@ -32,6 +32,22 @@ public class PlantAction extends BaseAction {
 	public List<Plant> getPlants() {
 		return plants;
 	}
+	
+	public Map<String, String> getMFTemplate() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("Do.png", "ELink Standard");
+		status.put("FWAS.png", "FWAS");
+		status.put("GSK.png", "GSK");
+		return status;
+	}
+	
+	public Map<String, String> getBoxTemplate() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("Box.png", "ELink Standard");
+		status.put("Box_CN.png", "China(Support Chinese Character)");
+		status.put("Box_WuXi.png", "WuXi");
+		return status;
+	}
 
 	public Map<Integer, String> getDateType() {
 		Map<Integer, String> dateType = new HashMap<Integer, String>();

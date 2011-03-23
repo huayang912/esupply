@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
@@ -245,7 +244,7 @@ public class Plant extends BaseObject implements Serializable {
 		this.nextOutboundDate = nextOutboundDate;
 	}
 
-	@Column(name="error_log_email1", nullable = true, length = 255)
+	@Column(name = "error_log_email1", nullable = true, length = 255)
 	public String getErrorLogEmail1() {
 		return errorLogEmail1;
 	}
@@ -253,8 +252,8 @@ public class Plant extends BaseObject implements Serializable {
 	public void setErrorLogEmail1(String errorLogEmail1) {
 		this.errorLogEmail1 = errorLogEmail1;
 	}
-	
-	@Column(name="error_log_email2", nullable = true, length = 255)
+
+	@Column(name = "error_log_email2", nullable = true, length = 255)
 	public String getErrorLogEmail2() {
 		return errorLogEmail2;
 	}
@@ -263,7 +262,7 @@ public class Plant extends BaseObject implements Serializable {
 		this.errorLogEmail2 = errorLogEmail2;
 	}
 
-	@Column(name="supplier_notify_email", nullable = true, length = 255)
+	@Column(name = "supplier_notify_email", nullable = true, length = 255)
 	public String getSupplierNotifyEmail() {
 		return supplierNotifyEmail;
 	}
@@ -272,7 +271,7 @@ public class Plant extends BaseObject implements Serializable {
 		this.supplierNotifyEmail = supplierNotifyEmail;
 	}
 
-	@Column(name="do_template_name", nullable = true, length = 255)
+	@Column(name = "do_template_name", nullable = true, length = 255)
 	public String getDoTemplateName() {
 		return doTemplateName;
 	}
@@ -280,8 +279,8 @@ public class Plant extends BaseObject implements Serializable {
 	public void setDoTemplateName(String doTemplateName) {
 		this.doTemplateName = doTemplateName;
 	}
-	
-	@Column(name="box_template_name", nullable = true, length = 255)
+
+	@Column(name = "box_template_name", nullable = true, length = 255)
 	public String getBoxTemplateName() {
 		return boxTemplateName;
 	}
