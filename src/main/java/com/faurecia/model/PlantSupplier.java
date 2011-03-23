@@ -46,6 +46,8 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	private String doNoPrefix;
 	private PlantScheduleGroup plantScheduleGroup;
 	private User responsibleUser;
+	private String doTemplateName;
+	private String boxTemplateName;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -165,6 +167,24 @@ public class PlantSupplier extends BaseObject implements Serializable {
 		this.responsibleUser = responsibleUser;
 	}
 
+	@Column(name = "do_template_name", nullable = true, length = 255)
+	public String getDoTemplateName() {
+		return doTemplateName;
+	}
+
+	public void setDoTemplateName(String doTemplateName) {
+		this.doTemplateName = doTemplateName;
+	}
+
+	@Column(name = "box_template_name", nullable = true, length = 255)
+	public String getBoxTemplateName() {
+		return boxTemplateName;
+	}
+
+	public void setBoxTemplateName(String boxTemplateName) {
+		this.boxTemplateName = boxTemplateName;
+	}
+	
 	/**
 	 * @see java.lang.Comparable#compareTo(Object)
 	 */
