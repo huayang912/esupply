@@ -43,7 +43,7 @@
 				</interceptor-ref>
 				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation">
-					<param name="excludeMethods">cancel,execute,delete,edit,list</param>
+					<param name="excludeMethods">cancel,execute,delete,edit,list,upload</param>
 				</interceptor-ref>
 				<interceptor-ref name="workflow">
 					<param name="excludeMethods">input,back,cancel,browse</param>
@@ -207,9 +207,8 @@
 			<result name="delete" type="redirect-action">items</result>
 			<result name="success" type="redirect-action">items</result>
 		</action>
-		
-		<action name="exportItem" class="itemAction"
-			method="export">
+
+		<action name="exportItem" class="itemAction" method="export">
 			<result name="input">/WEB-INF/pages/item/itemForm.jsp</result>
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
@@ -237,6 +236,20 @@
 			</result>
 			<result name="cancel" type="redirect-action">supplierItems</result>
 			<result name="success" type="redirect-action">supplierItems</result>
+			<result name="delete" type="redirect-action">supplierItems</result>
+		</action>
+
+		<action name="importSupplierItem" class="supplierItemAction"
+			method="importFile">
+			<result>/WEB-INF/pages/supplierItem/uploadSupplierItem.jsp</result>
+		</action>
+
+		<action name="uploadSupplierItem" class="supplierItemAction"
+			method="upload">
+			<result name="input">/WEB-INF/pages/supplierItem/uploadSupplierItem.jsp
+			</result>
+			<result name="cancel" type="redirect-action">supplierItems</result>
+			<result name="success" type="redirect-action">supplierItems</result>
 		</action>
 
 		<!-- Supplier -->
@@ -261,9 +274,8 @@
 			<result name="delete" type="redirect-action">suppliers</result>
 			<result name="success" type="redirect-action">suppliers</result>
 		</action>
-		
-		<action name="exportSupplier" class="supplierAction"
-			method="export">
+
+		<action name="exportSupplier" class="supplierAction" method="export">
 			<result name="input">/WEB-INF/pages/supplier/supplierForm.jsp</result>
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
@@ -362,13 +374,13 @@
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList.jsp
 			</result>
 		</action>
-		
+
 		<action name="deliveryOrders2" class="deliveryOrderAction"
 			method="list2">
 			<result name="success">/WEB-INF/pages/deliveryOrder/goodsFileList.jsp
 			</result>
 		</action>
-		
+
 		<action name="deliveryOrders3" class="deliveryOrderAction"
 			method="list3">
 			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList2.jsp
@@ -420,7 +432,7 @@
 				<param name="bufferSize">4096</param>
 			</result>
 		</action>
-		
+
 		<action name="printLogisticDeliveryOrder" class="deliveryOrderAction"
 			method="printLogistic">
 			<result name="success" type="stream">
@@ -430,15 +442,17 @@
 			</result>
 		</action>
 
-		<action name="printPalletLabel" class="deliveryOrderAction" method="printPalletLabel">
+		<action name="printPalletLabel" class="deliveryOrderAction"
+			method="printPalletLabel">
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
 				<param name="bufferSize">4096</param>
 			</result>
 		</action>
-		
-		<action name="printBoxLabel" class="deliveryOrderAction" method="printBoxLabel">
+
+		<action name="printBoxLabel" class="deliveryOrderAction"
+			method="printBoxLabel">
 			<result name="success" type="stream">
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
@@ -447,7 +461,7 @@
 			<result name="error">/WEB-INF/pages/deliveryOrder/deliveryOrderForm.jsp
 			</result>
 		</action>
-		
+
 		<!-- Receipt -->
 		<action name="receipts" class="receiptAction" method="list">
 			<interceptor-ref name="defaultStack">

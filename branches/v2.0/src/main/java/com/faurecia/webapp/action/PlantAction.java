@@ -35,7 +35,8 @@ public class PlantAction extends BaseAction {
 	
 	public Map<String, String> getMFTemplate() {
 		Map<String, String> status = new HashMap<String, String>();
-		status.put("Do.png", "ELink Standard");
+		status.put("Do.png", "EasyLink Standard");
+		status.put("DoSebango.png", "EasyLink Standard (With SEBANGO)");
 		status.put("FWAS.png", "FWAS");
 		status.put("GSK.png", "GSK");
 		return status;
@@ -43,8 +44,8 @@ public class PlantAction extends BaseAction {
 	
 	public Map<String, String> getBoxTemplate() {
 		Map<String, String> status = new HashMap<String, String>();
-		status.put("Box.png", "ELink Standard");
-		status.put("Box_CN.png", "China(Support Chinese Character)");
+		status.put("Box.png", "EasyLink Standard");
+		status.put("Box_CN.png", "EasyLink Standard (China)");
 		status.put("Box_WuXi.png", "WuXi");
 		return status;
 	}
