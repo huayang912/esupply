@@ -17,10 +17,8 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.Transformers;
 
 import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
@@ -28,7 +26,6 @@ import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.PlantScheduleGroup;
 import com.faurecia.model.PlantSupplier;
 import com.faurecia.model.PurchaseOrderDetail;
-import com.faurecia.model.ReceiptDetail;
 import com.faurecia.model.Schedule;
 import com.faurecia.model.ScheduleItem;
 import com.faurecia.model.ScheduleItemDetail;

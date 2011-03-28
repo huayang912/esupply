@@ -164,6 +164,8 @@
 			titleKey="deliveryOrderDetail.sequence" />
 		<display:column property="item.code"
 			titleKey="deliveryOrderDetail.itemCode" />
+		<display:column property="sebango"
+			titleKey="deliveryOrderDetail.sebango" />
 		<display:column property="itemDescription"
 			titleKey="deliveryOrderDetail.itemDescription" />
 		<display:column property="supplierItemCode"
