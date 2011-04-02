@@ -736,9 +736,13 @@ public class DeliveryOrderAction extends BaseAction {
 
 		if (doTemplateName.equalsIgnoreCase("Do.png")) {
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder);
+					deliveryOrder, false);
+		} else if (doTemplateName.equalsIgnoreCase("Do_CN.png")) {
+			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, "Do.png", deliveryOrder, true);
 		} else if (doTemplateName.equalsIgnoreCase("DoSebango.png")) {
-			inputStream = DeliveryOrderExportUtil.exportDoSebango(localAbsolutPath, doTemplateName, deliveryOrder);
+			inputStream = DeliveryOrderExportUtil.exportDoSebango(localAbsolutPath, doTemplateName, deliveryOrder, false);
+		} else if (doTemplateName.equalsIgnoreCase("DoSebango_CN.png")) {
+			inputStream = DeliveryOrderExportUtil.exportDoSebango(localAbsolutPath, doTemplateName, deliveryOrder, true);
 		} else {
 			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
 					deliveryOrder);
