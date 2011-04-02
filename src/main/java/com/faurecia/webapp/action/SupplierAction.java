@@ -85,6 +85,7 @@ public class SupplierAction extends BaseAction {
 		status.put("", "");
 		status.put("Do.png", "EasyLink Standard");
 		status.put("DoSebango.png", "EasyLink Standard (With SEBANGO)");
+		status.put("DoSebango_CN.png", "EasyLink Standard China (With SEBANGO)");
 		status.put("FWAS.png", "FWAS");
 		status.put("GSK.png", "GSK");
 		return status;
