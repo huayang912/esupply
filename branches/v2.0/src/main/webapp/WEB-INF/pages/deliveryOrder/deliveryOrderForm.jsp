@@ -32,28 +32,25 @@
 					<td><s:submit key="button.delete" action="deleteDeliveryOrder" /></td>
 				</c:if>
 				<c:if
-					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
-
+					test="${not empty deliveryOrder.doNo and empty deliveryOrder.fileIdentitfier and deliveryOrder.status == 'Confirm'}">
+					<td><s:submit key="button.print"
+						action="printDeliveryOrder" /></td>
+				</c:if>
+				<c:if
+					test="${not empty deliveryOrder.doNo and not empty deliveryOrder.fileIdentitfier and deliveryOrder.status == 'Confirm'}">
 					<td><s:submit key="button.printSupplier"
 						action="printDeliveryOrder" /></td>
 					<td><s:submit key="button.printLogistic"
 						action="printLogisticDeliveryOrder" /></td>
-				</c:if>
-				<c:if
-					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
 					<td><s:submit key="button.printPalletLabel"
 						action="printPalletLabel" /></td>
-				</c:if>
-				<c:if
-					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
 					<td><s:submit key="button.printBoxLabel"
 						action="printBoxLabel" /></td>
 				</c:if>
 				<td><c:if test="${param.from == 'list'}">
 					<input type="button" value="<fmt:message key="button.cancel"/>"
 						onclick="window.location.href='cancelDeliveryOrder.html'" />
-				</c:if>
-				<c:if test="${param.from == 'list2'}">
+				</c:if> <c:if test="${param.from == 'list2'}">
 					<input type="button" value="<fmt:message key="button.cancel"/>"
 						onclick="window.location.href='deliveryOrders3.html?fileIdentitfier=${deliveryOrder.fileIdentitfier}'" />
 				</c:if></td>
@@ -93,7 +90,8 @@
 				name="deliveryOrder.isPrint" key="deliveryOrder.isPrint" /><s:hidden
 				name="deliveryOrder.isRead" key="deliveryOrder.isRead" /><s:hidden
 				name="deliveryOrder.firstReadDate" key="deliveryOrder.firstReadDate" /><s:hidden
-				name="deliveryOrder.fileIdentitfier" key="deliveryOrder.fileIdentitfier" /> <s:hidden
+				name="deliveryOrder.fileIdentitfier"
+				key="deliveryOrder.fileIdentitfier" /> <s:hidden
 				name="deliveryOrder.allowOverQty" key="deliveryOrder.allowOverQty" />
 			<s:hidden name="deliveryOrder.externalDoNo"
 				key="deliveryOrder.externalDoNo" /></td>
