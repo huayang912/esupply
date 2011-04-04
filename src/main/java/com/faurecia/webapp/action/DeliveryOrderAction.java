@@ -446,7 +446,10 @@ public class DeliveryOrderAction extends BaseAction {
 
 		if (request.isUserInRole(Constants.PLANT_USER_ROLE) || request.isUserInRole(Constants.PLANT_ADMIN_ROLE)) {
 			hql += "and ps.responsibleUser.id = ? ";
+			hql += "and p.code = ? ";
+			
 			args.add(user.getId());
+			args.add(user.getUserPlant().getCode());
 		} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
 			if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
 				return "mainMenu";
@@ -457,6 +460,8 @@ public class DeliveryOrderAction extends BaseAction {
 			args.add(this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE));
 			args.add(user.getUserSupplier().getCode());
 		}
+		
+		hql += "and do.fileIdentitfier is not null and do.fileIdentitfier <> '' ";
 
 		if (deliveryOrder.getPlantSupplier() != null) {
 			hql += "and ps.id = ? ";
