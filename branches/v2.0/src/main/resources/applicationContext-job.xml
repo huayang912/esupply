@@ -15,7 +15,7 @@
 		<property name="mailMessage" ref="mailMessage" />
 		<property name="errorInboundTemplateName" value="errorInboundTemplate.vm" />
 		<property name="mfFtpServer" value="localhost"/>
-		<property name="mfFtpPort" value="22"/>
+		<property name="mfFtpPort" value="21"/>
 		<property name="mfFtpUser" value="dx"/>
 		<property name="mfFtpPassword" value="dx"/>
 		<property name="mfFtpPath" value="/SEQJIT/INP"/>
@@ -65,8 +65,8 @@
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<!-- ref bean="dataInboundJobTrigger" />
-				<ref bean="dataOutboundJobTrigger" /-->
+				<ref bean="dataInboundJobTrigger" />
+				<!-- ref bean="dataOutboundJobTrigger" /-->
 			</list>
 		</property>
 	</bean>

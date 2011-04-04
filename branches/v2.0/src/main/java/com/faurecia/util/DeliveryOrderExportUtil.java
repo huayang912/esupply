@@ -672,7 +672,7 @@ public class DeliveryOrderExportUtil {
 		// Manifest Number
 		if (deliveryOrder.getExternalDoNo() != null) {
 			String manfest = deliveryOrder.getExternalDoNo();
-			if (manfest.length() == 13) {
+			if (manfest.length() >= 13) {
 				String[] strArr = manfest.split("-");
 				String str1 = strArr[0].substring(0, strArr[0].length() - 4);
 				String str2 = strArr[0].substring(strArr[0].length() - 4);
@@ -684,7 +684,7 @@ public class DeliveryOrderExportUtil {
 
 				cb.beginText();
 				cb.setFontAndSize(dinBfb, 25);
-				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2 + " ", 137, 696, 0);
+				cb.showTextAligned(PdfContentByte.ALIGN_CENTER, str2 + " ", 140, 696, 0);
 				cb.endText();
 
 				cb.beginText();
@@ -1002,11 +1002,11 @@ public class DeliveryOrderExportUtil {
 		// Manifest Number
 		if (deliveryOrder.getExternalDoNo() != null) {
 			String manfest = deliveryOrder.getExternalDoNo();
-			if (manfest.length() == 12) {
+			if (manfest.length() >= 12) {
 
 				String str1 = manfest.substring(0, 4);
-				String str2 = manfest.substring(4, 4);
-				String str3 = manfest.substring(9, 4);
+				String str2 = manfest.substring(4, 8);
+				String str3 = manfest.substring(8);
 
 				cb.beginText();
 				cb.setFontAndSize(dinBfb, 16);
