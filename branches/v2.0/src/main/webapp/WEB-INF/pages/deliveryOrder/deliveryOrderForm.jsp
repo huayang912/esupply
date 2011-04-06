@@ -184,7 +184,7 @@
 			<display:column titleKey="deliveryOrderDetail.qty">
 				<input type="text"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].qty"
-					value="<fmt:formatNumber value="${deliveryOrderDetail.qty}" pattern="#,###.##" />"
+					value="<fmt:formatNumber value="${deliveryOrderDetail.qty}" pattern="###.##" />"
 					class="text medium" />
 				<input type="hidden"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].id"
