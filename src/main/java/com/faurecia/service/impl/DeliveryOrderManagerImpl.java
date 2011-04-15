@@ -453,7 +453,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					DeliveryOrder deliveryOrder = parseDelivery(delivery, plant, fileId);
 
 					DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
-					criteria.add(Restrictions.eq("externalDoNo", deliveryOrder.getExternalDoNo()));
+					criteria.add(Restrictions.eq("murn", deliveryOrder.getMurn()));
+					//criteria.add(Restrictions.eq("fileIdentitfier", deliveryOrder.getFileIdentitfier()));
 
 					List<DeliveryOrder> doList = this.findByCriteria(criteria);
 					if (doList != null && doList.size() > 0) {
