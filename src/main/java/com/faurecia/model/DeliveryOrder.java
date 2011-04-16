@@ -28,8 +28,8 @@ public class DeliveryOrder extends BaseObject {
 	 * 
 	 */
 	private static final long serialVersionUID = -7456872599350319130L;
-	
-	private String doNo;    //MANIFEST CODE
+
+	private String doNo; // MANIFEST CODE
 	private String externalDoNo;
 	private PlantSupplier plantSupplier;
 	private String plantName;
@@ -49,33 +49,47 @@ public class DeliveryOrder extends BaseObject {
 	private Date createDate;
 	private Date createDateFrom;
 	private Date createDateTo;
-	private Date startDate;    //DATETIME_PICKUP       
-	private Date endDate;      //DATETIME_RECEPTION
+	private Date startDate; // DATETIME_PICKUP
+	private Date endDate; // DATETIME_RECEPTION
 	private Boolean isExport;
 	private List<DeliveryOrderDetail> deliveryOrderDetailList;
 	private Boolean allowOverQty;
 	private String status;
 	private String exportFlag;
+	private String readFlag;
 	private String printFlag;
 	private Boolean isPrint;
-	
-	private String murn;  //code + bar code
-	private String OrderGroup; //MANIFEST ORDER GROUP
-	private String deliveryOrderGroup;  //DELIVERY ORDER GROUPk
+	private Boolean isRead;
+	private Date firstReadDate;
+
+	private String murn; // code + bar code
+	private String OrderGroup; // MANIFEST ORDER GROUP
+	private String deliveryOrderGroup; // DELIVERY ORDER GROUPk
 	private String dock;
 	private String route;
 	private String mainRoute;
 	private BigDecimal totalWeight;
-	private BigDecimal unitWeight;
+	private String unitWeight;
 	private BigDecimal totalVolume;
-	private BigDecimal unitVolume;
+	private String unitVolume;
 	private BigDecimal totalNbPallets;
-	private String title;	
+	private String title;
 	private Boolean isLogisticPartner;
+	private String fileIdentitfier;
+
+	private String plantCode;
+	private String supplierCode;
+
+	private String supplierPostCode;
+	private String supplierCity;
+	private String supplierCountry;
 	
+	private String plantPostCode;
+	private String plantCity;
+	private String plantCountry;
+
 	private String pCode;
 	private String sCode;
-	
 	
 	@Id
 	@Column(name = "do_no", length = 10)
@@ -86,7 +100,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setDoNo(String doNo) {
 		this.doNo = doNo;
 	}
-	
+
 	@Column(name = "ext_do_no", nullable = false, length = 20, unique = true)
 	public String getExternalDoNo() {
 		return externalDoNo;
@@ -97,7 +111,7 @@ public class DeliveryOrder extends BaseObject {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "plant_supplier_id", nullable=false)
+	@JoinColumn(name = "plant_supplier_id", nullable = false)
 	public PlantSupplier getPlantSupplier() {
 		return plantSupplier;
 	}
@@ -111,9 +125,18 @@ public class DeliveryOrder extends BaseObject {
 		if (this.plantSupplier != null) {
 			return this.plantSupplier.getPlant().getCode();
 		}
-		return null;
+		return plantCode;
 	}
-	
+
+	@Transient
+	public Boolean getIsLogisticPartner() {
+		return isLogisticPartner;
+	}
+
+	public void setIsLogisticPartner(Boolean isLogisticPartner) {
+		this.isLogisticPartner = isLogisticPartner;
+	}
+
 	@Column(name = "plant_name", nullable = false, length = 50)
 	public String getPlantName() {
 		if (plantName != null && plantName.trim().length() > 0) {
@@ -155,7 +178,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setPlantAddress2(String plantAddress2) {
 		this.plantAddress2 = plantAddress2;
 	}
-	
+
 	@Column(name = "plant_address3", nullable = true, length = 255)
 	public String getPlantAddress3() {
 		return plantAddress3;
@@ -212,9 +235,9 @@ public class DeliveryOrder extends BaseObject {
 		if (this.plantSupplier != null) {
 			return this.plantSupplier.getSupplier().getCode();
 		}
-		return null;
+		return supplierCode;
 	}
-	
+
 	@Column(name = "supplier_name", nullable = true, length = 50)
 	public String getSupplierName() {
 		if (supplierName != null && supplierName.trim().length() > 0) {
@@ -256,7 +279,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setSupplierAddress2(String supplierAddress2) {
 		this.supplierAddress2 = supplierAddress2;
 	}
-	
+
 	@Column(name = "supplier_address3", nullable = true, length = 255)
 	public String getSupplierAddress3() {
 		return supplierAddress3;
@@ -316,7 +339,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
+
 	@Column(name = "start_date", nullable = true)
 	public Date getStartDate() {
 		return startDate;
@@ -343,7 +366,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setIsExport(Boolean isExport) {
 		this.isExport = isExport;
 	}
-	
+
 	@Column(name = "is_print", nullable = true)
 	public Boolean getIsPrint() {
 		return isPrint;
@@ -352,14 +375,23 @@ public class DeliveryOrder extends BaseObject {
 	public void setIsPrint(Boolean isPrint) {
 		this.isPrint = isPrint;
 	}
-	
-	@Transient
-	public Boolean getIsLogisticPartner() {
-		return isLogisticPartner;
+
+	@Column(name = "is_read", nullable = true)
+	public Boolean getIsRead() {
+		return isRead;
 	}
 
-	public void setIsLogisticPartner(Boolean isLogisticPartner) {
-		this.isLogisticPartner = isLogisticPartner;
+	public void setIsRead(Boolean isRead) {
+		this.isRead = isRead;
+	}
+
+	@Column(name = "first_read_date", nullable = true)
+	public Date getFirstReadDate() {
+		return firstReadDate;
+	}
+
+	public void setFirstReadDate(Date firstReadDate) {
+		this.firstReadDate = firstReadDate;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "deliveryOrder")
@@ -378,8 +410,8 @@ public class DeliveryOrder extends BaseObject {
 
 		deliveryOrderDetailList.add(deliveryOrderDetail);
 	}
-	
-	@Column(name = "status", nullable = false, length=10)
+
+	@Column(name = "status", nullable = false, length = 10)
 	public String getStatus() {
 		return status;
 	}
@@ -405,7 +437,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setCreateDateTo(Date createDateTo) {
 		this.createDateTo = createDateTo;
 	}
-	
+
 	@Transient
 	public Boolean getAllowOverQty() {
 		return allowOverQty;
@@ -423,7 +455,7 @@ public class DeliveryOrder extends BaseObject {
 	public void setExportFlag(String exportFlag) {
 		this.exportFlag = exportFlag;
 	}
-	
+
 	@Transient
 	public String getPrintFlag() {
 		return printFlag;
@@ -433,7 +465,16 @@ public class DeliveryOrder extends BaseObject {
 		this.printFlag = printFlag;
 	}
 
-	@Column(name = "murn", length=20)
+	@Transient
+	public String getReadFlag() {
+		return readFlag;
+	}
+
+	public void setReadFlag(String readFlag) {
+		this.readFlag = readFlag;
+	}
+
+	@Column(name = "murn", length = 20)
 	public String getMurn() {
 		return murn;
 	}
@@ -442,7 +483,7 @@ public class DeliveryOrder extends BaseObject {
 		this.murn = murn;
 	}
 
-	@Column(name = "order_group", length=20)
+	@Column(name = "order_group", length = 20)
 	public String getOrderGroup() {
 		return OrderGroup;
 	}
@@ -451,7 +492,7 @@ public class DeliveryOrder extends BaseObject {
 		OrderGroup = orderGroup;
 	}
 
-	@Column(name = "delivery_order_group", length=20)
+	@Column(name = "delivery_order_group", length = 20)
 	public String getDeliveryOrderGroup() {
 		return deliveryOrderGroup;
 	}
@@ -460,7 +501,7 @@ public class DeliveryOrder extends BaseObject {
 		this.deliveryOrderGroup = deliveryOrderGroup;
 	}
 
-	@Column(name = "dock", length=20)
+	@Column(name = "dock", length = 20)
 	public String getDock() {
 		return dock;
 	}
@@ -469,7 +510,7 @@ public class DeliveryOrder extends BaseObject {
 		this.dock = dock;
 	}
 
-	@Column(name = "route", length=20)
+	@Column(name = "route", length = 20)
 	public String getRoute() {
 		return route;
 	}
@@ -478,7 +519,7 @@ public class DeliveryOrder extends BaseObject {
 		this.route = route;
 	}
 
-	@Column(name = "main_route", length=20)
+	@Column(name = "main_route", length = 20)
 	public String getMainRoute() {
 		return mainRoute;
 	}
@@ -496,12 +537,12 @@ public class DeliveryOrder extends BaseObject {
 		this.totalWeight = totalWeight;
 	}
 
-	@Column(name = "unit_weight", precision = 18, scale = 4)
-	public BigDecimal getUnitWeight() {
+	@Column(name = "unit_weight", length = 10)
+	public String getUnitWeight() {
 		return unitWeight;
 	}
 
-	public void setUnitWeight(BigDecimal unitWeight) {
+	public void setUnitWeight(String unitWeight) {
 		this.unitWeight = unitWeight;
 	}
 
@@ -514,12 +555,12 @@ public class DeliveryOrder extends BaseObject {
 		this.totalVolume = totalVolume;
 	}
 
-	@Column(name = "unit_volume", precision = 18, scale = 4)
-	public BigDecimal getUnitVolume() {
+	@Column(name = "unit_volume", length = 10)
+	public String getUnitVolume() {
 		return unitVolume;
 	}
 
-	public void setUnitVolume(BigDecimal unitVolume) {
+	public void setUnitVolume(String unitVolume) {
 		this.unitVolume = unitVolume;
 	}
 
@@ -532,13 +573,30 @@ public class DeliveryOrder extends BaseObject {
 		this.totalNbPallets = totalNbPallets;
 	}
 
-	@Column(name = "title", length=50)
+	@Column(name = "title", length = 50)
 	public String getTitle() {
 		return title;
 	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Column(name = "file_id", length = 50)
+	public String getFileIdentitfier() {
+		return fileIdentitfier;
+	}
+
+	public void setFileIdentitfier(String fileIdentitfier) {
+		this.fileIdentitfier = fileIdentitfier;
+	}
+
+	public void setPlantCode(String plantCode) {
+		this.plantCode = plantCode;
+	}
+
+	public void setSupplierCode(String supplierCode) {
+		this.supplierCode = supplierCode;
 	}
 
 	/**
@@ -563,8 +621,7 @@ public class DeliveryOrder extends BaseObject {
 			return false;
 		}
 		DeliveryOrder rhs = (DeliveryOrder) object;
-		return new EqualsBuilder().append(
-				this.doNo, rhs.doNo).isEquals();
+		return new EqualsBuilder().append(this.doNo, rhs.doNo).isEquals();
 	}
 
 	/**
@@ -572,8 +629,61 @@ public class DeliveryOrder extends BaseObject {
 	 */
 	public int compareTo(Object object) {
 		DeliveryOrder myClass = (DeliveryOrder) object;
-		return new CompareToBuilder().append(this.doNo, myClass.doNo)
-				.toComparison();
+		return new CompareToBuilder().append(this.doNo, myClass.doNo).toComparison();
+	}
+
+	@Column(name = "supplier_post_code", length = 50)
+	public String getSupplierPostCode() {
+		return supplierPostCode;
+	}
+
+	public void setSupplierPostCode(String supplierPostCode) {
+		this.supplierPostCode = supplierPostCode;
+	}
+
+	@Column(name = "supplier_city", length = 50)
+	public String getSupplierCity() {
+		return supplierCity;
+	}
+
+	public void setSupplierCity(String supplierCity) {
+		this.supplierCity = supplierCity;
+	}
+
+	@Column(name = "supplier_country", length = 50)
+	public String getSupplierCountry() {
+		return supplierCountry;
+	}
+
+	public void setSupplierCountry(String supplierCountry) {
+		this.supplierCountry = supplierCountry;
+	}
+
+	@Column(name = "plant_post_code", length = 50)
+	public String getPlantPostCode() {
+		return plantPostCode;
+	}
+
+	public void setPlantPostCode(String plantPostCode) {
+		this.plantPostCode = plantPostCode;
+	}
+
+	@Column(name = "plant_city", length = 50)
+	public String getPlantCity() {
+		return plantCity;
+	}
+
+	public void setPlantCity(String plantCity) {
+		this.plantCity = plantCity;
+	}
+
+	@Column(name = "plant_country", length = 50)
+	public String getPlantCountry() {
+		return plantCountry;
+	}
+
+	public void setPlantCountry(String plantCountry) {
+		this.plantCountry = plantCountry;
 	}
 
 	@Transient
@@ -593,5 +703,4 @@ public class DeliveryOrder extends BaseObject {
 	public void setsCode(String sCode) {
 		this.sCode = sCode;
 	}
-	
 }

@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -89,6 +91,26 @@ public class SupplierAction extends BaseAction {
 		}
 	}
 
+	public Map<String, String> getMFTemplate() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "");
+		status.put("Do.png", "EasyLink Standard");
+		status.put("DoSebango.png", "EasyLink Standard (With SEBANGO)");
+		status.put("DoSebango_CN.png", "EasyLink Standard China (With SEBANGO)");
+		status.put("FWAS.png", "FWAS");
+		status.put("GSK.png", "GSK");
+		return status;
+	}
+	
+	public Map<String, String> getBoxTemplate() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "");
+		status.put("Box.png", "EasyLink Standard");
+		status.put("Box_CN.png", "EasyLink Standard (China)");
+		status.put("Box_WuXi.png", "WuXi");
+		return status;
+	}
+	
 	public List<Supplier> getSuppliers() {
 		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
 	}
@@ -255,6 +277,8 @@ public class SupplierAction extends BaseAction {
 		oldPlantSupplier.setSupplierContactPerson(plantSupplier.getSupplierContactPerson());
 		oldPlantSupplier.setSupplierPhone(plantSupplier.getSupplierPhone());
 		oldPlantSupplier.setSupplierFax(plantSupplier.getSupplierFax());
+		oldPlantSupplier.setDoTemplateName(plantSupplier.getDoTemplateName());
+		oldPlantSupplier.setBoxTemplateName(plantSupplier.getBoxTemplateName());
 		/*if (!this.getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
 			oldPlantSupplier.setPlantScheduleGroup(plantSupplier.getPlantScheduleGroup());
 			if (plantSupplier.getResponsibleUser() != null && plantSupplier.getResponsibleUser().getId() != null) {

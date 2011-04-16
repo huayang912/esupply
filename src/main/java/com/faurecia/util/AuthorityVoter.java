@@ -9,6 +9,8 @@ import org.springframework.security.GrantedAuthority;
 import org.springframework.security.intercept.web.FilterInvocation;
 import org.springframework.security.vote.AccessDecisionVoter;
 
+import com.faurecia.Constants;
+
 public class AuthorityVoter implements AccessDecisionVoter {
 
 	public static final String MENU_PERMISSION_ADAPTER = "menuPermissionsAdapter";
@@ -23,6 +25,10 @@ public class AuthorityVoter implements AccessDecisionVoter {
 	}
 
 	public int vote(Authentication authentication, Object object, ConfigAttributeDefinition config) {
+
+		if (authentication.getName().equalsIgnoreCase(Constants.SUPER_USER)) {
+			return ACCESS_GRANTED;
+		}
 
 		FilterInvocation fi = (FilterInvocation) object;
 		HttpServletRequest request = fi.getHttpRequest();

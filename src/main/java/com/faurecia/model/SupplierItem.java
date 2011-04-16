@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -42,6 +43,9 @@ public class SupplierItem extends BaseObject {
 	private Item item;
 	private Supplier supplier;
 	private String supplierItemCode;
+	
+	private String pCode;
+	private String sCode;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -117,4 +121,21 @@ public class SupplierItem extends BaseObject {
 				.toComparison();
 	}
 
+	@Transient
+	public String getpCode() {
+		return pCode;
+	}
+
+	public void setpCode(String pCode) {
+		this.pCode = pCode;
+	}
+
+	@Transient
+	public String getsCode() {
+		return sCode;
+	}
+
+	public void setsCode(String sCode) {
+		this.sCode = sCode;
+	}
 }

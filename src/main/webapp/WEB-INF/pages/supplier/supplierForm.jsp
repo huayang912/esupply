@@ -24,8 +24,8 @@
 	</c:set>
 
 	<s:if test="plantSupplier.plant == null">
-		<li><s:select key="plantSupplier.plant.code"
-			list="%{plants}" listKey="code" listValue="name" required="true"/></li>
+		<li><s:select key="plantSupplier.plant.code" list="%{plants}"
+			listKey="code" listValue="name" required="true" /></li>
 	</s:if>
 
 	<li><s:textfield key="plantSupplier.supplier.code"
@@ -53,6 +53,12 @@
 	<li><s:select key="plantSupplier.plantScheduleGroup.id"
 		list="%{plantScheduleGroupList}" listKey="id" listValue="name"
 		theme="xhtml" /></li>
+
+	<li><s:select key="plantSupplier.doTemplateName"
+		list="%{mFTemplate}" theme="xhtml" /></li>
+
+	<li><s:select key="plantSupplier.boxTemplateName"
+		list="%{boxTemplate}" theme="xhtml" /></li>
 
 	<li class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></li>

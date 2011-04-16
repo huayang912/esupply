@@ -95,6 +95,7 @@ public class ScheduleAction extends BaseAction {
 	public ScheduleView getScheduleView() throws DateParseException {
 		PlantScheduleGroup plantScheduleGroup = schedule.getPlantSupplier().getPlantScheduleGroup();
 		boolean allowOverDateDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverDateDeliver() : false;
+		boolean allowFirmDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowFirmDeliver() : false;
 		// boolean allowOverQtyDeliver = plantScheduleGroup != null ?
 		// plantScheduleGroup.getAllowOverQtyDeliver() : false;
 		boolean allowForecastDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowForecastDeliver() : false;
@@ -158,10 +159,13 @@ public class ScheduleAction extends BaseAction {
 									head.put("dateFrom", scheduleItemDetail.getDateFrom());
 									head.put("dateTo", scheduleItemDetail.getDateTo());
 
-									if (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)) {
-										head.put("createDo", false);
-									} else if (allowOverDateDeliver) {
-										if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+//									if (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)) {
+//										head.put("createDo", false);
+//									} else 
+									if (allowOverDateDeliver) {
+										if (!allowFirmDeliver && scheduleItemDetail.getScheduleType().equals("Firm")) {
+											head.put("createDo", false);
+										} else if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
 											head.put("createDo", false);
 										} else {
 											head.put("createDo", true);
@@ -170,7 +174,9 @@ public class ScheduleAction extends BaseAction {
 										if (dateNow.compareTo(scheduleItemDetail.getDateTo()) > 0) {
 											head.put("createDo", false);
 										} else {
-											if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+											if (!allowFirmDeliver && scheduleItemDetail.getScheduleType().equals("Firm")) {
+												head.put("createDo", false);
+											} else if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
 												head.put("createDo", false);
 											} else {
 												head.put("createDo", true);

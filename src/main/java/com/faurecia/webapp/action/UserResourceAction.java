@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.faurecia.Constants;
 import com.faurecia.model.LabelValue;
 import com.faurecia.model.Resource;
 import com.faurecia.model.User;
@@ -157,7 +158,7 @@ public class UserResourceAction extends BaseAction implements Preparable {
 	}
 
 	public String save() throws Exception {
-		if (user != null && !user.getUsername().equalsIgnoreCase("admin")) {
+		if (user != null && !user.getUsername().equalsIgnoreCase(Constants.SUPER_USER)) {
 			user = this.userManager.getUserByUsername(user.getUsername());
 			String[] resources = getRequest().getParameterValues("resources");
 			List<Resource> removeList = new ArrayList();
@@ -203,7 +204,7 @@ public class UserResourceAction extends BaseAction implements Preparable {
 	}
 
 	private void prepareResourceList() {
-		if (user.getUsername().equalsIgnoreCase("admin")) {
+		if (user.getUsername().equalsIgnoreCase(Constants.SUPER_USER)) {
 			List<Resource> allResourceList = this.resourceManager.getResourceByType(type);
 			user.setResourceList(new ArrayList<LabelValue>());
 			for (Resource res : allResourceList) {

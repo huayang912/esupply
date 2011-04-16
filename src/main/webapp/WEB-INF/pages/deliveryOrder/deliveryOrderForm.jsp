@@ -23,25 +23,28 @@
 					<td><s:submit key="button.delete" action="deleteDeliveryOrder" /></td>
 				</c:if>
 				<c:if
-					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
-					<td><s:submit
-						key="button.printSupplier" action="printDeliveryOrder" /></td>
-					<td><s:submit
-						key="button.printLogistic" action="printLogisticDeliveryOrder" /></td>
+					test="${not empty deliveryOrder.doNo and empty deliveryOrder.fileIdentitfier and deliveryOrder.status == 'Confirm'}">
+					<td><s:submit key="button.print"
+						action="printDeliveryOrder" /></td>
 				</c:if>
 				<c:if
-					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
+					test="${not empty deliveryOrder.doNo and not empty deliveryOrder.fileIdentitfier and deliveryOrder.status == 'Confirm'}">
+					<td><s:submit key="button.printSupplier"
+						action="printDeliveryOrder" /></td>
+					<td><s:submit key="button.printLogistic"
+						action="printLogisticDeliveryOrder" /></td>
 					<td><s:submit key="button.printPalletLabel"
 						action="printPalletLabel" /></td>
-				</c:if>
-				<c:if
-					test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
 					<td><s:submit key="button.printBoxLabel"
 						action="printBoxLabel" /></td>
 				</c:if>
-				<td><input type="button"
-					value="<fmt:message key="button.cancel"/>"
-					onclick="window.location.href='cancelDeliveryOrder.html'" /></td>
+				<td><c:if test="${param.from == 'list'}">
+					<input type="button" value="<fmt:message key="button.cancel"/>"
+						onclick="window.location.href='cancelDeliveryOrder.html'" />
+				</c:if> <c:if test="${param.from == 'list2'}">
+					<input type="button" value="<fmt:message key="button.cancel"/>"
+						onclick="window.location.href='deliveryOrders3.html?fileIdentitfier=${deliveryOrder.fileIdentitfier}'" />
+				</c:if></td>
 			</tr>
 		</table>
 	</c:set>
@@ -50,9 +53,9 @@
 		<tr>
 			<td><s:label key="deliveryOrder.externalDoNo"
 				cssClass="text medium" /></td>
-			<td><s:hidden name="deliveryOrder.doNo" key="deliveryOrder.doNo" />
-			<s:hidden name="deliveryOrder.plantCode"
-				key="deliveryOrder.plantCode" /> <s:hidden
+			<td><input type="hidden" name="from" value="${param.from}" /> <s:hidden
+				name="deliveryOrder.doNo" key="deliveryOrder.doNo" /> <s:hidden
+				name="deliveryOrder.plantCode" key="deliveryOrder.plantCode" /> <s:hidden
 				name="deliveryOrder.supplierCode" key="deliveryOrder.supplierCode" />
 			<s:hidden name="deliveryOrder.plantName"
 				key="deliveryOrder.plantName" /> <s:hidden
@@ -76,6 +79,10 @@
 				key="deliveryOrder.plantSupplier.id" /> <s:hidden
 				name="deliveryOrder.isExport" key="deliveryOrder.isExport" /> <s:hidden
 				name="deliveryOrder.isPrint" key="deliveryOrder.isPrint" /> <s:hidden
+				name="deliveryOrder.isRead" key="deliveryOrder.isRead" /><s:hidden
+				name="deliveryOrder.firstReadDate" key="deliveryOrder.firstReadDate" /><s:hidden
+				name="deliveryOrder.fileIdentitfier"
+				key="deliveryOrder.fileIdentitfier" /> <s:hidden
 				name="deliveryOrder.allowOverQty" key="deliveryOrder.allowOverQty" />
 			<s:hidden name="deliveryOrder.externalDoNo"
 				key="deliveryOrder.externalDoNo" /></td>
@@ -117,11 +124,16 @@
 		</tr>
 		<tr>
 			<td><s:label key="deliveryOrder.status" cssClass="text medium" /></td>
-			<td><s:label key="deliveryOrder.isPrint" cssClass="text medium" /></td>
-		</tr>
-		<tr>
 			<td><s:label key="deliveryOrder.createDate"
 				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="deliveryOrder.isRead" cssClass="text medium" /></td>
+			<td><s:label key="deliveryOrder.firstReadDate"
+				cssClass="text medium" /></td>
+		</tr>
+		<tr>
+			<td><s:label key="deliveryOrder.isPrint" cssClass="text medium" /></td>
 			<td><s:label key="deliveryOrder.isExport" cssClass="text medium" /></td>
 		</tr>
 	</table>
@@ -131,7 +143,8 @@
 		class="table">
 		<c:if
 			test="${not empty deliveryOrder.doNo and deliveryOrder.status == 'Confirm'}">
-			<display:column>
+			<display:column
+				title="<input type='checkbox' name='allbox' value='all' onclick='checkAll(this.form);' />">
 				<input type="checkbox"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].isChoosen" />
 			</display:column>
@@ -140,6 +153,8 @@
 			titleKey="deliveryOrderDetail.sequence" />
 		<display:column property="item.code"
 			titleKey="deliveryOrderDetail.itemCode" />
+		<display:column property="sebango"
+			titleKey="deliveryOrderDetail.sebango" />
 		<display:column property="itemDescription"
 			titleKey="deliveryOrderDetail.itemDescription" />
 		<display:column property="supplierItemCode"
@@ -160,7 +175,7 @@
 			<display:column titleKey="deliveryOrderDetail.qty">
 				<input type="text"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].qty"
-					value="<fmt:formatNumber value="${deliveryOrderDetail.qty}" pattern="#,###.##" />"
+					value="<fmt:formatNumber value="${deliveryOrderDetail.qty}" pattern="###.##" />"
 					class="text medium" />
 				<input type="hidden"
 					name="deliveryOrderDetailList[${deliveryOrderDetail_rowNum}].id"

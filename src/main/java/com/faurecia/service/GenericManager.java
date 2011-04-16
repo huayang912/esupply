@@ -72,11 +72,11 @@ public interface GenericManager<T, PK extends Serializable> {
 
 	List<T> findByExample(T exampleEntity);
 
-	List find(String hql);
+	List findByHql(String hql);
 
-	List find(String hql, Object objectValue);
+	List findByHql(String hql, Object obj);
 
-	List find(String hql, Object[] objectValues);
+	List findByHql(String hql, Object[] objs);
 
 	void clearSession();
 

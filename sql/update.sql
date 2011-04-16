@@ -1,52 +1,3 @@
---add external do no
-alter table do add ext_do_no varchar(20);
-update do set ext_do_no = do_no;
-alter table do alter column ext_do_no varchar(20) not null;
-CREATE UNIQUE NONCLUSTERED INDEX [DO_INDEX] ON [dbo].[do] 
-(
-	[ext_do_no] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY];
-
---add orderedqty and receivedqty
-alter table do_detail add order_Qty numeric(18, 4);
-alter table do_detail add receive_Qty numeric(18, 4);
-alter table do_detail add order_lot numeric(9, 2);
-alter table do_detail add box_count numeric(9, 2);
-
---add some fields for print label
-alter table do add murn varchar(20);
-alter table do add order_group varchar(20);
-alter table do add delivery_order_group varchar(20);
-alter table do add dock varchar(20);
-alter table do add route varchar(20);
-alter table do add main_route varchar(20);
-alter table do add total_weight numeric(18, 4);
-alter table do add unit_weight numeric(18, 4);
-alter table do add total_volume numeric(18, 4);
-alter table do add unit_volume numeric(18, 4);
-alter table do add total_nb_pallets numeric(18, 4);
-alter table do add title varchar(50);
-
-alter table do_detail add label int;
-
---alter table plant add version int;
---update plant set version = 1;
---alter table plant alter column version int not null;
-
-alter table do_detail add indice int;
-alter table do_detail alter column reference_order_no varchar(20);
-alter table do_detail alter column reference_sequence varchar(10);
-
-
-alter table do_detail add package_type varchar(20);
-alter table do_detail add storage_code varchar(20);
-alter table do_detail add sebango varchar(20);
-
-alter table plant add box_template_name varchar(20);
-
-alter table do add plant_address3 varchar(255);
-alter table do add supplier_address3 varchar(255);
-
 USE [esupply]
 GO
 /****** 对象:  Table [dbo].[resource]    脚本日期: 12/25/2010 20:30:19 ******/
@@ -140,16 +91,21 @@ insert into resource(id, code, type, description) values(2003001, '/suppliers.ht
 insert into resource(id, code, type, description) values(2003002, '/editSupplier.html', 'url', 'Edit Suppliers');
 insert into resource(id, code, type, description) values(2003003, '/saveSupplier.html', 'url', 'Save Suppliers');
 insert into resource(id, code, type, description) values(2003004, '/exportSupplier.html', 'url', 'Export Suppliers');
-insert into resource(id, code, type, description) values(2004001, '/items.html', 'url', 'List Items');
-insert into resource(id, code, type, description) values(2004002, '/editItem.html', 'url', 'Edit Items');
-insert into resource(id, code, type, description) values(2004003, '/saveItem.html', 'url', 'Save Items');
-insert into resource(id, code, type, description) values(2004004, '/exportItem.html', 'url', 'Export Items');
+insert into resource(id, code, type, description) values(2004001, '/items.html', 'url', 'List Parts');
+insert into resource(id, code, type, description) values(2004002, '/editItem.html', 'url', 'Edit Parts');
+insert into resource(id, code, type, description) values(2004003, '/saveItem.html', 'url', 'Save Parts');
+insert into resource(id, code, type, description) values(2004004, '/exportItem.html', 'url', 'Export Parts');
 insert into resource(id, code, type, description) values(2005001, '/plantScheduleGroups.html', 'url', 'List Schedule Groups');
 insert into resource(id, code, type, description) values(2005002, '/editPlantScheduleGroup.html', 'url', 'Edit Schedule Group');
 insert into resource(id, code, type, description) values(2005003, '/savePlantScheduleGroup.html', 'url', 'Save Schedule Group');
 insert into resource(id, code, type, description) values(2006001, '/listScheduleControl.html', 'url', 'List Schedule Control');
 insert into resource(id, code, type, description) values(2006002, '/saveScheduleControl.html', 'url', 'Save Schedule Control');
 insert into resource(id, code, type, description) values(2007001, '/activeUsers.html', 'url', 'List Active Users');
+insert into resource(id, code, type, description) values(2008001, '/supplierItems.html', 'url', 'List Supplier Parts');
+insert into resource(id, code, type, description) values(2008002, '/editSupplierItem.html', 'url', 'Edit Supplier Parts');
+insert into resource(id, code, type, description) values(2008003, '/saveSupplierItem.html', 'url', 'Save Supplier Parts');
+insert into resource(id, code, type, description) values(2008004, '/importSupplierItem.html', 'url', 'Import Supplier Parts');
+insert into resource(id, code, type, description) values(2008005, '/uploadSupplierItem.html', 'url', 'Upload Supplier Parts');
 insert into resource(id, code, type, description) values(3001001, '/purchaseOrders.html', 'url', 'List Purchase Orders');
 insert into resource(id, code, type, description) values(3001002, '/editPurchaseOrder.html', 'url', 'Edit Purchase Orders');
 insert into resource(id, code, type, description) values(3001003, '/savePurchaseOrder.html', 'url', 'Save Purchase Orders');
@@ -159,15 +115,18 @@ insert into resource(id, code, type, description) values(3003001, '/schedules.ht
 insert into resource(id, code, type, description) values(3003002, '/scheduleHistory.html', 'url', 'List Schedule History');
 insert into resource(id, code, type, description) values(3003003, '/editSchedule.html', 'url', 'Edit Schedules');
 insert into resource(id, code, type, description) values(3003004, '/saveSchedule.html', 'url', 'Save Schedules');
-insert into resource(id, code, type, description) values(3004001, '/deliveryOrders.html', 'url', 'List Delivery Orders');
-insert into resource(id, code, type, description) values(3004002, '/editDeliveryOrder.html', 'url', 'Edit Delivery Orders');
-insert into resource(id, code, type, description) values(3004003, '/saveDeliveryOrder.html', 'url', 'Save Delivery Orders');
-insert into resource(id, code, type, description) values(3004004, '/confirmDeliveryOrder.html', 'url', 'Confirm Delivery Orders');
-insert into resource(id, code, type, description) values(3004005, '/cancelDeliveryOrder.html', 'url', 'Cancel Delivery Orders');
-insert into resource(id, code, type, description) values(3004006, '/deleteDeliveryOrder.html', 'url', 'Delete Delivery Orders');
-insert into resource(id, code, type, description) values(3004007, '/printDeliveryOrder.html', 'url', 'Print Delivery Orders');
+insert into resource(id, code, type, description) values(3004001, '/deliveryOrders.html', 'url', 'List Manifests');
+insert into resource(id, code, type, description) values(3004002, '/editDeliveryOrder.html', 'url', 'Edit Manifests');
+insert into resource(id, code, type, description) values(3004003, '/saveDeliveryOrder.html', 'url', 'Save Manifests');
+insert into resource(id, code, type, description) values(3004004, '/confirmDeliveryOrder.html', 'url', 'Confirm Manifests');
+insert into resource(id, code, type, description) values(3004005, '/cancelDeliveryOrder.html', 'url', 'Cancel Manifests');
+insert into resource(id, code, type, description) values(3004006, '/deleteDeliveryOrder.html', 'url', 'Delete Manifests');
+insert into resource(id, code, type, description) values(3004007, '/printDeliveryOrder.html', 'url', 'Print Manifests');
 insert into resource(id, code, type, description) values(3004008, '/printPalletLabel.html', 'url', 'Print Pallet Label');
 insert into resource(id, code, type, description) values(3004009, '/printBoxLabel.html', 'url', 'Print Box Label');
+insert into resource(id, code, type, description) values(3004010, '/deliveryOrders2.html', 'url', 'List Manifest Files');
+insert into resource(id, code, type, description) values(3004011, '/deliveryOrders3.html', 'url', 'Edit Manifest From Files');
+insert into resource(id, code, type, description) values(3004012, '/printLogisticDeliveryOrder.html', 'url', 'Print Logistic Partner''s Manifests');
 insert into resource(id, code, type, description) values(3005001, '/receipts.html', 'url', 'List Receipts');
 insert into resource(id, code, type, description) values(3005002, '/editReceipt.html', 'url', 'Edit Receipts');
 insert into resource(id, code, type, description) values(3005003, '/saveReceipt.html', 'url', 'Save Receipts');
@@ -186,3 +145,7 @@ insert into resource(id, code, type, description) values(4004002, '/exportOutbou
 insert into resource(id, code, type, description) values(4003002, '/importInboundLog.html', 'url', 'Import Inbound Log');
 insert into resource(id, code, type, description) values(4999999, '/logout.jsp', 'url', 'Logout');
 set identity_insert resource off;
+
+insert into resource(code, type, description) select code, 'plant', name from plant;
+insert into resource(code, type, description) select code, 'supplier', name from supplier;
+

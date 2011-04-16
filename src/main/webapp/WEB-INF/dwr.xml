@@ -9,6 +9,13 @@
             <include method="getUsers"/>
             <include method="keepSession"/>
         </create>
+        <create creator="spring" javascript="SupplierManager">
+            <param name="class" value="com.faurecia.service.SupplierManager"/>
+            <param name="beanName" value="supplierManager"/>
+            <include method="getSuppliersByPlantAndUser" />
+            <include method="getAuthorizedSupplier" />
+        </create>
         <convert converter="bean" match="com.faurecia.model.User"/>
+        <convert converter="bean" match="com.faurecia.model.Supplier"/>
     </allow>
 </dwr>

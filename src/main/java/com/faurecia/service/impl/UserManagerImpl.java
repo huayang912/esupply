@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.jws.WebService;
 import javax.persistence.EntityExistsException;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,10 +17,12 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.providers.encoding.PasswordEncoder;
 import org.springframework.security.userdetails.UsernameNotFoundException;
 
+import com.faurecia.Constants;
 import com.faurecia.dao.UserDao;
 import com.faurecia.model.Plant;
 import com.faurecia.model.Role;
 import com.faurecia.model.User;
+import com.faurecia.service.GenericManager;
 import com.faurecia.service.UserExistsException;
 import com.faurecia.service.UserManager;
 import com.faurecia.service.UserService;
@@ -203,10 +207,13 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 	public List<User> getAuthorizedUser(String userName, String userName2, String firstName, String lastName, String email, String orderBy,
 			String orderSort) {
 		List<User> users = new ArrayList<User>();
-		if (userName.equalsIgnoreCase("admin")) {
-			users = this.getAll(User.class);
+
+		String sql = "";
+		List<Object> params = new ArrayList<Object>();
+		if (userName.equalsIgnoreCase(Constants.SUPER_USER)) {
+			sql = "select u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u where 1=1 ";
 		} else {
-			String sql = "select u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from "
+			sql = "select u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from "
 					+ "(select distinct u.id ,u.account_expired ,u.account_locked ,u.address ,u.city ,u.country ,u.postal_code ,u.province ,u.credentials_expired ,u.email ,u.account_enabled ,u.first_name ,u.last_name ,u.password ,u.password_hint ,u.phone_number ,u.username ,u.version ,u.website from app_user as u "
 					+ "inner join user_resource as ur on u.id = ur.user_id "
 					+ "where ur.resource_id in "
@@ -235,65 +242,64 @@ public class UserManagerImpl extends UniversalManagerImpl implements UserManager
 					+ "inner join role_resource as rr on ur.role_id = rr.role_id "
 					+ "inner join resource as r on rr.resource_id = r.id and r.type = 'plant' " + "where u.username = ?)) as u where 1= 1 ";
 
-			List<Object> params = new ArrayList<Object>();
 			params.add(userName);
 			params.add(userName);
 			params.add(userName);
 			params.add(userName);
+		}
 
-			if (userName2 != null && userName2.trim().length() > 0) {
-				sql += "and u.username like ? ";
-				params.add("%" + userName2 + "%");
+		if (userName2 != null && userName2.trim().length() > 0) {
+			sql += "and u.username like ? ";
+			params.add("%" + userName2 + "%");
+		}
+
+		if (firstName != null && firstName.trim().length() > 0) {
+			sql += "and u.first_name like ? ";
+			params.add("%" + firstName + "%");
+		}
+
+		if (lastName != null && lastName.trim().length() > 0) {
+			sql += "and u.last_name like ? ";
+			params.add("%" + lastName + "%");
+		}
+
+		if (email != null && email.trim().length() > 0) {
+			sql += "and u.email like ? ";
+			params.add("%" + email + "%");
+		}
+
+		if (orderBy != null && orderBy.trim().length() > 0) {
+			sql += "order by u." + orderBy;
+			if (orderSort != null && orderSort.trim().length() > 0) {
+				sql += " " + orderSort;
 			}
+		}
 
-			if (firstName != null && firstName.trim().length() > 0) {
-				sql += "and u.first_name like ? ";
-				params.add("%" + firstName + "%");
-			}
+		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, params.toArray());
 
-			if (lastName != null && lastName.trim().length() > 0) {
-				sql += "and u.last_name like ? ";
-				params.add("%" + lastName + "%");
-			}
+		while (resultSet.next()) {
+			User user = new User();
+			user.setId(resultSet.getLong("id"));
+			user.setAccountExpired(resultSet.getBoolean("account_expired"));
+			user.setAccountLocked(resultSet.getBoolean("account_locked"));
+			// user.setAddress(resultSet.getString(4));
+			// user.setCity(5);
+			// user.setCountry(6);
+			// user.setPostal_code(7);
+			// user.setProvince(8);
+			user.setCredentialsExpired(resultSet.getBoolean("credentials_expired"));
+			user.setEmail(resultSet.getString("email"));
+			user.setEnabled(resultSet.getBoolean("account_enabled"));
+			user.setFirstName(resultSet.getString("first_name"));
+			user.setLastName(resultSet.getString("last_name"));
+			user.setPassword(resultSet.getString("password"));
+			user.setPasswordHint(resultSet.getString("password_hint"));
+			user.setPhoneNumber(resultSet.getString("phone_number"));
+			user.setUsername(resultSet.getString("username"));
+			user.setVersion(resultSet.getInt("version"));
+			user.setWebsite(resultSet.getString("website"));
 
-			if (email != null && email.trim().length() > 0) {
-				sql += "and u.email like ? ";
-				params.add("%" + email + "%");
-			}
-
-			if (orderBy != null && orderBy.trim().length() > 0) {
-				sql += "order by u." + orderBy;
-				if (orderSort != null && orderSort.trim().length() > 0) {
-					sql += " " + orderSort;
-				}
-			}
-
-			SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, params.toArray());
-
-			while (resultSet.next()) {
-				User user = new User();
-				user.setId(resultSet.getLong("id"));
-				user.setAccountExpired(resultSet.getBoolean("account_expired"));
-				user.setAccountLocked(resultSet.getBoolean("account_locked"));
-				// user.setAddress(resultSet.getString(4));
-				// user.setCity(5);
-				// user.setCountry(6);
-				// user.setPostal_code(7);
-				// user.setProvince(8);
-				user.setCredentialsExpired(resultSet.getBoolean("credentials_expired"));
-				user.setEmail(resultSet.getString("email"));
-				user.setEnabled(resultSet.getBoolean("account_enabled"));
-				user.setFirstName(resultSet.getString("first_name"));
-				user.setLastName(resultSet.getString("last_name"));
-				user.setPassword(resultSet.getString("password"));
-				user.setPasswordHint(resultSet.getString("password_hint"));
-				user.setPhoneNumber(resultSet.getString("phone_number"));
-				user.setUsername(resultSet.getString("username"));
-				user.setVersion(resultSet.getInt("version"));
-				user.setWebsite(resultSet.getString("website"));
-
-				users.add(user);
-			}
+			users.add(user);
 		}
 
 		return users;

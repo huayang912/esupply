@@ -92,4 +92,6 @@ public class Constants {
     public static final String DO_NO_PREFIX = "doNoPrefix";
     
     public static final String SUPPLIER_PLANT_CODE = "supplierPlantCode";
+    
+    public static final String SUPER_USER = "admin";
 }

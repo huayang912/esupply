@@ -66,8 +66,11 @@
 	<bean id="supplierItemAction" class="com.faurecia.webapp.action.SupplierItemAction"
 		scope="prototype">
 		<property name="supplierItemManager" ref="supplierItemManager" />
+		<property name="supplierManager" ref="supplierManager" />
 		<property name="userManager" ref="userManager" />
 		<property name="roleManager" ref="roleManager" />
+		<property name="plantSupplierManager" ref="plantSupplierManager" />
+		<property name="itemManager" ref="itemManager" />
 	</bean>
 
 	<bean id="supplierAction" class="com.faurecia.webapp.action.SupplierAction"

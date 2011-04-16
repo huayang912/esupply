@@ -36,7 +36,7 @@
 
 <c:if test="${item != null}">
 	<display:table name="items" cellspacing="0" cellpadding="0"
-		requestURI="" defaultsort="1" id="items" pagesize="25" class="table"
+		requestURI="" id="items" pagesize="25" class="table"
 		export="true">
 		<display:column property="code" sortable="true" url="/editItem.html"
 			paramId="id" paramProperty="id" titleKey="item.code" />
