@@ -55,7 +55,7 @@ public class ScheduleAction extends BaseAction {
 	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
 		this.plantSupplierManager = plantSupplierManager;
 	}
-	
+
 	public Schedule getSchedule() {
 		return schedule;
 	}
@@ -63,29 +63,31 @@ public class ScheduleAction extends BaseAction {
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
 	}
-	
+
 	public boolean getIsPlantUser() {
 		return isPlantUser;
-	}	
+	}
 
 	public List<PlantSupplier> getSuppliers() {
 		String userCode = this.getRequest().getRemoteUser();
 		User user = this.userManager.getUserByUsername(userCode);
-		
+
 		return this.plantSupplierManager.getPlantSupplierByUserId(user.getId());
 	}
 
 	public ScheduleView getScheduleView() throws DateParseException {
 		PlantScheduleGroup plantScheduleGroup = schedule.getPlantSupplier().getPlantScheduleGroup();
 		boolean allowOverDateDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverDateDeliver() : false;
-		//boolean allowOverQtyDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowOverQtyDeliver() : false;
+		boolean allowFirmDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowFirmDeliver() : false;
+		// boolean allowOverQtyDeliver = plantScheduleGroup != null ?
+		// plantScheduleGroup.getAllowOverQtyDeliver() : false;
 		boolean allowForecastDeliver = plantScheduleGroup != null ? plantScheduleGroup.getAllowForecastDeliver() : false;
-		
+
 		if (scheduleView == null) {
 			scheduleView = new ScheduleView();
 
 			if (schedule != null) {
-		
+
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTime(new Date());
 				calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -93,7 +95,7 @@ public class ScheduleAction extends BaseAction {
 				calendar.set(Calendar.SECOND, 0);
 				calendar.set(Calendar.MILLISECOND, 0);
 				Date dateNow = calendar.getTime();
-				
+
 				if (schedule.getScheduleItemList() != null && schedule.getScheduleItemList().size() > 0) {
 					for (int i = 0; i < schedule.getScheduleItemList().size(); i++) {
 						ScheduleItem scheduleItem = schedule.getScheduleItemList().get(i);
@@ -105,8 +107,8 @@ public class ScheduleAction extends BaseAction {
 								int insertPosion = -1;
 								for (int k = 0; k < scheduleView.getScheduleHead().getHeadList().size(); k++) {
 									Map<String, Object> head = scheduleView.getScheduleHead().getHeadList().get(k);
-									String scheduleType = (String)head.get("scheduleType");
-									Date dateFrom = (Date)head.get("dateFrom");
+									String scheduleType = (String) head.get("scheduleType");
+									Date dateFrom = (Date) head.get("dateFrom");
 									// Date dateTo =
 									// scheduleView.getScheduleHead().getDateToList().get(k);
 
@@ -118,7 +120,7 @@ public class ScheduleAction extends BaseAction {
 											insertPosion = -2;
 											break;
 										}
-										
+
 										if ("Backlog + Immediate Requirement".equals(scheduleItemDetail.getScheduleType())
 												&& "Firm".equals(scheduleType)) {
 											insertPosion = k;
@@ -138,32 +140,32 @@ public class ScheduleAction extends BaseAction {
 									Map<String, Object> head = new HashMap<String, Object>();
 									head.put("scheduleType", scheduleItemDetail.getScheduleType());
 									head.put("dateFrom", scheduleItemDetail.getDateFrom());
-									head.put("dateTo", scheduleItemDetail.getDateTo());															
-									
-									if (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE))
-									{
+									head.put("dateTo", scheduleItemDetail.getDateTo());
+
+									if (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)) {
 										head.put("createDo", false);
-									}
-									else if (allowOverDateDeliver) {
-										if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+									} else if (allowOverDateDeliver) {
+										if (!allowFirmDeliver && scheduleItemDetail.getScheduleType().equals("Firm")) {
 											head.put("createDo", false);
-										}
-										else {
+										} else if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+											head.put("createDo", false);
+										} else {
 											head.put("createDo", true);
 										}
 									} else {
 										if (dateNow.compareTo(scheduleItemDetail.getDateTo()) > 0) {
 											head.put("createDo", false);
 										} else {
-											if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+											if (!allowFirmDeliver && scheduleItemDetail.getScheduleType().equals("Firm")) {
 												head.put("createDo", false);
-											}
-											else {
+											} else if (!allowForecastDeliver && scheduleItemDetail.getScheduleType().equals("Forecast")) {
+												head.put("createDo", false);
+											} else {
 												head.put("createDo", true);
 											}
 										}
-									}									
-									
+									}
+
 									if (insertPosion != -1) {
 										scheduleView.getScheduleHead().getHeadList().add(insertPosion, head);
 									} else {
@@ -190,8 +192,8 @@ public class ScheduleAction extends BaseAction {
 
 						for (int j = 0; j < scheduleView.getScheduleHead().getHeadList().size(); j++) {
 							Map<String, Object> head = scheduleView.getScheduleHead().getHeadList().get(j);
-							String scheduleType = (String)head.get("scheduleType");
-							Date dateFrom = (Date)head.get("dateFrom");					
+							String scheduleType = (String) head.get("scheduleType");
+							Date dateFrom = (Date) head.get("dateFrom");
 
 							boolean findMatch = false;
 							if (scheduleItem.getScheduleItemDetailList() != null && scheduleItem.getScheduleItemDetailList().size() > 0) {
@@ -219,21 +221,21 @@ public class ScheduleAction extends BaseAction {
 		}
 
 		return scheduleView;
-	}	
+	}
 
 	public String list() {
 		HttpServletRequest request = getRequest();
 		if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
 			this.isPlantUser = true;
 		}
-		
+
 		schedule = new Schedule();
 		schedule.setCreateDate(new Date());
-		
+
 		return SUCCESS;
 	}
 
-	public String cancel() {				
+	public String cancel() {
 		if (!"list".equals(from)) {
 			return "mainMenu";
 		}
@@ -253,28 +255,31 @@ public class ScheduleAction extends BaseAction {
 				if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
 					return "mainMenu";
 				}
-				
-				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), new Date(), true);
+
+				schedule = this.scheduleManager.getLastestScheduleItem((String) this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user
+						.getUserSupplier().getCode(), new Date(), true);
 			}
 		} else {
 			if (request.isUserInRole(Constants.PLANT_USER_ROLE)) {
-				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), schedule.getCreateDate(), true);
+				schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), schedule.getSupplierCode(), schedule
+						.getCreateDate(), true);
 			} else if (request.isUserInRole(Constants.VENDOR_ROLE)) {
 				if (this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE) == null) {
 					return "mainMenu";
 				}
-				
-				schedule = this.scheduleManager.getLastestScheduleItem((String)this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user.getUserSupplier().getCode(), schedule.getCreateDate(), true);
+
+				schedule = this.scheduleManager.getLastestScheduleItem((String) this.getSession().getAttribute(Constants.SUPPLIER_PLANT_CODE), user
+						.getUserSupplier().getCode(), schedule.getCreateDate(), true);
 			}
 		}
 
 		return SUCCESS;
 	}
-	
+
 	public String listAudit() {
 		return SUCCESS;
 	}
-	
+
 	public String audit() throws Exception {
 		HttpServletRequest request = getRequest();
 		User user = this.userManager.getUserByUsername(request.getRemoteUser());
@@ -284,13 +289,13 @@ public class ScheduleAction extends BaseAction {
 
 		return SUCCESS;
 	}
-	
+
 	public String confirm() throws Exception {
-		
+
 		String[] scheduleItemIds = this.getRequest().getParameterValues("scheduleItem");
-		
+
 		this.scheduleManager.confirmScheduleItem(scheduleItemIds);
-		
+
 		HttpServletRequest request = getRequest();
 		User user = this.userManager.getUserByUsername(request.getRemoteUser());
 		schedule = this.scheduleManager.getLastestScheduleItem(user.getUserPlant().getCode(), supplier.getCode(), new Date(), false);

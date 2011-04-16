@@ -30,6 +30,7 @@ public class PlantScheduleGroup extends BaseObject {
 	private String name;
 	private Plant plant;
 	private Boolean allowOverDateDeliver;
+	private Boolean allowFirmDeliver;
 	private Boolean allowOverQtyDeliver;
 	private Boolean allowForecastDeliver;
 	private Boolean isDefault;
@@ -71,6 +72,15 @@ public class PlantScheduleGroup extends BaseObject {
 
 	public void setAllowOverDateDeliver(Boolean allowOverDateDeliver) {
 		this.allowOverDateDeliver = allowOverDateDeliver;
+	}
+	
+	@Column(name="allow_firm_deliver", nullable = false)
+	public Boolean getAllowFirmDeliver() {
+		return allowFirmDeliver;
+	}
+
+	public void setAllowFirmDeliver(Boolean allowFirmDeliver) {
+		this.allowFirmDeliver = allowFirmDeliver;
 	}
 	
 	@Column(name="allow_over_qty_deliver", nullable = false)

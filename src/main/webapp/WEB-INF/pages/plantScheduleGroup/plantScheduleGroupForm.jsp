@@ -46,6 +46,9 @@
 				key="plantScheduleGroup.allowOverQtyDeliver" /></label><s:checkbox key="plantScheduleGroup.allowOverQtyDeliver"
 				theme="simple" /></td>
 			<td><label class="desc"><fmt:message
+				key="plantScheduleGroup.allowFirmDeliver" /></label><s:checkbox key="plantScheduleGroup.allowFirmDeliver"
+				theme="simple" /></td>
+			<td><label class="desc"><fmt:message
 				key="plantScheduleGroup.allowForecastDeliver" /></label><s:checkbox key="plantScheduleGroup.allowForecastDeliver"
 				theme="simple" /></td>
 		</tr>
