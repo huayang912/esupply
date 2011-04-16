@@ -40,7 +40,7 @@
 				</interceptor-ref>
 				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation">
-					<param name="excludeMethods">cancel,execute,delete,edit,list</param>
+					<param name="excludeMethods">cancel,execute,delete,edit,list,upload</param>
 				</interceptor-ref>
 				<interceptor-ref name="workflow">
 					<param name="excludeMethods">input,back,cancel,browse</param>
@@ -264,6 +264,20 @@
 			</result>
 			<result name="cancel" type="redirect-action">supplierItems</result>
 			<result name="success" type="redirect-action">supplierItems</result>
+			<result name="delete" type="redirect-action">supplierItems</result>
+		</action>
+		
+		<action name="importSupplierItem" class="supplierItemAction"
+			method="importFile">
+			<result>/WEB-INF/pages/supplierItem/uploadSupplierItem.jsp</result>
+		</action>
+
+		<action name="uploadSupplierItem" class="supplierItemAction"
+			method="upload">
+			<result name="input">/WEB-INF/pages/supplierItem/uploadSupplierItem.jsp
+			</result>
+			<result name="cancel" type="redirect-action">supplierItems</result>
+			<result name="success" type="redirect-action">supplierItems</result>
 		</action>
 
 		<!-- Supplier -->
@@ -382,6 +396,18 @@
 			</result>
 		</action>
 
+		<action name="deliveryOrders2" class="deliveryOrderAction"
+			method="list2">
+			<result name="success">/WEB-INF/pages/deliveryOrder/goodsFileList.jsp
+			</result>
+		</action>
+
+		<action name="deliveryOrders3" class="deliveryOrderAction"
+			method="list3">
+			<result name="success">/WEB-INF/pages/deliveryOrder/deliveryOrderList2.jsp
+			</result>
+		</action>
+		
 		<action name="editDeliveryOrder" class="deliveryOrderAction"
 			method="edit">
 			<result name="poInput" type="redirect-action">
@@ -411,6 +437,7 @@
 		<action name="cancelDeliveryOrder" class="deliveryOrderAction"
 			method="cancel">
 			<result name="cancel" type="redirect-action">deliveryOrders</result>
+			<result name="cancel2" type="redirect-action">deliveryOrders3</result>
 		</action>
 
 		<action name="deleteDeliveryOrder" class="deliveryOrderAction"
@@ -427,6 +454,15 @@
 			</result>
 		</action>
 		
+		<action name="printLogisticDeliveryOrder" class="deliveryOrderAction"
+			method="printLogistic">
+			<result name="success" type="stream">
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<param name="bufferSize">4096</param>
+			</result>
+		</action>
+
 		<action name="printLogisticDeliveryOrder" class="deliveryOrderAction"
 			method="printLogistic">
 			<result name="success" type="stream">

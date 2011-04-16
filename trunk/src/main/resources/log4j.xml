@@ -10,10 +10,11 @@
 	</appender>
 
 	<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="e-supply.log" />       
-        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />   
+		<param name="File" value="e-supply.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
 		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="%d{yyyy-MM-dd hh:mm:ss.SSS} %p [%t] %c{1}.%M(%L) | %m%n" />
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd hh:mm:ss.SSS} %p [%t] %c{1}.%M(%L) | %m%n" />
 		</layout>
 	</appender>
 
@@ -45,9 +46,9 @@
 		<level value="WARN" />
 	</logger>
 
-	<!--
-		logger name="org.hibernate.SQL"> <level value="DEBUG"/> </logger
-	-->
+	<logger name="org.hibernate.SQL">
+		<level value="DEBUG" />
+	</logger>
 
 	<logger name="org.springframework">
 		<level value="WARN" />

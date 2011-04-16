@@ -10,6 +10,19 @@
 <meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {		
+		SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("schedules_plantSupplier_supplier_Code");
+		 if (suppliers != null) {
+		 	DWRUtil.addOptions("schedules_plantSupplier_supplier_Code",suppliers,"code","name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -22,14 +35,15 @@
 <s:form name="scheduleForm" action="schedules" method="post"
 	validate="true">
 	<s:hidden name="from" value="list" />
-	<s:hidden key="isHistory"/>
+	<s:hidden key="isHistory" />
 	<li style="padding: 0px">
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.plant" /></label></td>
 			<td colspan="2"><s:select key="plantSupplier.plant.Code"
-				list="%{plants}" listKey="code" listValue="name" theme="simple" /></td>
+				list="%{plants}" listKey="code" listValue="name" theme="simple"
+				onchange="cascadeUpdateSupplier(this);" /></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>
@@ -39,10 +53,9 @@
 		<c:if test="${isHistory}">
 			<tr>
 				<td><label class="desc"><fmt:message
-				key="schedule.createDate" /></label>
-				</td>
-				<td><s:textfield key="effectiveDate"
-					theme="simple" required="true" /></td>
+					key="schedule.createDate" /></label></td>
+				<td><s:textfield key="effectiveDate" theme="simple"
+					required="true" /></td>
 				<td><A HREF="#"
 					onClick="cal.select(document.forms['scheduleForm'].schedules_effectiveDate,'anchDateFrom','MM/dd/yyyy'); return false;"
 					NAME="anchDateFrom" ID="anchDateFrom"> <img
@@ -55,10 +68,12 @@
 </s:form>
 
 <c:if test="${plantSupplier != null}">
-<p><fmt:message key="schedule.notFound" /></p>
+	<p><fmt:message key="schedule.notFound" /></p>
 </c:if>
 
 <script type="text/javascript">
 		Form.focusFirstElement(document.forms["scheduleForm"]);
-		highlightFormElements();
+		highlightFormElements();	
+		cascadeUpdateSupplier(document.forms["scheduleForm"].elements["schedules_plantSupplier_plant_Code"]);	
 </script>
+

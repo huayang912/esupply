@@ -14,6 +14,7 @@
         <script type="text/javascript" src="<c:url value='/scripts/scriptaculous.js'/>"></script>
         <script type="text/javascript" src="<c:url value='/scripts/global.js'/>"></script>   
         <script type='text/javascript' src="<c:url value='/dwr/interface/UserManager.js'/>"></script>
+        <script type='text/javascript' src="<c:url value='/dwr/interface/SupplierManager.js'/>"></script>
   		<script type='text/javascript' src="<c:url value='/dwr/engine.js'/>"></script>
         <script type='text/javascript' src="<c:url value='/dwr/util.js'/>"></script>
         

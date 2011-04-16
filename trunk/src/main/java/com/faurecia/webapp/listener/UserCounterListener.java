@@ -125,7 +125,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
                 addUsername(user);
                 
                 HttpSession session = event.getSession();
-                MenuPermissionsAdapter menuPermissionsAdapter = new MenuPermissionsAdapter(user.getUrlAuthorities());
+                MenuPermissionsAdapter menuPermissionsAdapter = new MenuPermissionsAdapter(user.getUrlAuthorities(), user.getUsername());
                 session.setAttribute(AuthorityVoter.MENU_PERMISSION_ADAPTER, menuPermissionsAdapter);
             }
         }
@@ -176,7 +176,7 @@ public class UserCounterListener implements ServletContextListener, HttpSessionA
     }
 
 	public void sessionCreated(HttpSessionEvent se) {
-		MenuPermissionsAdapter menuPermissionsAdapter = new MenuPermissionsAdapter(null);
+		MenuPermissionsAdapter menuPermissionsAdapter = new MenuPermissionsAdapter(null, null);
         se.getSession().setAttribute(AuthorityVoter.MENU_PERMISSION_ADAPTER, menuPermissionsAdapter);
 	}
 

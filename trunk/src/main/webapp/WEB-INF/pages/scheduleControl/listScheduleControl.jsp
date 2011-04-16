@@ -11,6 +11,19 @@
 <meta name="menu" content="AdminMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("listScheduleControl_schedulePlantSupplier_supplier_code");
+		 if (suppliers != null) {		 
+		 	DWRUtil.addOptions("listScheduleControl_schedulePlantSupplier_supplier_code",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -25,7 +38,7 @@
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.plant" /></label></td>
 			<td colspan="2"><s:select key="schedulePlantSupplier.plant.code"
-				list="%{plants}" listKey="code" listValue="name" theme="simple" /></td>
+				list="%{plants}" listKey="code" listValue="name" theme="simple" onchange="cascadeUpdateSupplier(this);"/></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>
@@ -74,6 +87,7 @@
 </s:form>
 
 <script type="text/javascript">
-		Form.focusFirstElement(document.forms["scheduleControlForm"]);
+		Form.focusFirstElement(document.forms["listScheduleControl"]);
 		highlightFormElements();
+		cascadeUpdateSupplier(document.forms["listScheduleControl"].elements["listScheduleControl_schedulePlantSupplier_plant_code"]);
 </script>

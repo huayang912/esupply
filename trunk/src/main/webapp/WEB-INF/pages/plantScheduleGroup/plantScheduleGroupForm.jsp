@@ -33,7 +33,7 @@
 		<tr>
 			<s:if test="plantScheduleGroup.plant == null">
 				<td><s:select key="plantScheduleGroup.plant.code"
-					list="%{plants}" listKey="code" listValue="name"/></td>
+					list="%{plants}" listKey="code" listValue="name" /></td>
 			</s:if>
 			<td><s:textfield key="plantScheduleGroup.name" required="xhtml"
 				cssClass="text medium" /></td>
@@ -51,6 +51,9 @@
 			<td><label class="desc"><fmt:message
 				key="plantScheduleGroup.allowOverQtyDeliver" /></label><s:checkbox
 				key="plantScheduleGroup.allowOverQtyDeliver" theme="simple" /></td>
+			<td><label class="desc"><fmt:message
+				key="plantScheduleGroup.allowFirmDeliver" /></label><s:checkbox
+				key="plantScheduleGroup.allowFirmDeliver" theme="simple" /></td>
 			<td><label class="desc"><fmt:message
 				key="plantScheduleGroup.allowForecastDeliver" /></label><s:checkbox
 				key="plantScheduleGroup.allowForecastDeliver" theme="simple" /></td>
@@ -82,7 +85,7 @@
 		</fieldset>
 		</li>
 	</s:if>
-	
+
 	<li class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></li>
 </s:form>

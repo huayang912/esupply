@@ -7,6 +7,8 @@ import net.sf.navigator.menu.PermissionsAdapter;
 
 import org.springframework.security.GrantedAuthority;
 
+import com.faurecia.Constants;
+
 public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable {
 
 	/**
@@ -14,6 +16,7 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 	 */
 	private static final long serialVersionUID = 1L;
 	private GrantedAuthority[] authorities;
+	private String userName;
 
 	public GrantedAuthority[] getAuthorities() {
 		return authorities;
@@ -23,7 +26,19 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 		this.authorities = authorities;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public boolean isAllowed(MenuComponent menu) {
+		if (Constants.SUPER_USER.equalsIgnoreCase(userName)) {
+			return true;
+		}
+
 		if (authorities != null) {
 			if (menu.getPage() != null && menu.getPage().trim().length() != 0) {
 				for (GrantedAuthority authority : authorities) {
@@ -52,7 +67,8 @@ public class MenuPermissionsAdapter implements PermissionsAdapter, Serializable 
 		return false;
 	}
 
-	public MenuPermissionsAdapter(GrantedAuthority[] authorities) {
+	public MenuPermissionsAdapter(GrantedAuthority[] authorities, String userName) {
 		this.authorities = authorities;
+		this.userName = userName;
 	}
 }

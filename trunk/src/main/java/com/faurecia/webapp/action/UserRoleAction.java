@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.faurecia.Constants;
 import com.faurecia.model.LabelValue;
 import com.faurecia.model.Resource;
 import com.faurecia.model.Role;
@@ -71,7 +72,7 @@ public class UserRoleAction extends BaseAction {
 			role = this.roleManager.getRole(role.getName(), true);
 			prepareResourceList();
 		} else {
-			if (getRequest().getRemoteUser().equalsIgnoreCase("admin")) {
+			if (getRequest().getRemoteUser().equalsIgnoreCase(Constants.SUPER_USER)) {
 				roles = this.roleManager.getAll(Role.class);
 			} else {
 				User user = this.userManager.getUserByUsername(getRequest().getRemoteUser(), true, true);

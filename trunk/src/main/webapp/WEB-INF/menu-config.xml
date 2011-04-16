@@ -8,13 +8,14 @@
         <Menu name="UserMenu" title="menu.user" description="User Menu" page="/editProfile.html"/>            
         <Menu name="AdminMenu" title="menu.admin" description="Administrator Menu" width="120">
             <Item name="ViewUser" title="menu.admin.users" description="Users Menu" page="/users.html"/>
-            <Item name="RoleMenu" title="menu.admin.roles" description="Roles Menu" page="/roles.html"/>
-            <Item name="UserRole" title="menu.admin.userRoles" description="UserRoles Menu" page="/userRoles.html"/>
+            <Item name="RoleMenu" title="menu.admin.roles" description="Roles Menu" page="/roles.html"/>            
             <Item name="UserResource" title="menu.admin.userResources" description="User Resources Menu" page="/userResources.html"/>
+            <Item name="UserRole" title="menu.admin.userRoles" description="UserRoles Menu" page="/userRoles.html"/>
             <Item name="RoleResource" title="menu.admin.roleResources" description="Role Resources Menu" page="/roleResources.html"/>
             <Item name="PlantMenu" title="menu.admin.plants" description="Plants Menu" page="/plants.html" />
             <Item name="SupplierMenu" title="menu.admin.suppliers" description="Suppliers Menu" page="/suppliers.html" />
-            <Item name="ItemMenu" title="menu.admin.items" description="Items Menu" page="/items.html" />
+            <Item name="ItemMenu" title="menu.admin.items" description="Parts Menu" page="/items.html" />
+            <Item name="ItemMenu" title="menu.admin.supplierItems" description="Supplier Part Menu" page="/supplierItems.html" />
             <Item name="PlantScheudleGroupMenu" title="menu.admin.plantScheduleGroups" description="Schedule Groups Menu" page="/plantScheduleGroups.html" />
         	<Item name="ScheudleControlMenu" title="menu.admin.scheduleControl" description="Schedule Control Menu" page="/listScheduleControl.html" />
             <Item name="ActiveUsers" title="mainMenu.activeUsers" description="Active Users Menu" page="/activeUsers.html" /> 
@@ -24,7 +25,8 @@
         	<Item name="ScheduleAuditMenu" title="menu.order.scheduleAudit" description="Schedule Audit Menu" page="/listScheduleAudit.html" />
         	<Item name="ScheduleMenu" title="menu.order.schedules" description="Schedules Menu" page="/schedules.html" />
         	<Item name="ScheduleHistoryMenu" title="menu.order.scheduleHistory" description="Schedule History Menu" page="/scheduleHistory.html" />
-			<Item name="DeliveryOrderMenu" title="menu.order.deliveryOrders" description="Delivery Orders Menu" page="/deliveryOrders.html" />       
+			<Item name="DeliveryOrderMenu" title="menu.order.deliveryOrders" description="Manifests Menu" page="/deliveryOrders.html" /> 
+			<Item name="DeliveryOrderMenu2" title="menu.order.deliveryOrders2" description="Manifest File Menu" page="/deliveryOrders2.html"/>			
 			<Item name="ReceiptMenu" title="menu.order.receipts" description="Receipts Menu" page="/receipts.html" />
 			<Item name="ReceiptDetailMenu" title="menu.order.receiptDetails" description="Receipt Details Menu" page="/receiptDetails.html" />
 		</Menu>

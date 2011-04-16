@@ -194,6 +194,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				deliveryOrder.setCreateDate(new Date());
 				deliveryOrder.setIsExport(false);
 				deliveryOrder.setIsPrint(false);
+				deliveryOrder.setIsRead(false);
 				deliveryOrder.setStatus("Create");
 			}
 
@@ -440,6 +441,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			if (plantCode.trim().length() > 3) {
 				plantCode = plantCode.substring(plantCode.length() - 3);
 			}
+			String fileId = fileHeader.getFILID();
 			DetachedCriteria criteria0 = DetachedCriteria.forClass(Plant.class);
 			criteria0.add(Restrictions.like("code", plantCode, MatchMode.END));
 			List<Plant> plantList = plantManager.findByCriteria(criteria0);
@@ -454,10 +456,11 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			for (Object obj : order.getFileHeaderOrDeliveryOrFileEnd()) {
 				if (obj instanceof ManifestFile.Delivery) {
 					ManifestFile.Delivery delivery = (ManifestFile.Delivery) obj;
-					DeliveryOrder deliveryOrder = parseDelivery(delivery, plant);
+					DeliveryOrder deliveryOrder = parseDelivery(delivery, plant, fileId);
 
 					DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
-					criteria.add(Restrictions.eq("externalDoNo", deliveryOrder.getExternalDoNo()));
+					criteria.add(Restrictions.eq("murn", deliveryOrder.getMurn()));
+					//criteria.add(Restrictions.eq("fileIdentitfier", deliveryOrder.getFileIdentitfier()));
 
 					List<DeliveryOrder> doList = this.findByCriteria(criteria);
 					if (doList != null && doList.size() > 0) {
@@ -478,11 +481,12 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		return deliveryOrderList;
 	}
 
-	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant) throws DataConvertException {
+	private DeliveryOrder parseDelivery(ManifestFile.Delivery delivery, Plant plant, String fileId) throws DataConvertException {
 		DateFormat dtFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
 		ManifestFile.Delivery.Recheader header = delivery.getRecheader().get(0);
 		DeliveryOrder deliveryOrder = new DeliveryOrder();
+		deliveryOrder.setFileIdentitfier(fileId);
 
 		try {
 			String supplierCode = header.getSUCODE();
@@ -504,12 +508,6 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				supplier.setName(header.getSUNAME());
 
 				supplier = this.supplierManager.save(supplier);
-				
-				Resource resource = new Resource();
-				resource.setCode(supplier.getCode());
-				resource.setDescription(supplier.getName());
-				resource.setType("supplier");
-				this.resourceManager.save(resource);
 
 				log.info("Creating supplier user account.");
 				// 生成供应商帐号
@@ -576,13 +574,16 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setPlantSupplier(plantSupplier);
 			deliveryOrder.setDoNo(this.numberControlManager.generateNumber(plantSupplier.getDoNoPrefix(), 10));
 			deliveryOrder.setExternalDoNo(header.getMANCODE());
-			deliveryOrder.setPlantName(plant.getName());
+			deliveryOrder.setPlantName(header.getFAUPLANT());
 			deliveryOrder.setPlantAddress1(header.getFAUADDR1());
 			deliveryOrder.setPlantAddress2(header.getFAUADDR2());
 			deliveryOrder.setPlantAddress3(header.getFAUADDR3());
 			deliveryOrder.setPlantContactPerson(header.getFAUCONTACT());
 			deliveryOrder.setPlantPhone(header.getFAUTEL());
 			deliveryOrder.setPlantFax(header.getFAUFAX());
+			deliveryOrder.setPlantPostCode(header.getPOSTCODE());
+			deliveryOrder.setPlantCity(header.getCITY());
+			deliveryOrder.setPlantCountry(header.getFAUCTRY());
 			deliveryOrder.setSupplierName(header.getSUNAME());
 			deliveryOrder.setSupplierAddress1(header.getSUPADDR1());
 			deliveryOrder.setSupplierAddress2(header.getSUPADDR2());
@@ -590,6 +591,9 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			deliveryOrder.setSupplierContactPerson(header.getSUCONTACT());
 			deliveryOrder.setSupplierPhone(header.getSUPTEL());
 			deliveryOrder.setSupplierFax(header.getSUFAX());
+			deliveryOrder.setSupplierPostCode(header.getSUPPCOD());
+			deliveryOrder.setSupplierCity(header.getSUPCITY());
+			deliveryOrder.setSupplierCountry(header.getSUPCTRY());
 			deliveryOrder.setCreateDate(new Date());
 			try {
 				deliveryOrder.setStartDate(dtFormat.parse(header.getPICKUP()));
@@ -605,6 +609,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			}
 			deliveryOrder.setIsExport(true);
 			deliveryOrder.setIsPrint(false);
+			deliveryOrder.setIsRead(false);
+			deliveryOrder.setFirstReadDate(null);
 			deliveryOrder.setStatus("Confirm");
 			deliveryOrder.setMurn(header.getMURN());
 			deliveryOrder.setOrderGroup(header.getORDERG());
@@ -617,21 +623,13 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 			} catch (Exception ex) {
 				log.warn("Error when convert TOTWEIGHT into decimal.", ex);
 			}
-			try {
-				deliveryOrder.setUnitWeight(new BigDecimal(header.getUNITWEIGHT()));
-			} catch (Exception ex) {
-				log.warn("Error when convert UNITWEIGHT into decimal.", ex);
-			}
+			deliveryOrder.setUnitWeight(header.getUNITWEIGHT());
 			try {
 				deliveryOrder.setTotalVolume(new BigDecimal(header.getTOTVOL()));
 			} catch (Exception ex) {
 				log.warn("Error when convert TOTVOL into decimal.", ex);
 			}
-			try {
-				deliveryOrder.setUnitVolume(new BigDecimal(header.getUNITVOL()));
-			} catch (Exception ex) {
-				log.warn("Error when convert UNITVOL into decimal.", ex);
-			}
+			deliveryOrder.setUnitVolume(header.getUNITVOL());
 			try {
 				deliveryOrder.setTotalNbPallets(new BigDecimal(header.getTOTPAL()));
 			} catch (Exception ex) {

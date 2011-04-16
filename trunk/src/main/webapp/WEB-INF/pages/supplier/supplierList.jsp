@@ -5,6 +5,25 @@
 <meta name="heading"
 	content="<fmt:message key='plantSupplierList.heading'/>" />
 <meta name="menu" content="AdminMenu" />
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("suppliers_plantSupplier_supplier_code");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("suppliers_plantSupplier_supplier_code",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("suppliers_plantSupplier_supplier_code",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 <c:set var="buttons">
 	<s:submit method="list" key="button.search" theme="simple" />
@@ -24,7 +43,8 @@
 				key="plantSupplier.plant" /></label></td>
 			<td colspan="2"><s:select key="plantSupplier.plant.code"
 				list="%{plants}" listKey="code" listValue="name" headerKey="-1"
-				headerValue="All" theme="simple" /></td>
+				headerValue="All" theme="simple"
+				onchange="cascadeUpdateSupplier(this);" /></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>
@@ -47,7 +67,7 @@
 		<display:column property="supplierName" sortable="true"
 			titleKey="plantSupplier.supplier" />
 		<display:column property="plant.name" sortable="true"
-			titleKey="plantSupplier.plant" />			
+			titleKey="plantSupplier.plant" />
 		<display:column property="supplierAddress1" sortable="true"
 			titleKey="plantSupplier.supplierAddress1" />
 		<display:column property="supplierAddress2" sortable="true"

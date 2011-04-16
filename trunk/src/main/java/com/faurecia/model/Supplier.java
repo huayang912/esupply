@@ -19,7 +19,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 @NamedQueries ({
     @NamedQuery(
         name = "findSuppliersByPlant",
-        query = " select ps.supplier from PlantSupplier ps where ps.plant = :plant "
+        query = " select ps.supplier from PlantSupplier ps where ps.plant.code = :plantCode "
         )
 })
 public class Supplier extends BaseObject implements Serializable {

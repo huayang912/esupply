@@ -16,7 +16,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
-import com.faurecia.Constants;
 import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.DeliveryOrderDetail;
 import com.faurecia.model.Plant;
@@ -56,6 +55,7 @@ public class DeliveryOrderAction extends BaseAction {
 	private String dir;
 	private DeliveryOrder deliveryOrder;
 	private String doNo;
+	private String fileIdentitfier;
 	private Integer deliveryOrderDetailId;
 
 	private String poNo;
@@ -68,7 +68,6 @@ public class DeliveryOrderAction extends BaseAction {
 	private String scheduleType;
 	private InputStream inputStream;
 	private String fileName;
-	
 	private Boolean isLogisticPartner;
 
 	public void setDeliveryOrderManager(DeliveryOrderManager deliveryOrderManager) {
@@ -126,7 +125,7 @@ public class DeliveryOrderAction extends BaseAction {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
-	
+
 	public Boolean getIsLogisticPartner() {
 		return isLogisticPartner;
 	}
@@ -141,6 +140,14 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setDir(String dir) {
 		this.dir = dir;
+	}
+
+	public String getFileIdentitfier() {
+		return fileIdentitfier;
+	}
+
+	public void setFileIdentitfier(String fileIdentitfier) {
+		this.fileIdentitfier = fileIdentitfier;
 	}
 
 	public Map<String, String> getStatus() {
@@ -159,12 +166,12 @@ public class DeliveryOrderAction extends BaseAction {
 		return status;
 	}
 
-	public Map<String, String> getIsPrint() {
-		Map<String, String> isPrint = new HashMap<String, String>();
-		isPrint.put("", "All");
-		isPrint.put("No", "false");
-		isPrint.put("Yes", "true");
-		return isPrint;
+	public Map<String, String> getIsRead() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "All");
+		status.put("No", "false");
+		status.put("Yes", "true");
+		return status;
 	}
 
 	public List<Supplier> getSuppliers() {
@@ -314,7 +321,7 @@ public class DeliveryOrderAction extends BaseAction {
 			if (deliveryOrder.getsCode() != null && deliveryOrder.getsCode().trim().length() > 0) {
 				if (deliveryOrder.getsCode().equals("-1")) {
 					List<Supplier> suppliers = getSuppliers();
-					if (suppliers != null &&suppliers.size() > 0) {
+					if (suppliers != null && suppliers.size() > 0) {
 						selectCriteria.add(Restrictions.in("ps.supplier", suppliers));
 						selectCountCriteria.add(Restrictions.in("ps.supplier", suppliers));
 					} else {
@@ -370,6 +377,16 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 
+			if (deliveryOrder.getReadFlag() != null && deliveryOrder.getReadFlag().trim().length() > 0) {
+				if ("true".equalsIgnoreCase(deliveryOrder.getReadFlag())) {
+					selectCriteria.add(Restrictions.eq("isRead", true));
+					selectCountCriteria.add(Restrictions.eq("isRead", true));
+				} else {
+					selectCriteria.add(Restrictions.eq("isRead", false));
+					selectCountCriteria.add(Restrictions.eq("isRead", false));
+				}
+			}
+
 			if (deliveryOrder.getPlantSupplier() != null) {
 				selectCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
 				selectCountCriteria.add(Restrictions.eq("plantSupplier", deliveryOrder.getPlantSupplier()));
@@ -392,6 +409,137 @@ public class DeliveryOrderAction extends BaseAction {
 		return SUCCESS;
 	}
 
+	public String list2() {
+
+		if (deliveryOrder != null) {
+
+			String hql = "select min(do.createDate), p.code, p.name, s.code, s.name, do.fileIdentitfier, min(do.firstReadDate), max(do.isRead), do.plantContactPerson "
+					+ "from DeliveryOrder as do join do.plantSupplier as ps join ps.plant as p join ps.supplier as s where 1=1 ";
+			List args = new ArrayList();
+
+			if (deliveryOrder.getpCode() != null && deliveryOrder.getpCode().trim().length() > 0) {
+
+				if (deliveryOrder.getpCode().equals("-1")) {
+					List<Plant> plants = getPlants();
+					if (plants != null && plants.size() > 0) {
+						hql += "and ps.plant in ? ";
+						args.add(plants);
+					} else {
+						hql += "and p.code = -1 ";
+					}
+				} else {
+					hql += "and p.code = ? ";
+					args.add(deliveryOrder.getpCode().trim());
+				}
+			}
+
+			if (deliveryOrder.getsCode() != null && deliveryOrder.getsCode().trim().length() > 0) {
+				if (deliveryOrder.getsCode().equals("-1")) {
+					List<Supplier> suppliers = getSuppliers();
+					if (suppliers != null && suppliers.size() > 0) {
+						hql += "and ps.supplier in ? ";
+						args.add(suppliers);
+					} else {
+						hql += "and s.code = -1 ";
+					}
+				} else {
+					hql += "and s.code = ? ";
+					args.add(deliveryOrder.getsCode().trim());
+				}
+			}
+
+			hql += "and do.fileIdentitfier is not null and do.fileIdentitfier <> '' ";
+
+			if (deliveryOrder.getPlantSupplier() != null) {
+				hql += "and ps.id = ? ";
+				args.add(deliveryOrder.getPlantSupplier().getId());
+			}
+
+			if (deliveryOrder.getFileIdentitfier() != null) {
+				hql += "and do.fileIdentitfier like ? ";
+				args.add("%" + deliveryOrder.getFileIdentitfier() + "%");
+			}
+
+			hql += "group by p.code, p.name, s.code, s.name, do.fileIdentitfier, do.plantContactPerson having 1=1 ";
+
+			if (deliveryOrder.getCreateDateFrom() != null) {
+				hql += "and min(do.createDate) >= ? ";
+				args.add(deliveryOrder.getCreateDateFrom());
+			}
+
+			if (deliveryOrder.getCreateDateTo() != null) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTime(deliveryOrder.getCreateDateTo());
+				calendar.add(Calendar.DATE, 1);
+				hql += "and min(do.createDate) < ? ";
+				args.add(calendar.getTime());
+			}
+
+			if (deliveryOrder.getReadFlag() != null && deliveryOrder.getReadFlag().trim().length() > 0) {
+				if ("true".equalsIgnoreCase(deliveryOrder.getReadFlag())) {
+					hql += "and max(do.isRead) = '1' ";
+				} else {
+					hql += "and max(do.isRead) = '0' ";
+				}
+			}
+
+			if (sort != null && sort.trim().length() > 0) {
+				paginatedList.setSortCriterion(sort);
+				hql += "order by " + sort + " " + dir;
+			}
+
+			List result = null;
+			if (args.size() > 0) {
+				Object[] objs = new Object[args.size()];
+
+				for (int i = 0; i < args.size(); i++) {
+					objs[i] = args.get(i);
+				}
+				result = this.deliveryOrderManager.findByHql(hql, objs);
+			} else {
+				result = this.deliveryOrderManager.findByHql(hql);
+			}
+
+			if (result != null && result.size() > 0) {
+				List<DeliveryOrder> list2 = new ArrayList<DeliveryOrder>();
+
+				for (int i = (page - 1) * pageSize; i < result.size() && i < page * pageSize; i++) {
+					Object[] obj = (Object[]) (result.get(i));
+
+					DeliveryOrder deliveryOrder = new DeliveryOrder();
+					deliveryOrder.setCreateDate((Date) obj[0]);
+					deliveryOrder.setPlantCode((String) obj[1]);
+					deliveryOrder.setFileIdentitfier((String) obj[5]);
+					deliveryOrder.setSupplierName((String) obj[4]);
+					deliveryOrder.setPlantContactPerson((String) obj[8]);
+					deliveryOrder.setFirstReadDate((Date) obj[6]);
+
+					list2.add(deliveryOrder);
+				}
+
+				paginatedList.setList(list2);
+				paginatedList.setFullListSize(list2.size());
+			} else {
+				paginatedList.setList(result);
+				paginatedList.setFullListSize(result.size());
+			}
+		}
+		
+		return SUCCESS;
+	}
+
+	public String list3() {
+		if (this.fileIdentitfier != null) {
+			DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
+
+			criteria.add(Restrictions.eq("fileIdentitfier", this.fileIdentitfier));
+
+			deliveryOrderDetailList = this.deliveryOrderManager.findByCriteria(criteria);
+		}
+
+		return SUCCESS;
+	}
+
 	public String cancel() {
 		return CANCEL;
 	}
@@ -399,6 +547,9 @@ public class DeliveryOrderAction extends BaseAction {
 	public String edit() throws Exception {
 		if (this.doNo != null) {
 			deliveryOrder = this.deliveryOrderManager.get(doNo, true);
+			deliveryOrder.setFirstReadDate(new Date());
+			deliveryOrder.setIsRead(true);
+			deliveryOrder = this.deliveryOrderManager.save(deliveryOrder);
 		} else if (purchaseOrderDetailList != null) {
 			// po ´´½¨ do
 			boolean hasError = false;
@@ -455,6 +606,7 @@ public class DeliveryOrderAction extends BaseAction {
 							deliveryOrder.setCreateDate(new Date());
 							deliveryOrder.setIsExport(false);
 							deliveryOrder.setIsPrint(false);
+							deliveryOrder.setIsRead(false);
 							deliveryOrder.setAllowOverQty(allowOverQty);
 						}
 
@@ -557,19 +709,26 @@ public class DeliveryOrderAction extends BaseAction {
 	public String getFileName() {
 		return fileName;
 	}
-	
+
 	public String print(Boolean isLogistic) throws Exception {
 		String localAbsolutPath = this.getSession().getServletContext().getRealPath("/");
 		deliveryOrder = this.deliveryOrderManager.get(deliveryOrder.getDoNo(), true);
 		deliveryOrder.setIsLogisticPartner(isLogistic);
-		if (deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName().equalsIgnoreCase("Do.png")) {
-	  inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder,isSupplier);
-		} else {
-				isSupplier = false;
+
+		String doTemplateName = deliveryOrder.getPlantSupplier().getDoTemplateName();
+		if (doTemplateName == null || doTemplateName.trim().length() == 0) {
+			doTemplateName = deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName();
 		}
+
+		if (doTemplateName.equalsIgnoreCase("Do.png")) {
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
-					deliveryOrder,isSupplier);
+					deliveryOrder, false);
+		} else if (doTemplateName.equalsIgnoreCase("Do_CN.png")) {
+			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, "Do.png", deliveryOrder, true);
+		} else if (doTemplateName.equalsIgnoreCase("DoSebango.png")) {
+			inputStream = DeliveryOrderExportUtil.exportDoSebango(localAbsolutPath, doTemplateName, deliveryOrder, false);
+		} else if (doTemplateName.equalsIgnoreCase("DoSebango_CN.png")) {
+			inputStream = DeliveryOrderExportUtil.exportDoSebango(localAbsolutPath, doTemplateName, deliveryOrder, true);
 		} else {
 			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
 					deliveryOrder);
@@ -581,11 +740,11 @@ public class DeliveryOrderAction extends BaseAction {
 		}
 		return SUCCESS;
 	}
-	
+
 	public String printLogistic() throws Exception {
 		return print(true);
 	}
-	
+
 	public String printSupplier() throws Exception {
 		return print(false);
 	}
@@ -612,13 +771,19 @@ public class DeliveryOrderAction extends BaseAction {
 				}
 			}
 		}
-		if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box.png")) {
+
+		String boxTemplateName = deliveryOrder.getPlantSupplier().getBoxTemplateName();
+		if (boxTemplateName == null || boxTemplateName.trim().length() == 0) {
+			boxTemplateName = deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName();
+		}
+
+		if (boxTemplateName.equalsIgnoreCase("Box.png")) {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(),
 					deliveryOrder, selectedDeliveryOrderDetailList);
-		}else if (deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName().equalsIgnoreCase("Box_CN.png")) {
-			inputStream = DeliveryOrderExportUtil.printBoxLabel2(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(), deliveryOrder, selectedDeliveryOrderDetailList);
-		}  
-		else {
+		} else if (boxTemplateName.equalsIgnoreCase("Box_CN.png")) {
+			inputStream = DeliveryOrderExportUtil.printBoxLabel2(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(),
+					deliveryOrder, selectedDeliveryOrderDetailList);
+		} else {
 			inputStream = DeliveryOrderExportUtil.printBoxLabel1(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getBoxTemplateName(),
 					deliveryOrder, selectedDeliveryOrderDetailList);
 		}

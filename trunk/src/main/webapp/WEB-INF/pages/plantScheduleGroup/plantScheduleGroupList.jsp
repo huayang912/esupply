@@ -48,6 +48,10 @@
 			<input type="checkbox" disabled="disabled"
 				<c:if test="${plantScheduleGroupList.allowOverQtyDeliver}">checked="checked"</c:if> />
 		</display:column>
+		<display:column titleKey="plantScheduleGroup.allowFirmDeliver">
+			<input type="checkbox" disabled="disabled"
+				<c:if test="${plantScheduleGroup.allowFirmDeliver}">checked="checked"</c:if> />
+		</display:column>
 		<display:column titleKey="plantScheduleGroup.allowForecastDeliver">
 			<input type="checkbox" disabled="disabled"
 				<c:if test="${plantScheduleGroupList.allowForecastDeliver}">checked="checked"</c:if> />

@@ -173,7 +173,7 @@
 			<attribute name="javadoc_location" value="jar:file:/D:/FJY/mvn.repository/org/subethamail/subethasmtp-wiser/1.2/subethasmtp-wiser-1.2-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/Java/jdk1.6.0_20/lib/tools.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jdk1.6.0_23/lib/tools.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/tuckey/urlrewritefilter/3.0.4/urlrewritefilter-3.0.4.jar"/>
 	<classpathentry kind="var" path="M2_REPO/velocity/velocity/1.4/velocity-1.4.jar" sourcepath="M2_REPO/velocity/velocity/1.4/velocity-1.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/velocity/velocity-dep/1.4/velocity-dep-1.4.jar" sourcepath="M2_REPO/velocity/velocity-dep/1.4/velocity-dep-1.4-sources.jar"/>
