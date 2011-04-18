@@ -89,5 +89,4 @@
 <script type="text/javascript">
 		Form.focusFirstElement(document.forms["listScheduleControl"]);
 		highlightFormElements();
-		cascadeUpdateSupplier(document.forms["listScheduleControl"].elements["listScheduleControl_schedulePlantSupplier_plant_code"]);
 </script>

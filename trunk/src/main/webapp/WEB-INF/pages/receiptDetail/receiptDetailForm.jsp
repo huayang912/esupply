@@ -10,6 +10,25 @@
 <meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("searchReceiptDetail_receipt_sCode");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("searchReceiptDetail_receipt_sCode",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("searchReceiptDetail_receipt_sCode",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 
 <s:form name="receiptForm" action="searchReceiptDetail" method="post"
@@ -23,20 +42,20 @@
 				key="receipt.referenceReceiptNoLong" /></label></td>
 			<td colspan="2"><s:textfield
 				key="receipt.referenceReceiptNoLong" cssClass="text medium"
-				theme="simple" /></td>			
+				theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.plant" /></label></td>
-			<td colspan="2"><s:select key="receipt.pCode"
-				list="%{plants}" listKey="code" listValue="name" headerKey="-1" headerValue="All"
-				theme="simple" /></td>
-				
+			<td colspan="2"><s:select key="receipt.pCode" list="%{plants}"
+				listKey="code" listValue="name" headerKey="-1" headerValue="All"
+				theme="simple" onchange="cascadeUpdateSupplier(this);" /></td>
+
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>
 			<td colspan="2"><s:select key="receipt.sCode"
-				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1" headerValue="All"
-				theme="simple" /></td>
+				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1"
+				headerValue="All" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message

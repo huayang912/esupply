@@ -14,6 +14,18 @@ function checkedAll (obj) {
 	}
 }
 </script>
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {		
+		SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("listScheduleAudit_plantSupplier_supplier_code");
+		 if (suppliers != null) {
+		 	DWRUtil.addOptions("listScheduleAudit_plantSupplier_supplier_code",suppliers,"code","name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -27,12 +39,13 @@ function checkedAll (obj) {
 		<tr>
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.plant" /></label></td>
-			<td colspan="2"><s:select key="plantSupplier.plantCode"
-				list="%{plants}" listKey="code" listValue="name" theme="simple" /></td>
+			<td colspan="2"><s:select key="plantSupplier.plant.code"
+				list="%{plants}" listKey="code" listValue="name" theme="simple" 
+				onchange="cascadeUpdateSupplier(this);" /></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>
-			<td colspan="2"><s:select key="plantSupplier.supplierCode"
+			<td colspan="2"><s:select key="plantSupplier.supplier.code"
 				list="%{suppliers}" listKey="code" listValue="name" theme="simple" /></td>
 		</tr>
 	</table>

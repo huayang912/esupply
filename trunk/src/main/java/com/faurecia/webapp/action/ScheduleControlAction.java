@@ -1,5 +1,6 @@
 package com.faurecia.webapp.action;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -56,7 +57,17 @@ public class ScheduleControlAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (schedulePlantSupplier != null && schedulePlantSupplier.getPlant() != null
+				&& schedulePlantSupplier.getPlant().getCode() != null) {
+			return this.supplierManager.getSuppliersByPlantAndUser(schedulePlantSupplier.getPlant().getCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			List<Plant> plants = getPlants();
+			if (plants != null && plants.size() > 0) {
+				return this.supplierManager.getSuppliersByPlantAndUser(plants.get(0).getCode().trim() + "|" + this.getRequest().getRemoteUser());
+			}
+			
+			return new ArrayList<Supplier>();
+		}
 	}
 
 	public List<Plant> getPlants() {

@@ -112,7 +112,11 @@ public class PurchaseOrderAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (purchaseOrder != null && purchaseOrder.getpCode() != null && !purchaseOrder.getpCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(purchaseOrder.getpCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public List<Plant> getPlants() {
@@ -159,7 +163,7 @@ public class PurchaseOrderAction extends BaseAction {
 			if (purchaseOrder.getsCode() != null && purchaseOrder.getsCode().trim().length() > 0) {
 				if (purchaseOrder.getsCode().equals("-1")) {
 					List<Supplier> suppliers = getSuppliers();
-					if (suppliers != null &&suppliers.size() > 0) {
+					if (suppliers != null && suppliers.size() > 0) {
 						selectCriteria.add(Restrictions.in("ps.supplier", suppliers));
 						selectCountCriteria.add(Restrictions.in("ps.supplier", suppliers));
 					} else {
@@ -171,7 +175,6 @@ public class PurchaseOrderAction extends BaseAction {
 					selectCountCriteria.add(Restrictions.eq("s.code", purchaseOrder.getsCode().trim()));
 				}
 			}
-
 
 			if (purchaseOrder.getPoNo() != null && purchaseOrder.getPoNo().trim().length() > 0) {
 				selectCriteria.add(Restrictions.like("poNo", purchaseOrder.getPoNo().trim()));
@@ -195,7 +198,6 @@ public class PurchaseOrderAction extends BaseAction {
 				selectCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
 				selectCountCriteria.add(Restrictions.lt("createDate", calendar.getTime()));
 			}
-
 
 			if (sort != null && sort.trim().length() > 0) {
 				paginatedList.setSortCriterion(sort);

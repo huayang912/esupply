@@ -5,7 +5,7 @@
 <head>
 <title><fmt:message key="userResource.title" /></title>
 <meta name="heading" content="<fmt:message key='userResource.heading'/>" />
-<meta name="menu" content="InfoMenu" />
+<meta name="menu" content="AdminMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
 <script type="text/javascript"

@@ -1,9 +1,6 @@
 package com.faurecia.webapp.action;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +16,6 @@ import com.faurecia.model.DeliveryOrder;
 import com.faurecia.model.OutboundLog;
 import com.faurecia.model.Plant;
 import com.faurecia.model.Supplier;
-import com.faurecia.model.User;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.OutboundLogManager;
 import com.faurecia.service.PlantSupplierManager;
@@ -118,7 +114,11 @@ public class OutboundLogAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (outboundLog != null && outboundLog.getPlantCode() != null && !outboundLog.getPlantCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(outboundLog.getPlantCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public List<Plant> getPlants() {
@@ -148,8 +148,10 @@ public class OutboundLogAction extends BaseAction {
 
 			selectCriteria.createAlias("plantSupplier", "ps");
 			selectCriteria.createAlias("ps.plant", "p");
+			selectCriteria.createAlias("ps.supplier", "s");
 			selectCountCriteria.createAlias("plantSupplier", "ps");
 			selectCountCriteria.createAlias("ps.plant", "p");
+			selectCountCriteria.createAlias("ps.supplier", "s");
 
 			if (outboundLog.getPlantCode() != null && outboundLog.getPlantCode().trim().length() > 0) {
 

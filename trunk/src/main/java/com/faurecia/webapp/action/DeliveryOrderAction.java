@@ -165,6 +165,14 @@ public class DeliveryOrderAction extends BaseAction {
 		status.put("Yes", "true");
 		return status;
 	}
+	
+	public Map<String, String> getIsPrint() {
+		Map<String, String> status = new HashMap<String, String>();
+		status.put("", "All");
+		status.put("No", "false");
+		status.put("Yes", "true");
+		return status;
+	}
 
 	public Map<String, String> getIsRead() {
 		Map<String, String> status = new HashMap<String, String>();
@@ -175,7 +183,11 @@ public class DeliveryOrderAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (deliveryOrder != null && deliveryOrder.getpCode() != null && !deliveryOrder.getpCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(deliveryOrder.getpCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public List<Plant> getPlants() {
@@ -422,8 +434,16 @@ public class DeliveryOrderAction extends BaseAction {
 				if (deliveryOrder.getpCode().equals("-1")) {
 					List<Plant> plants = getPlants();
 					if (plants != null && plants.size() > 0) {
-						hql += "and ps.plant in ? ";
-						args.add(plants);
+						hql += "and p.code in (";
+						String plantCodes = "";
+						for(Plant plant : plants) {
+							if (plantCodes.length() == 0) {
+								plantCodes = "'" + plant.getCode() + "'";
+							} else {
+								plantCodes += ", '" + plant.getCode()+ "'";
+							}
+						}
+						hql += plantCodes + ") ";
 					} else {
 						hql += "and p.code = -1 ";
 					}
@@ -437,8 +457,16 @@ public class DeliveryOrderAction extends BaseAction {
 				if (deliveryOrder.getsCode().equals("-1")) {
 					List<Supplier> suppliers = getSuppliers();
 					if (suppliers != null && suppliers.size() > 0) {
-						hql += "and ps.supplier in ? ";
-						args.add(suppliers);
+						hql += "and s.code in (";
+						String supplierCodes = "";
+						for(Supplier supplier : suppliers) {
+							if (supplierCodes.length() == 0) {
+								supplierCodes = "'" + supplier.getCode() + "'";
+							} else {
+								supplierCodes += ", '" + supplier.getCode() + "'";
+							}
+						}
+						hql += supplierCodes + ") ";
 					} else {
 						hql += "and s.code = -1 ";
 					}
@@ -500,6 +528,10 @@ public class DeliveryOrderAction extends BaseAction {
 				result = this.deliveryOrderManager.findByHql(hql);
 			}
 
+			pageSize = pageSize == 0 ? 25 : pageSize;
+			page = page == 0 ? 1 : page;
+
+			paginatedList = new PaginatedListUtil<DeliveryOrder>();
 			if (result != null && result.size() > 0) {
 				List<DeliveryOrder> list2 = new ArrayList<DeliveryOrder>();
 

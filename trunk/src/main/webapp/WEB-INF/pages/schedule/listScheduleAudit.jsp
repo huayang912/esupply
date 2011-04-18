@@ -5,6 +5,18 @@
 <meta name="heading"
 	content="<fmt:message key='scheduleAudit.heading'/>" />
 <meta name="menu" content="OrderMenu" />
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {		
+		SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("listScheduleAudit_plantSupplier_supplierCode");
+		 if (suppliers != null) {
+		 	DWRUtil.addOptions("listScheduleAudit_plantSupplier_supplierCode",suppliers,"code","name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -22,7 +34,8 @@
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.plantCode" /></label></td>
 			<td colspan="2"><s:select key="plantSupplier.plantCode"
-				list="%{plants}" listKey="code" listValue="name" theme="simple" /></td>
+				list="%{plants}" listKey="code" listValue="name" theme="simple"
+				onchange="cascadeUpdateSupplier(this);" /></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplierCode" /></label></td>
@@ -35,6 +48,6 @@
 </s:form>
 
 <script type="text/javascript">
-		Form.focusFirstElement(document.forms["scheduleForm"]);
+		Form.focusFirstElement(document.forms["listScheduleAudit"]);
 		highlightFormElements();
 </script>

@@ -3,7 +3,26 @@
 <head>
 <title><fmt:message key="noticeList.title" /></title>
 <meta name="heading" content="<fmt:message key='noticeList.heading'/>" />
-<meta name="menu" content="SupplierMenu" />
+<meta name="menu" content="InfoMenu" />
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("noticeReaders_plantSupplier_supplier_code");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("noticeReaders_plantSupplier_supplier_code",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("noticeReaders_plantSupplier_supplier_code",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -21,7 +40,7 @@
 				key="plantSupplier.plant" /></label></td>
 			<td colspan="2"><s:select key="plantSupplier.plant.code"
 				list="%{plants}" listKey="code" listValue="name" theme="simple" 
-				headerKey="-1" headerValue="All"/></td>
+				headerKey="-1" headerValue="All" onchange="cascadeUpdateSupplier(this);"/></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>

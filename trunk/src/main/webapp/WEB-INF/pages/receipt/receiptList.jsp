@@ -10,6 +10,25 @@
 <meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("receipts_receipt_sCode");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("receipts_receipt_sCode",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("receipts_receipt_sCode",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -37,7 +56,7 @@
 				key="plantSupplier.plant" /></label></td>
 			<td colspan="2"><s:select key="receipt.pCode" list="%{plants}"
 				listKey="code" listValue="name" headerKey="-1" headerValue="All"
-				theme="simple" /></td>
+				theme="simple" onchange="cascadeUpdateSupplier(this);" /></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>
@@ -79,45 +98,43 @@
 </s:form>
 
 <c:if test="${receipt != null}">
-<display:table name="paginatedList" cellspacing="0" cellpadding="0"
-	requestURI="" id="receipts" class="table" export="true">
-	<display:column property="referenceReceiptNoLong" sortable="true"
-		sortProperty="referenceReceiptNoLong" url="/editReceipt.html"
-		paramId="receiptNo" paramProperty="receiptNo"
-		titleKey="receipt.referenceReceiptNoLong" />
-	<display:column property="referenceReceiptNo" sortable="true"
-		sortProperty="referenceReceiptNo"
-		titleKey="receipt.referenceReceiptNo" />
-	<display:column property="receiptNo" sortable="true"
-		sortProperty="receiptNo" titleKey="receipt.receiptNo" />
-	<display:column property="plantCode" sortable="true"
-		sortProperty="p.code" titleKey="receipt.plantCode" />
-	<display:column property="plantName" sortable="true"
-		sortProperty="p.name" titleKey="receipt.plantName" />
-	<display:column property="supplierCode" sortable="true"
-		sortProperty="s.code" titleKey="receipt.supplierCode" />
-	<display:column property="supplierName" sortable="true"
-		sortProperty="ps.supplierName" titleKey="receipt.supplierName" />
-	<display:column property="postingDate" format="{0,date,MM/dd/yyyy}"
-		sortable="true" titleKey="receipt.postingDate" />
+	<display:table name="paginatedList" cellspacing="0" cellpadding="0"
+		requestURI="" id="receipts" class="table" export="true">
+		<display:column property="referenceReceiptNoLong" sortable="true"
+			sortProperty="referenceReceiptNoLong" url="/editReceipt.html"
+			paramId="receiptNo" paramProperty="receiptNo"
+			titleKey="receipt.referenceReceiptNoLong" />
+		<display:column property="referenceReceiptNo" sortable="true"
+			sortProperty="referenceReceiptNo"
+			titleKey="receipt.referenceReceiptNo" />
+		<display:column property="receiptNo" sortable="true"
+			sortProperty="receiptNo" titleKey="receipt.receiptNo" />
+		<display:column property="plantCode" sortable="true"
+			sortProperty="p.code" titleKey="receipt.plantCode" />
+		<display:column property="plantName" sortable="true"
+			sortProperty="p.name" titleKey="receipt.plantName" />
+		<display:column property="supplierCode" sortable="true"
+			sortProperty="s.code" titleKey="receipt.supplierCode" />
+		<display:column property="supplierName" sortable="true"
+			sortProperty="ps.supplierName" titleKey="receipt.supplierName" />
+		<display:column property="postingDate" format="{0,date,MM/dd/yyyy}"
+			sortable="true" titleKey="receipt.postingDate" />
 
-	<display:setProperty name="paging.banner.item_name">
-		<fmt:message key="receipt.receipt" />
-	</display:setProperty>
-	<display:setProperty name="paging.banner.items_name">
-		<fmt:message key="receipt.receipts" />
-	</display:setProperty>
+		<display:setProperty name="paging.banner.item_name">
+			<fmt:message key="receipt.receipt" />
+		</display:setProperty>
+		<display:setProperty name="paging.banner.items_name">
+			<fmt:message key="receipt.receipts" />
+		</display:setProperty>
 
-	<display:setProperty name="export.excel.filename"
-		value="receipt List.xls" />
-	<display:setProperty name="export.csv.filename"
-		value="receipt List.csv" />
-	<display:setProperty name="export.pdf.filename"
-		value="receipt List.pdf" />
-</display:table>
-
+		<display:setProperty name="export.excel.filename"
+			value="receipt List.xls" />
+		<display:setProperty name="export.csv.filename"
+			value="receipt List.csv" />
+		<display:setProperty name="export.pdf.filename"
+			value="receipt List.pdf" />
+	</display:table>
+</c:if>
 <script type="text/javascript">
     highlightTableRows("receipts");    
 </script>
-
-</c:if>

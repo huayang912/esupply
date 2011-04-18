@@ -113,7 +113,11 @@ public class ReceiptDetailAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (receipt != null && receipt.getpCode() != null && !receipt.getpCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(receipt.getpCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public List<Plant> getPlants() {
