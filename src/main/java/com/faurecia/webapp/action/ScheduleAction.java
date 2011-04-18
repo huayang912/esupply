@@ -1,6 +1,7 @@
 package com.faurecia.webapp.action;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -85,7 +86,17 @@ public class ScheduleAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (plantSupplier != null && plantSupplier.getPlant() != null && plantSupplier.getPlant().getCode() != null) {
+			return this.supplierManager.getSuppliersByPlantAndUser(plantSupplier.getPlant().getCode().trim() + "|"
+					+ this.getRequest().getRemoteUser());
+		} else {
+			List<Plant> plants = getPlants();
+			if (plants != null && plants.size() > 0) {
+				return this.supplierManager.getSuppliersByPlantAndUser(plants.get(0).getCode().trim() + "|" + this.getRequest().getRemoteUser());
+			}
+			
+			return new ArrayList<Supplier>();
+		}
 	}
 
 	public List<Plant> getPlants() {
@@ -159,9 +170,11 @@ public class ScheduleAction extends BaseAction {
 									head.put("dateFrom", scheduleItemDetail.getDateFrom());
 									head.put("dateTo", scheduleItemDetail.getDateTo());
 
-//									if (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)) {
-//										head.put("createDo", false);
-//									} else 
+									// if
+									// (getRequest().isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE))
+									// {
+									// head.put("createDo", false);
+									// } else
 									if (allowOverDateDeliver) {
 										if (!allowFirmDeliver && scheduleItemDetail.getScheduleType().equals("Firm")) {
 											head.put("createDo", false);
@@ -253,7 +266,7 @@ public class ScheduleAction extends BaseAction {
 				schedule = this.scheduleManager.getLastestScheduleItem(plantSupplier.getPlant().getCode(), plantSupplier.getSupplier().getCode(),
 						new Date(), true);
 			}
-			
+
 			return SUCCESS;
 		}
 		return INPUT;

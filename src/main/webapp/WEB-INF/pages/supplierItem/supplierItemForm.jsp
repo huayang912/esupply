@@ -76,5 +76,4 @@
 <script type="text/javascript">
     Form.focusFirstElement(document.forms["saveSupplierItem"]);
     highlightFormElements();
-    cascadeUpdateSupplier(document.forms["saveSupplierItem"].elements["saveSupplierItem_supplierItem_pCode"]);
 </script>

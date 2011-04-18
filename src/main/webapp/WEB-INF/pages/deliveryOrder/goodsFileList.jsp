@@ -20,6 +20,25 @@
 </c:choose>
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("deliveryOrders2_deliveryOrder_sCode");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("deliveryOrders2_deliveryOrder_sCode",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("deliveryOrders2_deliveryOrder_sCode",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -35,17 +54,27 @@
 	<table style="margin: 0px">
 		<tr>
 			<td><label class="desc"><fmt:message
+				key="deliveryOrder.plantCode" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.pCode"
+				list="%{plants}" listKey="code" listValue="name" headerKey="-1"
+				headerValue="All" theme="simple"
+				onchange="cascadeUpdateSupplier(this);" /></td>
+
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.supplierCode" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.sCode"
+				list="%{suppliers}" listKey="code" listValue="name" headerKey="-1"
+				headerValue="All" theme="simple" /></td>
+		</tr>
+		<tr>
+			<td><label class="desc"><fmt:message
 				key="deliveryOrder.fileIdentitfier" /></label></td>
 			<td colspan="2"><s:textfield key="deliveryOrder.fileIdentitfier"
 				cssClass="text medium" theme="simple" /></td>
-			<c:if
-				test="<%=request.isUserInRole(com.faurecia.Constants.PLANT_USER_ROLE)%>">
-				<td><label class="desc"><fmt:message
-					key="deliveryOrder.supplierCode" /></label></td>
-				<td colspan="2"><s:select key="deliveryOrder.plantSupplier.id"
-					list="%{suppliers}" listKey="id" listValue="supplierName"
-					theme="simple" /></td>
-			</c:if>
+			<td><label class="desc"><fmt:message
+				key="deliveryOrder.isRead" /></label></td>
+			<td colspan="2"><s:select key="deliveryOrder.readFlag"
+				list="%{isRead}" theme="simple" /></td>
 		</tr>
 		<tr>
 			<td><label class="desc"><fmt:message
@@ -65,27 +94,24 @@
 				NAME="anchDateTo" ID="anchDateTo"><img
 				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
 		</tr>
-		<tr>
-			<td><label class="desc"><fmt:message
-				key="deliveryOrder.isRead" /></label></td>
-			<td colspan="2"><s:select key="deliveryOrder.readFlag"
-				list="%{isRead}" theme="simple" /></td>
-		</tr>
 	</table>
 	</li>
 	<div><s:submit method="list2" key="button.search" theme="simple" /></div>
 </s:form>
 
+<c:if test="${deliveryOrder != null}">
 <display:table name="paginatedList" cellspacing="0" cellpadding="0"
-	requestURI="" defaultsort="1" id="deliveryOrders" class="table"
+	requestURI="" id="deliveryOrders" class="table"
 	export="true">
 	<display:column property="createDate" sortable="true"
-		sortProperty="min(do.createDate)" url="/deliveryOrders3.html" paramId="fileIdentitfier"
-		paramProperty="fileIdentitfier" titleKey="deliveryOrder.createDate"
+		sortProperty="min(do.createDate)" url="/deliveryOrders3.html"
+		paramId="fileIdentitfier" paramProperty="fileIdentitfier"
+		titleKey="deliveryOrder.createDate"
 		format="{0, date, MM/dd/yyyy HH:mm:ss}" />
 	<display:column property="plantCode" sortable="true"
 		sortProperty="p.code" titleKey="deliveryOrder.plantCode" />
-	<display:column property="fileIdentitfier" sortable="true" sortProperty="do.fileIdentitfier"
+	<display:column property="fileIdentitfier" sortable="true"
+		sortProperty="do.fileIdentitfier"
 		titleKey="deliveryOrder.fileIdentitfier" />
 	<display:column property="supplierName" sortable="true"
 		sortProperty="s.name" titleKey="deliveryOrder.supplierName" />
@@ -93,7 +119,8 @@
 		sortProperty="do.plantContactPerson"
 		titleKey="deliveryOrder.plantContactPerson" />
 	<display:column property="firstReadDate" sortable="true"
-		sortProperty="min(do.firstReadDate)" titleKey="deliveryOrder.firstReadDate"
+		sortProperty="min(do.firstReadDate)"
+		titleKey="deliveryOrder.firstReadDate"
 		format="{0, date, MM/dd/yyyy HH:mm:ss}" />
 	<display:setProperty name="paging.banner.item_name">
 		<fmt:message key="deliveryOrder.deliveryOrder" />
@@ -111,7 +138,7 @@
 </display:table>
 
 <c:out value="${buttons}" escapeXml="false" />
-
+</c:if>
 <script type="text/javascript">
-    highlightTableRows("deliveryOrders");    
+    highlightTableRows("deliveryOrders2");    
 </script>

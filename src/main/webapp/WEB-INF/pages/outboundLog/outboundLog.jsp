@@ -10,6 +10,25 @@
 	content="<fmt:message key='outboundLogList.heading'/>" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("outboundLogs_outboundLog_supplierCode");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("outboundLogs_outboundLog_supplierCode",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("outboundLogs_outboundLog_supplierCode",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 <meta name="menu" content="InfoMenu" />
 <c:set var="buttons">
@@ -30,7 +49,7 @@
 				key="plantSupplier.plant" /></label></td>
 			<td colspan="2"><s:select key="outboundLog.plantCode"
 				list="%{plants}" listKey="code" listValue="name" headerKey="-1"
-				headerValue="All" theme="simple" /></td>
+				headerValue="All" theme="simple" onchange="cascadeUpdateSupplier(this);"/></td>
 
 			<td><label class="desc"><fmt:message
 				key="plantSupplier.supplier" /></label></td>

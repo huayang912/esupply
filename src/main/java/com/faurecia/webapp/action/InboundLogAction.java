@@ -131,7 +131,11 @@ public class InboundLogAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (inboundLog != null && inboundLog.getPlantCode() != null && !inboundLog.getPlantCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(inboundLog.getPlantCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public List<Plant> getPlants() {
@@ -170,9 +174,11 @@ public class InboundLogAction extends BaseAction {
 
 			selectCriteria.createAlias("plantSupplier", "ps");
 			selectCriteria.createAlias("ps.plant", "p");
+			selectCriteria.createAlias("ps.supplier", "s");
 			selectCountCriteria.createAlias("plantSupplier", "ps");
 			selectCountCriteria.createAlias("ps.plant", "p");
-			
+			selectCountCriteria.createAlias("ps.supplier", "s");
+
 			if (inboundLog.getPlantCode() != null && inboundLog.getPlantCode().trim().length() > 0) {
 
 				if (inboundLog.getPlantCode().equals("-1")) {
@@ -193,7 +199,7 @@ public class InboundLogAction extends BaseAction {
 			if (inboundLog.getSupplierCode() != null && inboundLog.getSupplierCode().trim().length() > 0) {
 				if (inboundLog.getSupplierCode().equals("-1")) {
 					List<Supplier> suppliers = getSuppliers();
-					if (suppliers != null &&suppliers.size() > 0) {
+					if (suppliers != null && suppliers.size() > 0) {
 						selectCriteria.add(Restrictions.or(Restrictions.in("ps.supplier", suppliers), Restrictions.isNull("ps.supplier")));
 						selectCountCriteria.add(Restrictions.or(Restrictions.in("ps.supplier", suppliers), Restrictions.isNull("ps.supplier")));
 					} else {
@@ -205,7 +211,7 @@ public class InboundLogAction extends BaseAction {
 					selectCountCriteria.add(Restrictions.eq("s.code", inboundLog.getSupplierCode().trim()));
 				}
 			}
-		
+
 			if (inboundLog.getCreateDateFrom() != null) {
 				selectCriteria.add(Restrictions.ge("createDate", inboundLog.getCreateDateFrom()));
 				selectCountCriteria.add(Restrictions.ge("createDate", inboundLog.getCreateDateFrom()));

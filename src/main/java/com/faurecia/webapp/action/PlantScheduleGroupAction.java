@@ -80,7 +80,12 @@ public class PlantScheduleGroupAction extends BaseAction {
 	}
 	
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (plantScheduleGroup != null && plantScheduleGroup.getPlant() != null
+				&& plantScheduleGroup.getPlant().getCode() != null && !plantScheduleGroup.getPlant().getCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(plantScheduleGroup.getPlant().getCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public String list() {

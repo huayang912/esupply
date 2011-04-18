@@ -11,6 +11,25 @@
 <meta name="menu" content="OrderMenu" />
 <script type="text/javascript"
 	src="<c:url value='/scripts/CalendarPopup.js'/>"></script>
+<script type="text/javascript">
+	function cascadeUpdateSupplier(plantSelect) {
+		if (plantSelect.options(plantSelect.selectedIndex).value != "-1") {	
+			SupplierManager.getSuppliersByPlantAndUser(plantSelect.options(plantSelect.selectedIndex).value + "|${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+		else
+		{
+			SupplierManager.getAuthorizedSupplier("${pageContext.request.remoteUser}", supplierSelectHandler);
+		}
+	}
+
+	function supplierSelectHandler(suppliers) {
+		 DWRUtil.removeAllOptions("deliveryOrders_deliveryOrder_sCode");
+		 if (suppliers != null) {		 
+			 DWRUtil.addOptions("deliveryOrders_deliveryOrder_sCode",[{ name:'All', code:'-1' }], "code", "name");    
+		 	DWRUtil.addOptions("deliveryOrders_deliveryOrder_sCode",suppliers, "code", "name");    
+		 }
+	}
+</script>
 </head>
 
 <c:set var="buttons">
@@ -36,7 +55,7 @@
 				key="deliveryOrder.plantCode" /></label></td>
 			<td colspan="2"><s:select key="deliveryOrder.pCode"
 				list="%{plants}" listKey="code" listValue="name" headerKey="-1"
-				headerValue="All" theme="simple" /></td>
+				headerValue="All" theme="simple" onchange="cascadeUpdateSupplier(this);"/></td>
 
 			<td><label class="desc"><fmt:message
 				key="deliveryOrder.supplierCode" /></label></td>
@@ -89,7 +108,7 @@
 
 <c:if test="${deliveryOrder != null}">
 	<display:table name="paginatedList" cellspacing="0" cellpadding="0"
-		requestURI="" defaultsort="1" id="deliveryOrders" class="table"
+		requestURI="" id="deliveryOrders" class="table"
 		export="true">
 		<display:column property="createDate" sortable="true"
 			sortProperty="createDate" url="/editDeliveryOrder.html?from=list"
@@ -137,8 +156,8 @@
 		<display:setProperty name="export.pdf.filename"
 			value="deliveryOrder List.pdf" />
 	</display:table>
+</c:if>
 
-	<script type="text/javascript">
+<script type="text/javascript">
     highlightTableRows("deliveryOrders");    
 </script>
-</c:if>

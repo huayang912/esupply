@@ -94,7 +94,12 @@ public class NoticeReaderAction extends BaseAction {
 	}
 
 	public List<Supplier> getSuppliers() {
-		return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		if (plantSupplier != null && plantSupplier.getPlant() != null
+				&& plantSupplier.getPlant().getCode() != null && !plantSupplier.getPlant().getCode().equals("-1")) {
+			return this.supplierManager.getSuppliersByPlantAndUser(plantSupplier.getPlant().getCode().trim() + "|" + this.getRequest().getRemoteUser());
+		} else {
+			return this.supplierManager.getAuthorizedSupplier(this.getRequest().getRemoteUser());
+		}
 	}
 
 	public List<Plant> getPlants() {
