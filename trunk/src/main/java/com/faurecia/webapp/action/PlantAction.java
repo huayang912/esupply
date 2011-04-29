@@ -50,6 +50,11 @@ public class PlantAction extends BaseAction {
 		status.put("DoSebango_CN.png", "EasyLink Standard China (With SEBANGO)");
 		status.put("FWAS.png", "FWAS");
 		status.put("GSK.png", "GSK");
+		status.put("1037.PNG", "Wuxi");
+		status.put("1057.PNG", "Shanghai");
+		status.put("1545.png", "Guangzhou Automative Seating");
+		status.put("1546.png", "Guangzhou Emission Control");
+		status.put("1556.png", "Nanjing");
 		return status;
 	}
 	
@@ -57,7 +62,7 @@ public class PlantAction extends BaseAction {
 		Map<String, String> status = new HashMap<String, String>();
 		status.put("Box.png", "EasyLink Standard");
 		status.put("Box_CN.png", "EasyLink Standard (China)");
-		status.put("Box_WuXi.png", "WuXi");
+		status.put("Box_WuXi.png", "Wuxi");
 		return status;
 	}
 
