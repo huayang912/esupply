@@ -66,7 +66,7 @@
 			<td><s:textfield key="receipt.postingDateFrom"
 				cssClass="text short" theme="simple" /></td>
 			<td><A HREF="#"
-				onClick="cal.select(document.forms['receiptForm'].receipts_receipt_postingDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
+				onClick="cal.select(document.forms['receiptForm'].searchReceiptDetail_receipt_postingDateFrom,'anchDateFrom','MM/dd/yyyy'); return false;"
 				NAME="anchDateFrom" ID="anchDateFrom"><img
 				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
 			<td><label class="desc"><fmt:message
@@ -74,7 +74,7 @@
 			<td><s:textfield key="receipt.postingDateTo"
 				cssClass="text short" theme="simple" /></td>
 			<td><A HREF="#"
-				onClick="cal.select(document.forms['receiptForm'].receipts_receipt_postingDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
+				onClick="cal.select(document.forms['receiptForm'].searchReceiptDetail_receipt_postingDateTo,'anchDateTo','MM/dd/yyyy'); return false;"
 				NAME="anchDateTo" ID="anchDateTo"><img
 				src="<c:url value="/images/calendar.png"/>" border="0" /></A></td>
 		</tr>
