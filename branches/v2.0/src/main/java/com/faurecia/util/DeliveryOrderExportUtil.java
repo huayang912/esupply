@@ -80,9 +80,9 @@ public class DeliveryOrderExportUtil {
 				}
 				// damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
+				BigDecimal qty = deliveryOrderDetail.getQty() != null ? deliveryOrderDetail.getQty() : BigDecimal.ZERO;
 				// qty = qty.setScale(0, BigDecimal.ROUND_CEILING);
-
+				
 				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
 
 				totalBoxQty = totalBoxQty.add(boxQty);
@@ -232,7 +232,7 @@ public class DeliveryOrderExportUtil {
 					unitCount = new BigDecimal(1);
 				}
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
+				BigDecimal qty = deliveryOrderDetail.getQty() != null ? deliveryOrderDetail.getQty() : BigDecimal.ZERO;
 				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
 				totalBoxQty = totalBoxQty.add(boxQty);
 
@@ -395,7 +395,7 @@ public class DeliveryOrderExportUtil {
 					unitCount = new BigDecimal(1);
 				}
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
+				BigDecimal qty = deliveryOrderDetail.getQty() != null ? deliveryOrderDetail.getQty() : BigDecimal.ZERO;
 				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
 				totalBoxQty = totalBoxQty.add(boxQty);
 

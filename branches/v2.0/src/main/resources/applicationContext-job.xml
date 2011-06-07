@@ -65,7 +65,7 @@
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<!-- ref bean="dataInboundJobTrigger" /-->
+				<ref bean="dataInboundJobTrigger" />
 				<!-- ref bean="dataOutboundJobTrigger" /-->
 			</list>
 		</property>
