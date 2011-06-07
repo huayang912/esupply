@@ -740,7 +740,7 @@ public class DeliveryOrderAction extends BaseAction {
 		}
 
 		if (doTemplateName.equalsIgnoreCase("Do.png")) {
-			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
+			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, doTemplateName,
 					deliveryOrder, false);
 		} else if (doTemplateName.equalsIgnoreCase("Do_CN.png")) {
 			inputStream = DeliveryOrderExportUtil.exportDo(localAbsolutPath, "Do.png", deliveryOrder, true);
@@ -749,7 +749,7 @@ public class DeliveryOrderAction extends BaseAction {
 		} else if (doTemplateName.equalsIgnoreCase("DoSebango_CN.png")) {
 			inputStream = DeliveryOrderExportUtil.exportDoSebango(localAbsolutPath, doTemplateName, deliveryOrder, true);
 		} else {
-			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, deliveryOrder.getPlantSupplier().getPlant().getDoTemplateName(),
+			inputStream = DeliveryOrderExportUtil.export(localAbsolutPath, doTemplateName,
 					deliveryOrder);
 		}
 		fileName = "deliveryOrder_" + deliveryOrder.getDoNo() + ".pdf";

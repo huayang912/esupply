@@ -45,6 +45,9 @@ public class PlantAction extends BaseAction {
 		status.put("1545.png", "Guangzhou Automative Seating");
 		status.put("1546.png", "Guangzhou Emission Control");
 		status.put("1556.png", "Nanjing");
+		status.put("FWAC.png", "FWAC");
+		status.put("FCASWH.png", "FCASWH");
+		status.put("ThaiLand.png", "Faurecia Emissions Control (Thailand)");
 		return status;
 	}
 	
