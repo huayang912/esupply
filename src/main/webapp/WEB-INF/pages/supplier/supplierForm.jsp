@@ -63,11 +63,20 @@
 				list="%{responsibleUserList}" listKey="id" listValue="fullName"
 				theme="xhtml" /></li>
 
-			<li><s:select key="plantSupplier.doTemplateName" list="%{mFTemplate}"
-				theme="xhtml" /></li>
+			<li><s:select key="plantSupplier.doTemplateName"
+				list="%{mFTemplate}" theme="xhtml" /></li>
 
-			<li><s:select key="plantSupplier.boxTemplateName" list="%{boxTemplate}"
-				theme="xhtml" /></li>
+			<li><s:select key="plantSupplier.boxTemplateName"
+				list="%{boxTemplate}" theme="xhtml" /></li>
+
+			<table>
+				<tr>
+					<td><label class="desc"><fmt:message
+						key="plantSupplier.needExportDo" /></label><s:checkbox
+						key="plantSupplier.needExportDo" theme="simple" /></td>
+
+				</tr>
+			</table>
 		</c:when>
 	</c:choose>
 
