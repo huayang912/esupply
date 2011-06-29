@@ -311,6 +311,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 		criteria.add(Restrictions.eq("isPrint", true));
 		criteria.add(Restrictions.eq("isExport", false));
 		criteria.add(Restrictions.eq("status", "Confirm"));
+		criteria.add(Restrictions.eq("ps.needExportDo", true));
 		criteria.addOrder(Order.asc("createDate"));
 
 		List<DeliveryOrder> deliveryOrderList = this.findByCriteria(criteria);
@@ -601,7 +602,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				log.warn("Error when convert RECEPT into datetime.", ex);
 				deliveryOrder.setEndDate(null);
 			}
-			deliveryOrder.setIsExport(true);
+								
+			deliveryOrder.setIsExport(!plantSupplier.getNeedExportDo());
 			deliveryOrder.setIsPrint(false);
 			deliveryOrder.setIsRead(false);
 			deliveryOrder.setFirstReadDate(null);

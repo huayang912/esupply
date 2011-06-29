@@ -74,3 +74,7 @@ alter table plant_supplier add box_template_name varchar(50);
 alter table plant_schedule_group add allow_firm_deliver tinyint null;
 update plant_schedule_group set allow_firm_deliver = 1;
 alter table plant_schedule_group alter column allow_firm_deliver tinyint not null;
+
+alter table plant_supplier add need_export_do tinyint;
+update plant_supplier set need_export_do = 1;
+alter table plant_supplier alter column need_export_do tinyint not null;
