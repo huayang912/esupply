@@ -386,7 +386,8 @@ public class PurchaseOrderManagerImpl extends GenericManagerImpl<PurchaseOrder, 
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
-
+				plantSupplier.setNeedExportDo(false);
+				
 				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager
 						.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
 				if (defaultPlantScheduleGroup != null) {

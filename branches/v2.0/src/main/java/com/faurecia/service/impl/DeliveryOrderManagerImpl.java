@@ -72,6 +72,7 @@ import com.faurecia.service.SupplierManager;
 import com.faurecia.service.UserExistsException;
 import com.faurecia.service.UserManager;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import freemarker.template.utility.StringUtil;
 
 public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, String> implements DeliveryOrderManager {
@@ -321,7 +322,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				DeliveryOrder deliveryOrder = deliveryOrderList.get(i);
 
 				if (deliveryOrder.getDeliveryOrderDetailList() != null && deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
-
+					Collections.sort(deliveryOrder.getDeliveryOrderDetailList());
 				}
 			}
 		}
@@ -332,6 +333,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 	public DeliveryOrder get(String doNo, boolean includeDetail) {
 		DeliveryOrder deliveryOrder = this.genericDao.get(doNo);
 		if (includeDetail && deliveryOrder.getDeliveryOrderDetailList() != null && deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
+			Collections.sort(deliveryOrder.getDeliveryOrderDetailList());			
 		}
 		return deliveryOrder;
 	}
@@ -455,7 +457,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 
 					DetachedCriteria criteria = DetachedCriteria.forClass(DeliveryOrder.class);
 					criteria.add(Restrictions.eq("murn", deliveryOrder.getMurn()));
-					//criteria.add(Restrictions.eq("fileIdentitfier", deliveryOrder.getFileIdentitfier()));
+					// criteria.add(Restrictions.eq("fileIdentitfier",
+					// deliveryOrder.getFileIdentitfier()));
 
 					List<DeliveryOrder> doList = this.findByCriteria(criteria);
 					if (doList != null && doList.size() > 0) {
@@ -556,6 +559,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				plantSupplier.setPlant(plant);
 				plantSupplier.setSupplier(supplier);
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
+				plantSupplier.setNeedExportDo(false);
 
 				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager
 						.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
@@ -602,8 +606,8 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				log.warn("Error when convert RECEPT into datetime.", ex);
 				deliveryOrder.setEndDate(null);
 			}
-								
-			deliveryOrder.setIsExport(!plantSupplier.getNeedExportDo());
+
+			deliveryOrder.setIsExport(false);
 			deliveryOrder.setIsPrint(false);
 			deliveryOrder.setIsRead(false);
 			deliveryOrder.setFirstReadDate(null);
