@@ -17,9 +17,11 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.CompareToBuilder;
 
+import freemarker.template.utility.StringUtil;
+
 @Entity
 @Table(name = "do_detail")
-public class DeliveryOrderDetail extends BaseObject {
+public class DeliveryOrderDetail extends BaseObject implements Comparable<DeliveryOrderDetail> {
 
 	/**
 	 * 
@@ -312,13 +314,8 @@ public class DeliveryOrderDetail extends BaseObject {
 				this.id, rhs.id).isEquals();
 	}
 
-	/**
-	 * @see java.lang.Comparable#compareTo(Object)
-	 */
-	public int compareTo(Object object) {
-		DeliveryOrderDetail myClass = (DeliveryOrderDetail) object;
-		return new CompareToBuilder().append(this.id, myClass.id)
-				.toComparison();
+	public int compareTo(DeliveryOrderDetail o) {
+		return StringUtil.leftPad(this.sequence, 10, '0').compareTo(StringUtil.leftPad(o.sequence, 10, '0'));
 	}
 
 }
