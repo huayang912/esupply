@@ -5,13 +5,12 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 
 import com.faurecia.model.Plant;
-import com.faurecia.model.User;
+import com.faurecia.model.Resource;
 import com.faurecia.service.GenericManager;
+import com.faurecia.service.PlantSupplierManager;
 
 public class PlantAction extends BaseAction {
 
@@ -20,6 +19,8 @@ public class PlantAction extends BaseAction {
 	 */
 	private static final long serialVersionUID = -33601379593125595L;
 	private GenericManager<Plant, String> plantManager;
+	private GenericManager<Resource, Long> resourceManager;
+	private PlantSupplierManager plantSupplierManager;
 	private List<Plant> plants;
 	private Plant plant;
 	private String code;
@@ -27,6 +28,14 @@ public class PlantAction extends BaseAction {
 
 	public void setPlantManager(GenericManager<Plant, String> plantManager) {
 		this.plantManager = plantManager;
+	}
+
+	public void setPlantSupplierManager(PlantSupplierManager plantSupplierManager) {
+		this.plantSupplierManager = plantSupplierManager;
+	}
+
+	public void setResourceManager(GenericManager<Resource, Long> resourceManager) {
+		this.resourceManager = resourceManager;
 	}
 
 	public List<Plant> getPlants() {
@@ -45,9 +54,6 @@ public class PlantAction extends BaseAction {
 		status.put("1545.png", "Guangzhou Automative Seating");
 		status.put("1546.png", "Guangzhou Emission Control");
 		status.put("1556.png", "Nanjing");
-		status.put("FWAC.png", "FWAC");
-		status.put("FCASWH.png", "FCASWH");
-		status.put("ThaiLand.png", "Faurecia Emissions Control (Thailand)");
 		return status;
 	}
 	
@@ -71,7 +77,7 @@ public class PlantAction extends BaseAction {
 	}
 
 	public String list() {		
-		plants = plantManager.getAll();
+		plants = plantSupplierManager.getAuthorizedPlant(this.getRequest().getRemoteUser());
 		return SUCCESS;
 	}
 
@@ -111,15 +117,8 @@ public class PlantAction extends BaseAction {
 	}
 
 	public String edit() throws JAXBException, MalformedURLException {
-		HttpServletRequest request = getRequest();
-		editProfile = (request.getRequestURI().indexOf("editPlantProfile") > -1);
-		
 		if (this.code != null) {
 			plant = this.plantManager.get(code);
-			plant.setConfirmFtpPassword(plant.getFtpPassword());
-		} else if (editProfile) {
-			User user = userManager.getUserByUsername(request.getRemoteUser());
-			plant = user.getUserPlant();
 			plant.setConfirmFtpPassword(plant.getFtpPassword());
 		} else {
 			plant = new Plant();
@@ -142,6 +141,12 @@ public class PlantAction extends BaseAction {
 		saveMessage(getText(key));
 		this.plantManager.flushSession();
 		if (!isNew) {
+			Resource resource = new Resource();
+			resource.setCode(plant.getCode());
+			resource.setDescription(plant.getName());
+			resource.setType("plant");
+			this.resourceManager.save(resource);
+			
 			return INPUT;
 		} else {
 			return SUCCESS;

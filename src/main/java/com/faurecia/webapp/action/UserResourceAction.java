@@ -179,9 +179,9 @@ public class UserResourceAction extends BaseAction implements Preparable {
 				user.getResources().add(resourceManager.getResource(resources[i]));
 			}
 		}
-		
+
 		prepareResourceList();
-		
+
 		return SUCCESS;
 	}
 
@@ -204,7 +204,7 @@ public class UserResourceAction extends BaseAction implements Preparable {
 	}
 
 	private void prepareResourceList() {
-		if (user.getUsername().equalsIgnoreCase(Constants.SUPER_USER)) {
+		if (this.getRequest().getRemoteUser().equalsIgnoreCase(Constants.SUPER_USER) && false) {
 			List<Resource> allResourceList = this.resourceManager.getResourceByType(type);
 			user.setResourceList(new ArrayList<LabelValue>());
 			for (Resource res : allResourceList) {
@@ -223,10 +223,12 @@ public class UserResourceAction extends BaseAction implements Preparable {
 				}
 			}
 
-			User user2 = this.userManager.getUserByUsername(getRequest().getRemoteUser(), true, true,true);
-			
+			User user2 = this.userManager.getUserByUsername(getRequest().getRemoteUser(), true, true, true);
+
 			List<Resource> allResourceList = null;
-			if (type.equals(Resource.RESOURCE_TYPE_URL)) {
+			if (this.getRequest().getRemoteUser().equalsIgnoreCase(Constants.SUPER_USER)) {
+				allResourceList = this.resourceManager.getResourceByType(type);
+			} else if (type.equals(Resource.RESOURCE_TYPE_URL)) {
 				allResourceList = user2.getUrlResource();
 			} else if (type.equals(Resource.RESOURCE_TYPE_PLANT)) {
 				allResourceList = user2.getPlantResource();
