@@ -972,7 +972,7 @@
 		<jdbc.artifactId>jtds</jdbc.artifactId>
 		<jdbc.version>1.2</jdbc.version>
 		<jdbc.driverClassName>net.sourceforge.jtds.jdbc.Driver</jdbc.driverClassName>
-		<jdbc.url>jdbc:jtds:sqlserver://localhost:1433;databaseName=esupply</jdbc.url>
+		<jdbc.url>jdbc:jtds:sqlserver://10.164.1.101:1433;databaseName=esupply3</jdbc.url>
 		<jdbc.username>sa</jdbc.username>
 		<jdbc.password>sa</jdbc.password>
 
