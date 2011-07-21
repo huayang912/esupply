@@ -678,6 +678,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					log.warn("Error when convert OLOT into decimal.", ex);
 				}
 				detail.setSequence(String.valueOf(i));
+				detail.setReferenceSequence(StringUtil.leftPad(String.valueOf(i), 4, '0'));
 				try {
 					detail.setUnitCount(new BigDecimal(recpos.getPCSPU()));
 				} catch (Exception ex) {
@@ -697,7 +698,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 					detail.setOrderedQty(detail.getUnitCount().multiply(detail.getBoxCount()));
 					detail.setQty(detail.getOrderedQty());
 				}
-				detail.setUom("");
+				detail.setUom(item.getUom());
 				detail.setPackageType(recpos.getPACKTYPE());
 				detail.setSebango(recpos.getSEBANGO());
 				detail.setStorageCode(recpos.getSCODE());
