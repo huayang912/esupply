@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -506,6 +507,15 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					List<DELFOR02E1EDP16> E1EDP16List = E1EDP10.getE1EDP16();
 
 					if (E1EDP16List != null && E1EDP16List.size() > 0) {
+						// LeadTime
+						int leadTime = 0;
+						if (E1EDP10.getE1EDP15() != null && E1EDP10.getE1EDP15().size() > 0 && E1EDP10.getE1EDP15().get(0).getTXT02() != null) {
+							try {
+								leadTime = Integer.parseInt((E1EDP10.getE1EDP15().get(0).getTXT02()));
+							} catch (NumberFormatException ex) {
+
+							}
+						}
 						for (int j = 0; j < E1EDP16List.size(); j++) {
 							DELFOR02E1EDP16 E1EDP16 = E1EDP16List.get(j);
 
@@ -531,8 +541,12 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 								scheduleItemDetail.setDateType("Day");
 							}
 
-							scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
+							//scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
 							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
+							Calendar dtCalendar = Calendar.getInstance();
+							dtCalendar.setTime(scheduleItemDetail.getDateTo());
+							dtCalendar.add(Calendar.DATE, -leadTime);
+							scheduleItemDetail.setDateFrom(dtCalendar.getTime());
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
 							//scheduleItemDetail.setIsConfirm(false);
