@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -96,7 +97,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 	public void setPlantScheduleGroupManager(PlantScheduleGroupManager plantScheduleGroupManager) {
 		this.plantScheduleGroupManager = plantScheduleGroupManager;
 	}
-	
+
 	public void setScheduleItemManager(ScheduleItemManager scheduleItemManager) {
 		this.scheduleItemManager = scheduleItemManager;
 	}
@@ -172,7 +173,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 			if (inboundLog.getPlantSupplier() == null) {
 				inboundLog.setPlantSupplier(schedule.getPlantSupplier());
-			}				
+			}
 
 			// 零件号+版本号如果遇到重复的情况，覆盖原有的记录(先删除，在新增)
 			if (schedule.getScheduleItemList() != null && schedule.getScheduleItemList().size() > 0) {
@@ -194,7 +195,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 			}
 			// 保存采购单
 			this.save(schedule);
-			
+
 			this.flushSession();
 
 			inboundLog.setInboundResult("success");
@@ -222,7 +223,7 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 
 		return null;
 	}
-	
+
 	public Schedule getLastestScheduleItem(String plantCode, String supplierCode, boolean isConfirm) {
 		return getLastestScheduleItem(plantCode, supplierCode, new Date(), isConfirm);
 	}
@@ -232,70 +233,69 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 				+ "(select schedule.schedule_no, schedule.plant_supplier_id, item_code, max(release_no) as release_no from schedule_item "
 				+ "inner join schedule on schedule_item.schedule_no = schedule.schedule_no "
 				+ "inner join plant_supplier on schedule.plant_supplier_id = plant_supplier.id "
-				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? and schedule_item.is_confirm = ? " 
+				+ "where plant_supplier.plant_code = ? and plant_supplier.supplier_code = ? and schedule_item.create_date <= ? and schedule_item.is_confirm = ? "
 				+ "group by schedule.schedule_no, schedule.plant_supplier_id, item_code) as a on schedule_item.item_code = a.item_code and schedule_item.release_no = a.release_no and schedule_item.schedule_no = a.schedule_no "
 				+ "inner join schedule_control on schedule_control.schedule_no = a.schedule_no and schedule_control.plant_supplier_id = a.plant_supplier_id "
 				+ "and schedule_control.item_code = a.item_code and (schedule_control.expire_date > ? or schedule_control.expire_date is null)";
-		
-		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, new Object[]{plantCode, supplierCode, tillDate, isConfirm ? 1 : 0, tillDate});
+
+		SqlRowSet resultSet = this.jdbcTemplate.queryForRowSet(sql, new Object[] { plantCode, supplierCode, tillDate, isConfirm ? 1 : 0, tillDate });
 		List<Integer> scheduleItemIdIist = new ArrayList<Integer>();
-		
+
 		while (resultSet.next()) {
 			scheduleItemIdIist.add(resultSet.getInt(1));
 		}
-		
+
 		if (scheduleItemIdIist.size() == 0) {
-			return null;	
+			return null;
 		}
-		
+
 		DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleItem.class);
 		criteria.createAlias("item", "i");
 		criteria.add(Restrictions.in("id", scheduleItemIdIist));
 		criteria.addOrder(Order.asc("i.code"));
-		
+
 		List<ScheduleItem> scheduleItemList = this.findByCriteria(criteria);
-		
+
 		if (scheduleItemList != null && scheduleItemList.size() > 0) {
 			Schedule schedule = null;
 			for (int i = 0; i < scheduleItemList.size(); i++) {
 				ScheduleItem scheduleItem = scheduleItemList.get(i);
 				if (scheduleItem.getScheduleItemDetailList() != null && scheduleItem.getScheduleItemDetailList().size() > 0) {
-					
+
 				}
-				
-				//查找最新的Schedule
+
+				// 查找最新的Schedule
 				if (schedule == null || schedule.getCreateDate().compareTo(scheduleItem.getSchedule().getCreateDate()) < 0) {
 					schedule = scheduleItemList.get(i).getSchedule();
 				}
 			}
-			
+
 			schedule.setScheduleItemList(scheduleItemList);
-			
+
 			return schedule;
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
-	
+
 	public void confirmScheduleItem(String[] scheduleItemIds) {
 		if (scheduleItemIds != null && scheduleItemIds.length > 0) {
 			for (int i = 0; i < scheduleItemIds.length; i++) {
 				ScheduleItem scheduleItem = this.scheduleItemManager.get(Integer.parseInt(scheduleItemIds[i]));
-				
-				DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleItem.class);				
+
+				DetachedCriteria criteria = DetachedCriteria.forClass(ScheduleItem.class);
 				criteria.createAlias("schedule", "s");
 				criteria.add(Restrictions.eq("s.plantSupplier", scheduleItem.getSchedule().getPlantSupplier()));
 				criteria.add(Restrictions.eq("item", scheduleItem.getItem()));
 				criteria.add(Restrictions.eq("isConfirm", false));
 				criteria.add(Restrictions.le("releaseNo", scheduleItem.getReleaseNo()));
-				
+
 				List<ScheduleItem> scheduleItemList = this.genericDao.findByCriteria(criteria);
-				
+
 				for (int j = 0; j < scheduleItemList.size(); j++) {
 					ScheduleItem scheduleItem2 = scheduleItemList.get(j);
 					scheduleItem2.setIsConfirm(true);
-					
+
 					this.scheduleItemManager.save(scheduleItem2);
 				}
 			}
@@ -349,19 +349,19 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 							supplier.setName(E1EDKA1.getNAME1() != null ? E1EDKA1.getNAME1() : supplierCode);
 
 							supplier = this.supplierManager.save(supplier);
-							
+
 							Resource resource = new Resource();
 							resource.setCode(supplier.getCode());
 							resource.setDescription(supplier.getName());
 							resource.setType("supplier");
 							this.resourceManager.save(resource);
-							
+
 							isCreateSupplier = true;
 						}
 					}
 				}
 			}
-			
+
 			if (isCreateSupplier) {
 				log.info("Creating supplier user account.");
 				// 生成供应商帐号
@@ -374,7 +374,8 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 				supplierUser.setPassword(RandomStringUtils.random(6, true, true));
 				supplierUser.setConfirmPassword(supplierUser.getPassword());
 				supplierUser.setFirstName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
-				//supplierUser.setLastName(supplier.getName() != null ? supplier.getName() : supplier.getCode());
+				// supplierUser.setLastName(supplier.getName() != null ?
+				// supplier.getName() : supplier.getCode());
 				supplierUser.setLastName("");
 				supplierUser.setUserSupplier(supplier);
 				// supplierUser.setUserPlant(plant);
@@ -415,12 +416,13 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 				plantSupplier.setSupplier(supplier);
 				plantSupplier.setDoNoPrefix(String.valueOf(this.numberControlManager.getNextNumber(Constants.DO_NO_PREFIX)));
 
-				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
+				PlantScheduleGroup defaultPlantScheduleGroup = this.plantScheduleGroupManager
+						.getDefaultPlantScheduleGroupByPlantCode(plant.getCode());
 				if (defaultPlantScheduleGroup != null) {
 					plantSupplier.setPlantScheduleGroup(defaultPlantScheduleGroup);
 				}
-				
-				plantSupplier = this.plantSupplierManager.save(plantSupplier);				
+
+				plantSupplier = this.plantSupplierManager.save(plantSupplier);
 			}
 
 			schedule.setPlantSupplier(plantSupplier);
@@ -455,12 +457,12 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 						item.setDescription(itemDescription);
 						item.setPlant(plant);
 						item.setUom(E1EDP10.getVRKME());
-						
+
 						List<DELFOR02E1EDP14> E1EDP14List = E1EDP10.getE1EDP14();
 						if (E1EDP14List != null && E1EDP14List.size() > 0) {
 							DELFOR02E1EDP14 E1EDP14 = E1EDP14List.get(0);
 							BigDecimal unitCount = new BigDecimal(E1EDP14.getANZAR());
-							item.setUnitCount(unitCount);							
+							item.setUnitCount(unitCount);
 						}
 
 						item = this.itemManager.save(item);
@@ -469,11 +471,11 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					supplierItemCode = E1EDP10.getIDNLF();
 
 					if (supplierItemCode != null && supplierItemCode.trim().length() > 0) {
-						supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);						
+						supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
 					}
-					
+
 					supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(item, supplier);
-					
+
 					if (supplierItem == null) {
 						log.info("The relationship between Item: " + item.getCode() + " and Supplier: " + supplier.getCode()
 								+ " not found, try to create a new one.");
@@ -484,9 +486,9 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 						supplierItem.setSupplierItemCode(supplierItemCode);
 
 						supplierItem = this.supplierItemManager.save(supplierItem);
-					} else if (supplierItemCode != null && (supplierItem.getSupplierItemCode() == null 
-									|| supplierItem.getSupplierItemCode().trim().length() == 0)) {
-						
+					} else if (supplierItemCode != null
+							&& (supplierItem.getSupplierItemCode() == null || supplierItem.getSupplierItemCode().trim().length() == 0)) {
+
 						supplierItem.setSupplierItemCode(supplierItemCode);
 						supplierItem = this.supplierItemManager.save(supplierItem);
 					}
@@ -503,21 +505,30 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 					scheduleItem.setIsConfirm(false);
 
 					schedule.addScheduleItem(scheduleItem);
-					
+
 					if (this.scheduleControlManager.get(schedule.getScheduleNo(), plantSupplier, item) == null) {
 						ScheduleControl scheduleControl = new ScheduleControl();
 						scheduleControl.setScheduleNo(schedule.getScheduleNo());
 						scheduleControl.setPlantSupplier(plantSupplier);
 						scheduleControl.setItem(item);
-						
+
 						this.scheduleControlManager.save(scheduleControl);
 					}
 
 					// ----------------------------schedule item
-					// detail---------------------								
+					// detail---------------------
 					List<DELFOR02E1EDP16> E1EDP16List = E1EDP10.getE1EDP16();
 
 					if (E1EDP16List != null && E1EDP16List.size() > 0) {
+						// LeadTime
+						int leadTime = 0;
+						if (E1EDP10.getE1EDP15() != null && E1EDP10.getE1EDP15().size() > 0 && E1EDP10.getE1EDP15().get(0).getTXT02() != null) {
+							try {
+								leadTime = Integer.parseInt((E1EDP10.getE1EDP15().get(0).getTXT02()));
+							} catch (NumberFormatException ex) {
+
+							}
+						}
 						for (int j = 0; j < E1EDP16List.size(); j++) {
 							DELFOR02E1EDP16 E1EDP16 = E1EDP16List.get(j);
 
@@ -543,11 +554,15 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 								scheduleItemDetail.setDateType("Day");
 							}
 
-							scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
-							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
+							//scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));  //ETA												
+							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));    //ETD
+							Calendar dtCalendar = Calendar.getInstance();
+							dtCalendar.setTime(scheduleItemDetail.getDateTo());
+							dtCalendar.add(Calendar.DATE, -leadTime);
+							scheduleItemDetail.setDateFrom(dtCalendar.getTime());
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
-							//scheduleItemDetail.setIsConfirm(false);
+							// scheduleItemDetail.setIsConfirm(false);
 
 							scheduleItem.addScheduleItemDetail(scheduleItemDetail);
 						}
