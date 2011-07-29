@@ -94,9 +94,9 @@
 						<td></td>
 						<td></td>
 						<td><fmt:message key="scheduleDetail.eta" /></td>
-						<s:iterator id="dateFrom"
+						<s:iterator id="dateTo"
 							value="%{scheduleView.scheduleHead.headList}">
-							<td><fmt:formatDate value="${dateFrom}" pattern="MM/dd/yyyy" />
+							<td><fmt:formatDate value="${dateTo}" pattern="MM/dd/yyyy" />
 							</td>
 						</s:iterator>
 					</tr>
@@ -106,7 +106,7 @@
 						<td></td>
 						<td></td>
 						<td><fmt:message key="scheduleDetail.etd" /></td>
-						<s:iterator id="dateTo"
+						<s:iterator id="dateFrom"
 							value="%{scheduleView.scheduleHead.headList}">
 							<td><fmt:formatDate value="${dateFrom}" pattern="MM/dd/yyyy" /></td>
 						</s:iterator>
