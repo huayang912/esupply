@@ -541,12 +541,13 @@ public class ScheduleManagerImpl extends GenericManagerImpl<Schedule, String> im
 								scheduleItemDetail.setDateType("Day");
 							}
 
-							//scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
-							scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
+							scheduleItemDetail.setDateFrom(dateFormat.parse(E1EDP16.getEDATUV()));
+							//scheduleItemDetail.setDateTo(dateFormat.parse(E1EDP16.getEDATUB()));
 							Calendar dtCalendar = Calendar.getInstance();
-							dtCalendar.setTime(scheduleItemDetail.getDateTo());
+							dtCalendar.setTime(scheduleItemDetail.getDateFrom());
 							dtCalendar.add(Calendar.DATE, -leadTime);
-							scheduleItemDetail.setDateFrom(dtCalendar.getTime());
+							//scheduleItemDetail.setDateFrom(dtCalendar.getTime());
+							scheduleItemDetail.setDateTo(dtCalendar.getTime());
 							scheduleItemDetail.setReleaseQty(new BigDecimal(E1EDP16.getWMENG()));
 							scheduleItemDetail.setScheduleItem(scheduleItem);
 							//scheduleItemDetail.setIsConfirm(false);
