@@ -53,7 +53,7 @@
         #end
     #else
       </li>
-      #if ($count == $menu.parent.components.size())
+      #if ($count == $renderedChildren)
       </ul>
       #end
     #end
