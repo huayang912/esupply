@@ -294,7 +294,8 @@ public class DataInboundJob {
 				String fileName = fileNameList.get(j); // 获取下载文件名
 				String filePrefix = fileName.substring(0, fileName.lastIndexOf('.'));
 				String fileSuffix = fileName.substring(fileName.lastIndexOf('.') - 1);
-				if (!"SEQJIT".equals(dataType) && !fileName.toLowerCase().endsWith(".xml")) {
+				if (("SEQJIT".equals(dataType) && fileName.toLowerCase().endsWith(".tmp")) 
+						||(!"SEQJIT".equals(dataType) && !fileName.toLowerCase().endsWith(".xml"))) {
 					continue;
 				}
 
