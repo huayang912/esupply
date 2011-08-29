@@ -607,7 +607,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				deliveryOrder.setEndDate(null);
 			}
 
-			deliveryOrder.setIsExport(false);
+			deliveryOrder.setIsExport(true);
 			deliveryOrder.setIsPrint(false);
 			deliveryOrder.setIsRead(false);
 			deliveryOrder.setFirstReadDate(null);
