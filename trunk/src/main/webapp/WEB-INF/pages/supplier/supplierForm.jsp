@@ -60,6 +60,15 @@
 	<li><s:select key="plantSupplier.boxTemplateName"
 		list="%{boxTemplate}" theme="xhtml" /></li>
 
+	<table>
+		<tr>
+			<td><label class="desc"><fmt:message
+				key="plantSupplier.needExportDo" /></label><s:checkbox
+				key="plantSupplier.needExportDo" theme="simple" /></td>
+
+		</tr>
+	</table>
+
 	<li class="buttonBar bottom"><c:out value="${buttons}"
 		escapeXml="false" /></li>
 </s:form>
