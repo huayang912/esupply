@@ -48,6 +48,7 @@ public class PlantSupplier extends BaseObject implements Serializable {
 	private User responsibleUser;
 	private String doTemplateName;
 	private String boxTemplateName;
+	private Boolean needExportDo;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -183,6 +184,15 @@ public class PlantSupplier extends BaseObject implements Serializable {
 
 	public void setBoxTemplateName(String boxTemplateName) {
 		this.boxTemplateName = boxTemplateName;
+	}
+	
+	@Column(name = "need_export_do", nullable = false)
+	public Boolean getNeedExportDo() {
+		return needExportDo;
+	}
+
+	public void setNeedExportDo(Boolean needExportDo) {
+		this.needExportDo = needExportDo;
 	}
 	
 	/**

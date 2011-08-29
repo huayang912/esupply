@@ -290,6 +290,7 @@ public class SupplierAction extends BaseAction {
 		oldPlantSupplier.setSupplierFax(plantSupplier.getSupplierFax());
 		oldPlantSupplier.setDoTemplateName(plantSupplier.getDoTemplateName());
 		oldPlantSupplier.setBoxTemplateName(plantSupplier.getBoxTemplateName());
+		oldPlantSupplier.setNeedExportDo(plantSupplier.getNeedExportDo());
 		/*if (!this.getRequest().isUserInRole(Constants.VENDOR_ROLE)) {
 			oldPlantSupplier.setPlantScheduleGroup(plantSupplier.getPlantScheduleGroup());
 			if (plantSupplier.getResponsibleUser() != null && plantSupplier.getResponsibleUser().getId() != null) {
