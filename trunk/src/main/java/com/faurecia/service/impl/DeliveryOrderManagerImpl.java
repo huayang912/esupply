@@ -608,7 +608,7 @@ public class DeliveryOrderManagerImpl extends GenericManagerImpl<DeliveryOrder, 
 				log.warn("Error when convert RECEPT into datetime.", ex);
 				deliveryOrder.setEndDate(null);
 			}
-			deliveryOrder.setIsExport(true);
+			deliveryOrder.setIsExport(false);
 			deliveryOrder.setIsPrint(false);
 			deliveryOrder.setIsRead(false);
 			deliveryOrder.setFirstReadDate(null);
