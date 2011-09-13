@@ -176,7 +176,7 @@ public class DataInboundJob {
 
 				if (plant.getNextInboundDate() == null || nowDate.compareTo(plant.getNextInboundDate()) > 0) {
 					log.info("Start inbound data for plant: " + plant.getName() + ".");
-					DownloadFiles(plant.getFtpServer(), plant.getFtpPort(), plant.getFtpUser(), plant.getFtpPassword(), plant.getFtpPath(), plant
+					DownloadFiles(plant.getFtpServer(), (plant.getFtpPort() != null ? plant.getFtpPort() : 21), plant.getFtpUser(), plant.getFtpPassword(), plant.getFtpPath(), plant
 							.getTempFileDirectory(), plant.getArchiveFileDirectory(), plant.getErrorFileDirectory(), nowDate, "service", plant);
 
 					// 设置下次运行时间
