@@ -425,10 +425,14 @@ public class DeliveryOrderExportUtil {
 
 				// DESCRIPTION
 				if (deliveryOrderDetail.getItemDescription() != null) {
-					cb.beginText();
-					cb.setFontAndSize(nameFont, 8);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 245, rowPix, 0);
-					cb.endText();
+					
+					PdfTemplate tp2 = cb.createTemplate(100, 60);
+					tp2.beginText();
+					tp2.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_CLIP);
+					tp2.setFontAndSize(nameFont, 7);
+					tp2.showText(deliveryOrderDetail.getItemDescription());
+					tp2.endText();
+					cb.addTemplate(tp2, 200, rowPix);
 				}
 
 				// ORDER_LOT
