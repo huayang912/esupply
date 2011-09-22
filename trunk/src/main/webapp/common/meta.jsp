@@ -1,5 +1,5 @@
         <!-- HTTP 1.1 -->
-        <meta http-equiv="Cache-Control" content="no-store"/>
+        <meta http-equiv="Cache-Control" content="no-cache"/>
         <!-- HTTP 1.0 -->
         <meta http-equiv="Pragma" content="no-cache"/>
         <!-- Prevents caching at the Proxy Server -->
