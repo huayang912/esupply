@@ -80,10 +80,10 @@ public class DeliveryOrderExportUtil {
 				}
 				// damandQty = damandQty.setScale(0, BigDecimal.ROUND_CEILING);
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
+				BigDecimal qty = deliveryOrderDetail.getQty() != null ? deliveryOrderDetail.getQty() : BigDecimal.ZERO;
 				// qty = qty.setScale(0, BigDecimal.ROUND_CEILING);
-
-				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
+				
+				BigDecimal boxQty = unitCount.compareTo(BigDecimal.ZERO) != 0 ? qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP) : qty;
 
 				totalBoxQty = totalBoxQty.add(boxQty);
 
@@ -232,8 +232,8 @@ public class DeliveryOrderExportUtil {
 					unitCount = new BigDecimal(1);
 				}
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
-				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
+				BigDecimal qty = deliveryOrderDetail.getQty() != null ? deliveryOrderDetail.getQty() : BigDecimal.ZERO;
+				BigDecimal boxQty = unitCount.compareTo(BigDecimal.ZERO) != 0 ? qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP) : qty;
 				totalBoxQty = totalBoxQty.add(boxQty);
 
 				// PART NUMBER
@@ -254,17 +254,10 @@ public class DeliveryOrderExportUtil {
 
 				// DESCRIPTION
 				if (deliveryOrderDetail.getItemDescription() != null) {
-					PdfTemplate tp2 = cb.createTemplate(100, 50);
-					tp2.beginText();
-					tp2.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_CLIP);
-					tp2.setFontAndSize(nameFont, 7);
-					tp2.showText(deliveryOrderDetail.getItemDescription());
-					tp2.endText();
-					cb.addTemplate(tp2, 220, rowPix);					
-					//cb.beginText();
-					//cb.setFontAndSize(nameFont, 7);
-					//cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 220, rowPix, 0);
-					//cb.endText();
+					cb.beginText();
+					cb.setFontAndSize(nameFont, 7);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 220, rowPix, 0);
+					cb.endText();
 				}
 
 				// ORDER_LOT
@@ -345,13 +338,13 @@ public class DeliveryOrderExportUtil {
 
 			int rowPix = 512 + diff;
 			BigDecimal totalBoxQty = BigDecimal.ZERO;
-			int totalPage = isCN ? (int) Math.ceil(((double) deliveryOrder.getDeliveryOrderDetailList().size()) / 14) : (int) Math
-					.ceil(((double) deliveryOrder.getDeliveryOrderDetailList().size()) / 15);
+			int totalPage = isCN ? (int) Math.ceil(((double) deliveryOrder.getDeliveryOrderDetailList().size()) / 14)
+					: (int) Math.ceil(((double) deliveryOrder.getDeliveryOrderDetailList().size()) / 15);
 			int currentPage = 0;
 			for (int i = 0; i < deliveryOrder.getDeliveryOrderDetailList().size(); i++) {
 				DeliveryOrderDetail deliveryOrderDetail = deliveryOrder.getDeliveryOrderDetailList().get(i);
 
-				if (i % (isCN ? 14 : 15) == 0) {
+				if ( i % (isCN ? 14 : 15) == 0) {
 
 					if (i > 0) {
 						document.newPage();
@@ -402,8 +395,8 @@ public class DeliveryOrderExportUtil {
 					unitCount = new BigDecimal(1);
 				}
 
-				BigDecimal qty = deliveryOrderDetail.getQty();
-				BigDecimal boxQty = qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP);
+				BigDecimal qty = deliveryOrderDetail.getQty() != null ? deliveryOrderDetail.getQty() : BigDecimal.ZERO;
+				BigDecimal boxQty = unitCount.compareTo(BigDecimal.ZERO) != 0 ? qty.divide(unitCount, 1, BigDecimal.ROUND_HALF_UP) : qty;
 				totalBoxQty = totalBoxQty.add(boxQty);
 
 				// PART NUMBER
@@ -432,17 +425,14 @@ public class DeliveryOrderExportUtil {
 
 				// DESCRIPTION
 				if (deliveryOrderDetail.getItemDescription() != null) {
-					PdfTemplate tp2 = cb.createTemplate(115, 60);
+					
+					PdfTemplate tp2 = cb.createTemplate(100, 60);
 					tp2.beginText();
 					tp2.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_CLIP);
 					tp2.setFontAndSize(nameFont, 7);
 					tp2.showText(deliveryOrderDetail.getItemDescription());
 					tp2.endText();
-					cb.addTemplate(tp2, 186, rowPix);
-					//cb.beginText();
-					//cb.setFontAndSize(nameFont, 8);
-					//cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 245, rowPix, 0);
-					//cb.endText();
+					cb.addTemplate(tp2, 200, rowPix);
 				}
 
 				// ORDER_LOT
@@ -471,7 +461,7 @@ public class DeliveryOrderExportUtil {
 				if (qty != null) {
 					cb.beginText();
 					cb.setFontAndSize(dinBf, 8);
-					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 410, rowPix, 0);
+					cb.showTextAligned(PdfContentByte.ALIGN_CENTER, numberFormat.format(qty), 412, rowPix, 0);
 					cb.endText();
 				}
 
@@ -1513,17 +1503,10 @@ public class DeliveryOrderExportUtil {
 
 							// part description
 							if (deliveryOrderDetail.getItemDescription() != null) {
-								PdfTemplate tp2 = cb.createTemplate(100, 50);
-								tp2.beginText();
-								tp2.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_CLIP);
-								tp2.setFontAndSize(dinBf, 6);
-								tp2.showText(deliveryOrderDetail.getItemDescription());
-								tp2.endText();
-								cb.addTemplate(tp2, 510, 725 - labelHeight);
-								//cb.beginText();
-								//cb.setFontAndSize(dinBf, 6);
-								//cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 510, 725 - labelHeight, 0);
-								//cb.endText();
+								cb.beginText();
+								cb.setFontAndSize(dinBf, 6);
+								cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 510, 725 - labelHeight, 0);
+								cb.endText();
 							}
 
 							// SEBANGO code + barcode #3
@@ -1682,18 +1665,11 @@ public class DeliveryOrderExportUtil {
 
 					// part description
 					if (deliveryOrderDetail.getItemDescription() != null) {
-						PdfTemplate tp2 = cb.createTemplate(100, 50);
-						tp2.beginText();
-						tp2.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_CLIP);
-						tp2.setFontAndSize(simBf, 9);
-						tp2.showText(deliveryOrderDetail.getItemDescription());
-						tp2.endText();
-						cb.addTemplate(tp2, 510, 690 - labelHeight);						
-						//cb.beginText();
-						//cb.setFontAndSize(simBf, 9);
-						//cb.setColorFill(BaseColor.BLACK);
-						//cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 510, 690 - labelHeight, 0);
-						//cb.endText();
+						cb.beginText();
+						cb.setFontAndSize(simBf, 9);
+						cb.setColorFill(BaseColor.BLACK);
+						cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 510, 690 - labelHeight, 0);
+						cb.endText();
 					}
 
 					// supplier data
@@ -1947,17 +1923,10 @@ public class DeliveryOrderExportUtil {
 
 							// part description
 							if (deliveryOrderDetail.getItemDescription() != null) {
-								PdfTemplate tp2 = cb.createTemplate(100, 50);
-								tp2.beginText();
-								tp2.setTextRenderingMode(PdfContentByte.TEXT_RENDER_MODE_FILL_CLIP);
-								tp2.setFontAndSize(simBf, 6);
-								tp2.showText(deliveryOrderDetail.getItemDescription());
-								tp2.endText();
-								cb.addTemplate(tp2, 510, 725 - labelHeight);
-								//cb.beginText();
-								//cb.setFontAndSize(simBf, 6);
-								//cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 510, 725 - labelHeight, 0);
-								//cb.endText();
+								cb.beginText();
+								cb.setFontAndSize(simBf, 6);
+								cb.showTextAligned(PdfContentByte.ALIGN_CENTER, deliveryOrderDetail.getItemDescription(), 510, 725 - labelHeight, 0);
+								cb.endText();
 							}
 
 							// SEBANGO code + barcode #3
