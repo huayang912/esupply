@@ -26,10 +26,12 @@ import com.faurecia.model.Schedule;
 import com.faurecia.model.ScheduleItem;
 import com.faurecia.model.ScheduleItemDetail;
 import com.faurecia.model.Supplier;
+import com.faurecia.model.SupplierItem;
 import com.faurecia.service.DeliveryOrderManager;
 import com.faurecia.service.GenericManager;
 import com.faurecia.service.PlantSupplierManager;
 import com.faurecia.service.ScheduleManager;
+import com.faurecia.service.SupplierItemManager;
 import com.faurecia.service.SupplierManager;
 import com.faurecia.util.DeliveryOrderExportUtil;
 import com.faurecia.webapp.util.PaginatedListUtil;
@@ -47,6 +49,7 @@ public class DeliveryOrderAction extends BaseAction {
 	private ScheduleManager scheduleManager;
 	private GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager;
 	private SupplierManager supplierManager;
+	private SupplierItemManager supplierItemManager;
 
 	private PaginatedListUtil<DeliveryOrder> paginatedList;
 	private int pageSize;
@@ -92,6 +95,10 @@ public class DeliveryOrderAction extends BaseAction {
 
 	public void setScheduleItemDetailManager(GenericManager<ScheduleItemDetail, Integer> scheduleItemDetailManager) {
 		this.scheduleItemDetailManager = scheduleItemDetailManager;
+	}
+	
+	public void setSupplierItemManager(SupplierItemManager supplierItemManager) {
+		this.supplierItemManager = supplierItemManager;
 	}
 
 	public PaginatedListUtil<DeliveryOrder> getPaginatedList() {
@@ -165,7 +172,7 @@ public class DeliveryOrderAction extends BaseAction {
 		status.put("Yes", "true");
 		return status;
 	}
-	
+
 	public Map<String, String> getIsPrint() {
 		Map<String, String> status = new HashMap<String, String>();
 		status.put("", "All");
@@ -436,11 +443,11 @@ public class DeliveryOrderAction extends BaseAction {
 					if (plants != null && plants.size() > 0) {
 						hql += "and p.code in (";
 						String plantCodes = "";
-						for(Plant plant : plants) {
+						for (Plant plant : plants) {
 							if (plantCodes.length() == 0) {
 								plantCodes = "'" + plant.getCode() + "'";
 							} else {
-								plantCodes += ", '" + plant.getCode()+ "'";
+								plantCodes += ", '" + plant.getCode() + "'";
 							}
 						}
 						hql += plantCodes + ") ";
@@ -459,7 +466,7 @@ public class DeliveryOrderAction extends BaseAction {
 					if (suppliers != null && suppliers.size() > 0) {
 						hql += "and s.code in (";
 						String supplierCodes = "";
-						for(Supplier supplier : suppliers) {
+						for (Supplier supplier : suppliers) {
 							if (supplierCodes.length() == 0) {
 								supplierCodes = "'" + supplier.getCode() + "'";
 							} else {
@@ -556,7 +563,7 @@ public class DeliveryOrderAction extends BaseAction {
 				paginatedList.setFullListSize(result.size());
 			}
 		}
-		
+
 		return SUCCESS;
 	}
 
@@ -582,6 +589,17 @@ public class DeliveryOrderAction extends BaseAction {
 			deliveryOrder.setFirstReadDate(new Date());
 			deliveryOrder.setIsRead(true);
 			deliveryOrder = this.deliveryOrderManager.save(deliveryOrder);
+
+			if (deliveryOrder.getDeliveryOrderDetailList() != null && deliveryOrder.getDeliveryOrderDetailList().size() > 0) {
+				for (DeliveryOrderDetail deliveryOrderDetail : deliveryOrder.getDeliveryOrderDetailList()) {
+					if (deliveryOrderDetail.getSupplierItemCode() == null || deliveryOrderDetail.getSupplierItemCode().trim().length() == 0) {
+						SupplierItem supplierItem = this.supplierItemManager.getSupplierItemByItemAndSupplier(deliveryOrderDetail.getItem(), deliveryOrder.getPlantSupplier().getSupplier());
+						if (supplierItem != null) {
+							deliveryOrderDetail.setSupplierItemCode(supplierItem.getSupplierItemCode());
+						}
+					}
+				}
+			}
 		} else if (purchaseOrderDetailList != null) {
 			// po ´´½¨ do
 			boolean hasError = false;
