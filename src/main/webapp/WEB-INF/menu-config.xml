@@ -21,6 +21,7 @@
             <Item name="ViewPlantUser" title="menu.admin.plantUsers" page="/admin/users.html?roleType=ROLE_PLANT_USER"/>            
             <Item name="InboundLogsMenu" title="menu.admin.inboundLogs" page="/inboundLogs.html"/>
             <Item name="OutboundLogsMenu" title="menu.admin.outboundLogs" page="/outboundLogs.html"/>
+            <Item name="AutoUploadMenu" title="menu.admin.autoUpload.html" page="/autoUpload.html"/>
         </Menu>
         <Menu name="PlantUserMenu" title="menu.plantUser" description="Plant User Menu" roles="ROLE_PLANT_USER" width="120" page="/items.html">
         	<Item name="ItemMenu" title="menu.item" description="Item Menu" page="/items.html" roles="ROLE_PLANT_USER"/>
