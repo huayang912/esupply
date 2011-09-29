@@ -176,4 +176,10 @@
 		<property name="roleManager" ref="roleManager" />
 		<property name="noticeReaderManager" ref="noticeReaderManager" />
 	</bean>
+	
+	<bean id="autoUploadAction" class="com.faurecia.webapp.action.AutoUploadAction"
+		scope="prototype">
+		<property name="userManager" ref="userManager" />
+		<property name="roleManager" ref="roleManager" />
+	</bean>
 </beans>
